@@ -21,7 +21,8 @@ class Session extends Model
 	 *
 	 * @return void
 	 */
-	protected static function boot() {
+	protected static function boot()
+    {
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
@@ -32,7 +33,8 @@ class Session extends Model
 	 *
 	 * @param $user
 	 */
-	public function markAsComplete($user = null) {
+	public function markAsComplete($user = null)
+    {
 		if(!$user) {
 			$user = Auth::user();
 		}
@@ -45,7 +47,8 @@ class Session extends Model
 	 *
 	 * @return bool
 	 */
-	public function getIsCompletedAttribute($user = null) {
+	public function getIsCompletedAttribute($user = null)
+    {
 		if(!$user) {
 			$user = Auth::user();
 		}
@@ -59,7 +62,8 @@ class Session extends Model
 	 *
 	 * @return bool
 	 */
-	public function getIsDateLockedAttribute() {
+	public function getIsDateLockedAttribute()
+    {
 		if(!empty($this->lock_date)) {
 			$expire = strtotime($this->lock_date);
 			$today = strtotime('today midnight');
@@ -75,23 +79,28 @@ class Session extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
-	public function resources() {
+	public function resources()
+    {
 		return $this->belongsToMany('App\Models\Resource', 'resource_session');
 	}
 
-	public function lesson() {
+	public function lesson()
+    {
 		return $this->belongsTo('App\Models\Lesson');
 	}
 
-	public function course() {
+	public function course()
+    {
 		return $this->belongsTo('App\Models\Course', 'starter_course_id', 'id');
 	}
 
-	public function usersWatched() {
+	public function usersWatched()
+    {
 		return $this->belongsToMany('App\Models\User', 'session_user');
 	}
 
-	public function sluggable() {
+	public function sluggable()
+    {
 		return [
 			'slug' => [
 				'source' => 'title'

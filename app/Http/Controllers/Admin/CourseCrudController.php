@@ -97,6 +97,16 @@ class CourseCrudController extends CrudController
 			]
 		]);
 
+		$this->crud->addField([
+		    'label' => 'Lock tags:',
+            'type' => 'select2_multiple',
+		    'name' => 'tags',
+            'entity' => 'tags',
+            'attribute' => 'title',
+            'model' => 'App\Models\ISTag',
+            'pivot' => true
+        ]);
+
 
 		/**
 		 * Add CRUD action button

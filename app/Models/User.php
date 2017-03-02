@@ -37,11 +37,18 @@ class User extends Authenticatable
 		$this->notify(new ResetPasswordNotification($token));
 	}
 
-	public function profile() {
+	public function profile()
+    {
 		return $this->hasOne('App\Models\Profile');
 	}
 
-	public function sessionsWatched() {
+	public function sessionsWatched()
+    {
 		return $this->belongsToMany('App\Models\Session', 'session_user');
 	}
+
+	public function tags()
+    {
+        return $this->belongsToMany('App\Models\ISTag', 'tag_user', 'user_id', 'tag_id');
+    }
 }

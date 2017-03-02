@@ -188,7 +188,12 @@ return [
 		/**
 		 * Sluggable
 		 */
-		Cviebrock\EloquentSluggable\ServiceProvider::class
+		Cviebrock\EloquentSluggable\ServiceProvider::class,
+
+        /**
+         * Infusionsoft
+         */
+        Infusionsoft\FrameworkSupport\Laravel\InfusionsoftServiceProvider::class,
     ],
 
     /*
@@ -237,7 +242,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-		'Gamification' => App\Gamification\Contracts\Gamification::class
+		'Gamification' => App\Gamification\Contracts\Gamification::class,
+        'Infusionsoft' => Infusionsoft\FrameworkSupport\Laravel\InfusionsoftFacade::class,
     ],
 
 ];

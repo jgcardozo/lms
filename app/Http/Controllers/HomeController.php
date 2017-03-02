@@ -38,8 +38,8 @@ class HomeController extends Controller
 	}
 
 	public function test() {
-		$tmp = Milestone::find(1);
-		dd($tmp->badges);
+		$tmp = Course::find(1);
+		dd($tmp->tags);
 		//dd(Gamification::getScore());
 		// event(new \App\Events\WatchedSession($session));
 		return;

@@ -29,7 +29,5 @@ class LogSuccessfulLogin
     {
         $is = new InfusionsoftController($event->user);
         $is->sync();
-
-        dd($event);
     }
 }

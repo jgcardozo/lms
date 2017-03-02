@@ -91,6 +91,21 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 
 
 /**
+ * Infusionsoft route
+ */
+Route::get('is/sync', [
+    'uses' => 'InfusionsoftController@sync'
+]);
+
+Route::get('is/sign', [
+    'uses' => 'InfusionsoftController@signin'
+]);
+
+Route::get('is/callback', [
+    'uses' => 'InfusionsoftController@callback'
+]);
+
+/**
  * Admin routes
  */
 Route::get('admin/', [

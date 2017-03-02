@@ -109,15 +109,18 @@ class Course extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
-    public function modules() {
+    public function modules()
+    {
 		return $this->hasMany('App\Models\Module');
 	}
 
-	public function starter_videos() {
+	public function starter_videos()
+    {
 		return $this->hasMany('App\Models\Session', 'starter_course_id');
 	}
 
-	public function sluggable() {
+	public function sluggable()
+    {
 		return [
 			'slug' => [
 				'source' => 'title'
@@ -125,17 +128,25 @@ class Course extends Model
 		];
 	}
 
-	public function getRouteKeyName() {
+	public function getRouteKeyName()
+    {
 		return 'slug';
 	}
 
-	public function coachingcall() {
+	public function coachingcall()
+    {
 		return $this->hasOne('App\Models\CoachingCall');
 	}
 
-	public function events() {
+	public function events()
+    {
 		return $this->hasMany('App\Events');
 	}
+
+    public function tags()
+    {
+        return $this->morphToMany('App\Models\ISTag', 'lockable', 'is_lockables', 'lockable_id', 'tag_id');
+    }
 
 	/*
 	|--------------------------------------------------------------------------
