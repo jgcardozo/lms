@@ -16,11 +16,13 @@ class RoleMiddleware
      */
 	public function handle($request, Closure $next, $role)
 	{
-		if (Auth::guest()) {
+		if (Auth::guest())
+		{
 			return redirect()->route('test');
 		}
 
-		if (!$request->user()->hasRole($role)) {
+		if (!$request->user()->hasRole($role))
+		{
 			// abort(403);
 			return redirect()->route('test');
 		}

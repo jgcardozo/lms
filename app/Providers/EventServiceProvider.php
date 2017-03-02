@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\WatchedSession' => [
             'App\Listeners\WatchedSessionFired',
         ],
+
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\LogSuccessfulLogin'
+        ]
     ];
 
     /**

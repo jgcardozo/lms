@@ -114,7 +114,8 @@ class Lesson extends Model
 
 		// Get previous lesson
 		$prevLesson = $this->previous_lesson;
-		if((!$prevLesson || $prevLesson->is_completed) && !$this->is_date_locked) {
+		if((!$prevLesson || $prevLesson->is_completed) && !$this->is_date_locked)
+		{
 			return false;
 		}
 
