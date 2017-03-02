@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i');
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+body {
+    background: #f3f3f3;
+    font-family: 'Roboto', sans-serif;
+}
+
+.wrap {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.header {
+    background: #DCDCDC;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.block {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: #FFFFFF;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.block__title {
+    margin-bottom: 20px;
+}
+
+.block__link {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 9;
+
+    background: #00ADEF;
+    color: #FFFFFF;
+    line-height: 35px;
+    text-align: center;
+    text-decoration: none;
+
+    padding: 0 8px;
+    border-radius: 5px;
+
+    display: block;
+    height: 35px;
+
+
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.single-header-block {
+    width: 100%;
+    background: #9b9b9b;
+    margin-bottom: 100px;
+    padding: 60px 90px;
+    position: relative;
+}
+
+.single-header-block__step-back {
+    position: absolute;
+    top: 20px;
+}
+
+.single-header-block__step-back a {
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.single-header-block__title {
+    color: #FFFFFF;
+    margin: 0 0 30px;
+    font-size: 26px;
+    line-height: 30px;
+}
+
+.single-header-block__content {
+    color: #FFFFFF;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.single-header-block__content--small {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.single-header-block__separator {
+    display: block;
+    clear: both;
+    width: 50px;
+    height: 2px;
+    background: #FFFFFF;
+    margin: 25px 0;
+}
+
+.block--course-reminder {
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    margin: 0;
+
+    position: relative;
+    bottom: -120px;
+}
+
+.block--course-reminder span {
+    color: #a2a2a2;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.block--course-reminder p {
+    color: #383838;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.block--course-reminder a.watch-them {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 15px;
+    z-index: 999;
+
+    background: #00ADEF;
+    color: #FFFFFF;
+    line-height: 35px;
+    text-align: center;
+    text-decoration: none;
+
+    padding: 0 8px;
+    border-radius: 5px;
+
+    display: block;
+    width: auto;
+    height: 35px;
+    margin: auto;
+}
+
+.course-modules__title,
+.module-lessons__title,
+.lesson-sessions__title {
+    color: #4a4a4a;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.course-modules__list,
+.module-lessons__list,
+.lesson-sessions__list {
+    overflow: hidden;
+}
+
+.course-modules__list .module,
+.module-lessons__list .lesson {
+    width: 32%;
+    float: left;
+    margin-left: 2%;
+}
+
+.course-modules__list .module--first,
+.module-lessons__list .lesson--first {
+    margin-left: 0;
+    clear: left;
+}
+
+.form-control {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.form-control input {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #DCDCDC;
+
+    line-height: 35px;
+    padding: 0 15px;
+}
+
+.completed {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: block;
+
+    font-size: 0;
+    line-height: 0;
+}
+
+.completed:after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 9px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.locked {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.8);
+    z-index: 99;
+}
+
+.locked:after {
+    content: 'Locked' attr(data-date);
+    color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    height: 20px;
+    width: 100%;
+
+    z-index: 9999;
+}
