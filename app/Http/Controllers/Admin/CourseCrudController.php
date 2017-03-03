@@ -13,7 +13,8 @@ class CourseCrudController extends CrudController
 {
 	use BackpackCrudTrait;
 
-	public function setup() {
+	public function setup()
+	{
 		$this->crud->setModel('App\Models\Course');
 		$this->crud->setRoute('admin/course');
 		$this->crud->setEntityNameStrings('course', 'courses');
@@ -100,7 +101,7 @@ class CourseCrudController extends CrudController
 		$this->crud->addField([
 		    'label' => 'Lock tags:',
             'type' => 'select2_multiple',
-		    'name' => 'tags',
+		    'name' => 'lock_tags',
             'entity' => 'tags',
             'attribute' => 'title',
             'model' => 'App\Models\ISTag',

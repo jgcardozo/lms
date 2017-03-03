@@ -8,7 +8,8 @@ trait BackpackCrudTrait {
 	| Models
 	|--------------------------------------------------------------------------
 	*/
-	public function admin_editable_title() {
+	public function admin_editable_title()
+	{
 		$modelname = strtolower(class_basename($this));
 		ob_start();
 		?>
@@ -23,7 +24,8 @@ trait BackpackCrudTrait {
 	| Controllers
 	|--------------------------------------------------------------------------
 	*/
-	public function saveReorder() {
+	public function saveReorder()
+	{
 		$this->crud->hasAccessOrFail('reorder');
 
 		$all_entries = \Request::input('tree');

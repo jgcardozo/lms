@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
@@ -12,7 +13,7 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Session extends Model
 {
-	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait;
+	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait, ISLock;
 
 	protected $fillable = ['title', 'description', 'video_url', 'video_duration', 'starter_course_id', 'lesson_id', 'lock_date'];
 

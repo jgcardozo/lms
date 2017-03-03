@@ -59,9 +59,9 @@ class ResourceCrudController extends CrudController
         /**
          * Enable CRUD reorder
          */
-        $this->crud->enableReorder('title', 1);
+        /*$this->crud->enableReorder('title', 1);
         $this->crud->allowAccess('reorder');
-        $this->crud->orderBy('lft');
+        $this->crud->orderBy('lft');*/
     }
 
     public function store(StoreRequest $request)

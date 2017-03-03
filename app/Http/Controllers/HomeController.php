@@ -38,8 +38,8 @@ class HomeController extends Controller
 	}
 
 	public function test() {
-		$tmp = Course::find(1);
-		dd($tmp->tags);
+		$tmp = Course::findBySlug(1);
+		dd($tmp);
 		//dd(Gamification::getScore());
 		// event(new \App\Events\WatchedSession($session));
 		return;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ISLock;
 use Backpack\CRUD\CrudTrait;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +14,7 @@ class User extends Authenticatable
     use Notifiable;
 	use CrudTrait;
 	use HasRoles;
+	use ISLock;
 
     /**
      * The attributes that are mass assignable.
@@ -47,7 +49,7 @@ class User extends Authenticatable
 		return $this->belongsToMany('App\Models\Session', 'session_user');
 	}
 
-	public function tags()
+	public function is_tags()
     {
         return $this->belongsToMany('App\Models\ISTag', 'tag_user', 'user_id', 'tag_id');
     }

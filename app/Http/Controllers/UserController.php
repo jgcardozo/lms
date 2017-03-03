@@ -24,7 +24,8 @@ class UserController extends Controller
 		return view('lms.user.settings');
 	}
 
-	public function store(Request $request) {
+	public function store(Request $request)
+	{
 		$rules = [
 			'name' => 'required',
 			'email' => 'required',
@@ -51,7 +52,8 @@ class UserController extends Controller
 		return redirect()->back();
 	}
 
-	public function settingsStore(Request $request) {
+	public function settingsStore(Request $request)
+	{
 		$rules = [
 			'oldpassword' => 'oldpassword',
 			'password' => 'required',
@@ -68,6 +70,31 @@ class UserController extends Controller
 		$user->password = bcrypt($request->get('password'));
 		$user->save();
 
-		return redirect()->back();
+		return redirect();
+	}
+
+	public function autologin(Request $request)
+	{
+		if(Auth::check())
+		{
+			return redirect('/');
+		}
+
+		$id = $request->get('id');
+		$mail = $request->get('email');
+		$key = $request->get('key');
+
+		if($key != 'f0mmy4Qrcux')
+		{
+			return redirect('/');
+		}
+
+		$user = User::find($id);
+		if(!empty($user) && $user->email === $mail)
+		{
+			Auth::loginUsingId($user->id);
+		}
+
+		return redirect('/');
 	}
 }

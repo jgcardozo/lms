@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
@@ -12,7 +13,11 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Module extends Model
 {
-	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait;
+	use CrudTrait;
+	use Sluggable;
+	use SluggableScopeHelpers;
+	use BackpackCrudTrait;
+	use ISLock;
 
 	protected $fillable = ['title', 'description', 'video_url', 'course_id', 'lock_date'];
 
@@ -21,7 +26,8 @@ class Module extends Model
 	 *
 	 * @return void
 	 */
-	protected static function boot() {
+	protected static function boot()
+	{
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
@@ -34,7 +40,8 @@ class Module extends Model
 	 * @param null $user
 	 * @return array
 	 */
-	public function getProgress($user = null) {
+	public function getProgress($user = null)
+	{
 		if(!$user) {
 			$user = Auth::user();
 		}
@@ -59,7 +66,8 @@ class Module extends Model
 	 * 
 	 * @return string
 	 */
-	public function getProgressPercentage() {
+	public function getProgressPercentage()
+	{
 		$progress = $this->getProgress();
 		$sCount = count($progress['lessons']);
 		$wCount = count($progress['watched']);
@@ -73,7 +81,8 @@ class Module extends Model
 	 *
 	 * @return bool
 	 */
-	public function getPreviousModuleAttribute() {
+	public function getPreviousModuleAttribute()
+	{
 		$prevModule = $this->course->modules->where('lft', '<', $this->lft)->last();
 
 		return !$prevModule ? false : $prevModule;
@@ -85,7 +94,8 @@ class Module extends Model
 	 *
 	 * @return bool
 	 */
-	public function getIsCompletedAttribute() {
+	public function getIsCompletedAttribute()
+	{
 		$progress = $this->getProgress();
 
 		return count($progress['lessons']) == count($progress['watched']);
@@ -97,7 +107,8 @@ class Module extends Model
 	 *
 	 * @return bool
 	 */
-	public function getIsDateLockedAttribute() {
+	public function getIsDateLockedAttribute()
+	{
 		if(!empty($this->lock_date)) {
 			$expire = strtotime($this->lock_date);
 			$today = strtotime('today midnight');
@@ -111,10 +122,16 @@ class Module extends Model
 	/**
 	 * Check if module is locked by any reason
 	 *
-	 * @return bool
+	 * @return bool Returns true if is locked
 	 */
-	public function getIsLockedAttribute() {
+	public function getIsLockedAttribute()
+	{
 		if($this->course->is_locked || !$this->course->areAllStarterSeen()) {
+			return true;
+		}
+
+		if($this->is_tag_locked())
+		{
 			return true;
 		}
 
@@ -132,15 +149,18 @@ class Module extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
-	public function course() {
+	public function course()
+	{
 		return $this->belongsTo('App\Models\Course');
 	}
 
-	public function lessons() {
+	public function lessons()
+	{
 		return $this->hasMany('App\Models\Lesson');
 	}
 	
-	public function sluggable() {
+	public function sluggable()
+	{
 		return [
 			'slug' => [
 				'source' => 'title'

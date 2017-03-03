@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use App\Models\Session;
+use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
@@ -14,7 +15,11 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Course extends Model
 {
-	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait;
+	use CrudTrait;
+	use Sluggable;
+	use SluggableScopeHelpers;
+	use BackpackCrudTrait;
+	use ISLock;
 
 	protected $fillable = ['title', 'short_description', 'description', 'video_url', 'featured_image', 'module_group_title', 'lock_date'];
 
@@ -23,7 +28,8 @@ class Course extends Model
 	 *
 	 * @return void
 	 */
-	protected static function boot() {
+	protected static function boot()
+	{
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
@@ -37,7 +43,8 @@ class Course extends Model
 	 * @param null $user
 	 * @return bool
 	 */
-	public function areAllStarterSeen($user = null) {
+	public function areAllStarterSeen($user = null)
+	{
 		if(!$user) {
 			$user = Auth::user();
 		}
@@ -59,7 +66,8 @@ class Course extends Model
 	 *
 	 * @return array
 	 */
-	public function getAllSessions() {
+	public function getAllSessions()
+	{
 		$tmp = [];
 
 		foreach($this->modules as $module) {
@@ -77,7 +85,8 @@ class Course extends Model
 	 * @param null $user
 	 * @return bool
 	 */
-	public function getNextSession($user = null) {
+	public function getNextSession($user = null)
+	{
 		if(!$user) {
 			$user = Auth::user();
 		}
@@ -100,8 +109,9 @@ class Course extends Model
 	 *
 	 * @return bool
 	 */
-	public function getIsLockedAttribute() {
-		return false;
+	public function getIsLockedAttribute()
+	{
+		return $this->is_tag_locked();
 	}
 
 	/*
@@ -119,15 +129,6 @@ class Course extends Model
 		return $this->hasMany('App\Models\Session', 'starter_course_id');
 	}
 
-	public function sluggable()
-    {
-		return [
-			'slug' => [
-				'source' => 'title'
-			]
-		];
-	}
-
 	public function getRouteKeyName()
     {
 		return 'slug';
@@ -143,10 +144,14 @@ class Course extends Model
 		return $this->hasMany('App\Events');
 	}
 
-    public function tags()
-    {
-        return $this->morphToMany('App\Models\ISTag', 'lockable', 'is_lockables', 'lockable_id', 'tag_id');
-    }
+	public function sluggable()
+	{
+		return [
+			'slug' => [
+				'source' => 'title'
+			]
+		];
+	}
 
 	/*
 	|--------------------------------------------------------------------------

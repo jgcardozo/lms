@@ -31,42 +31,59 @@ Route::get('test/fb/post', [
 ]);
 
 
-/**
- * Front-end routes
- */
-Route::get('/', [
-    'as' => 'courses',
-    'uses' => 'HomeController@index'
-]);
-
-Route::get('course/{course}', [
-    'as' => 'single.course',
-    'uses' => 'CourseController@index'
-]);
-
-Route::get('course/{course}/starter', [
-    'as' => 'single.course.starter',
-    'uses' => 'CourseController@starter_videos'
+/*
+|--------------------------------------------------------------------------
+| Front-end routes
+|--------------------------------------------------------------------------
+*/
+/*Route::get('course/{course}', [
+	'as' => 'single.course',
+	'uses' => 'CourseController@index',
+	'middleware' => 'infusionsoft_access'
 ]);
 
 Route::get('module/{module}', [
-    'as' => 'single.module',
-    'uses' => 'ModuleController@index'
+	'as' => 'single.module',
+	'uses' => 'ModuleController@index',
+	'middleware' => 'infusionsoft_access'
+]);*/
+
+Route::get('/', [
+	'as' => 'courses',
+	'uses' => 'HomeController@index'
 ]);
 
-Route::get('lesson/{lesson}', [
-    'as' => 'single.lesson',
-    'uses' => 'LessonController@index'
-]);
+Route::group(['middleware' => ['infusionsoft_access']], function() {
+	Route::get('course/{course}', [
+		'as' => 'single.course',
+		'uses' => 'CourseController@index'
+	]);
+
+	Route::get('course/{course}/starter', [
+		'as' => 'single.course.starter',
+		'uses' => 'CourseController@starter_videos'
+	]);
+
+	Route::get('module/{module}', [
+		'as' => 'single.module',
+		'uses' => 'ModuleController@index'
+	]);
+
+	Route::get('lesson/{lesson}', [
+		'as' => 'single.lesson',
+		'uses' => 'LessonController@index'
+	]);
+});
 
 Route::group(['prefix' => 'session', 'middleware' => 'auth'], function() {
 
-    // Mark session as completed
-    Route::get('{session}/completed', [
-        'as' => 'session.completed',
-        'uses' => 'SessionController@complete'
-    ]);
+	// Mark session as completed
+	Route::get('{session}/completed', [
+		'as' => 'session.completed',
+		'uses' => 'SessionController@complete'
+	]);
 });
+
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 {
@@ -106,6 +123,13 @@ Route::get('is/callback', [
 ]);
 
 /**
+ * Auto-login
+ */
+Route::get('/auto-login', [
+	'uses' => 'UserController@autologin'
+]);
+
+/**
  * Admin routes
  */
 Route::get('admin/', [
@@ -126,7 +150,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], func
     CRUD::resource('resource', 'Admin\ResourceCrudController');
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
+
+    Route::get('settings', [
+		'uses' => 'Admin\SettingsController@index'
+	]);
+
+	Route::post('settings', [
+		'uses' => 'Admin\SettingsController@save'
+	]);
 });
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

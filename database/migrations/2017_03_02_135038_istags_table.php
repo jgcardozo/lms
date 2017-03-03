@@ -14,8 +14,10 @@ class IstagsTable extends Migration
     public function up()
     {
         Schema::create('is_tags', function (Blueprint $table) {
-            $table->increments('id');
+            $table->interger('id');
             $table->string('title');
+
+            $table->primary(['id']);
         });
     }
 
