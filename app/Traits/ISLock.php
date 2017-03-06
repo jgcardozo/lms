@@ -1,12 +1,12 @@
 <?php
-/**
- * Infusionsoft lock content tags
- */
 
 namespace App\Traits;
 
 use Auth;
 
+/**
+ * Infusionsoft tag lock content
+ */
 trait ISLock
 {
 	/*
@@ -33,7 +33,7 @@ trait ISLock
 
 		$check = array_intersect($lock_tags, $user_tabs);
 
-		if(count($check) == count($lock_tags))
+		if(count($check) > 0 || count($lock_tags) == 0)
 		{
 			return false;
 		}

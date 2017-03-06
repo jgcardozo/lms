@@ -23,6 +23,7 @@ class InfusionsoftController extends Controller
     public function sync()
     {
         Infusionsoft::setToken(unserialize(Session::get('token')));
+        
         $userTags = Infusionsoft::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $this->user->contact_id], ['GroupId', 'ContactGroup'], '', false);
         $userTags = array_map(function($tag) {
             return array(
@@ -45,7 +46,7 @@ class InfusionsoftController extends Controller
         }
 
         $syncUserTags = array_column($userTags, 'id');
-        $this->user->tags()->sync($syncUserTags, false);
+        $this->user->is_tags()->sync($syncUserTags, false);
     }
 
     public function signin()

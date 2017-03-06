@@ -14,6 +14,9 @@ use App\Models\CoachingCall;
 use App\Models\Gamification\Badge;
 use App\Models\Gamification\Milestone;
 
+use App\Streaks\Streak;
+use App\Streaks\Types\LoginStreak;
+
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Support\Facades\Storage;
@@ -38,8 +41,12 @@ class HomeController extends Controller
 	}
 
 	public function test() {
-		$tmp = Course::findBySlug(1);
-		dd($tmp);
+		// Streak::log(new LoginStreak());
+		$a = new LoginStreak();
+		// dd($a->is_active());
+		dump($a->started());
+		dd($a->last_date());
+
 		//dd(Gamification::getScore());
 		// event(new \App\Events\WatchedSession($session));
 		return;
