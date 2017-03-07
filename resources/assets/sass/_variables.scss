@@ -1,38 +1,30 @@
+/* Body*/
+$body-bg: #fff;
 
-// Body
-$body-bg: #f5f8fa;
-
-// Borders
-$laravel-border-color: darken($body-bg, 10%);
-$list-group-border: $laravel-border-color;
-$navbar-default-border: $laravel-border-color;
-$panel-default-border: $laravel-border-color;
-$panel-inner-border: $laravel-border-color;
-
-// Brands
+/* Brands*/
 $brand-primary: #3097D1;
 $brand-info: #8eb4cb;
 $brand-success: #2ab27b;
 $brand-warning: #cbb956;
 $brand-danger: #bf5329;
+$brand-dark: #232c40;
+$brand-white: #fff;
 
-// Typography
-$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$font-family-sans-serif: "Raleway", sans-serif;
-$font-size-base: 14px;
-$line-height-base: 1.6;
+/* Typography*/
+$headings-font-family: "Open Sans", "Brandon Grotesque", sans-serif;
+$headings-font-weight: 600;
+$headings-line-height: 1.6;
+$headings-color: $brand-dark;
+
+$font-size-h1: 2.4rem;
+$font-size-h2: 30px;
+$font-size-h3: 30px;
+$font-size-h4: 30px;
+$font-size-h5: 30px;
+$font-size-h6: 30px;
+
+$font-family-sans-serif: "Open Sans", sans-serif;
+$font-size-base: 1.6rem;
+$line-height-base: 1.4;
 $text-color: #636b6f;
 
-// Navbar
-$navbar-default-bg: #fff;
-
-// Buttons
-$btn-default-color: $text-color;
-
-// Inputs
-$input-border: lighten($text-color, 40%);
-$input-border-focus: lighten($brand-primary, 25%);
-$input-color-placeholder: lighten($text-color, 30%);
-
-// Panels
-$panel-default-heading-bg: #fff;

@@ -1,4 +1,4 @@
-@extends('lms.master')
+@extends('layouts.app')
 
 @section('title', $course->title)
 

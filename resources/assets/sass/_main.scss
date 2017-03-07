@@ -1,0 +1,31 @@
+html {
+  box-sizing: border-box;
+  line-height: 1;
+  font-size: 62.5%;
+  -ms-text-size-adjust: 62.5%;
+  -webkit-text-size-adjust: 62.5%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+	font-family: $font-family-sans-serif;
+	background: $body-bg;
+	font-size: $font-size-base;
+	line-height: $line-height-base;
+}
+
+a {
+  color: $brand-dark;
+  text-decoration: none;
+}
+
+a:hover, a:focus, a:active {
+  color: $brand-dark;
+}

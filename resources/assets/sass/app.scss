@@ -1,9 +1,24 @@
+/* Normalize*/
+@import "normalize";
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+/* Fonts*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
-// Variables
+/* Variables*/
 @import "variables";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+/* Main*/
+@import "main";
+
+/* Typography*/
+@import "typography";
+
+/**
+ * Grid
+ */
+@import "grid";
+
+/**
+ * Main Course Blocks
+ */
+@import "components/course-block--main";

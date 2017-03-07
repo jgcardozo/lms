@@ -1,0 +1,28 @@
+.grid {
+	display: block;
+	margin: 0 auto;
+}
+
+.grid-full {
+	width: 100%;
+}
+
+.grid-950w {
+	max-width: 95rem;
+}
+
+/**
+ * Grid Flex
+ */
+.grid-flex {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.flex-column {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+}
