@@ -6,6 +6,7 @@ use Session;
 use Infusionsoft;
 use App\Models\User;
 use App\Models\ISTag;
+use App\Models\Course;
 use Illuminate\Support\Facades\Request;
 
 class InfusionsoftController extends Controller
@@ -17,9 +18,11 @@ class InfusionsoftController extends Controller
         $this->user = $user;
     }
 
-    /**
-     * Sync user stuff
-     */
+	/**
+	 * Sync user tags from Infusionsoft
+	 * 
+	 * @return array New IDs attached
+	 */
     public function sync()
     {
         Infusionsoft::setToken(unserialize(Session::get('token')));
@@ -46,12 +49,39 @@ class InfusionsoftController extends Controller
         }
 
         $syncUserTags = array_column($userTags, 'id');
-        $this->user->is_tags()->sync($syncUserTags, false);
+        $result = $this->user->is_tags()->sync($syncUserTags, false);
+
+		$this->checkUnlockedCourses($result['attached']);
+
+		return $result['attached'];
     }
+
+	/**
+	 * Send notification to the user for unlocked
+	 * courses by tag
+	 *
+	 * @param $tags
+	 */
+	public function checkUnlockedCourses($tags)
+	{
+		// $tags = ISTag::query()->whereIn('id', $tags)->get()->first();
+		$tag = ISTag::find(748);
+
+		dd($tag->lockables);
+
+
+
+		$a = Course::with(['lock_tags' => function($query) use ($tags) {
+			var_dump($tags);
+			$query->whereIn('id', $tags);
+		}]);
+
+		dd($a->get());
+	}
 
     public function signin()
     {
-        echo '<a href="' . Infusionsoft::getAuthorizationUrl() . '">Click here to connect to Infusionsoft</a>';
+        return redirect()->away(Infusionsoft::getAuthorizationUrl());
     }
 
     public function callback()

@@ -10,6 +10,7 @@ use App\Models\Session;
 use App\Models\Module;
 use App\Models\Lesson;
 use App\Models\CoachingCall;
+use App\Models\User;
 
 use App\Models\Gamification\Badge;
 use App\Models\Gamification\Milestone;
@@ -41,11 +42,15 @@ class HomeController extends Controller
 	}
 
 	public function test() {
+		$user = User::find(1);
+		$is = new InfusionsoftController($user);
+		$newTags = $is->checkUnlockedCourses([336, 832, 1154]);
+
 		// Streak::log(new LoginStreak());
-		$a = new LoginStreak();
-		// dd($a->is_active());
-		dump($a->started());
-		dd($a->last_date());
+		// $a = new LoginStreak();
+		// dd($a->log());
+		// dump($a->started());
+		// dd($a->last_date());
 
 		//dd(Gamification::getScore());
 		// event(new \App\Events\WatchedSession($session));

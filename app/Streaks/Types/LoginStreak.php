@@ -17,7 +17,7 @@ class LoginStreak implements StreakInterface
 	/**
 	 * @var array Logs from DB
 	 */
-	private $logs = null;
+	private $log = null;
 
 	/**
 	 * @var int
@@ -26,7 +26,7 @@ class LoginStreak implements StreakInterface
 
 	public function __construct()
 	{
-		$this->loadFromDb();
+		$this->get_log();
 	}
 
 	private function loadFromDb()
@@ -34,24 +34,29 @@ class LoginStreak implements StreakInterface
 		$user = Auth::user();
 		$type = self::class;
 
-		$this->logs = DB::table('g_streak_logs')->where('user_id', $user->id)->where('type', $type)->orderBy('created_at')->get();
+		return DB::table('g_streak_logs')->where('user_id', $user->id)->where('type', $type)->orderBy('updated_at')->first();
+	}
+
+	public function get_log()
+	{
+		if(is_null($this->log))
+		{
+			$this->log = $this->loadFromDb();
+		}
+
+		return $this->log;
 	}
 
 	public function is_active()
 	{
-		if(is_null($this->logs))
-		{
-			$this->loadFromDb();
-		}
-
-		if(empty($this->logs))
+		if(empty($this->get_log()))
 		{
 			return false;
 		}
 
-		$last = $this->logs->last();
+		$last = $this->get_log();
 
-		$lastLogDate = Carbon::parse($last->created_at);
+		$lastLogDate = Carbon::parse($last->updated_at);
 		$firstDay = Carbon::now()->subDays($this->streakDays - 1)->startOfDay();
 		$lastDay = Carbon::now()->endOfDay();
 
@@ -60,30 +65,12 @@ class LoginStreak implements StreakInterface
 
 	public function started()
 	{
-		if(!$this->is_active())
-		{
-			return false;
-		}
-
-		// First day is the day when the streak started. Today - streakDays
-		$firstDay = Carbon::now()->subDays($this->streakDays - 1)->startOfDay();
-		$_logs = $this->logs->where('created_at', '>=', $firstDay);
-
-		return $_logs->first()->created_at;
+		return 'N/A';
 	}
 
 	public function last_date()
 	{
-		if(!$this->is_active())
-		{
-			return false;
-		}
-
-		// First day is the day when the streak started. Today - streakDays
-		$firstDay = Carbon::now()->subDays($this->streakDays - 1)->startOfDay();
-		$_logs = $this->logs->where('created_at', '>=', $firstDay);
-
-		return $_logs->last()->created_at;
+		return 'N/A';
 	}
 
 	public function consecutive()
@@ -93,6 +80,30 @@ class LoginStreak implements StreakInterface
 
 	public function is_logged()
 	{
-		return false;
+		if(empty($this->get_log()))
+		{
+			return false;
+		}
+
+		$todayStart = Carbon::now()->startOfDay();
+		$todayEnd = Carbon::now()->endOfDay();
+
+		$lastLog = Carbon::parse($this->log->updated_at);
+
+		return $lastLog->between($todayStart, $todayEnd);
+	}
+
+	public function log()
+	{
+		if(!$this->is_active())
+		{
+			$this->log->count = 0;
+		}else{
+			$this->log->count++;
+		}
+
+		$this->log->updated_at = Carbon::now();
+
+		DB::table('g_streak_logs')->where('id', $this->log->id)->update((array)$this->log);
 	}
 }
