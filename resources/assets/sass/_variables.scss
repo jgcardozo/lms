@@ -1,5 +1,5 @@
 /* Body*/
-$body-bg: #fff;
+$body-bg: #ffffff;
 
 /* Brands*/
 $brand-primary: #3097D1;
@@ -9,9 +9,17 @@ $brand-warning: #cbb956;
 $brand-danger: #bf5329;
 $brand-dark: #232c40;
 $brand-white: #fff;
+$brand-grey-light: #928780;
+$brand-grey: #4a494a;
+$brand-white-dark: #f6f6f6;
+
+/* Borders */
+$border-grey-light: #cfcfcf;
+$border-blue: #4d73a9;
 
 /* Typography*/
-$headings-font-family: "Open Sans", "Brandon Grotesque", sans-serif;
+$headings-font-family: "BrandonBold", "Open Sans", sans-serif;
+$headings-font-family-light: "BrandonLight", "Open Sans", sans-serif;
 $headings-font-weight: 600;
 $headings-line-height: 1.6;
 $headings-color: $brand-dark;
@@ -20,8 +28,8 @@ $font-size-h1: 2.4rem;
 $font-size-h2: 30px;
 $font-size-h3: 30px;
 $font-size-h4: 30px;
-$font-size-h5: 30px;
-$font-size-h6: 30px;
+$font-size-h5: 1.6rem;
+$font-size-h6: 1.3rem;
 
 $font-family-sans-serif: "Open Sans", sans-serif;
 $font-size-base: 1.6rem;

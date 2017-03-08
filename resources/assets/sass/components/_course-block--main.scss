@@ -1,5 +1,8 @@
 .courseblock {
-  background: url("images/course-placeholder.png") no-repeat center / cover;
+  background-image: url("images/course-placeholder.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   position: relative;
   color: $brand-white;
   padding: 3rem;

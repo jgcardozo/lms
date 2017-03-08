@@ -1,16 +1,27 @@
-/* Normalize*/
+/**
+ * Normalize
+ */
 @import "normalize";
 
-/* Fonts*/
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+/**
+ * Fonts
+ */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import "fonts";
 
-/* Variables*/
+/**
+ * Variables
+ */
 @import "variables";
 
-/* Main*/
+/**
+ * Main
+ */
 @import "main";
 
-/* Typography*/
+/**
+ * Typography
+ */
 @import "typography";
 
 /**
@@ -19,6 +30,21 @@
 @import "grid";
 
 /**
+ * Header
+ */
+@import "header";
+
+/**
+ * Footer
+ */
+@import "footer";
+
+/**
  * Main Course Blocks
  */
 @import "components/course-block--main";
+
+/**
+ * Single Course 
+ */
+@import "components/course-single";
