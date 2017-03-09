@@ -25,7 +25,6 @@
                                  <div class="wistia_embed wistia_async_gpc49zomb2" style="width:100%;height:100%;"></div>
                              </div>
                          </div>
-
                     </div>
                 </div>
             </div>
@@ -33,21 +32,34 @@
 
         <div class="grid grid--w950 course-reminder">
             <div class="course-reminder__block">
-                @if(!$starterSeen)
-                    <span><em>Hi there</em></span>
-                    <p>Welcome to {{ $course->title }}</p>
-                    <span>{{ $course->short_description }}</span>
-                    <a href="{{ route('single.course.starter', $course->slug) }}" class="watch-them">Watch videos</a>
-                @elseif(!empty($nextSession))
-                    <span><em>Last Session</em></span>
-                    <p>Welcome to {{ $nextSession->title }}</p>
-                    <span>{{ strip_tags($nextSession->description) }}</span>
-                    <a href="{{ route('single.lesson', $nextSession->lesson->slug) }}" class="watch-them">Resume</a>
-                @else
-                    <span><em>Congrats</em></span>
-                    <p>You watch them all, go to hell</p>
-                    <span></span>
-                @endif
+                <div class="grid--flex flex--space-between">
+                    @if(!$starterSeen)
+                        <div class="course-reminder__content">
+                            <p class="course-reminder__blurb">Hi there</p>
+                            <h2 class="course-reminder__title">Welcome to {{ $course->title }}</h2>
+                            <p>{{ $course->short_description }}</p>
+                        </div>
+
+                        <div class="grid--flex flex--align-center">
+                            <a href="{{ route('single.course.starter', $course->slug) }}" class="course-reminder__link">Watch videos</a>
+                        </div>
+                    @elseif(!empty($nextSession))
+                        <div class="course-reminder__content">
+                            <p class="course-reminder__blurb">Last Session</p>
+                            <h2 class="course-reminder__title">Welcome to {{ $nextSession->title }}</h2>
+                            <p>{{ strip_tags($nextSession->description) }}</p>
+                        </div>
+
+                        <div class="grid--flex flex--align-center">
+                            <a href="{{ route('single.lesson', $nextSession->lesson->slug) }}" class="course-reminder__link">Resume Lesson ></a>
+                        </div>                    
+                    @else
+                        <div class="course-reminder__content">
+                            <p class="course-reminder__blurb">Congrats</p>
+                            <h2 class="course-reminder__title">You watched them all :)</h2>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
 

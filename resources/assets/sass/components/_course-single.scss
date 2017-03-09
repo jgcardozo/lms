@@ -8,7 +8,7 @@
   width: 100%;
   margin: 0 auto;
 
-  @at-root #{&}__overlay {
+  &__overlay {
     background: rgba(#3e352c,0.8);
     position: absolute;
     top: 0;
@@ -18,10 +18,11 @@
     z-index: 0;
   }
 
-  @at-root #{&}__content {
+  &__content {
     position: relative;
     z-index: 1;
-    padding: 10rem 0;
+    padding-top: 10rem;
+    padding-bottom: 10rem;
   }
 }
 
@@ -30,28 +31,29 @@
   flex-basis: 50%;
   max-width: 50%;
 
-  @at-root #{&}__title {
+  &__title {
     color: $brand-white;
     font-size: 3.6rem;
-    margin: 0 0 2rem;
+    margin: 0 0 1rem;
   }
 
-  @at-root #{&}__content {
+  &__content {
     color: $brand-white;
     font-size: 1.8rem;
     font-weight: 300;
     margin: 0 0 2rem;
   }
 
-  @at-root #{&}__content--small {
+  &__content--small {
     font-size: 1.4rem;
     font-weight: 400;
+    color: $brand-grey-light-variant;
   }
 
-  @at-root #{&}__step-back {
+  &__step-back {
     position: absolute;
     top: 4rem;
-    left: 0;
+    left: 1rem;
     color: $brand-white;
     font-size: 1.4rem;
     font-weight: 400;
@@ -73,7 +75,7 @@
   margin-top: -6rem;
   z-index: 1;
 
-  @at-root #{&}__block {
+  &__block {
     background: rgba(#272e40,0.8);
     color: $brand-white;
     padding: 3rem 4rem;
@@ -83,12 +85,13 @@
 .course-modules {
   margin: 4rem auto 0;
 
-  @at-root #{&}__title {
+  &__title {
     font-size: 1.6rem;
+    text-transform: uppercase;
     margin: 0 0 2rem;
   }
 
-  @at-root #{&}__list {
+  &__list {
     margin: 0 -0.5rem;
   }
 }
@@ -99,17 +102,17 @@
   max-width: 33.3334%;
   padding: 0 0.5rem;
 
-  @at-root #{&}__content {
+  &__content {
     background: $brand-white-dark;
     padding: 3rem 4rem;
   }
 
-  @at-root #{&}__title {
+  &__title {
     font-size: 1.6rem;
     margin: 0 0 0.5rem;
   }
 
-  @at-root #{&}__link {
+  &__link {
     font-size: 1.4rem;
     color: $border-blue;
     border: 1px solid $border-blue;
@@ -123,7 +126,7 @@
     }
   }
 
-  @at-root #{&}__featured-image {
+  &__featured-image {
     background-image: url("images/course-placeholder.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -135,5 +138,39 @@
     font-size: 1.4rem;
     color: $brand-grey-light;
     margin: 0 0 1rem;
+  }
+}
+
+.course-reminder {
+  color: $brand-white;
+
+  &__content {
+    padding-right: 4rem;
+  }
+
+  &__blurb {
+    font-size: 1.4rem;
+    font-style: italic;
+  }
+
+  &__title {
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem;
+    color: $brand-white;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &__link {
+    background: $brand-yellow;
+    color: $brand-white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 1.2rem 2rem;
+    border-radius: 0.2rem;
+    white-space: nowrap;
+    display: inline-block;
   }
 }

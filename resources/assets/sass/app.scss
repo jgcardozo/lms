@@ -6,7 +6,7 @@
 /**
  * Fonts
  */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700');
 @import "fonts";
 
 /**
@@ -48,3 +48,13 @@
  * Single Course 
  */
 @import "components/course-single";
+
+/**
+ * Single Lesson Sessions 
+ */
+@import "components/lesson-sessions-single";
+
+/**
+ * Single Module Lessons 
+ */
+@import "components/module-lessons-single";

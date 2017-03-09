@@ -20,7 +20,11 @@
         ]) !!};
     </script>
 </head>
-<body>
+@if(Request::is('/'))
+    <body class="home">
+@else
+    <body>
+@endif
     <div id="app">
         @include('layouts.header')            
 

@@ -19,6 +19,10 @@ body {
 	background: $body-bg;
 	font-size: $font-size-base;
 	line-height: $line-height-base;
+
+	&.home {
+		background: $brand-white-dark;
+	}
 }
 
 a {
