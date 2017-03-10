@@ -1,76 +1,75 @@
-@extends('layouts.app')
+@extends('layouts.login')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+    <main>
+        <div class="login__logo"></div>
 
-                <div class="panel-body">
+        <div class="grid grid--w950">
+            <div class="login__component grid--flex">
+                <div class="login__component-left">
+                    <h2 class="login__title">Reset Password</h2>
+
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('password.request') }}">
+                    
+                    <form class="login__form" role="form" method="POST" action="{{ route('password.request') }}">
                         {{ csrf_field() }}
 
                         <input type="hidden" name="token" value="{{ $token }}">
+                        
+                        <div class="login__form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                            <div class="login__form-box">
+                                <input id="email" type="email" name="email" value="{{ $email or old('email') }}" placeholder="Email Address" required autofocus>
 
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
+                                    <span class="login__help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                        <div class="login__form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="login__form-box">
+                                <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
 
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
+                                    <span class="login__help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        <div class="login__form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            <div class="login__form-box">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
 
                                 @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
+                                    <span class="login__help-block">
                                         <strong>{{ $errors->first('password_confirmation') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Reset Password
-                                </button>
-                            </div>
+                        <div class="login__form-group">
+                            <button type="submit" class="login__form-submit">
+                                Reset Password
+                            </button>
                         </div>
                     </form>
                 </div>
-            </div>
+
+                <div class="login__component-right">
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                    <p>Donec faucibus sagittis posuere. Maecenas consectetur vel eros elementum ultricies. Pellentesque turpis lorem, tincidunt accumsan magna vel, iaculis convallis sapien. Suspendisse vestibulum varius magna, nec venenatis est cursus nec.</p>
+                </div>
+            </div>        
         </div>
-    </div>
-</div>
+    </main>
 @endsection
