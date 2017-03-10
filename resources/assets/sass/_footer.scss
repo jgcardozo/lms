@@ -1,0 +1,48 @@
+.mastfoot {
+	padding: 2rem 0 6rem;
+	margin: 5rem auto 0;
+
+	hr {
+		display: block;
+		width: 100%;
+		height: 1px;
+		background: $border-grey-light;
+		border: 0;
+		position: relative;
+		top: -2rem;
+		margin: 0;
+	}
+
+	h5 {
+		color: $brand-grey-light;
+		margin: 0 0 0.5rem;
+    	text-transform: uppercase;
+	}
+
+	p {
+		color: $brand-grey;
+		font-size: 1.2rem;
+		margin: 0 0 0.5rem;
+	}
+
+	a {
+		color: $brand-grey-light;
+		font-size: 1.2rem;
+	}
+
+	.list__item {
+		position: relative;
+		border-left: 0.1rem solid #d7d7d7;
+		margin-left: -0.4rem;
+    	padding-left: 2rem;
+
+		&:first-of-type {
+			border-left: none;
+			padding-right: 2rem;
+		}
+
+		a {
+			display: block;
+		}
+	}
+}

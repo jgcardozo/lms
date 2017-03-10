@@ -1,23 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="{{ config('app.locale') }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="Learning management system">
-        <meta name="author" content="Codeart.mk">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>ASK 2.0 - @yield('title')</title>
-        <link href="{!! asset('lms/css/test.css') !!}" rel="stylesheet" type="text/css" />
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="{!! asset('lms/js/main.js') !!}"></script>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-        <!--[if lt IE 9]>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-        <![endif]-->
-    </head>
-
-    <body>
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
+</head>
+<body>
+    <div id="app">
         @include('lms.header')
         @yield('before_content')
         <div id="content">
@@ -26,5 +30,9 @@
             </div>
         </div>
         @yield('after_content')
-    </body>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+</body>
 </html>

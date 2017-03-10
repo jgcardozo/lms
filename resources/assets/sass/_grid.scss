@@ -1,0 +1,42 @@
+.grid {
+  display: block;
+  margin: 0 auto;
+}
+
+.grid--full {
+  width: 100%;
+}
+
+.grid--w950 {
+  max-width: 97rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/**
+ * Grid Flex
+ */
+.grid--flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flex--column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.flex--space-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.flex--align-center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
