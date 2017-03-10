@@ -19,7 +19,6 @@ class CourseCrudController extends CrudController
 		$this->crud->setRoute('admin/course');
 		$this->crud->setEntityNameStrings('course', 'courses');
 
-
 		/**
 		 * Define CRUD list columns
 		 */
@@ -50,7 +49,6 @@ class CourseCrudController extends CrudController
 				'label' => 'Module group title'
 			]
 		]);
-
 
 		/**
 		 * Add CRUD fields
@@ -99,15 +97,14 @@ class CourseCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
-		    'label' => 'Lock tags:',
-            'type' => 'select2_multiple',
-		    'name' => 'lock_tags',
-            'entity' => 'tags',
-            'attribute' => 'title',
-            'model' => 'App\Models\ISTag',
-            'pivot' => true
-        ]);
-
+			'label' => 'Lock tags:',
+			'type' => 'select2_multiple',
+			'name' => 'lock_tags',
+			'entity' => 'tags',
+			'attribute' => 'title',
+			'model' => 'App\Models\ISTag',
+			'pivot' => true
+		]);
 
 		/**
 		 * Add CRUD action button

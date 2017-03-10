@@ -66,6 +66,14 @@ class LessonCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'label' => 'Lesson featured image',
+			'name' => 'featured_image',
+			'type' => 'upload',
+			'upload' => true,
+			'disk' => 's3'
+		]);
+
+		$this->crud->addField([
 			'label' => 'Assign this lesson to module:',
 			'type' => 'select2',
 			'name' => 'module_id',

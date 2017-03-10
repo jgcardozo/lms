@@ -18,6 +18,7 @@ class CreateModulesTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->longText('description');
+            $table->longText('featured_image')->nullable();
             $table->string('video_url');
             $table->integer('lft')->default(0);
 

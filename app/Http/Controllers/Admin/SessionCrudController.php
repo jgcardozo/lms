@@ -81,6 +81,14 @@ class SessionCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'label' => 'Session featured image',
+			'name' => 'featured_image',
+			'type' => 'upload',
+			'upload' => true,
+			'disk' => 's3'
+		]);
+
+		$this->crud->addField([
 			'label' => 'Assign resource(s) to this session',
 			'type' => 'select2_multiple',
 			'name' => 'resources',

@@ -30,37 +30,27 @@ Route::get('test/fb/post', [
     'uses' => 'HomeController@posttofb'
 ]);
 
+// Logout route
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 /*
 |--------------------------------------------------------------------------
 | Front-end routes
 |--------------------------------------------------------------------------
 */
-/*Route::get('course/{course}', [
-	'as' => 'single.course',
-	'uses' => 'CourseController@index',
-	'middleware' => 'infusionsoft_access'
-]);
-
-Route::get('module/{module}', [
-	'as' => 'single.module',
-	'uses' => 'ModuleController@index',
-	'middleware' => 'infusionsoft_access'
-]);*/
-
 Route::get('/', [
-	'as' => 'courses',
+	'as' => 'home',
 	'uses' => 'HomeController@index'
 ]);
 
-Route::group(['middleware' => ['infusionsoft_access']], function() {
+Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	Route::get('course/{course}', [
 		'as' => 'single.course',
 		'uses' => 'CourseController@index'
 	]);
 
-	Route::get('course/{course}/starter', [
-		'as' => 'single.course.starter',
+	Route::get('course/{course}/intro', [
+		'as' => 'single.course.intro',
 		'uses' => 'CourseController@starter_videos'
 	]);
 
@@ -73,18 +63,17 @@ Route::group(['middleware' => ['infusionsoft_access']], function() {
 		'as' => 'single.lesson',
 		'uses' => 'LessonController@index'
 	]);
-});
-
-Route::group(['prefix' => 'session', 'middleware' => 'auth'], function() {
 
 	// Mark session as completed
-	Route::get('{session}/completed', [
+	Route::get('session/{session}/completed', [
 		'as' => 'session.completed',
 		'uses' => 'SessionController@complete'
 	]);
 });
 
-
+/**
+ * User routes
+ */
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 {
     Route::get('profile', [
@@ -106,6 +95,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
     ]);
 });
 
+Route::get('user/register', 'UserController@register');
+
 
 /**
  * Infusionsoft route
@@ -122,16 +113,20 @@ Route::get('is/callback', [
     'uses' => 'InfusionsoftController@callback'
 ]);
 
-/**
- * Auto-login
- */
+/*
+|--------------------------------------------------------------------------
+| Auto login route
+|--------------------------------------------------------------------------
+*/
 Route::get('/auto-login', [
 	'uses' => 'UserController@autologin'
 ]);
 
-/**
- * Admin routes
- */
+/*
+|--------------------------------------------------------------------------
+| Backpack admin panel routes
+|--------------------------------------------------------------------------
+*/
 Route::get('admin/', [
 	'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect',
 	'middleware' => ['role:Administrator']
@@ -161,5 +156,3 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], func
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index');

@@ -27,7 +27,7 @@ class CourseCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
             'description' => 'required',
             'video_url' => 'required|max:255',
             'module_group_title' => 'required|max:255',
-            'image' => 'mimes:jpeg,bmp,png'
+            'featured_image' => 'mimes:jpeg,bmp,png'
         ];
     }
 }
