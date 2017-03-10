@@ -17,6 +17,9 @@ use App\Models\Gamification\Milestone;
 
 use App\Streaks\Streak;
 use App\Streaks\Types\LoginStreak;
+use App\Notifications\UnlockedByTag;
+
+use App\Events\WatchedSession;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory;
@@ -36,16 +39,22 @@ class HomeController extends Controller
 	}
 
 	public function index() {
-		$courses = Course::all();
+		if(Auth::user())
+		{
+			$courses = Course::all();
 
-		return view('lms.courses.list')->with(['courses' => $courses]);
+			return view('lms.courses.list')->with(['courses' => $courses]);
+		}
+
+		return view('auth.login');
 	}
 
 	public function test() {
-		$user = User::find(1);
-		$is = new InfusionsoftController($user);
-		$newTags = $is->checkUnlockedCourses([336, 832, 1154]);
+		// $userTags = CA_Infusionsoft::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $this->user->contact_id], ['GroupId', 'ContactGroup'], '', false);
+		// $a = CA_Infusionsoft::get()::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => 294378], ['GroupId', 'ContactGroup'], '', false);
+		// dd($a);
 
+		die();
 		// Streak::log(new LoginStreak());
 		// $a = new LoginStreak();
 		// dd($a->log());

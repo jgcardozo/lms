@@ -13,7 +13,7 @@ trait BackpackCrudTrait {
 		$modelname = strtolower(class_basename($this));
 		ob_start();
 		?>
-		<a href="<?php echo route('crud.' . $modelname . '.edit', $this->id); ?>" title="Edit <?php echo $modelname; ?>'"><?php echo $this->title; ?></a>
+		<a href="<?php echo route('crud.' . $modelname . '.edit', $this->id); ?>" title="Edit <?php echo $modelname; ?>"><?php echo $this->title; ?></a>
 		<?php
 		$title = ob_get_clean();
 		return $title;

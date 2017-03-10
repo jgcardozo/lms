@@ -19,7 +19,7 @@ class Module extends Model
 	use BackpackCrudTrait;
 	use ISLock;
 
-	protected $fillable = ['title', 'description', 'video_url', 'course_id', 'lock_date'];
+	protected $fillable = ['title', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
 
 	/**
 	 * The "booting" method of the model.
@@ -166,6 +166,30 @@ class Module extends Model
 				'source' => 'title'
 			]
 		];
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Mutators
+	|--------------------------------------------------------------------------
+	*/
+	public function setFeaturedImageAttribute($value) {
+		$attribute_name = 'featured_image';
+		$disk = 's3';
+		$destination_path = 'module_' . $this->slug . '/';
+
+		$request = \Request::instance();
+		$file = $request->file($attribute_name);
+		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+
+		// Make the image
+		$image = \Image::make($file);
+
+		// Store the image on disk
+		\Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
+
+		// Save the path to the database
+		$this->attributes[$attribute_name] = $destination_path . $filename;
 	}
 
 	/*

@@ -21,6 +21,7 @@
 
         <div class="lesson-sessions__list">
             @foreach($lesson->sessions as $key => $session)
+                {!! $session->featured_image_url !!}
                 <div id="session-{{ $session->id }}" class="block">
                     <h2 class="block__title">{{ $session->title }}</h2>
 

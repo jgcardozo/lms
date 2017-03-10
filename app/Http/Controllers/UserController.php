@@ -7,11 +7,21 @@ use Validator;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
     public function __construct(User $user) {
 		//
+	}
+
+	/**
+	 *
+	 * @param Request $request
+	 */
+	public function register(Request $request)
+	{
+		File::put('post.txt', $request);
 	}
 
 	public function profile() {

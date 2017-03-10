@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Streaks\Streak;
 use Illuminate\Auth\Events\Login;
 use App\Streaks\Types\LoginStreak;
+use App\Notifications\UnlockedByTag;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Http\Controllers\InfusionsoftController;
@@ -31,9 +32,20 @@ class LogSuccessfulLogin
     {
 		// Sync Infusionsoft user tags
         $is = new InfusionsoftController($event->user);
-        $is->sync();
+        $newTags = $is->sync();
 
-		// Catch the streak
+        // Check for unlocked course/module/lesson/session
+        // and notify the user
+        $items = $is->checkUnlockedCourses($newTags);
+        if(!empty($is))
+        {
+			foreach($items as $item)
+			{
+				$event->user->notify(new UnlockedByTag($item));
+			}
+        }
+
+		// Catch the login streak
 		Streak::log(new LoginStreak());
     }
 }

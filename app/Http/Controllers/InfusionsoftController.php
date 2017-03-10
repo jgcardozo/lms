@@ -51,8 +51,6 @@ class InfusionsoftController extends Controller
         $syncUserTags = array_column($userTags, 'id');
         $result = $this->user->is_tags()->sync($syncUserTags, false);
 
-		$this->checkUnlockedCourses($result['attached']);
-
 		return $result['attached'];
     }
 
@@ -64,19 +62,13 @@ class InfusionsoftController extends Controller
 	 */
 	public function checkUnlockedCourses($tags)
 	{
-		// $tags = ISTag::query()->whereIn('id', $tags)->get()->first();
-		$tag = ISTag::find(748);
+		$tags = ISTag::query()->whereIn('id', $tags)->get();
 
-		dd($tag->lockables);
+		$a = Course::whereHas('lock_tags', function($query) use ($tags) {
+			return $query->whereIn('tag_id', $tags->pluck('id'));
+		})->get();
 
-
-
-		$a = Course::with(['lock_tags' => function($query) use ($tags) {
-			var_dump($tags);
-			$query->whereIn('id', $tags);
-		}]);
-
-		dd($a->get());
+		return $a;
 	}
 
     public function signin()
