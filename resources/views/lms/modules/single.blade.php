@@ -42,7 +42,7 @@
                     @foreach($module->lessons as $key => $lesson)
                         <div id="lesson-{{ $lesson->id }}" class="module-lessons__item grid--flex flex--space-between lesson {{ ($key % 3) == 0 ? 'lesson--first' : '' }}">
                             <div class="lesson-sessions__video grid--flex">
-                                <a href="{{ route('single.lesson', $lesson->slug) }}" class="block__link">View lesson</a>
+                                <a href="{{ route('single.lesson', $lesson->slug) }}" class="block__link"></a>
                             </div>
 
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">

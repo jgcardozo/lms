@@ -2,6 +2,12 @@
   background: $brand-white;
   position: relative;
   z-index: 10;
+  color: $brand-grey-light;
+  font-size: 1.4rem;
+
+  a {
+    color: $brand-grey-light;
+  }
 
   &__left {
     min-height: 5rem;
@@ -16,27 +22,94 @@
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    border-right: 1px solid $brand-grey-light-variant;
   }
 
   &__logo-link {
-    font-family: $headings-font-family;
+    font-family: $headings-font-family-light;
     font-size: 1.6rem;
     text-transform: uppercase;
     color: $brand-grey-light;
+    background: url('images/icons/logo.svg') no-repeat center left / 3rem auto;
+    padding-left: 4rem;
+    height: 3rem;
+    line-height: 3rem;
 
     &:hover {
       color: $brand-grey-light;
     }
   }
 
+  &__main-links {
+
+    a {
+      padding: 1rem 1.5rem  0.5rem;
+      border-bottom: 0.6rem solid transparent;
+
+      &:hover {
+        border-bottom: 0.6rem solid $brand-yellow;
+      }
+    }
+  }
+
   .list__item {
     padding: 0.5rem 1.5rem;
     position: relative;
+  }
 
-    a {
-      color: $brand-grey-light;
-      font-size: 1.4rem;
-    }
+  &__user {
+    border-left: 1px solid $brand-grey-light-variant;
+  }
+
+  &__user-name {
+    position: relative;
+    top: 0.2rem;
+  }
+
+  &__user-avatar {
+    display: inline-block;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 100%;
+    background: $brand-grey-light-variant;
+    border: 0.2rem solid #7ac173;
+    vertical-align: middle;
+    margin: 0 1rem;
+    color: $brand-white;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 2.2rem;
+    font-style: normal;
+  }
+
+  &__notifications {
+    border-left: 1px solid $brand-grey-light-variant;
+    padding: 0.5rem 1.5rem;
+  }
+
+  &__calendar {
+    border-left: 1px solid $brand-grey-light-variant;
+    padding: 0.5rem 1.5rem;
+  }
+
+  &__progress {
+    border-left: 1px solid $brand-grey-light-variant;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .icon--calendar {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background: url('images/icons/icon--calendar.svg') no-repeat center;
+  }
+
+  .icon--notification {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background: url('images/icons/icon--notification.svg') no-repeat center;
   }
 }
 

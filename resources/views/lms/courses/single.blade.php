@@ -69,28 +69,36 @@
 
                 <div class="grid--flex course-modules__list">
                     @foreach($course->modules as $key => $module)
-                        <div id="module-{{ $module->id }}" class="module {{ ($key % 3) == 0 ? 'module--first' : '' }}">
-
-                            @if($module->is_locked)
-                                <div class="locked"
-                                    @if($module->is_date_locked)
-                                        data-date=" until {{ date('d-m-Y', strtotime($module->lock_date)) }}"
-                                    @endif
-                                ></div>
-                            @endif
-
-                            <div class="module__featured-image">
-                                @if($module->is_completed)
-                                    <span class="completed">Completed</span>
+                        <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}">
+                            <div class="module__component grid--flex flex--column">
+                                @if($module->is_locked)
+                                    <div class="module__locked"
+                                        @if($module->is_date_locked)
+                                            data-date=" until {{ date('d-m-Y', strtotime($module->lock_date)) }}"
+                                        @endif
+                                    ><i class="icon--lock"></i></div>
                                 @endif
-                            </div>
-                            
-                            <div class="module__content">
-                                <h2 class="module__title">{{ $module->title }}</h2>                                
 
-                                {!! $module->description !!}
+                                <div class="module__featured-image">
+                                    @if($module->is_completed)
+                                        <span class="completed">Completed</span>
+                                    @endif
+                                </div>
+                                
+                                <div class="module__content">
+                                    <h2 class="module__title">{{ $module->title }}</h2>                                
+                                    <?php 
+                                        //Get 80 characters from description
+                                        $strArray = substr(strip_tags($module->description),0,80).'...';
+                                    ?>
+                                    <p>{{ $strArray }}</p>
 
-                                <a href="{{ route('single.module', $module->slug) }}" class="module__link">View module</a>
+                                    @if($module->is_locked)
+                                        <a href="javascript:;" class="module__link">Go To Lesson</a>
+                                    @else
+                                        <a href="{{ route('single.module', $module->slug) }}" class="module__link">Go To Lesson</a>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @endforeach

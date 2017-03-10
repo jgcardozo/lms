@@ -42,7 +42,7 @@
                     @foreach($lesson->sessions as $key => $session)
                         <div id="session-{{ $session->id }}" class="lesson-sessions__item grid--flex flex--space-between">
                             <div class="lesson-sessions__video grid--flex">
-                                <a href="{{ route('session.completed', $session->slug) }}" class="block__link">Watch</a>
+                                <a href="{{ route('session.completed', $session->slug) }}" class="block__link"></a>
                             </div>
 
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
