@@ -10,12 +10,16 @@ use App\Models\Session;
 use App\Models\Module;
 use App\Models\Lesson;
 use App\Models\CoachingCall;
+use App\Models\User;
 
 use App\Models\Gamification\Badge;
 use App\Models\Gamification\Milestone;
 
 use App\Streaks\Streak;
 use App\Streaks\Types\LoginStreak;
+use App\Notifications\UnlockedByTag;
+
+use App\Events\WatchedSession;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory;
@@ -35,17 +39,27 @@ class HomeController extends Controller
 	}
 
 	public function index() {
-		$courses = Course::all();
+		if(Auth::user())
+		{
+			$courses = Course::all();
 
-		return view('lms.courses.list')->with(['courses' => $courses]);
+			return view('lms.courses.list')->with(['courses' => $courses]);
+		}
+
+		return view('auth.login');
 	}
 
 	public function test() {
+		// $userTags = CA_Infusionsoft::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $this->user->contact_id], ['GroupId', 'ContactGroup'], '', false);
+		// $a = CA_Infusionsoft::get()::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => 294378], ['GroupId', 'ContactGroup'], '', false);
+		// dd($a);
+
+		die();
 		// Streak::log(new LoginStreak());
-		$a = new LoginStreak();
-		// dd($a->is_active());
-		dump($a->started());
-		dd($a->last_date());
+		// $a = new LoginStreak();
+		// dd($a->log());
+		// dump($a->started());
+		// dd($a->last_date());
 
 		//dd(Gamification::getScore());
 		// event(new \App\Events\WatchedSession($session));

@@ -15,7 +15,7 @@ class Session extends Model
 {
 	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait, ISLock;
 
-	protected $fillable = ['title', 'description', 'video_url', 'video_duration', 'starter_course_id', 'lesson_id', 'lock_date'];
+	protected $fillable = ['title', 'description', 'video_url', 'video_duration', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date'];
 
 	/**
 	 * The "booting" method of the model.
@@ -75,6 +75,13 @@ class Session extends Model
 		return false;
 	}
 
+	public function getFeaturedImageUrlAttribute()
+	{
+		// $s3image = \Storage::disk('s3')->url($this->featured_image);
+
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
@@ -107,6 +114,30 @@ class Session extends Model
 				'source' => 'title'
 			]
 		];
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Mutators
+	|--------------------------------------------------------------------------
+	*/
+	public function setFeaturedImageAttribute($value) {
+		$attribute_name = 'featured_image';
+		$disk = 's3';
+		$destination_path = 'session_' . $this->slug . '/';
+
+		$request = \Request::instance();
+		$file = $request->file($attribute_name);
+		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+
+		// Make the image
+		$image = \Image::make($file);
+
+		// Store the image on disk
+		\Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString(), 'public');
+
+		// Save the path to the database
+		$this->attributes[$attribute_name] = $destination_path . $filename;
 	}
 
 	/*
