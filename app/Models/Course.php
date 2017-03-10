@@ -8,6 +8,7 @@ use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
+use App\Traits\BackpackUpdateLFT;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -15,11 +16,12 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Course extends Model
 {
-	use CrudTrait;
-	use Sluggable;
-	use SluggableScopeHelpers;
-	use BackpackCrudTrait;
 	use ISLock;
+	use Sluggable;
+	use CrudTrait;
+	use BackpackCrudTrait;
+	use BackpackUpdateLFT;
+	use SluggableScopeHelpers;
 
 	protected $fillable = ['title', 'short_description', 'description', 'video_url', 'featured_image', 'module_group_title', 'lock_date'];
 
@@ -158,13 +160,13 @@ class Course extends Model
 	| Mutators
 	|--------------------------------------------------------------------------
 	*/
-	public function setImageAttribute($value) {
+	public function setFeaturedImageAttribute($value) {
 		$attribute_name = 'featured_image';
 		$disk = 's3';
 		$destination_path = 'course_' . $this->slug . '/';
 
 		$request = \Request::instance();
-		$file = $request->file('featured_image');
+		$file = $request->file($attribute_name);
 		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
 
 		// Make the image
@@ -174,7 +176,7 @@ class Course extends Model
 		\Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
 
 		// Save the path to the database
-		$this->attributes[$attribute_name] = $destination_path.'/'.$filename;
+		$this->attributes[$attribute_name] = $destination_path . $filename;
 	}
 
 	/*

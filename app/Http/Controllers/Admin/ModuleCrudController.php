@@ -65,6 +65,14 @@ class ModuleCrudController extends CrudController
 			'label' => 'Video URL'
 		]);
 
+		$this->crud->addField([
+			'label' => 'Module featured image',
+			'name' => 'featured_image',
+			'type' => 'upload',
+			'upload' => true,
+			'disk' => 's3'
+		]);
+
 		// TODO: Fix this mess
 		$courses = \App\Models\Course::all()->keyBy('id')->toArray();
 		$coachingCalls = \App\Models\CoachingCall::all()->keyBy('id')->toArray();

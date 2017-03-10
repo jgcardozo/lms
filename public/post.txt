@@ -1,0 +1,13 @@
+GET /user/register HTTP/1.1
+Accept:                    text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding:           gzip, deflate, sdch
+Accept-Language:           en-US,en;q=0.8
+Cache-Control:             max-age=0
+Connection:                keep-alive
+Content-Length:            
+Content-Type:              
+Cookie:                    pmaCookieVer=5; pma_lang=en; pma_collation_connection=utf8_unicode_ci; pma_console_height=92; pma_console_config=%7B%22alwaysExpand%22%3Afalse%2C%22startHistory%22%3Afalse%2C%22currentQuery%22%3Atrue%2C%22enterExecutes%22%3Afalse%2C%22darkTheme%22%3Afalse%7D; pma_console_mode=collapse; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6IkRzRyt2MFB4cWR5ZExvN2F1Y1E3c0E9PSIsInZhbHVlIjoiK1NKU25GZEdWb2pyZk5ETWNXSCtFd0h4QmdYV0VhVE42OXY2Tis4ZWFyZGRpZWl0Z2g5NmdkeWZRemZwTGlNSEFmRjZJZ2ZVUWU4RTB0XC93SnBhWXc0WHVoYVpCUkRUXC9zSGVnRVdCN3lUcz0iLCJtYWMiOiI1Y2FhYTQxM2U1YTAyYzAwNjJmNTZjNzE0YzU1OTgwZDAyOGEyZjNiYTg1N2MxNGIwOWYwM2E3ZjUxNzE1MzM2In0%3D; phpMyAdmin=k2c5fv1mtarlm6dtgf82lf7evvn8q693; pmaUser-1=%7B%22iv%22%3A%22BL%5C%2FD3RBvlJWAekqyhl2LoQ%3D%3D%22%2C%22mac%22%3A%22bad3ad9a4a8a691c048dbcbe2d08450103fa77f9%22%2C%22payload%22%3A%22H1qhURlHFvN7BPjOPAoOPA%3D%3D%22%7D; pmaAuth-1=%7B%22iv%22%3A%22rmuKJeGqmZEy0Dml3893TA%3D%3D%22%2C%22mac%22%3A%2201a34b3bbd11ff3942ca64b10aacaffa856f610c%22%2C%22payload%22%3A%22lM8ry%2B6WuCKYryWCDk67RphNQUhabOXlXB3oHFdaJqY%3D%22%7D; XSRF-TOKEN=eyJpdiI6ImdtVlNrYjBTVEhERk1zWU1pK2JnMmc9PSIsInZhbHVlIjoiMXI4RGxOVzl3UlN0MXBzblRzbjZ0NlIzeXI5RGlSdFNLRGdTaUQ0YXREUWRDSnVJMEw3XC83Q1p0VGdUV3JmYVpWWGFIN2gxNU5OWExuODJoeEZGMTZ3PT0iLCJtYWMiOiJkZGE3YjY5MjFmNmE5YzQ4ZTExNGE0YWJiMzgyNDQzNmI5ZGM4Y2E3YzJmYzE0ZGM5MDZkNjZlZDFhMmRkNjhmIn0%3D; laravel_session=eyJpdiI6IllXa09zeW5hM3FUOThBbkRxNnlOZUE9PSIsInZhbHVlIjoiNVJlSldQTDdCWCtiXC80Q25MREljXC9VdzEzZWhuK0xPZzBpaHMzZWEyXC9nSG1lXC83d0U2dDZCd2F0SWQyeFFFWmtzcyszNU8zTFRkK1VHdjNUMEoxV0VnPT0iLCJtYWMiOiI0YWQwYmRkMWQyM2MzOGY2NjE2MjYwMjQxMmViMjIzNTc3YTcyZjFhZWNkMDQzMzcwMTE4MWVjODEwNDM3MTk5In0%3D
+Host:                      asklms.dev
+Upgrade-Insecure-Requests: 1
+User-Agent:                Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
+

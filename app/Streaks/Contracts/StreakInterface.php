@@ -28,13 +28,21 @@ interface StreakInterface
 
 	/**
 	 * Get the number of consecutive days/values tracked. Ex: 12 straight days that they logged in
+	 *
 	 * @return mixed
 	 */
 	public function consecutive();
 
 	/**
-	 * Determinate if the user streak was already logged dependent on its the rule
+	 * Determinate if the user streak was already logged dependent on its the rule(todays date)
+	 *
 	 * @return bool
 	 */
 	public function is_logged();
+
+	/**
+	 * Make the logic and log the streak
+	 *
+	 */
+	public function log();
 }

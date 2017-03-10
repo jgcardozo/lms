@@ -15,7 +15,7 @@ class Lesson extends Model
 {
 	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait, ISLock;
 
-	protected $fillable = ['title', 'description', 'video_url', 'module_id', 'lock_date'];
+	protected $fillable = ['title', 'description', 'video_url', 'module_id', 'featured_image', 'lock_date'];
 
 	/**
 	 * The "booting" method of the model.
@@ -156,6 +156,30 @@ class Lesson extends Model
 				'source' => 'title'
 			]
 		];
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Mutators
+	|--------------------------------------------------------------------------
+	*/
+	public function setFeaturedImageAttribute($value) {
+		$attribute_name = 'featured_image';
+		$disk = 's3';
+		$destination_path = 'lesson_' . $this->slug . '/';
+
+		$request = \Request::instance();
+		$file = $request->file($attribute_name);
+		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+
+		// Make the image
+		$image = \Image::make($file);
+
+		// Store the image on disk
+		\Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
+
+		// Save the path to the database
+		$this->attributes[$attribute_name] = $destination_path . $filename;
 	}
 
 	/*

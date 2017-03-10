@@ -20,7 +20,7 @@ class Streak
 
 		if(!$streak->is_logged())
 		{
-			DB::insert('INSERT INTO g_streak_logs (user_id, type) VALUES (?, ?)', [$user->id, $type]);
+			$streak->log();
 		}
 	}
 }

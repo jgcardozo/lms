@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Gamification\Gamification;
+use Illuminate\Support\ServiceProvider;
 
 class GamificationServiceProvider extends ServiceProvider
 {

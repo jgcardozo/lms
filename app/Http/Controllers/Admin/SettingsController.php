@@ -13,6 +13,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 Class SettingsController extends BaseController
 {
+	protected $infusionsoft;
+
+	public function __construct(Infusionsoft $infusionsoft)
+	{
+		$this->infusionsoft = $infusionsoft;
+	}
+
 	public function index()
 	{
 		Infusionsoft::setToken(unserialize(Session::get('token')));
