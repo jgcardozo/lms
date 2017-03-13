@@ -30,7 +30,7 @@
     font-size: 1.6rem;
     text-transform: uppercase;
     color: $brand-grey-light;
-    background: url('images/icons/logo.svg') no-repeat center left / 3rem auto;
+    background: url('../images/icons/logo.svg') no-repeat center left / 3rem auto;
     padding-left: 4rem;
     height: 3rem;
     line-height: 3rem;
@@ -102,14 +102,14 @@
     display: block;
     width: 2rem;
     height: 2rem;
-    background: url('images/icons/icon--calendar.svg') no-repeat center;
+    background: url('../images/icons/icon--calendar.svg') no-repeat center;
   }
 
   .icon--notification {
     display: block;
     width: 2rem;
     height: 2rem;
-    background: url('images/icons/icon--notification.svg') no-repeat center;
+    background: url('../images/icons/icon--notification.svg') no-repeat center;
   }
 }
 
