@@ -50,7 +50,7 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	]);
 
 	Route::get('course/{course}/intro', [
-		'as' => 'single.course.intro',
+		'as' => 'single.course.starter',
 		'uses' => 'CourseController@starter_videos'
 	]);
 

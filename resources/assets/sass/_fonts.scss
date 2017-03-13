@@ -1,19 +1,19 @@
 @font-face {
 	font-family: 'BrandonBold';
-	src: url('fonts/Brandon_bld.eot');
-	src: url('fonts/Brandon_bld.eot?#iefix') format('embedded-opentype'), 
-		url('fonts/Brandon_bld.woff') format('woff'), 
-		url('fonts/Brandon_bld.ttf') format('truetype'), 
-		url('fonts/Brandon_bld.svg#svgBrandonBold') format('svg');
+	src: url('../fonts/Brandon_bld.eot');
+	src: url('../fonts/Brandon_bld.eot?#iefix') format('embedded-opentype'), 
+		url('../fonts/Brandon_bld.woff') format('woff'), 
+		url('../fonts/Brandon_bld.ttf') format('truetype'), 
+		url('../fonts/Brandon_bld.svg#svgBrandonBold') format('svg');
 	font-weight: 400;
 }
 
 @font-face {
 	font-family: 'BrandonLight';
-	src: url('fonts/Brandon_light.eot');
-	src: url('fonts/Brandon_light.eot?#iefix') format('embedded-opentype'), 
-		url('fonts/Brandon_light.woff') format('woff'), 
-		url('fonts/Brandon_light.ttf') format('truetype'), 
-		url('fonts/Brandon_light.svg#svgBrandonLight') format('svg');
+	src: url('../fonts/Brandon_light.eot');
+	src: url('../fonts/Brandon_light.eot?#iefix') format('embedded-opentype'), 
+		url('../fonts/Brandon_light.woff') format('woff'), 
+		url('../fonts/Brandon_light.ttf') format('truetype'), 
+		url('../fonts/Brandon_light.svg#svgBrandonLight') format('svg');
 	font-weight: 300;
 }
