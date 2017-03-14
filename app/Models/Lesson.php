@@ -135,11 +135,26 @@ class Lesson extends Model
 		return true;
 	}
 
+	/**
+	 * Get this lesson course
+	 *
+	 * @return mixed
+	 */
+	public function aaaagetCourseAttribute()
+	{
+		return $this->module->course;
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+	public function course()
+	{
+		return $this->module()->getResults()->belongsTo('App\Models\Course');
+	}
+
 	public function module()
 	{
 		return $this->belongsTo('App\Models\Module');

@@ -99,7 +99,12 @@ class Session extends Model
 
 	public function course()
     {
-		return $this->belongsTo('App\Models\Course', 'starter_course_id', 'id');
+		if(!empty($this->starter_course_id))
+		{
+			return $this->belongsTo('App\Models\Course', 'starter_course_id', 'id');
+		}
+
+		return $this->lesson()->getResults()->module()->getResults()->belongsTo('App\Models\Course');
 	}
 
 	public function usersWatched()

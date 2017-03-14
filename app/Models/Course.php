@@ -116,6 +116,19 @@ class Course extends Model
 		return $this->is_tag_locked();
 	}
 
+	/**
+	 * Bold first word of the title
+	 * @return string
+	 */
+	public function getBoldTitleAttribute()
+	{
+		$title = preg_split("/\s+/", $this->title);
+		$title[0] = "<strong> $title[0] </strong>";
+		$title = join(' ', $title);
+
+		return $title;
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations

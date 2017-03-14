@@ -86,7 +86,7 @@
                                 </div>
                                 
                                 <div class="module__content">
-                                    <h2 class="module__title">{{ $module->title }}</h2>                                
+                                    <h2 class="module__title">{{ $module->title }}</h2>
                                     <?php 
                                         //Get 80 characters from description
                                         $strArray = substr(strip_tags($module->description),0,80).'...';

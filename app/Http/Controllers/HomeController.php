@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 // use Facebook\Facebook;
 use Illuminate\Http\Request;
@@ -20,6 +21,9 @@ use App\Streaks\Types\LoginStreak;
 use App\Notifications\UnlockedByTag;
 
 use App\Events\WatchedSession;
+use Session as z;
+
+use InfusionsoftFlow;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory;
@@ -50,6 +54,14 @@ class HomeController extends Controller
 	}
 
 	public function test() {
+		$item = Session::find(3);
+		dd($item->course);
+
+		// dump($a);
+		// $a = InfusionsoftFlow;
+		// var_dump($a);
+		// die();
+
 		// $userTags = CA_Infusionsoft::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $this->user->contact_id], ['GroupId', 'ContactGroup'], '', false);
 		// $a = CA_Infusionsoft::get()::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => 294378], ['GroupId', 'ContactGroup'], '', false);
 		// dd($a);

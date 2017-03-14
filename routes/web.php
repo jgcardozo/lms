@@ -98,21 +98,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 Route::get('user/register', 'UserController@register');
 
 
-/**
- * Infusionsoft route
- */
-Route::get('is/sync', [
-    'uses' => 'InfusionsoftController@sync'
-]);
-
-Route::get('is/sign', [
-    'uses' => 'InfusionsoftController@signin'
-]);
-
-Route::get('is/callback', [
-    'uses' => 'InfusionsoftController@callback'
-]);
-
 /*
 |--------------------------------------------------------------------------
 | Auto login route
@@ -146,13 +131,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], func
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 
-    Route::get('settings', [
-		'uses' => 'Admin\SettingsController@index'
-	]);
+	Route::group(['prefix' => 'settings'], function() {
+		Route::get('/', [
+			'uses' => 'Admin\SettingsController@index'
+		]);
 
-	Route::post('settings', [
-		'uses' => 'Admin\SettingsController@save'
-	]);
+		Route::get('is/callback', [
+			'uses' => 'Admin\SettingsController@InfusionsoftCallback'
+		]);
+
+		Route::post('/', [
+			'uses' => 'Admin\SettingsController@save'
+		]);
+	});
 });
 
 Auth::routes();

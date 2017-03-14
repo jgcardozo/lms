@@ -3,6 +3,23 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+
+            <!-- Auth Infusionsoft user -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="box-title">Authenticate Infusionsoft application</div>
+                </div>
+
+                <form method="post">
+
+                    <div class="box-footer">
+                        <a href="{{ InfusionsoftFlow::requestUrl() }}" class="btn btn-primary">Auth</a>
+                    </div>
+
+                    {{ csrf_field() }}
+                </form>
+            </div> <!-- END Auth Infusionsoft user -->
+
             <div class="box box-default">
                 <div class="box-header with-border">
                     <div class="box-title">Sync Infusionsoft tags</div>
@@ -37,7 +54,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label>Auto login auth-key:</label>
-                            <input type="text" class="form-control" name="autologin-auth" value="f0mmy4Qrcux" />
+                            <input type="text" class="form-control" name="auto_login_key" value="{{ @$auto_login_key }}" />
                         </div>
                     </div>
 

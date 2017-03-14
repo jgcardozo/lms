@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Infusionsoft;
 use App\Models\User;
+use InfusionsoftFlow;
 use App\Models\ISTag;
 use App\Models\Course;
 use Illuminate\Support\Facades\Request;
@@ -15,7 +16,7 @@ class InfusionsoftController extends Controller
 
     public function __construct(User $user)
     {
-        $this->user = $user;
+		$this->user = $user;
     }
 
 	/**
@@ -25,9 +26,7 @@ class InfusionsoftController extends Controller
 	 */
     public function sync()
     {
-        Infusionsoft::setToken(unserialize(Session::get('token')));
-        
-        $userTags = Infusionsoft::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $this->user->contact_id], ['GroupId', 'ContactGroup'], '', false);
+		$userTags = InfusionsoftFlow::getUserTags($this->user->contact_id);
         $userTags = array_map(function($tag) {
             return array(
                 'title' => $tag['ContactGroup'],
@@ -70,27 +69,4 @@ class InfusionsoftController extends Controller
 
 		return $a;
 	}
-
-    public function signin()
-    {
-        return redirect()->away(Infusionsoft::getAuthorizationUrl());
-    }
-
-    public function callback()
-    {
-        if (Session::has('token')) {
-            Infusionsoft::setToken(unserialize(Session::get('token')));
-        }
-
-        if (Request::has('code') and !Infusionsoft::getToken()) {
-            Infusionsoft::requestAccessToken(Request::get('code'));
-        }
-
-        if (Infusionsoft::getToken()) {
-            Session::put('token', serialize(Infusionsoft::getToken()));
-            return redirect()->to('/');
-        }
-
-        return redirect()->to('/');
-    }
 }
