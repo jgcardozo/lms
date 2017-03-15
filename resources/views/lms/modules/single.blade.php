@@ -35,35 +35,41 @@
         </div>
         
         <div class="grid grid--w950">
-            <div class="module-lessons">
+            <div class="lessons-list">
                 <h2 class="module-lessons__title">Lessons</h2>
 
                 <div class="module-lessons__list">
                     @foreach($module->lessons as $key => $lesson)
                         <div id="lesson-{{ $lesson->id }}" class="module-lessons__item grid--flex flex--space-between lesson {{ ($key % 3) == 0 ? 'lesson--first' : '' }}">
-                            <div class="lesson-sessions__video grid--flex">
-                                <a href="{{ route('single.lesson', $lesson->slug) }}" class="block__link"></a>
-                            </div>
-
-                            <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
-                                <div class="lesson-sessions__content--left">
-                                    <h2 class="lesson-sessions__item--title">{{ $lesson->title }}</h2>
+                            <div class="lessons-list__content grid--flex flex--space-between flex--align-center">
+                                <div class="lessons-list__content--left">
+                                    <h2 class="lessons-list__item--title"><a href="{{ route('single.lesson', $lesson->slug) }}">{{ $lesson->title }}</a></h2>
                                     <?php 
                                         //Get 2 sentences from description
                                         $strArray = explode('.', $lesson->description);
                                     ?>
                                     {!! $strArray[0] . '. ' . $strArray[1] . '.' !!}
                                 </div>
-                                
-                                <div class="lesson-sessions__content--right">
-                                    @if($lesson->is_completed)
-                                        <span class="completed">Completed</span>
-                                    @else
-                                        <span class="mark-completed">Mark as completed</span>
-                                    @endif
 
-                                    @if($lesson->is_date_locked)
-                                        <div class="locked" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}"></div>
+                                <div class="lessons-list__content--center grid--flex flex--space-between">
+                                    <div class="lessons-list__lesson-info">
+                                        <p>Sessions</p>
+                                        <h4>12</h4>
+                                    </div>
+
+                                    <div class="lessons-list__lesson-info">
+                                        <p>Avg. Time</p>
+                                        <h4>1h</h4>
+                                    </div>                                     
+                                </div>
+                                
+                                <div class="lessons-list__content--right">
+                                    @if($lesson->is_completed)
+                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
+                                    @elseif($lesson->is_date_locked)
+                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}"></div>
+                                    @else
+                                        <div class="course-progress"><span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            

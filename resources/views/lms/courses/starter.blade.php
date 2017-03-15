@@ -26,7 +26,7 @@
 
                     <div class="single-header-video">
                         <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
-                        <div class="wistia_responsive_padding" style="padding:56.67% 0 0 0;position:relative;">
+                        <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
                             <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
                                 <div class="wistia_embed wistia_async_gpc49zomb2" style="width:100%;height:100%;"></div>
                             </div>
@@ -41,6 +41,10 @@
                                 video.bind('secondchange', function(s) {
                                     if (s === watchRule) {                                 
                                         console.log("We just reached " + s + " seconds!");
+                                    }
+
+                                    if (video.secondsWatched() >= watchRule) {
+                                        console.log("The video session can be completed!");
                                     }
                                 });
                             }});
@@ -69,7 +73,7 @@
                     @foreach($videos as $video)
                         <div id="session-{{ $video->id }}" class="course-starter__item grid--flex flex--space-between">
                             <div class="course-starter__video grid--flex">
-                                <a href="{{ route('session.completed', $video->slug) }}" class="block__link"></a>
+                                <a href="{{ route('session.completed', $video->slug) }}" class="block__link js-open-session"></a>
                             </div>
 
                             <div class="course-starter__content grid--flex flex--space-between flex--align-center">
@@ -84,9 +88,9 @@
 
                                 <div class="course-starter__content--right">
                                     @if($video->is_completed)
-                                        <span class="completed">Completed</span>
+                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                     @else
-                                        <span class="mark-completed">Mark as completed</span>
+                                        <div class="course-progress">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            
@@ -96,4 +100,14 @@
             </div>
         </div>        
     </main>
+
+    <div class="session-single">
+        <div class="session-single__content">
+            <div class="session-single__close"></div>
+
+            @include('lms.courses.session-popup')
+
+        </div>
+    </div>
+
 @endsection

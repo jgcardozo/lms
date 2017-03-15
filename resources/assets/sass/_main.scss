@@ -15,14 +15,14 @@ html {
 }
 
 body {
-	font-family: $font-family-sans-serif;
-	background: $body-bg;
-	font-size: $font-size-base;
-	line-height: $line-height-base;
+  font-family: $font-family-sans-serif;
+  background: $body-bg;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
 
-	&.home {
-		background: $brand-white-dark;
-	}
+  &.home {
+    background: $brand-white-dark;
+  }
 }
 
 a {
@@ -30,7 +30,7 @@ a {
   text-decoration: none;
 }
 
-a:hover, a:focus, a:active {
+a:hover {
   color: $brand-dark;
 }
 
@@ -46,5 +46,15 @@ a:hover, a:focus, a:active {
 
 .spacer__top--big,
 .grid.spacer__top--big {
-	margin-top: 6rem;
+  margin-top: 6rem;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
 }

@@ -10,7 +10,12 @@
             <div class="grid grid--w950 course-single__content">
                 <div class="grid--flex flex--space-between">
                     <div class="single-header-block">
-                        <h2 class="single-header-block__title">{{ $course->title }}</h2>
+                        <?php 
+                        $title = preg_split("/\s+/", $course->title);
+                        $title[0] = "<strong> $title[0] </strong>";
+                        $title = join(' ', $title);
+                        ?>
+                        <h2 class="single-header-block__title">{!! $title !!}</h2>
                         <p class="single-header-block__content">{{ $course->short_description }}</p>
                         <div class="single-header-block__separator"></div>
                         <div class="single-header-block__content single-header-block__content--small">
@@ -81,7 +86,7 @@
 
                                 <div class="module__featured-image">
                                     @if($module->is_completed)
-                                        <span class="completed">Completed</span>
+                                        <div class="module__completed">Completed</div>
                                     @endif
                                 </div>
                                 

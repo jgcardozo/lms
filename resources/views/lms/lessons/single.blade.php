@@ -42,7 +42,7 @@
                     @foreach($lesson->sessions as $key => $session)
                         <div id="session-{{ $session->id }}" class="lesson-sessions__item grid--flex flex--space-between">
                             <div class="lesson-sessions__video grid--flex">
-                                <a href="{{ route('session.completed', $session->slug) }}" class="block__link"></a>
+                                <a href="{{ route('session.completed', $session->slug) }}" class="block__link js-open-session"></a>
                             </div>
 
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
@@ -57,13 +57,11 @@
 
                                 <div class="lesson-sessions__content--right">
                                     @if($session->is_completed)
-                                        <span class="completed">Completed</span>
+                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
+                                    @elseif($session->is_date_locked)
+                                        <div class="course-progress course-progress--locked" data-date=" until {{ date('d-m-Y', strtotime($session->lock_date)) }}"></div>
                                     @else
-                                        <span class="mark-completed">Mark as completed</span>
-                                    @endif
-
-                                    @if($session->is_date_locked)
-                                        <div class="locked" data-date=" until {{ date('d-m-Y', strtotime($session->lock_date)) }}"></div>
+                                        <div class="course-progress">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            
@@ -73,4 +71,13 @@
             </div>
         </div>
     </main>
+
+    <div class="session-single">
+        <div class="session-single__content">
+            <div class="session-single__close"></div>
+
+            @include('lms.courses.session-popup')
+
+        </div>
+    </div>
 @endsection
