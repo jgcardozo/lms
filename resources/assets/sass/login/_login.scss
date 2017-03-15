@@ -2,9 +2,13 @@
   background: url('../images/login-bg.jpg') no-repeat center / cover;
   min-height: 100vh;
 
+  main {
+    overflow: hidden;
+  }
+
   &__overlay {
     background: rgba(#3e352c,0.8);
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;

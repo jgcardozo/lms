@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="6px" viewBox="0 0 11 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="0" y="0" width="1280" height="50"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-1" y="-1" width="1282" height="52">
+            <rect x="-1" y="-1" width="1282" height="52" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Header" transform="translate(-140.000000, -25.000000)">
+            <g id="Rectangle-Copy-5">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use stroke="#DEDEDE" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+            </g>
+            <path d="M143.495431,33.1199999 C143.384663,33.1199999 143.275873,33.0824179 143.182907,33.0092319 C142.971261,32.8371459 142.937635,32.5246218 143.111699,32.3129758 L146.577156,28.0602755 L143.111699,23.8075751 C142.939613,23.5959291 142.971261,23.2853831 143.182907,23.111319 C143.392575,22.941211 143.705099,22.966925 143.879163,23.1825271 L147.599782,27.7477514 C147.748132,27.9297275 147.748132,28.1908235 147.599782,28.3708215 L143.879163,32.9360459 C143.780263,33.0586819 143.637847,33.1199999 143.495431,33.1199999 L143.495431,33.1199999 Z" id="Shape-Copy" fill="#4A4A4A" transform="translate(145.355522, 28.060000) rotate(-270.000000) translate(-145.355522, -28.060000) "></path>
+        </g>
+    </g>
+</svg>

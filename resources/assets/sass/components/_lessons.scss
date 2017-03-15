@@ -1,0 +1,75 @@
+.lessons-list {
+  margin: 4rem auto 0;
+  
+  p {
+    font-size: 1.2rem;
+    color: $brand-grey-light;
+    margin: 0;
+  }
+
+  &__title {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    margin: 0 0 2rem;
+  }
+
+  &__list {
+    margin: 0 auto;
+  }
+
+  &__item {
+    background: $brand-white-dark;
+    margin: 0 auto 1rem;
+    min-height: 11rem;
+  }
+
+  &__item--title {
+    font-family: $font-family-sans-serif;
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+  }
+
+  &__content {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    max-width: 100%;
+    padding: 0.5rem 3rem;
+  }
+
+  &__content--left {
+    -ms-flex-preferred-size: 45%;
+    flex-basis: 45%;
+    max-width: 45%;
+    padding-right: 4rem;
+    border-right: 0.1rem solid #ebebeb; 
+  }
+
+  &__content--right {
+    -ms-flex-preferred-size: 25%;
+    flex-basis: 25%;
+    max-width: 25%;
+    text-align: right;
+  }
+
+  &__lesson-info {
+    padding: 0 3rem;
+
+    &:first-of-type {
+      border-right: 0.1rem solid #b4ada7;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #b4ada7;
+      margin: 0;
+    }
+
+    h4 {
+      font-family: $font-family-sans-serif;
+      font-size: 1.6rem;
+      color: $brand-grey-light;
+      font-weight: 400;
+      margin: 0;
+    }
+  }
+}

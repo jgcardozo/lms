@@ -10,6 +10,11 @@
 @import "fonts";
 
 /**
+ * Perfect Scrollbar
+ */
+@import "node_modules/perfect-scrollbar/dist/css/perfect-scrollbar";
+
+/**
  * Variables
  */
 @import "variables";
@@ -53,6 +58,11 @@
  * Single Lesson Sessions 
  */
 @import "components/lesson-sessions-single";
+
+/**
+ * Single Lessons 
+ */
+@import "components/lessons";
 
 /**
  * Single Module Lessons 
