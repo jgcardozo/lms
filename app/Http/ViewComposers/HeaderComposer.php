@@ -16,6 +16,7 @@ class HeaderComposer
 	 */
 	public function compose(View $view)
 	{
+		$lms_items = null;
 		$notifications = [];
 		if($user = Auth::user())
 		{

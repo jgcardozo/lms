@@ -1,0 +1,95 @@
+.user-settings {
+  background: $brand-white;
+
+  h2 {
+    font-size: 1.4rem;
+    margin: 0 0 1rem;
+    font-family: $font-family-sans-serif;
+    font-weight: 400;
+    color: $brand-grey-light;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: $brand-grey-light;
+  }
+
+  &__content {
+    padding: 3.5rem;
+  }
+
+  &__info {
+    -ms-flex-preferred-size: 30%;
+    flex-basis: 30%;
+    max-width: 30%;
+    padding-right: 4rem;
+  }
+
+  &__manage {
+    -ms-flex-preferred-size: 70%;
+    flex-basis: 70%;
+    max-width: 70%;
+  }
+
+  &__main-links {
+    min-height: 5rem;
+    border-bottom: 0.1rem solid $border-grey;
+
+    a {
+      color: $brand-grey-light;
+      font-size: 1.4rem;      
+      padding: 1rem 1.5rem  0.5rem;
+      border-bottom: 0.3rem solid transparent;
+
+      &:hover {
+        border-bottom: 0.3rem solid $border-grey-light;
+      }
+
+      &.active {
+        border-bottom: 0.3rem solid $border-grey-light;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .form-control {
+    margin-bottom: 2rem;
+    padding-right: 8rem;
+
+    label {
+      font-size: 1.4rem;
+      color: $brand-grey-light;
+      -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+      max-width: 30%;
+    }
+
+    input {
+      -ms-flex-preferred-size: 70%;
+      flex-basis: 70%;
+      max-width: 70%;
+      border: 0.1rem solid $brand-grey-light-variant;
+      border-radius: 0.3rem;
+      padding: 0 2rem;
+      height: 5rem;
+      font-size: 1.4rem;
+      color: #4a494a;
+    }
+  }
+
+  .form-control--submit {
+    margin-top: 4rem;
+    
+    input[type="submit"] {
+      color: $brand-white;
+      background: $brand-green;
+      border-radius: 0.3rem;
+      border: 0;
+      font-size: 1.4rem;
+      font-weight: 600;
+      min-height: 5rem;
+      padding: 0.5rem 1.5rem;
+      min-width: 19rem;
+    }
+  }
+}
