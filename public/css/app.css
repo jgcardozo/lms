@@ -424,6 +424,10 @@ body.home {
   background: #f6f6f6;
 }
 
+body.inner-page {
+  background: #f6f6f6;
+}
+
 a {
   color: #232c40;
   text-decoration: none;
@@ -607,6 +611,12 @@ p {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.flex--end {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
 /**
@@ -1966,4 +1976,103 @@ p {
   flex-basis: 50%;
   max-width: 50%;
   padding-left: 4.5rem;
+}
+
+/**
+ * User Settings 
+ */
+.user-settings {
+  background: #fff;
+}
+
+.user-settings h2, .user-settings .login h3, .login .user-settings h3 {
+  font-size: 1.4rem;
+  margin: 0 0 1rem;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  color: #928780;
+}
+
+.user-settings p {
+  font-size: 1.2rem;
+  color: #928780;
+}
+
+.user-settings__content {
+  padding: 3.5rem;
+}
+
+.user-settings__info {
+  -ms-flex-preferred-size: 30%;
+  flex-basis: 30%;
+  max-width: 30%;
+  padding-right: 4rem;
+}
+
+.user-settings__manage {
+  -ms-flex-preferred-size: 70%;
+  flex-basis: 70%;
+  max-width: 70%;
+}
+
+.user-settings__main-links {
+  min-height: 5rem;
+  border-bottom: 0.1rem solid #dcd9d6;
+}
+
+.user-settings__main-links a {
+  color: #928780;
+  font-size: 1.4rem;
+  padding: 1rem 1.5rem  0.5rem;
+  border-bottom: 0.3rem solid transparent;
+}
+
+.user-settings__main-links a:hover {
+  border-bottom: 0.3rem solid #cfcfcf;
+}
+
+.user-settings__main-links a.active {
+  border-bottom: 0.3rem solid #cfcfcf;
+  font-weight: 700;
+}
+
+.user-settings .form-control {
+  margin-bottom: 2rem;
+  padding-right: 8rem;
+}
+
+.user-settings .form-control label {
+  font-size: 1.4rem;
+  color: #928780;
+  -ms-flex-preferred-size: 30%;
+  flex-basis: 30%;
+  max-width: 30%;
+}
+
+.user-settings .form-control input {
+  -ms-flex-preferred-size: 70%;
+  flex-basis: 70%;
+  max-width: 70%;
+  border: 0.1rem solid #dadada;
+  border-radius: 0.3rem;
+  padding: 0 2rem;
+  height: 5rem;
+  font-size: 1.4rem;
+  color: #4a494a;
+}
+
+.user-settings .form-control--submit {
+  margin-top: 4rem;
+}
+
+.user-settings .form-control--submit input[type="submit"] {
+  color: #fff;
+  background: #62D262;
+  border-radius: 0.3rem;
+  border: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  min-height: 5rem;
+  padding: 0.5rem 1.5rem;
+  min-width: 19rem;
 }
