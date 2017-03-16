@@ -16,7 +16,7 @@ Class SettingsController extends BaseController
 {
 	public function index()
 	{
-		$isTagCategories = InfusionsoftFlow::is()->data()->query('ContactGroupCategory', 1000, 0, ['Id' => '%'], ['Id', 'CategoryName'], '', false);
+		$isTagCategories = InfusionsoftFlow::getTagCategories();
 
 		$settingsDB = DB::table('settings')->get()->toArray();
 
@@ -61,7 +61,7 @@ Class SettingsController extends BaseController
 		$sqlVal = "";
 		foreach($categories as $category)
 		{
-			$catTags = InfusionsoftFlow::is()->data()->query('ContactGroup', 1000, 0, ['GroupCategoryId' => $category], ['Id', 'GroupName'], '', false);
+			$catTags = InfusionsoftFlow::getCategoryTags();
 			if(!empty($catTags))
 			{
 				foreach($catTags as $tag)

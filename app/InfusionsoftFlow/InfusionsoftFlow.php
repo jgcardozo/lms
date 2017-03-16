@@ -27,8 +27,11 @@ class InfusionsoftFlow
 	{
 		$row = DB::table('settings')->where('key', 'is_token')->first();
 
-		$token = unserialize($row->value);
-		$this->is->setToken($token);
+		if(!empty($row))
+		{
+			$token = unserialize($row->value);
+			$this->is->setToken($token);
+		}
 	}
 
 	public function saveTokenToDB()
@@ -61,5 +64,19 @@ class InfusionsoftFlow
 		}
 
 		return $userTags;
+	}
+
+	public function getTagCategories()
+	{
+		if(!$this->is->getToken()) return [];
+
+		return $this->is->data()->query('ContactGroupCategory', 1000, 0, ['Id' => '%'], ['Id', 'CategoryName'], '', false);
+	}
+
+	public function getCategoryTags($category)
+	{
+		if(!$this->is->getToken()) return [];
+
+		return $this->is->data()->query('ContactGroup', 1000, 0, ['GroupCategoryId' => $category], ['Id', 'GroupName'], '', false);
 	}
 }

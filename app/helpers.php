@@ -1,8 +1,6 @@
 <?php
-use Request;
-
 /**
- * Chnage Header elements when on routes for Course, Module, Lesson
+ * Change Header elements when on routes for Course, Module, Lesson
  */
 if (!function_exists('changeHeader')) {
 	function changeHeader() {

@@ -49,6 +49,7 @@
                                         $strArray = explode('.', $lesson->description);
                                     ?>
                                     {!! $strArray[0] . '. ' . $strArray[1] . '.' !!}
+                                    <h5>Progress {{ $lesson->getProgressPercentage() }}%</h5>
                                 </div>
 
                                 <div class="lessons-list__content--center grid--flex flex--space-between">

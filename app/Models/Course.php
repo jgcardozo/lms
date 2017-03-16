@@ -72,8 +72,10 @@ class Course extends Model
 	{
 		$tmp = [];
 
-		foreach($this->modules as $module) {
-			foreach($module->lessons as $lesson) {
+		foreach($this->modules as $module)
+		{
+			foreach($module->lessons as $lesson)
+			{
 				$tmp = array_merge($tmp, $lesson->sessions->pluck('id')->toArray());
 			}
 		}
@@ -93,6 +95,11 @@ class Course extends Model
 			$user = Auth::user();
 		}
 
+		if(!$this->areAllStarterSeen())
+		{
+			return false;
+		}
+
 		$courseSessions = $this->getAllSessions();
 		$watched_videos = $user->sessionsWatched->pluck('id')->toArray();
 
@@ -103,7 +110,7 @@ class Course extends Model
 			break;
 		}
 
-		return false;
+		return true;
 	}
 
 	/**
@@ -114,19 +121,6 @@ class Course extends Model
 	public function getIsLockedAttribute()
 	{
 		return $this->is_tag_locked();
-	}
-
-	/**
-	 * Bold first word of the title
-	 * @return string
-	 */
-	public function getBoldTitleAttribute()
-	{
-		$title = preg_split("/\s+/", $this->title);
-		$title[0] = "<strong> $title[0] </strong>";
-		$title = join(' ', $title);
-
-		return $title;
 	}
 
 	/*

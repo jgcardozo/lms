@@ -54,8 +54,8 @@ class HomeController extends Controller
 	}
 
 	public function test() {
-		$item = Session::find(3);
-		dd($item->course);
+		$item = Course::find(1);
+		dd($item->getNextSession());
 
 		// dump($a);
 		// $a = InfusionsoftFlow;

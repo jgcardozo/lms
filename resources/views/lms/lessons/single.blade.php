@@ -48,7 +48,7 @@
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
                                 <div class="lesson-sessions__content--left">
                                     <h2 class="lesson-sessions__item--title">{{ $session->title }}</h2>
-                                    <?php 
+                                    <?php
                                         //Get 2 sentences from description
                                         $strArray = explode('.', $session->description);
                                     ?>

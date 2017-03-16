@@ -46,19 +46,19 @@ class Module extends Model
 			$user = Auth::user();
 		}
 
-		$lessons = $this->lessons;
+		$progress = [
+			'sessions' => [],
+			'watched' => []
+		];
 
-		$watched = [];
-		foreach($lessons as $lesson) {
-			if($lesson->is_completed) {
-				$watched[] = $lesson->id;
-			}
+		foreach($this->lessons as $lesson)
+		{
+			$_progress = $lesson->getProgress();
+			$progress['sessions'] = array_merge($progress['sessions'], $_progress['sessions']);
+			$progress['watched'] = array_merge($progress['watched'], $_progress['watched']);
 		}
 
-		return [
-			'lessons' => $lessons->pluck('id')->toArray(),
-			'watched' => $watched
-		];
+		return $progress;
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Module extends Model
 	public function getProgressPercentage()
 	{
 		$progress = $this->getProgress();
-		$sCount = count($progress['lessons']);
+		$sCount = count($progress['sessions']);
 		$wCount = count($progress['watched']);
 		$percentage = ($wCount / $sCount) * 100;
 
@@ -96,9 +96,15 @@ class Module extends Model
 	 */
 	public function getIsCompletedAttribute()
 	{
-		$progress = $this->getProgress();
+		foreach($this->lessons as $lesson)
+		{
+			if(!$lesson->is_completed)
+			{
+				return false;
+			}
+		}
 
-		return count($progress['lessons']) == count($progress['watched']);
+		return true;
 	}
 
 	/**
