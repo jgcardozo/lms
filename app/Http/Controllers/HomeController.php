@@ -55,7 +55,8 @@ class HomeController extends Controller
 
 	public function test() {
 		$item = Course::find(1);
-		dd($item->getNextSession());
+		activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
+		// dd($item->getNextSession());
 
 		// dump($a);
 		// $a = InfusionsoftFlow;

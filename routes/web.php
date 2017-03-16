@@ -95,7 +95,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
     ]);
 });
 
-Route::get('user/register', 'UserController@register');
+Route::post('user/register', 'UserController@register');
 
 
 /*
@@ -144,6 +144,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], func
 			'uses' => 'Admin\SettingsController@save'
 		]);
 	});
+
+	Route::get('log', [
+		'uses' => 'Admin\LoglistController@index'
+	]);
 });
 
 Auth::routes();

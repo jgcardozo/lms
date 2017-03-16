@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
-    public function __construct(User $user) {
+    public function __construct(User $user)
+	{
 		//
 	}
 
@@ -21,16 +22,41 @@ class UserController extends Controller
 	 */
 	public function register(Request $request)
 	{
-		File::put('post.txt', $request);
+		$rules = [
+			'contactId' => 'required|numeric',
+			'email' => 'required'
+		];
+
+		$validator = Validator::make($request->all(), $rules);
+
+		if($validator->fails())
+		{
+			//activity()
+		}
+
+		$newUser = new User();
+		$newUser->contact_id = $request->get('contactId');
+		$newUser->name = $request->get('email');
+		$newUser->email = $request->get('email');
+		$newUser->password = bcrypt(str_random(8));
+		$newUser->save();
+
+		$profile = new Profile();
+		$profile->phone1 = $request->get('phone');
+		$profile->company = $request->get('company');
+		$profile->address = $request->get('address');
+		$newUser->profile()->save($profile);
 	}
 
-	public function profile() {
+	public function profile()
+	{
 		$user = Auth::user();
 
 		return view('lms.user.profile')->with(['user' => $user]);
 	}
 
-	public function settings() {
+	public function settings()
+	{
 		return view('lms.user.settings');
 	}
 
@@ -39,13 +65,13 @@ class UserController extends Controller
 		$rules = [
 			'name' => 'required',
 			'email' => 'required',
-			'phone1' => 'required',
-			'phone2' => 'required'
+			'phone1' => 'required'
 		];
 
 		$validator = Validator::make($request->all(), $rules);
 
-		if($validator->fails()) {
+		if($validator->fails())
+		{
 			return redirect()->back(); // TODO: Return with errors
 		}
 
@@ -57,6 +83,8 @@ class UserController extends Controller
 		$profile = $user->profile ?: new Profile();
 		$profile->phone1 = $request->get('phone1');
 		$profile->phone2 = $request->get('phone2');
+		$profile->company = $request->get('company');
+		$profile->address = $request->get('address');
 		$user->profile()->save($profile);
 
 		return redirect()->back();
@@ -80,7 +108,7 @@ class UserController extends Controller
 		$user->password = bcrypt($request->get('password'));
 		$user->save();
 
-		return redirect();
+		return redirect()->back();
 	}
 
 	public function autologin(Request $request)

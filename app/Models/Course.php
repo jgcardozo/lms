@@ -12,6 +12,7 @@ use App\Traits\BackpackUpdateLFT;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Course extends Model
@@ -19,6 +20,7 @@ class Course extends Model
 	use ISLock;
 	use Sluggable;
 	use CrudTrait;
+	use LogsActivity;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
@@ -56,7 +58,8 @@ class Course extends Model
 
 		$check = array_intersect($starter_videos, $watched_videos);
 
-		if(count($check) == count($starter_videos)) {
+		if(count($check) == count($starter_videos))
+		{
 			return true;
 		}
 
@@ -91,7 +94,8 @@ class Course extends Model
 	 */
 	public function getNextSession($user = null)
 	{
-		if(!$user) {
+		if(!$user)
+		{
 			$user = Auth::user();
 		}
 
@@ -103,7 +107,8 @@ class Course extends Model
 		$courseSessions = $this->getAllSessions();
 		$watched_videos = $user->sessionsWatched->pluck('id')->toArray();
 
-		foreach($courseSessions as $session) {
+		foreach($courseSessions as $session)
+		{
 			if(in_array($session, $watched_videos)) continue;
 
 			return Session::find($session);
@@ -167,7 +172,8 @@ class Course extends Model
 	| Mutators
 	|--------------------------------------------------------------------------
 	*/
-	public function setFeaturedImageAttribute($value) {
+	public function setFeaturedImageAttribute($value)
+	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
 		$destination_path = 'course_' . $this->slug . '/';
@@ -191,7 +197,8 @@ class Course extends Model
 	| Backpack model callbacks
 	|--------------------------------------------------------------------------
 	*/
-	public function view_modules_button() {
+	public function view_modules_button()
+	{
 		ob_start();
 		?>
 		<a href="<?php echo route('crud.module.index', ['course' => $this->id]); ?>" class="btn btn-xs btn-default">
@@ -203,7 +210,8 @@ class Course extends Model
 		return $button;
 	}
 
-	public function view_intros_button() {
+	public function view_intros_button()
+	{
 		if(!$this->starter_videos) return;
 		?>
 		<a href="<?php echo route('crud.session.index', ['course' => $this->id]); ?>" class="btn btn-xs btn-default">

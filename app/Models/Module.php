@@ -9,15 +9,17 @@ use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Module extends Model
 {
+	use ISLock;
 	use CrudTrait;
 	use Sluggable;
+	use LogsActivity;
 	use SluggableScopeHelpers;
 	use BackpackCrudTrait;
-	use ISLock;
 
 	protected $fillable = ['title', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
 

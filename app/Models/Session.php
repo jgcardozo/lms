@@ -9,11 +9,17 @@ use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Session extends Model
 {
-	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait, ISLock;
+	use ISLock;
+	use CrudTrait;
+	use Sluggable;
+	use LogsActivity;
+	use BackpackCrudTrait;
+	use SluggableScopeHelpers;
 
 	protected $fillable = ['title', 'description', 'video_url', 'video_duration', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date'];
 
