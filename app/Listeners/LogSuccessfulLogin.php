@@ -49,6 +49,6 @@ class LogSuccessfulLogin
 		Streak::log(new LoginStreak());
 
 		// Log the activity
-		activity('user-logged')->causedBy($event->user)->log('User :causer.email has logged in.');
+		activity('user-logged')->causedBy($event->user)->withProperties(['ip' => request()->ip()])->log('User :causer.email has logged in.');
     }
 }

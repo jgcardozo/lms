@@ -44,10 +44,6 @@ class Module extends Model
 	 */
 	public function getProgress($user = null)
 	{
-		if(!$user) {
-			$user = Auth::user();
-		}
-
 		$progress = [
 			'sessions' => [],
 			'watched' => []
@@ -55,7 +51,7 @@ class Module extends Model
 
 		foreach($this->lessons as $lesson)
 		{
-			$_progress = $lesson->getProgress();
+			$_progress = $lesson->getProgress($user);
 			$progress['sessions'] = array_merge($progress['sessions'], $_progress['sessions']);
 			$progress['watched'] = array_merge($progress['watched'], $_progress['watched']);
 		}
@@ -134,7 +130,8 @@ class Module extends Model
 	 */
 	public function getIsLockedAttribute()
 	{
-		if($this->course->is_locked || !$this->course->areAllStarterSeen()) {
+		if($this->course->is_locked || !$this->course->areAllStarterSeen())
+		{
 			return true;
 		}
 
@@ -145,7 +142,8 @@ class Module extends Model
 
 		// Get previous module
 		$prevModule = $this->previous_module;
-		if((!$prevModule || $prevModule->is_completed) && !$this->is_date_locked) {
+		if((!$prevModule || $prevModule->is_completed) && !$this->is_date_locked)
+		{
 			return false;
 		}
 
@@ -181,7 +179,8 @@ class Module extends Model
 	| Mutators
 	|--------------------------------------------------------------------------
 	*/
-	public function setFeaturedImageAttribute($value) {
+	public function setFeaturedImageAttribute($value)
+	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
 		$destination_path = 'module_' . $this->slug . '/';
@@ -205,7 +204,8 @@ class Module extends Model
 	| Backpack model callbacks
 	|--------------------------------------------------------------------------
 	*/
-	public function view_lessons_button() {
+	public function view_lessons_button()
+	{
 		ob_start();
 		?>
 		<a href="<?php echo route('crud.lesson.index', ['module' => $this->id]); ?>" class="btn btn-xs btn-default">
@@ -217,7 +217,8 @@ class Module extends Model
 		return $button;
 	}
 
-	public function admin_course_link() {
+	public function admin_course_link()
+	{
 		if(!$this->course) return;
 
 		ob_start();

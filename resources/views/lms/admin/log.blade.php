@@ -41,7 +41,7 @@
                                                 @endif
                                             </td>
                                             <td>{!! $log->description !!}</td>
-                                            <td>{{ $log->causer->email }}</td>
+                                            <td>{{ @$log->causer->email }}</td>
                                             <td>{{ !empty($log->subject) ? $log->subject->title . ' [' . $log->subject->id . ']' : '' }}</td>
                                             <td>
                                                 @foreach($log->properties as $key => $p)

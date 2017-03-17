@@ -31,7 +31,8 @@ class UserController extends Controller
 
 		if($validator->fails())
 		{
-			//activity()
+			activity('user-registered-failed')->withProperties(['contactID' => request()->get('contactId')])->log('New user with Infusionsoft ID <strong>:properties.contactID</strong> failed to register.');
+			return;
 		}
 
 		$newUser = new User();
@@ -46,6 +47,10 @@ class UserController extends Controller
 		$profile->company = $request->get('company');
 		$profile->address = $request->get('address');
 		$newUser->profile()->save($profile);
+
+		$newUser->assignRole('Customer');
+
+		activity('user-registered-success')->causedBy($newUser)->log('New user with email: <strong>:causer.email</strong> registered.');
 	}
 
 	public function profile()

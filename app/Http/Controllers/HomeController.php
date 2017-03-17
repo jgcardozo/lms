@@ -54,8 +54,8 @@ class HomeController extends Controller
 	}
 
 	public function test() {
-		$item = Course::find(1);
-		activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
+		// $item = Course::find(1);
+		// activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
 		// dd($item->getNextSession());
 
 		// dump($a);

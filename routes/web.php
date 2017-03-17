@@ -112,15 +112,6 @@ Route::get('/auto-login', [
 | Backpack admin panel routes
 |--------------------------------------------------------------------------
 */
-Route::get('admin/', [
-	'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect',
-	'middleware' => ['role:Administrator']
-]);
-
-Route::get('admin/dashboard', function() {
-	return view('backpack::dashboard', ['title' => trans('backpack::base.dashboard')]);
-});
-
 Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], function()
 {
     CRUD::resource('course', 'Admin\CourseCrudController');
@@ -131,6 +122,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], func
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 
+	Route::get('/', [
+		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
+	]);
+
+	Route::get('dashboard', function() {
+		return view('backpack::dashboard', ['title' => trans('backpack::base.dashboard')]);
+	});
+
+	// Settings
 	Route::group(['prefix' => 'settings'], function() {
 		Route::get('/', [
 			'uses' => 'Admin\SettingsController@index'
