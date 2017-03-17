@@ -30,7 +30,12 @@ class InfusionsoftFlow
 		if(!empty($row))
 		{
 			$token = unserialize($row->value);
-			$this->is->setToken($token);
+
+			if($token->endOfLife > time())
+			{
+				$this->is->setToken($token);
+				$this->refreshToken();
+			}
 		}
 	}
 
@@ -57,26 +62,43 @@ class InfusionsoftFlow
 
 	public  function getUserTags($contactID = 0)
 	{
-		try {
-			$userTags = $this->is()->data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $contactID], ['GroupId', 'ContactGroup'], '', false);
-		} catch (\Exception $e) {
-			$userTags = [];
+		if(!$this->is->getToken())
+		{
+			return false;
 		}
 
-		return $userTags;
+		try {
+			return $this->is()->data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $contactID], ['GroupId', 'ContactGroup'], '', false);
+		} catch (\Exception $e) {
+			return false;
+		}
 	}
 
 	public function getTagCategories()
 	{
-		if(!$this->is->getToken()) return [];
+		if(!$this->is->getToken())
+		{
+			return false;
+		}
 
-		return $this->is->data()->query('ContactGroupCategory', 1000, 0, ['Id' => '%'], ['Id', 'CategoryName'], '', false);
+		try {
+			return $this->is->data()->query('ContactGroupCategory', 1000, 0, ['Id' => '%'], ['Id', 'CategoryName'], '', false);
+		} catch (\Exception $e) {
+			return false;
+		}
 	}
 
 	public function getCategoryTags($category)
 	{
-		if(!$this->is->getToken()) return [];
+		if(!$this->is->getToken())
+		{
+			return false;
+		}
 
-		return $this->is->data()->query('ContactGroup', 1000, 0, ['GroupCategoryId' => $category], ['Id', 'GroupName'], '', false);
+		try {
+			return $tags = $this->is->data()->query('ContactGroup', 1000, 0, ['GroupCategoryId' => $category], ['Id', 'GroupName'], '', false);
+		} catch (\Exception $e) {
+			return false;
+		}
 	}
 }
