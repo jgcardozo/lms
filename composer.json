@@ -13,7 +13,9 @@
         "infusionsoft/php-sdk": "^1.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "league/flysystem-aws-s3-v3": "~1.0"
+        "league/flysystem-aws-s3-v3": "~1.0",
+        "spatie/laravel-activitylog": "^1.12",
+        "spatie/laravel-permission": "^1.12"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

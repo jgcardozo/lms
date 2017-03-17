@@ -9,11 +9,17 @@ use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Lesson extends Model
 {
-	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait, ISLock;
+	use ISLock;
+	use CrudTrait;
+	use Sluggable;
+	use LogsActivity;
+	use BackpackCrudTrait;
+	use SluggableScopeHelpers;
 
 	protected $fillable = ['title', 'description', 'video_url', 'module_id', 'featured_image', 'lock_date'];
 
@@ -99,7 +105,8 @@ class Lesson extends Model
 	 */
 	public function getIsDateLockedAttribute()
 	{
-		if(!empty($this->lock_date)) {
+		if(!empty($this->lock_date))
+		{
 			$expire = strtotime($this->lock_date);
 			$today = strtotime('today midnight');
 
@@ -136,13 +143,13 @@ class Lesson extends Model
 	}
 
 	/**
-	 * Get this lesson course
+	 * Get lesson duration. Sum of all sessions.
 	 *
 	 * @return mixed
 	 */
-	public function aaaagetCourseAttribute()
+	public function getDurationAttribute()
 	{
-		return $this->module->course;
+		return $this->sessions->sum('video_duration');
 	}
 
 	/*
@@ -165,7 +172,8 @@ class Lesson extends Model
 		return $this->hasMany('App\Models\Session');
 	}
 
-	public function sluggable() {
+	public function sluggable()
+	{
 		return [
 			'slug' => [
 				'source' => 'title'
@@ -178,7 +186,8 @@ class Lesson extends Model
 	| Mutators
 	|--------------------------------------------------------------------------
 	*/
-	public function setFeaturedImageAttribute($value) {
+	public function setFeaturedImageAttribute($value)
+	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
 		$destination_path = 'lesson_' . $this->slug . '/';

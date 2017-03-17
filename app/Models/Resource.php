@@ -18,7 +18,8 @@ class Resource extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
-    public function sessions() {
+    public function sessions()
+	{
 		return $this->belongsToMany('App\Models\Session', 'resource_session');
 	}
 
@@ -27,7 +28,8 @@ class Resource extends Model
 	| Mutators
 	|--------------------------------------------------------------------------
 	*/
-	public function setFileUrlAttribute($value) {
+	public function setFileUrlAttribute($value)
+	{
 		$attribute_name = 'file_url';
 		$disk = 's3';
 		$destination_path = '';

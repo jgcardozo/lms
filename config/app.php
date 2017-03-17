@@ -196,6 +196,12 @@ return [
          * Infusionsoft
          */
         Infusionsoft\FrameworkSupport\Laravel\InfusionsoftServiceProvider::class,
+
+		/**
+		 * Spatie activity log & permissions
+		 */
+		Spatie\Permission\PermissionServiceProvider::class,
+		Spatie\Activitylog\ActivitylogServiceProvider::class,
     ],
 
     /*

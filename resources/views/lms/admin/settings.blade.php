@@ -1,5 +1,13 @@
 @extends('backpack::layout')
 
+@section('header')
+    <section class="content-header">
+        <h1>
+            General settings
+        </h1>
+    </section>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">

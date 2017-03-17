@@ -17,8 +17,8 @@ class CreateProfilesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->string('phone1');
-            $table->string('phone2');
+            $table->string('phone1')->default('');
+            $table->string('phone2')->default('');
             $table->string('company')->default('');
             $table->string('address')->default('');
             $table->string('city')->default('');

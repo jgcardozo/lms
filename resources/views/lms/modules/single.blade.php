@@ -44,7 +44,9 @@
                             <div class="lessons-list__content grid--flex flex--space-between flex--align-center">
                                 <div class="lessons-list__content--left">
                                     <h2 class="lessons-list__item--title"><a href="{{ route('single.lesson', $lesson->slug) }}">{{ $lesson->title }}</a></h2>
-                                    
+
+                                    <h5>Progress {{ $lesson->getProgressPercentage() }}%</h5>
+
                                     <p>{{ truncate_string($lesson->description) }}</p>
                                 </div>
 

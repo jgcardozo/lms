@@ -33,7 +33,7 @@
         <div class="grid grid--w950 course-reminder">
             <div class="course-reminder__block">
                 <div class="grid--flex flex--space-between">
-                    @if(!$starterSeen)
+                    @if($starterSeen === false)
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Hi there</p>
                             <h2 class="course-reminder__title">Welcome to {{ $course->title }}</h2>
@@ -43,7 +43,7 @@
                         <div class="grid--flex flex--align-center">
                             <a href="{{ route('single.course.starter', $course->slug) }}" class="course-reminder__link">Watch videos</a>
                         </div>
-                    @elseif(!empty($nextSession))
+                    @elseif(!empty($nextSession) && $nextSession !== true)
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Last Session</p>
                             <h2 class="course-reminder__title">Welcome to {{ $nextSession->title }}</h2>
@@ -89,6 +89,7 @@
                                 <div class="module__content">
                                     <h2 class="module__title">{{ $module->title }}</h2>
 
+                                    <h5>Progress {{ $module->getProgressPercentage() }}%</h5>
                                     <p>{{ truncate_string($module->description) }}</p>
 
                                     @if($module->is_locked)
