@@ -44,12 +44,10 @@
                             <div class="lessons-list__content grid--flex flex--space-between flex--align-center">
                                 <div class="lessons-list__content--left">
                                     <h2 class="lessons-list__item--title"><a href="{{ route('single.lesson', $lesson->slug) }}">{{ $lesson->title }}</a></h2>
-                                    <?php 
-                                        //Get 2 sentences from description
-                                        $strArray = explode('.', $lesson->description);
-                                    ?>
-                                    {!! $strArray[0] . '. ' . $strArray[1] . '.' !!}
+
                                     <h5>Progress {{ $lesson->getProgressPercentage() }}%</h5>
+
+                                    <p>{{ truncate_string($lesson->description) }}</p>
                                 </div>
 
                                 <div class="lessons-list__content--center grid--flex flex--space-between">
@@ -68,7 +66,9 @@
                                     @if($lesson->is_completed)
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                     @elseif($lesson->is_date_locked)
-                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}"></div>
+                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}">
+                                            <p>Unlocks {{ date('d-m-Y', strtotime($lesson->lock_date)) }}</p>
+                                        </div>
                                     @else
                                         <div class="course-progress"><span class="course-progress__bar"></span></div>
                                     @endif

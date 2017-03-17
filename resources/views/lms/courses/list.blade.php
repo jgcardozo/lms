@@ -27,7 +27,7 @@
 			        	<div class="courseblock__content">
 			        		<div class="courseblock__logo"></div>
 			        		
-			        		<h2 class="courseblock__title">{{ $course->title }}</h2>
+			        		<h2 class="courseblock__title ucase">{!! bold_first_word($course->title) !!}</h2>
 
 				            <p>{!! $course->short_description !!}</p>
 							
