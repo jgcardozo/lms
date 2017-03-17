@@ -174,7 +174,17 @@
                         $lesson_box .= "<h6>Lesson $lesson_count</h6>";
                         $lesson_box .= "<h2>$lesson->title</h2>";
                         $lesson_box .= "<p>" . truncate_string($lesson->description) . "</p>";
-                        $lesson_box .= "<a href='". route('single.lesson', $lesson->slug) ."' class='course-progress-box__item--lesson-mark__info--link'>View This Lesson</a>";
+                        // Check if module is locked
+                        if ( $lesson->is_locked ) {
+                            if ( $lesson->is_date_locked ) {
+                                $lesson_box .= "<div class='course-progress-box__item--lesson-mark__locked'>Unlocks " . date('d-m-Y', strtotime($lesson->lock_date)) . "</div>";
+                            } else {
+                                $lesson_box .= "<div class='course-progress-box__item--lesson-mark__locked'>Locked</div>";
+                            }
+                        } else {
+                            $lesson_box .= "<a href='". route('single.lesson', $lesson->slug) ."' class='course-progress-box__item--lesson-mark__info--link'>View This Lesson</a>";
+                        }
+
                         $lesson_box .= "</div>";
                         $lesson_box .= "</div>";
 
@@ -188,7 +198,17 @@
                     $module_box .= "<h6>Module $module_count</h6>";
                     $module_box .= "<h2>$module->title</h2>";
                     $module_box .= "<p>" . truncate_string($module->description) . "</p>";
-                    $module_box .= "<a href='" . route('single.module', $module->slug) . "' class='course-progress-box__item--module__link'>View This Module</a>";
+                    // Check if module is locked
+                    if ( $module->is_locked ) {
+                        if ( $module->is_date_locked ) {
+                            $module_box .= "<div class='course-progress-box__item--module__locked'>Unlocks " . date('d-m-Y', strtotime($module->lock_date)) . "</div>";
+                        } else {
+                            $module_box .= "<div class='course-progress-box__item--module__locked'>Locked</div>";
+                        }
+                    } else {
+                        $module_box .= "<a href='" . route('single.module', $module->slug) . "' class='course-progress-box__item--module__link'>View This Module</a>";
+                    }
+
                     $module_box .= "</div>";
 
                     echo $module_box;

@@ -274,6 +274,10 @@
       border: 0.1rem solid $brand-green;
       background: url('../images/icons/icon--complete.svg') no-repeat center;
     }
+
+    &--locked {
+      background: url('../images/icons/icon--lock.svg') no-repeat center;
+    }
   }
 
   &--completed {

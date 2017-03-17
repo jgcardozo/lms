@@ -41,8 +41,17 @@
                 <div class="lesson-sessions__list">
                     @foreach($lesson->sessions as $key => $session)
                         <div id="session-{{ $session->id }}" class="lesson-sessions__item grid--flex flex--space-between">
+                            @if($session->is_date_locked)
+                                <div class="lesson-sessions__item--locked-overlay"></div>
+                            @endif
                             <div class="lesson-sessions__video grid--flex">
-                                <a href="{{ route('session.completed', $session->slug) }}" class="block__link js-open-session"></a>
+                                @if($session->is_date_locked)
+                                    <div class="course-progress grid--flex flex--align-center flex--just-center">
+                                        <span class="course-progress__bar course-progress__bar--locked"></span>
+                                    </div>
+                                @else
+                                    <a href="{{ route('session.completed', $session->slug) }}" class="block__link js-open-session"></a>
+                                @endif
                             </div>
 
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
@@ -54,10 +63,10 @@
 
                                 <div class="lesson-sessions__content--right">
                                     @if($session->is_completed)
-                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
+                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>                                    
                                     @elseif($session->is_date_locked)
-                                        <div class="course-progress course-progress--locked" data-date=" until {{ date('d-m-Y', strtotime($session->lock_date)) }}">
-                                            <p>Unlocks {{ date('d-m-Y', strtotime($session->lock_date)) }}</p>
+                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($session->lock_date)) }}">
+                                            Unlocks {{ date('d-m-Y', strtotime($session->lock_date)) }} 
                                         </div>
                                     @else
                                         <div class="course-progress">Mark as completed <span class="course-progress__bar"></span></div>
