@@ -48,18 +48,17 @@
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
                                 <div class="lesson-sessions__content--left">
                                     <h2 class="lesson-sessions__item--title">{{ $session->title }}</h2>
-                                    <?php 
-                                        //Get 2 sentences from description
-                                        $strArray = explode('.', $session->description);
-                                    ?>
-                                    {!! $strArray[0] . '. ' . $strArray[1] . '.' !!}
+                                    
+                                    <p>{{ truncate_string($session->description) }}</p>
                                 </div>
 
                                 <div class="lesson-sessions__content--right">
                                     @if($session->is_completed)
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                     @elseif($session->is_date_locked)
-                                        <div class="course-progress course-progress--locked" data-date=" until {{ date('d-m-Y', strtotime($session->lock_date)) }}"></div>
+                                        <div class="course-progress course-progress--locked" data-date=" until {{ date('d-m-Y', strtotime($session->lock_date)) }}">
+                                            <p>Unlocks {{ date('d-m-Y', strtotime($session->lock_date)) }}</p>
+                                        </div>
                                     @else
                                         <div class="course-progress">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif

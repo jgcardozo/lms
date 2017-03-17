@@ -79,11 +79,8 @@
                             <div class="course-starter__content grid--flex flex--space-between flex--align-center">
                                 <div class="course-starter__content--left">
                                     <h2 class="course-starter__item--title">{{ $video->title }}</h2>
-                                    <?php 
-                                        //Get 2 sentences from description
-                                        $strArray = explode('.', $video->description);
-                                    ?>
-                                    {!! $strArray[0] . '. ' . $strArray[1] . '.' !!}
+
+                                    <p>{{ truncate_string($video->description) }}</p>
                                 </div>
 
                                 <div class="course-starter__content--right">

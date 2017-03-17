@@ -27,7 +27,7 @@ $(document).ready( function() {
 		e.stopPropagation();
 		e.preventDefault();
 
-		$('.masthead__notifications-outer-wrap, .masthead__classes-wrap').stop().slideUp(200);
+		$('.masthead__notifications-outer-wrap, .masthead__classes-wrap, .course-progress-box').stop().slideUp(200);
 		$(this).next('.dropdown-menu-wrap').stop().slideToggle(200);
 	});
 
@@ -38,7 +38,7 @@ $(document).ready( function() {
 		e.stopPropagation();
 		e.preventDefault();
 
-		$('.dropdown-menu-wrap, .masthead__notifications-outer-wrap').stop().slideUp(200);
+		$('.dropdown-menu-wrap, .masthead__notifications-outer-wrap, .course-progress-box').stop().slideUp(200);
 		$(this).next('.masthead__classes-wrap').stop().slideToggle(200);
 	});
 
@@ -49,7 +49,7 @@ $(document).ready( function() {
 		e.stopPropagation();
 		e.preventDefault();
 
-		$('.dropdown-menu-wrap, .masthead__classes-wrap').stop().slideUp(200);
+		$('.dropdown-menu-wrap, .masthead__classes-wrap, .course-progress-box').stop().slideUp(200);
 		$(this).next('.masthead__notifications-outer-wrap').stop().slideToggle(200);
 	});
 
@@ -59,7 +59,7 @@ $(document).ready( function() {
 	 * Close menus, dropdowns, etc. on body click 
 	 */
 	$('body').on('click', function() {
-		$('.dropdown-menu-wrap, .masthead__notifications-outer-wrap, .masthead__classes-wrap').stop().slideUp(200);
+		$('.dropdown-menu-wrap, .masthead__notifications-outer-wrap, .masthead__classes-wrap, .course-progress-box').stop().slideUp(200);
 	});
 
 	/**
@@ -75,5 +75,61 @@ $(document).ready( function() {
 		e.preventDefault();
 
 		$('.session-single').fadeOut();
+	});
+
+	/**
+	 * Course Progress
+	 */
+	$('body').on('click', '.js-header-progress', function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		$('.dropdown-menu-wrap, .masthead__notifications-outer-wrap, .masthead__classes-wrap').stop().slideUp(200);
+		$('.course-progress-box').stop().slideToggle(200);
+	});
+
+	$('body').on('click', '.js-header-close-progress', function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		$('.course-progress-box').stop().slideUp(200);
+	});
+
+	$('body').on('click', '.course-progress-box', function(e) {
+		e.stopPropagation();
+	});
+
+	var timerToClose;
+	$('.course-progress-box__item--lesson-mark').on({
+		mouseenter: function() {
+			clearTimeout(timerToClose);
+
+			$('.course-progress-box__item--lesson-mark__info, .course-progress-box__item--lesson-mark').removeClass('is-hover');
+			$(this).addClass('is-hover');
+			$(this).next('.course-progress-box__item--lesson-mark__info').addClass('is-hover');
+		},
+		mouseleave: function() {
+			timerToClose = window.setTimeout( function() {
+				$('.course-progress-box__item--lesson-mark__info, .course-progress-box__item--lesson-mark').removeClass('is-hover');
+			}, 200);
+		}
+	});
+
+	$('.course-progress-box__item--lesson-mark__info').on({
+		click: function(e) {
+			e.stopPropagation();
+		},
+		mouseenter: function() {
+			clearTimeout(timerToClose);
+			
+			$('.course-progress-box__item--lesson-mark__info, .course-progress-box__item--lesson-mark').removeClass('is-hover');
+			$(this).addClass('is-hover');
+			$(this).prev('.course-progress-box__item--lesson-mark').addClass('is-hover');
+		},
+		mouseleave: function() {
+			timerToClose = window.setTimeout( function() {
+				$('.course-progress-box__item--lesson-mark__info, .course-progress-box__item--lesson-mark').removeClass('is-hover');
+			}, 200);
+		}
 	});
 });
