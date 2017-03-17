@@ -81,6 +81,10 @@
                                 @endif
 
                                 <div class="module__featured-image">
+                                    @if(! $module->is_locked)
+                                        {{ $module->getProgressPercentage() }}% 
+                                    @endif
+
                                     @if($module->is_completed)
                                         <div class="module__completed">Completed</div>
                                     @endif
@@ -89,7 +93,6 @@
                                 <div class="module__content">
                                     <h2 class="module__title">{{ $module->title }}</h2>
 
-                                    <h5>Progress {{ $module->getProgressPercentage() }}%</h5>
                                     <p>{{ truncate_string($module->description) }}</p>
 
                                     @if($module->is_locked)

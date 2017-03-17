@@ -42,11 +42,16 @@
                     @foreach($module->lessons as $key => $lesson)
                         <div id="lesson-{{ $lesson->id }}" class="module-lessons__item grid--flex flex--space-between lesson {{ ($key % 3) == 0 ? 'lesson--first' : '' }}">
                             <div class="lessons-list__content grid--flex flex--space-between flex--align-center">
+                                @if($lesson->is_locked)
+                                    <div class="lessons-list__content--locked-overlay"></div>
+                                @endif
+
                                 <div class="lessons-list__content--left">
-                                    <h2 class="lessons-list__item--title"><a href="{{ route('single.lesson', $lesson->slug) }}">{{ $lesson->title }}</a></h2>
-
-                                    <h5>Progress {{ $lesson->getProgressPercentage() }}%</h5>
-
+                                    @if($lesson->is_locked)
+                                        <h2 class="lessons-list__item--title">{{ $lesson->title }}</h2>
+                                    @else
+                                        <h2 class="lessons-list__item--title"><a href="{{ route('single.lesson', $lesson->slug) }}">{{ $lesson->title }}</a></h2>
+                                    @endif
                                     <p>{{ truncate_string($lesson->description) }}</p>
                                 </div>
 
@@ -58,19 +63,25 @@
 
                                     <div class="lessons-list__lesson-info">
                                         <p>Avg. Time</p>
-                                        <h4>1h</h4>
+                                        <h4>{{ $lesson->duration }}m</h4>
                                     </div>                                     
                                 </div>
                                 
                                 <div class="lessons-list__content--right">
                                     @if($lesson->is_completed)
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
-                                    @elseif($lesson->is_date_locked)
-                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}">
-                                            <p>Unlocks {{ date('d-m-Y', strtotime($lesson->lock_date)) }}</p>
-                                        </div>
+                                    @elseif($lesson->is_locked)
+                                        @if($lesson->is_date_locked)
+                                            <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}">
+                                                Unlocks {{ date('d-m-Y', strtotime($lesson->lock_date)) }} <span class="course-progress__bar course-progress__bar--locked"></span>
+                                            </div>
+                                        @else
+                                            <div class="course-progress">
+                                               <span class="course-progress__bar course-progress__bar--locked"></span>
+                                            </div>
+                                        @endif
                                     @else
-                                        <div class="course-progress"><span class="course-progress__bar"></span></div>
+                                        <div class="course-progress">{{ $lesson->getProgressPercentage() }}%<span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            

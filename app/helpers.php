@@ -42,6 +42,9 @@ if ( !function_exists('truncate_string') ) {
 	}
 }
 
+/**
+ * Make first word in string bold / strong
+ */
 if ( !function_exists('bold_first_word') ) {
 	function bold_first_word( $string ) {
 		$title = preg_split("/\s+/",  $string);
