@@ -27,6 +27,11 @@ class InfusionsoftController extends Controller
     public function sync()
     {
 		$userTags = InfusionsoftFlow::getUserTags($this->user->contact_id);
+		if($userTags === false)
+		{
+			return [];
+		}
+
         $userTags = array_map(function($tag) {
             return array(
                 'title' => $tag['ContactGroup'],

@@ -152,6 +152,11 @@ class Lesson extends Model
 		return $this->sessions->sum('video_duration');
 	}
 
+	public function getSessionsCountAttribute()
+	{
+		return count($this->sessions);
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
