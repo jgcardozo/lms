@@ -62,7 +62,18 @@ class LessonCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'video_url',
-			'label' => 'Video URL'
+			'label' => 'Video URL',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'bonus_video_url',
+			'label' => 'Bonus video URL',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		$this->crud->addField([

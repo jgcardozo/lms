@@ -58,7 +58,10 @@ class HomeController extends Controller
 		// activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
 		// dd($item->getNextSession());
 		$item = Lesson::find(1);
-		dd($item->sessions_count);
+		dd($item->is_fb_posted);
+
+		$user = User::find(1);
+		dd($user->fb_posted);
 
 		// dump($a);
 		// $a = InfusionsoftFlow;

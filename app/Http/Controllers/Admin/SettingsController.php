@@ -16,6 +16,10 @@ Class SettingsController extends BaseController
 {
 	public function index()
 	{
+		// $a = InfusionsoftFlow::is()->invoices()->locateExistingCard(294378, '0002');
+		$a = InfusionsoftFlow::is()->data()->query('CreditCard', 1000, 0, ['ContactId' => 294378], ['Id', 'Last4', 'NameOnCard', 'CardType', 'FirstName', 'LastName', 'ExpirationMonth', 'ExpirationYear'], '', false);
+		dd($a);
+
 		$isTagCategories = InfusionsoftFlow::getTagCategories();
 
 		$settingsDB = DB::table('settings')->get()->toArray();

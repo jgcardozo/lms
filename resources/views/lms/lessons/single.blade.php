@@ -76,6 +76,22 @@
                         </div>
                     @endforeach
                 </div>
+
+                @if($lesson->is_completed && $lesson->has_bonus)
+                    @if(!$lesson->is_fb_posted)
+                        <div class="lesson-sessions__item">
+                            <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module</strong></p>
+
+                            <form>
+                                <textarea name="facebook_post"></textarea>
+                            </form>
+                        </div>
+                    @else
+                        <div class="lesson-sessions__item">
+                            <p>Bonus video here</p>
+                        </div>
+                    @endif
+                @endif
             </div>
         </div>
     </main>

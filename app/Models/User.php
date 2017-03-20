@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\ISTag', 'tag_user', 'user_id', 'tag_id');
     }
+
+	public function fb_posted()
+	{
+		return $this->belongsToMany('App\Models\Lesson', 'fb_lesson', 'user_id', 'lesson_id');
+	}
 }
