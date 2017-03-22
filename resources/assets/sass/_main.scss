@@ -12,6 +12,7 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
+  outline: 0;
 }
 
 body {

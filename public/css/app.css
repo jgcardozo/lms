@@ -515,6 +515,7 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
+  outline: 0;
 }
 
 body {
@@ -1583,6 +1584,85 @@ p {
   height: 100%;
   background: #dcd9d6;
   opacity: 0.7;
+}
+
+.lesson-sessions__item--bonus {
+  padding: 3.5rem 4rem;
+}
+
+.lesson-sessions__item--bonus p {
+  color: #232c40;
+  font-size: 1.8rem;
+  margin: 0 0 2rem;
+}
+
+.lesson-sessions__item--bonus textarea {
+  width: 100%;
+  min-height: 11rem;
+  border: 0.1rem solid #dcd9d6;
+  background: #fff;
+  padding: 3rem;
+  border-radius: 0.3rem;
+  font-size: 1.4rem;
+  color: #928780;
+  margin: 0 0 2rem;
+}
+
+.lesson-sessions__item--bonus input[type="submit"] {
+  display: inline-block;
+  font-size: 1.4rem;
+  color: #4d73a9;
+  width: 100%;
+  max-width: 15.6rem;
+  text-align: center;
+  padding: 1rem;
+  border: 0.1rem solid #4d73a9;
+  border-radius: 0.3rem;
+  background: none;
+}
+
+.lesson-sessions__item--bonus input[type="submit"]:hover {
+  background: #4d73a9;
+  border-color: #4d73a9;
+  color: #fff;
+}
+
+.lesson-sessions__item--bonus .chars-count {
+  font-size: 1.2rem;
+  color: #B4ADA7;
+  margin-right: 3.5rem;
+}
+
+.lesson-sessions__item--bonus-video {
+  -ms-flex-preferred-size: 40%;
+  flex-basis: 40%;
+  max-width: 40%;
+}
+
+.lesson-sessions__item--bonus-content {
+  -ms-flex-preferred-size: 60%;
+  flex-basis: 60%;
+  max-width: 60%;
+  padding-left: 5rem;
+}
+
+.lesson-sessions__item--bonus-content h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+  margin: 0;
+  color: #1b2130;
+}
+
+.lesson-sessions__item--bonus-content h5 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  margin: 0 0 2rem;
+  color: #928780;
+}
+
+.lesson-sessions__item--bonus-content p {
+  font-size: 1.2rem;
+  color: #928780;
 }
 
 .lesson-sessions__item--title {

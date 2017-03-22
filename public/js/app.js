@@ -11765,6 +11765,19 @@ $(document).ready(function () {
 			circle.animate(percent); // Number from 0.0 to 1.0
 		});
 	});
+
+	/**
+  * Count textarea characters remaining
+  */
+	$('.js-count-chars').on('keyup', function () {
+		var $this = $(this),
+		    text_max = $this.attr('maxlength'),
+		    text_length = $this.val().length,
+		    text_remaining = text_max - text_length,
+		    charsShow = $this.data('chars');
+
+		$('.chars-count[data-chars="' + charsShow + '"] span').html(text_remaining);
+	});
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 

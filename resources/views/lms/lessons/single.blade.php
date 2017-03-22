@@ -79,16 +79,38 @@
 
                 @if($lesson->is_completed && $lesson->has_bonus)
                     @if(!$lesson->is_fb_posted)
-                        <div class="lesson-sessions__item">
-                            <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module</strong></p>
+                        <div class="lesson-sessions__item lesson-sessions__item--bonus">
+                            <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
                             <form>
-                                <textarea name="facebook_post"></textarea>
+                                <textarea class="js-count-chars" data-chars="bonus" name="facebook_post" maxlength="200"></textarea>
+
+                                <div class="form-group grid--flex flex--end flex--align-center">
+                                    <div class="chars-count" data-chars="bonus"><span>200</span> Left</div>
+                                    <input type="submit" value="Send">
+                                </div>
                             </form>
                         </div>
                     @else
-                        <div class="lesson-sessions__item">
-                            <p>Bonus video here</p>
+                        <div class="lesson-sessions__item lesson-sessions__item--bonus">
+                            <p>Thank you! Here’s your ultra secret bonus content.</p>
+
+                            <div class="grid--flex flex--space-between">
+                                <div class="lesson-sessions__item--bonus-video">
+                                    <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
+                                    <div class="wistia_responsive_padding" style="padding:56.67% 0 0 0;position:relative;">
+                                        <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                                            <div class="wistia_embed wistia_async_gpc49zomb2" style="width:100%;height:100%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="lesson-sessions__item--bonus-content">
+                                    <h3>Easter Egg Video</h3>
+                                    <h5>Duration 12 min</h5>
+                                    <p>Donec faucibus sagittis posuere. Maecenas consectetur vel eros elementum ultricies. Pellentesque turpis lorem, tincidunt accumsan magna vel, iaculis convallis sapien. Suspendisse vestibulum varius magna, nec venenatis est cursus nec. Sed efficitur sodales diam, a faucibus orci fringilla at. In quis nisl mattis, placerat neque convallis.</p>
+                                </div>
+                            </div>
                         </div>
                     @endif
                 @endif
