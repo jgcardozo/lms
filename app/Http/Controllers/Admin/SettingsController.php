@@ -21,7 +21,7 @@ Class SettingsController extends BaseController
 		$settingsDB = DB::table('settings')->get()->toArray();
 
 		$settings_data = [
-			'is_tag_categories' => $isTagCategories
+			'is_tag_categories' => $isTagCategories !== false ? $isTagCategories : []
 		];
 
 		foreach($settingsDB as $key => $value)
@@ -61,7 +61,7 @@ Class SettingsController extends BaseController
 		$sqlVal = "";
 		foreach($categories as $category)
 		{
-			$catTags = InfusionsoftFlow::getCategoryTags();
+			$catTags = InfusionsoftFlow::getCategoryTags($category);
 			if(!empty($catTags))
 			{
 				foreach($catTags as $tag)
