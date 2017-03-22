@@ -4,6 +4,11 @@
 @import "normalize";
 
 /**
+ * Variables
+ */
+@import "variables";
+
+/**
  * Fonts
  */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700');
@@ -15,9 +20,9 @@
 @import "node_modules/perfect-scrollbar/dist/css/perfect-scrollbar";
 
 /**
- * Variables
+ * jQuery Datepicker custom style
  */
-@import "variables";
+@import "components/datepicker";
 
 /**
  * Main
@@ -88,3 +93,8 @@
  * Course Progress
  */
 @import "components/course-progress";
+
+/**
+ * Calendar
+ */
+@import "calendar/calendar";

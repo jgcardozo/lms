@@ -1,0 +1,260 @@
+.events {
+
+  &__count {
+    background: $brand-white;
+    padding: 1.5rem 3rem;
+    border-radius: 0.3rem 0.3rem 0 0;
+
+    p {
+      font-size: 1.4rem;
+      color: $brand-dark;
+      margin: 0;
+    }
+  }
+  
+  &__item {
+    background: $brand-white;
+    padding: 2rem 0;
+    margin: 0 0 0.3rem;
+
+    h2 {
+      font-family: $font-family-sans-serif;
+      font-size: 1.6rem;
+      margin: 0;
+      color: $brand-grey;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-family: $font-family-sans-serif;
+      font-size: 1.4rem;
+      margin: 0.5rem 0 0;
+      color: $brand-dark;
+      font-weight: 700;
+    }
+
+    h5 {
+      font-family: $font-family-sans-serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+      margin: 0;
+      color: $brand-grey-super-light;
+      font-style: italic;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 0 0 0.5rem;
+      color: $brand-grey-light;
+    }
+
+    &--date {
+      padding: 0 2rem;
+      -ms-flex-preferred-size: 15rem;
+      flex-basis: 15rem;
+      max-width: 15rem;
+    }
+
+    &--content {
+      padding: 0 2rem;
+
+      &-image {
+        width: 14rem;
+        height: 9rem;
+        background-image: url("../images/course-placeholder.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+
+        &--overlay {
+          background: rgba(#3e352c,0.8);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+        }
+      }
+
+      &-logo {
+        position: relative;
+        z-index: 1;
+
+        &--icon {
+          display: block;
+          max-width: 4.8rem;
+        }
+      }
+
+      &-info {
+        padding: 0 2rem;
+        -ms-flex-preferred-size: 36rem;
+        flex-basis: 36rem;
+        max-width: 36rem;
+      }
+    }
+
+    &--activity {
+      padding: 0 2rem;
+
+      &-active {
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 100%;
+        background: $brand-green;
+      }
+
+      &-inactive {
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 100%;
+        background: $border-grey;
+      }
+    }
+
+    &--link {
+      padding: 0 4rem;
+      -ms-flex-preferred-size: 23rem;
+      flex-basis: 23rem;
+      max-width: 23rem;
+
+      a {
+        font-size: 1.4rem;
+        color: $border-blue;
+      }
+
+      &-view {
+
+        &:after {
+          content: "";
+          display: inline-block;
+          vertical-align: middle;
+          width: 1.5rem;
+          height: 1rem;
+          background: url('../images/icons/icon--arrow-next_blue.svg') no-repeat center / 100% auto;
+          margin-left: 1rem;
+        }
+      }
+
+      &-apply {
+        display: inline-block;
+        width: 100%;
+        max-width: 15.6rem;
+        text-align: center;
+        padding: 1rem;
+        border: 0.1rem solid #c9d5e5;
+        border-radius: 0.3rem;
+
+        &:hover {
+          background: $border-blue;
+          border-color: $border-blue;
+          color: $brand-white;
+        }
+      }
+    }
+
+    &-featured {
+      background-image: url("../images/course-placeholder.jpg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+      margin: 0 0 0.3rem;
+      color: $brand-white;
+      padding: 3rem 4rem;
+
+      h2 {
+        font-family: $font-family-sans-serif;
+        font-size: 1.6rem;
+        margin: 0;
+        color: $brand-white;
+        font-weight: 700;
+      }
+
+      h3 {
+        font-family: $font-family-sans-serif;
+        font-size: 2rem;
+        margin: 0;
+        color: $brand-white;
+        font-weight: 700;
+      }
+
+      h5 {
+        font-family: $font-family-sans-serif;
+        font-size: 1.6rem;
+        margin: 0;
+        color: $brand-white;
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      
+      &-title {
+        h2 {
+          font-family: $headings-font-family-light;
+          font-size: 3.6rem;
+          margin: 0;
+          color: $brand-white;
+          font-weight: 300;
+
+          strong {
+            font-family: $headings-font-family;
+            font-weight: 700;
+          }
+        }
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin: 0;
+        color: $brand-white;
+      }
+
+      &--overlay {
+        background: rgba(#3e352c,0.8);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      &-box {
+        position: relative;
+        z-index: 2;
+
+        &--top {
+          margin-bottom: 4rem;
+        }
+
+        &--bottom {
+          max-width: 32rem;
+        }
+      }
+
+      &-logo {
+        max-width: 5.8rem;
+        margin-right: 1.5rem;
+      }
+
+      &-link {
+        display: inline-block;
+        background: $brand-white;
+        border-radius: 0.3rem;
+        color: $brand-dark;
+        font-weight: 700;
+        text-align: center;
+        padding: 1rem;
+        width: 15.6rem;
+        
+        &:hover {
+          background: $brand-dark;
+          color: $brand-white;
+        }
+      }
+    }
+  }
+}

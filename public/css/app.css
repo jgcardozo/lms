@@ -221,6 +221,13 @@ th {
 }
 
 /**
+ * Variables
+ */
+/* Body*/
+/* Brands*/
+/* Borders */
+/* Typography*/
+/**
  * Fonts
  */
 @font-face {
@@ -388,12 +395,109 @@ th {
 }
 
 /**
- * Variables
+ * jQuery Datepicker custom style
  */
-/* Body*/
-/* Brands*/
-/* Borders */
-/* Typography*/
+.ui-datepicker {
+  width: 100% !important;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 28rem;
+  position: relative;
+}
+
+.ui-datepicker-group {
+  background: #fff;
+  width: 49.5%;
+  max-width: 47rem;
+  padding-top: 4rem;
+}
+
+.ui-datepicker-header {
+  margin: 0 0 0.5rem;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  position: absolute;
+  top: 50%;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-top: -2.2rem;
+  border-radius: 100%;
+  box-shadow: 0 0 0.5rem #928780;
+  cursor: pointer;
+}
+
+.ui-datepicker-prev-hover, .ui-datepicker-next-hover {
+  box-shadow: 0 0 1rem #928780;
+}
+
+.ui-datepicker-prev {
+  left: -2.2rem;
+  background: #fff url("../images/icons/icon--arrow-prev_grey.svg") no-repeat center/1.6rem auto;
+}
+
+.ui-datepicker-next {
+  right: -2.2rem;
+  background: #fff url("../images/icons/icon--arrow-next_grey.svg") no-repeat center/1.6rem auto;
+}
+
+.ui-datepicker-prev span,
+.ui-datepicker-next span {
+  display: none;
+}
+
+.ui-datepicker-title {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #232c40;
+  text-align: center;
+}
+
+.ui-datepicker table {
+  width: 100%;
+  max-width: 22rem;
+  font-size: 1.2rem;
+  border-collapse: collapse;
+  margin: 0 auto;
+  color: #7B6A54;
+}
+
+.ui-datepicker th {
+  padding: .7rem .3rem;
+  text-align: center;
+  font-weight: 400;
+  color: #B4ADA7;
+  border: 0;
+}
+
+.ui-datepicker td {
+  border: 0;
+  padding: 1px;
+}
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+  display: block;
+  padding: .4rem .2rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.ui-datepicker td a {
+  color: #7B6A54;
+}
+
+.ui-datepicker-row-break {
+  display: none;
+}
+
 /**
  * Main
  */
@@ -886,7 +990,19 @@ p {
 
 .masthead__calendar {
   border-left: 1px solid #dadada;
-  padding: 0.5rem 1.5rem;
+}
+
+.masthead__calendar a {
+  padding: 0.5rem 1.5rem 0;
+  border-bottom: 0.6rem solid transparent;
+}
+
+.masthead__calendar a:hover {
+  border-bottom: 0.6rem solid #ffb80d;
+}
+
+.masthead__calendar a.active {
+  border-bottom: 0.6rem solid #ffb80d;
 }
 
 .masthead__progress {
@@ -1324,6 +1440,24 @@ p {
   border-radius: 100%;
   background: url(../images/icons/icon--complete.svg) no-repeat center/1.6rem auto;
   margin-left: 1rem;
+}
+
+.module__active {
+  position: absolute;
+  top: 4rem;
+  right: 4rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 100%;
+  border: 0.9rem solid #f6f6f6;
+}
+
+.module__active svg {
+  width: 4.8rem !important;
+  height: 4.8rem;
+  position: absolute;
+  top: -0.9rem;
+  left: -0.9rem;
 }
 
 .module p {
@@ -1810,6 +1944,19 @@ p {
 
 .lessons-list .course-progress__bar--locked {
   background: url("../images/icons/icon--lock.svg") no-repeat center/1.4rem auto;
+}
+
+.lessons-list .course-progress__bar--active {
+  border: 0.9rem solid #dcd9d6;
+  position: relative;
+}
+
+.lessons-list .course-progress__bar--active svg {
+  width: 4.8rem !important;
+  height: 4.8rem;
+  position: absolute;
+  top: -0.9rem;
+  left: -0.9rem;
 }
 
 .lessons-list .course-progress--completed {
@@ -2497,4 +2644,259 @@ p {
   border: 0;
   border-radius: 0 0 1.5rem 1.5rem;
   text-indent: 1rem;
+}
+
+/**
+ * Calendar
+ */
+.events__count {
+  background: #fff;
+  padding: 1.5rem 3rem;
+  border-radius: 0.3rem 0.3rem 0 0;
+}
+
+.events__count p {
+  font-size: 1.4rem;
+  color: #232c40;
+  margin: 0;
+}
+
+.events__item {
+  background: #fff;
+  padding: 2rem 0;
+  margin: 0 0 0.3rem;
+}
+
+.events__item h2, .events__item .login h3, .login .events__item h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+  margin: 0;
+  color: #4a494a;
+  font-weight: 700;
+}
+
+.events__item h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+  margin: 0.5rem 0 0;
+  color: #232c40;
+  font-weight: 700;
+}
+
+.events__item h5 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin: 0;
+  color: #B4ADA7;
+  font-style: italic;
+}
+
+.events__item p {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+  color: #928780;
+}
+
+.events__item--date {
+  padding: 0 2rem;
+  -ms-flex-preferred-size: 15rem;
+  flex-basis: 15rem;
+  max-width: 15rem;
+}
+
+.events__item--content {
+  padding: 0 2rem;
+}
+
+.events__item--content-image {
+  width: 14rem;
+  height: 9rem;
+  background-image: url("../images/course-placeholder.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+.events__item--content-image--overlay {
+  background: rgba(62, 53, 44, 0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.events__item--content-logo {
+  position: relative;
+  z-index: 1;
+}
+
+.events__item--content-logo--icon {
+  display: block;
+  max-width: 4.8rem;
+}
+
+.events__item--content-info {
+  padding: 0 2rem;
+  -ms-flex-preferred-size: 36rem;
+  flex-basis: 36rem;
+  max-width: 36rem;
+}
+
+.events__item--activity {
+  padding: 0 2rem;
+}
+
+.events__item--activity-active {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 100%;
+  background: #62D262;
+}
+
+.events__item--activity-inactive {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 100%;
+  background: #dcd9d6;
+}
+
+.events__item--link {
+  padding: 0 4rem;
+  -ms-flex-preferred-size: 23rem;
+  flex-basis: 23rem;
+  max-width: 23rem;
+}
+
+.events__item--link a {
+  font-size: 1.4rem;
+  color: #4d73a9;
+}
+
+.events__item--link-view:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.5rem;
+  height: 1rem;
+  background: url("../images/icons/icon--arrow-next_blue.svg") no-repeat center/100% auto;
+  margin-left: 1rem;
+}
+
+.events__item--link-apply {
+  display: inline-block;
+  width: 100%;
+  max-width: 15.6rem;
+  text-align: center;
+  padding: 1rem;
+  border: 0.1rem solid #c9d5e5;
+  border-radius: 0.3rem;
+}
+
+.events__item--link-apply:hover {
+  background: #4d73a9;
+  border-color: #4d73a9;
+  color: #fff;
+}
+
+.events__item-featured {
+  background-image: url("../images/course-placeholder.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  margin: 0 0 0.3rem;
+  color: #fff;
+  padding: 3rem 4rem;
+}
+
+.events__item-featured h2, .events__item-featured .login h3, .login .events__item-featured h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.events__item-featured h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 2rem;
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.events__item-featured h5 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+  margin: 0;
+  color: #fff;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.events__item-featured-title h2, .events__item-featured-title .login h3, .login .events__item-featured-title h3 {
+  font-family: "BrandonLight", "Open Sans", sans-serif;
+  font-size: 3.6rem;
+  margin: 0;
+  color: #fff;
+  font-weight: 300;
+}
+
+.events__item-featured-title h2 strong, .events__item-featured-title .login h3 strong, .login .events__item-featured-title h3 strong {
+  font-family: "BrandonBold", "Open Sans", sans-serif;
+  font-weight: 700;
+}
+
+.events__item-featured p {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #fff;
+}
+
+.events__item-featured--overlay {
+  background: rgba(62, 53, 44, 0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.events__item-featured-box {
+  position: relative;
+  z-index: 2;
+}
+
+.events__item-featured-box--top {
+  margin-bottom: 4rem;
+}
+
+.events__item-featured-box--bottom {
+  max-width: 32rem;
+}
+
+.events__item-featured-logo {
+  max-width: 5.8rem;
+  margin-right: 1.5rem;
+}
+
+.events__item-featured-link {
+  display: inline-block;
+  background: #fff;
+  border-radius: 0.3rem;
+  color: #232c40;
+  font-weight: 700;
+  text-align: center;
+  padding: 1rem;
+  width: 15.6rem;
+}
+
+.events__item-featured-link:hover {
+  background: #232c40;
+  color: #fff;
 }

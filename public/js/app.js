@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 37);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,11 +74,11 @@
 
 
 var _ = __webpack_require__(1);
-var cls = __webpack_require__(6);
-var defaultSettings = __webpack_require__(15);
-var dom = __webpack_require__(4);
-var EventManager = __webpack_require__(12);
-var guid = __webpack_require__(13);
+var cls = __webpack_require__(7);
+var defaultSettings = __webpack_require__(22);
+var dom = __webpack_require__(5);
+var EventManager = __webpack_require__(19);
+var guid = __webpack_require__(20);
 
 var instances = {};
 
@@ -187,8 +187,8 @@ exports.get = function (element) {
 "use strict";
 
 
-var cls = __webpack_require__(6);
-var dom = __webpack_require__(4);
+var cls = __webpack_require__(7);
+var dom = __webpack_require__(5);
 
 var toInt = exports.toInt = function (x) {
   return parseInt(x, 10) || 0;
@@ -278,8 +278,8 @@ exports.env = {
 
 
 var _ = __webpack_require__(1);
-var cls = __webpack_require__(6);
-var dom = __webpack_require__(4);
+var cls = __webpack_require__(7);
+var dom = __webpack_require__(5);
 var instances = __webpack_require__(0);
 var updateScroll = __webpack_require__(3);
 
@@ -509,97 +509,6 @@ module.exports = function (element, axis, value) {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var DOM = {};
-
-DOM.e = function (tagName, className) {
-  var element = document.createElement(tagName);
-  element.className = className;
-  return element;
-};
-
-DOM.appendTo = function (child, parent) {
-  parent.appendChild(child);
-  return child;
-};
-
-function cssGet(element, styleName) {
-  return window.getComputedStyle(element)[styleName];
-}
-
-function cssSet(element, styleName, styleValue) {
-  if (typeof styleValue === 'number') {
-    styleValue = styleValue.toString() + 'px';
-  }
-  element.style[styleName] = styleValue;
-  return element;
-}
-
-function cssMultiSet(element, obj) {
-  for (var key in obj) {
-    var val = obj[key];
-    if (typeof val === 'number') {
-      val = val.toString() + 'px';
-    }
-    element.style[key] = val;
-  }
-  return element;
-}
-
-DOM.css = function (element, styleNameOrObject, styleValue) {
-  if (typeof styleNameOrObject === 'object') {
-    // multiple set with object
-    return cssMultiSet(element, styleNameOrObject);
-  } else {
-    if (typeof styleValue === 'undefined') {
-      return cssGet(element, styleNameOrObject);
-    } else {
-      return cssSet(element, styleNameOrObject, styleValue);
-    }
-  }
-};
-
-DOM.matches = function (element, query) {
-  if (typeof element.matches !== 'undefined') {
-    return element.matches(query);
-  } else {
-    if (typeof element.matchesSelector !== 'undefined') {
-      return element.matchesSelector(query);
-    } else if (typeof element.webkitMatchesSelector !== 'undefined') {
-      return element.webkitMatchesSelector(query);
-    } else if (typeof element.mozMatchesSelector !== 'undefined') {
-      return element.mozMatchesSelector(query);
-    } else if (typeof element.msMatchesSelector !== 'undefined') {
-      return element.msMatchesSelector(query);
-    }
-  }
-};
-
-DOM.remove = function (element) {
-  if (typeof element.remove !== 'undefined') {
-    element.remove();
-  } else {
-    if (element.parentNode) {
-      element.parentNode.removeChild(element);
-    }
-  }
-};
-
-DOM.queryChildren = function (element, selector) {
-  return Array.prototype.filter.call(element.childNodes, function (child) {
-    return DOM.matches(child, selector);
-  });
-};
-
-module.exports = DOM;
-
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10826,7 +10735,241 @@ return jQuery;
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var DOM = {};
+
+DOM.e = function (tagName, className) {
+  var element = document.createElement(tagName);
+  element.className = className;
+  return element;
+};
+
+DOM.appendTo = function (child, parent) {
+  parent.appendChild(child);
+  return child;
+};
+
+function cssGet(element, styleName) {
+  return window.getComputedStyle(element)[styleName];
+}
+
+function cssSet(element, styleName, styleValue) {
+  if (typeof styleValue === 'number') {
+    styleValue = styleValue.toString() + 'px';
+  }
+  element.style[styleName] = styleValue;
+  return element;
+}
+
+function cssMultiSet(element, obj) {
+  for (var key in obj) {
+    var val = obj[key];
+    if (typeof val === 'number') {
+      val = val.toString() + 'px';
+    }
+    element.style[key] = val;
+  }
+  return element;
+}
+
+DOM.css = function (element, styleNameOrObject, styleValue) {
+  if (typeof styleNameOrObject === 'object') {
+    // multiple set with object
+    return cssMultiSet(element, styleNameOrObject);
+  } else {
+    if (typeof styleValue === 'undefined') {
+      return cssGet(element, styleNameOrObject);
+    } else {
+      return cssSet(element, styleNameOrObject, styleValue);
+    }
+  }
+};
+
+DOM.matches = function (element, query) {
+  if (typeof element.matches !== 'undefined') {
+    return element.matches(query);
+  } else {
+    if (typeof element.matchesSelector !== 'undefined') {
+      return element.matchesSelector(query);
+    } else if (typeof element.webkitMatchesSelector !== 'undefined') {
+      return element.webkitMatchesSelector(query);
+    } else if (typeof element.mozMatchesSelector !== 'undefined') {
+      return element.mozMatchesSelector(query);
+    } else if (typeof element.msMatchesSelector !== 'undefined') {
+      return element.msMatchesSelector(query);
+    }
+  }
+};
+
+DOM.remove = function (element) {
+  if (typeof element.remove !== 'undefined') {
+    element.remove();
+  } else {
+    if (element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+  }
+};
+
+DOM.queryChildren = function (element, selector) {
+  return Array.prototype.filter.call(element.childNodes, function (child) {
+    return DOM.matches(child, selector);
+  });
+};
+
+module.exports = DOM;
+
+
+/***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+// Utility functions
+
+var PREFIXES = 'Webkit Moz O ms'.split(' ');
+var FLOAT_COMPARISON_EPSILON = 0.001;
+
+// Copy all attributes from source object to destination object.
+// destination object is mutated.
+function extend(destination, source, recursive) {
+    destination = destination || {};
+    source = source || {};
+    recursive = recursive || false;
+
+    for (var attrName in source) {
+        if (source.hasOwnProperty(attrName)) {
+            var destVal = destination[attrName];
+            var sourceVal = source[attrName];
+            if (recursive && isObject(destVal) && isObject(sourceVal)) {
+                destination[attrName] = extend(destVal, sourceVal, recursive);
+            } else {
+                destination[attrName] = sourceVal;
+            }
+        }
+    }
+
+    return destination;
+}
+
+// Renders templates with given variables. Variables must be surrounded with
+// braces without any spaces, e.g. {variable}
+// All instances of variable placeholders will be replaced with given content
+// Example:
+// render('Hello, {message}!', {message: 'world'})
+function render(template, vars) {
+    var rendered = template;
+
+    for (var key in vars) {
+        if (vars.hasOwnProperty(key)) {
+            var val = vars[key];
+            var regExpString = '\\{' + key + '\\}';
+            var regExp = new RegExp(regExpString, 'g');
+
+            rendered = rendered.replace(regExp, val);
+        }
+    }
+
+    return rendered;
+}
+
+function setStyle(element, style, value) {
+    var elStyle = element.style;  // cache for performance
+
+    for (var i = 0; i < PREFIXES.length; ++i) {
+        var prefix = PREFIXES[i];
+        elStyle[prefix + capitalize(style)] = value;
+    }
+
+    elStyle[style] = value;
+}
+
+function setStyles(element, styles) {
+    forEachObject(styles, function(styleValue, styleName) {
+        // Allow disabling some individual styles by setting them
+        // to null or undefined
+        if (styleValue === null || styleValue === undefined) {
+            return;
+        }
+
+        // If style's value is {prefix: true, value: '50%'},
+        // Set also browser prefixed styles
+        if (isObject(styleValue) && styleValue.prefix === true) {
+            setStyle(element, styleName, styleValue.value);
+        } else {
+            element.style[styleName] = styleValue;
+        }
+    });
+}
+
+function capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function isString(obj) {
+    return typeof obj === 'string' || obj instanceof String;
+}
+
+function isFunction(obj) {
+    return typeof obj === 'function';
+}
+
+function isArray(obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+}
+
+// Returns true if `obj` is object as in {a: 1, b: 2}, not if it's function or
+// array
+function isObject(obj) {
+    if (isArray(obj)) {
+        return false;
+    }
+
+    var type = typeof obj;
+    return type === 'object' && !!obj;
+}
+
+function forEachObject(object, callback) {
+    for (var key in object) {
+        if (object.hasOwnProperty(key)) {
+            var val = object[key];
+            callback(val, key);
+        }
+    }
+}
+
+function floatEquals(a, b) {
+    return Math.abs(a - b) < FLOAT_COMPARISON_EPSILON;
+}
+
+// https://coderwall.com/p/nygghw/don-t-use-innerhtml-to-empty-dom-elements
+function removeChildren(el) {
+    while (el.firstChild) {
+        el.removeChild(el.firstChild);
+    }
+}
+
+module.exports = {
+    extend: extend,
+    render: render,
+    setStyle: setStyle,
+    setStyles: setStyles,
+    capitalize: capitalize,
+    isString: isString,
+    isFunction: isFunction,
+    isObject: isObject,
+    forEachObject: forEachObject,
+    floatEquals: floatEquals,
+    removeChildren: removeChildren
+};
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10875,7 +11018,581 @@ exports.list = function (element) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Base object for different progress bar shapes
+
+var Path = __webpack_require__(11);
+var utils = __webpack_require__(6);
+
+var DESTROYED_ERROR = 'Object is destroyed';
+
+var Shape = function Shape(container, opts) {
+    // Throw a better error if progress bars are not initialized with `new`
+    // keyword
+    if (!(this instanceof Shape)) {
+        throw new Error('Constructor was called without new keyword');
+    }
+
+    // Prevent calling constructor without parameters so inheritance
+    // works correctly. To understand, this is how Shape is inherited:
+    //
+    //   Line.prototype = new Shape();
+    //
+    // We just want to set the prototype for Line.
+    if (arguments.length === 0) {
+        return;
+    }
+
+    // Default parameters for progress bar creation
+    this._opts = utils.extend({
+        color: '#555',
+        strokeWidth: 1.0,
+        trailColor: null,
+        trailWidth: null,
+        fill: null,
+        text: {
+            style: {
+                color: null,
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                padding: 0,
+                margin: 0,
+                transform: {
+                    prefix: true,
+                    value: 'translate(-50%, -50%)'
+                }
+            },
+            autoStyleContainer: true,
+            alignToBottom: true,
+            value: null,
+            className: 'progressbar-text'
+        },
+        svgStyle: {
+            display: 'block',
+            width: '100%'
+        },
+        warnings: false
+    }, opts, true);  // Use recursive extend
+
+    // If user specifies e.g. svgStyle or text style, the whole object
+    // should replace the defaults to make working with styles easier
+    if (utils.isObject(opts) && opts.svgStyle !== undefined) {
+        this._opts.svgStyle = opts.svgStyle;
+    }
+    if (utils.isObject(opts) && utils.isObject(opts.text) && opts.text.style !== undefined) {
+        this._opts.text.style = opts.text.style;
+    }
+
+    var svgView = this._createSvgView(this._opts);
+
+    var element;
+    if (utils.isString(container)) {
+        element = document.querySelector(container);
+    } else {
+        element = container;
+    }
+
+    if (!element) {
+        throw new Error('Container does not exist: ' + container);
+    }
+
+    this._container = element;
+    this._container.appendChild(svgView.svg);
+    if (this._opts.warnings) {
+        this._warnContainerAspectRatio(this._container);
+    }
+
+    if (this._opts.svgStyle) {
+        utils.setStyles(svgView.svg, this._opts.svgStyle);
+    }
+
+    // Expose public attributes before Path initialization
+    this.svg = svgView.svg;
+    this.path = svgView.path;
+    this.trail = svgView.trail;
+    this.text = null;
+
+    var newOpts = utils.extend({
+        attachment: undefined,
+        shape: this
+    }, this._opts);
+    this._progressPath = new Path(svgView.path, newOpts);
+
+    if (utils.isObject(this._opts.text) && this._opts.text.value !== null) {
+        this.setText(this._opts.text.value);
+    }
+};
+
+Shape.prototype.animate = function animate(progress, opts, cb) {
+    if (this._progressPath === null) {
+        throw new Error(DESTROYED_ERROR);
+    }
+
+    this._progressPath.animate(progress, opts, cb);
+};
+
+Shape.prototype.stop = function stop() {
+    if (this._progressPath === null) {
+        throw new Error(DESTROYED_ERROR);
+    }
+
+    // Don't crash if stop is called inside step function
+    if (this._progressPath === undefined) {
+        return;
+    }
+
+    this._progressPath.stop();
+};
+
+Shape.prototype.destroy = function destroy() {
+    if (this._progressPath === null) {
+        throw new Error(DESTROYED_ERROR);
+    }
+
+    this.stop();
+    this.svg.parentNode.removeChild(this.svg);
+    this.svg = null;
+    this.path = null;
+    this.trail = null;
+    this._progressPath = null;
+
+    if (this.text !== null) {
+        this.text.parentNode.removeChild(this.text);
+        this.text = null;
+    }
+};
+
+Shape.prototype.set = function set(progress) {
+    if (this._progressPath === null) {
+        throw new Error(DESTROYED_ERROR);
+    }
+
+    this._progressPath.set(progress);
+};
+
+Shape.prototype.value = function value() {
+    if (this._progressPath === null) {
+        throw new Error(DESTROYED_ERROR);
+    }
+
+    if (this._progressPath === undefined) {
+        return 0;
+    }
+
+    return this._progressPath.value();
+};
+
+Shape.prototype.setText = function setText(newText) {
+    if (this._progressPath === null) {
+        throw new Error(DESTROYED_ERROR);
+    }
+
+    if (this.text === null) {
+        // Create new text node
+        this.text = this._createTextContainer(this._opts, this._container);
+        this._container.appendChild(this.text);
+    }
+
+    // Remove previous text and add new
+    if (utils.isObject(newText)) {
+        utils.removeChildren(this.text);
+        this.text.appendChild(newText);
+    } else {
+        this.text.innerHTML = newText;
+    }
+};
+
+Shape.prototype._createSvgView = function _createSvgView(opts) {
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this._initializeSvg(svg, opts);
+
+    var trailPath = null;
+    // Each option listed in the if condition are 'triggers' for creating
+    // the trail path
+    if (opts.trailColor || opts.trailWidth) {
+        trailPath = this._createTrail(opts);
+        svg.appendChild(trailPath);
+    }
+
+    var path = this._createPath(opts);
+    svg.appendChild(path);
+
+    return {
+        svg: svg,
+        path: path,
+        trail: trailPath
+    };
+};
+
+Shape.prototype._initializeSvg = function _initializeSvg(svg, opts) {
+    svg.setAttribute('viewBox', '0 0 100 100');
+};
+
+Shape.prototype._createPath = function _createPath(opts) {
+    var pathString = this._pathString(opts);
+    return this._createPathElement(pathString, opts);
+};
+
+Shape.prototype._createTrail = function _createTrail(opts) {
+    // Create path string with original passed options
+    var pathString = this._trailString(opts);
+
+    // Prevent modifying original
+    var newOpts = utils.extend({}, opts);
+
+    // Defaults for parameters which modify trail path
+    if (!newOpts.trailColor) {
+        newOpts.trailColor = '#eee';
+    }
+    if (!newOpts.trailWidth) {
+        newOpts.trailWidth = newOpts.strokeWidth;
+    }
+
+    newOpts.color = newOpts.trailColor;
+    newOpts.strokeWidth = newOpts.trailWidth;
+
+    // When trail path is set, fill must be set for it instead of the
+    // actual path to prevent trail stroke from clipping
+    newOpts.fill = null;
+
+    return this._createPathElement(pathString, newOpts);
+};
+
+Shape.prototype._createPathElement = function _createPathElement(pathString, opts) {
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', pathString);
+    path.setAttribute('stroke', opts.color);
+    path.setAttribute('stroke-width', opts.strokeWidth);
+
+    if (opts.fill) {
+        path.setAttribute('fill', opts.fill);
+    } else {
+        path.setAttribute('fill-opacity', '0');
+    }
+
+    return path;
+};
+
+Shape.prototype._createTextContainer = function _createTextContainer(opts, container) {
+    var textContainer = document.createElement('div');
+    textContainer.className = opts.text.className;
+
+    var textStyle = opts.text.style;
+    if (textStyle) {
+        if (opts.text.autoStyleContainer) {
+            container.style.position = 'relative';
+        }
+
+        utils.setStyles(textContainer, textStyle);
+        // Default text color to progress bar's color
+        if (!textStyle.color) {
+            textContainer.style.color = opts.color;
+        }
+    }
+
+    this._initializeTextContainer(opts, container, textContainer);
+    return textContainer;
+};
+
+// Give custom shapes possibility to modify text element
+Shape.prototype._initializeTextContainer = function(opts, container, element) {
+    // By default, no-op
+    // Custom shapes should respect API options, such as text.style
+};
+
+Shape.prototype._pathString = function _pathString(opts) {
+    throw new Error('Override this function for each progress bar');
+};
+
+Shape.prototype._trailString = function _trailString(opts) {
+    throw new Error('Override this function for each progress bar');
+};
+
+Shape.prototype._warnContainerAspectRatio = function _warnContainerAspectRatio(container) {
+    if (!this.containerAspectRatio) {
+        return;
+    }
+
+    var computedStyle = window.getComputedStyle(container, null);
+    var width = parseFloat(computedStyle.getPropertyValue('width'), 10);
+    var height = parseFloat(computedStyle.getPropertyValue('height'), 10);
+    if (!utils.floatEquals(this.containerAspectRatio, width / height)) {
+        console.warn(
+            'Incorrect aspect ratio of container',
+            '#' + container.id,
+            'detected:',
+            computedStyle.getPropertyValue('width') + '(width)',
+            '/',
+            computedStyle.getPropertyValue('height') + '(height)',
+            '=',
+            width / height
+        );
+
+        console.warn(
+            'Aspect ratio of should be',
+            this.containerAspectRatio
+        );
+    }
+};
+
+module.exports = Shape;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;( function( factory ) {
+	if ( true ) {
+
+		// AMD. Register as an anonymous module.
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(4) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} ( function( $ ) {
+
+$.ui = $.ui || {};
+
+return $.ui.version = "1.12.1";
+
+} ) );
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Circle shaped progress bar
+
+var Shape = __webpack_require__(8);
+var utils = __webpack_require__(6);
+
+var Circle = function Circle(container, options) {
+    // Use two arcs to form a circle
+    // See this answer http://stackoverflow.com/a/10477334/1446092
+    this._pathTemplate =
+        'M 50,50 m 0,-{radius}' +
+        ' a {radius},{radius} 0 1 1 0,{2radius}' +
+        ' a {radius},{radius} 0 1 1 0,-{2radius}';
+
+    this.containerAspectRatio = 1;
+
+    Shape.apply(this, arguments);
+};
+
+Circle.prototype = new Shape();
+Circle.prototype.constructor = Circle;
+
+Circle.prototype._pathString = function _pathString(opts) {
+    var widthOfWider = opts.strokeWidth;
+    if (opts.trailWidth && opts.trailWidth > opts.strokeWidth) {
+        widthOfWider = opts.trailWidth;
+    }
+
+    var r = 50 - widthOfWider / 2;
+
+    return utils.render(this._pathTemplate, {
+        radius: r,
+        '2radius': r * 2
+    });
+};
+
+Circle.prototype._trailString = function _trailString(opts) {
+    return this._pathString(opts);
+};
+
+module.exports = Circle;
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Lower level API to animate any kind of svg path
+
+var Tweenable = __webpack_require__(36);
+var utils = __webpack_require__(6);
+
+var EASING_ALIASES = {
+    easeIn: 'easeInCubic',
+    easeOut: 'easeOutCubic',
+    easeInOut: 'easeInOutCubic'
+};
+
+var Path = function Path(path, opts) {
+    // Throw a better error if not initialized with `new` keyword
+    if (!(this instanceof Path)) {
+        throw new Error('Constructor was called without new keyword');
+    }
+
+    // Default parameters for animation
+    opts = utils.extend({
+        duration: 800,
+        easing: 'linear',
+        from: {},
+        to: {},
+        step: function() {}
+    }, opts);
+
+    var element;
+    if (utils.isString(path)) {
+        element = document.querySelector(path);
+    } else {
+        element = path;
+    }
+
+    // Reveal .path as public attribute
+    this.path = element;
+    this._opts = opts;
+    this._tweenable = null;
+
+    // Set up the starting positions
+    var length = this.path.getTotalLength();
+    this.path.style.strokeDasharray = length + ' ' + length;
+    this.set(0);
+};
+
+Path.prototype.value = function value() {
+    var offset = this._getComputedDashOffset();
+    var length = this.path.getTotalLength();
+
+    var progress = 1 - offset / length;
+    // Round number to prevent returning very small number like 1e-30, which
+    // is practically 0
+    return parseFloat(progress.toFixed(6), 10);
+};
+
+Path.prototype.set = function set(progress) {
+    this.stop();
+
+    this.path.style.strokeDashoffset = this._progressToOffset(progress);
+
+    var step = this._opts.step;
+    if (utils.isFunction(step)) {
+        var easing = this._easing(this._opts.easing);
+        var values = this._calculateTo(progress, easing);
+        var reference = this._opts.shape || this;
+        step(values, reference, this._opts.attachment);
+    }
+};
+
+Path.prototype.stop = function stop() {
+    this._stopTween();
+    this.path.style.strokeDashoffset = this._getComputedDashOffset();
+};
+
+// Method introduced here:
+// http://jakearchibald.com/2013/animated-line-drawing-svg/
+Path.prototype.animate = function animate(progress, opts, cb) {
+    opts = opts || {};
+
+    if (utils.isFunction(opts)) {
+        cb = opts;
+        opts = {};
+    }
+
+    var passedOpts = utils.extend({}, opts);
+
+    // Copy default opts to new object so defaults are not modified
+    var defaultOpts = utils.extend({}, this._opts);
+    opts = utils.extend(defaultOpts, opts);
+
+    var shiftyEasing = this._easing(opts.easing);
+    var values = this._resolveFromAndTo(progress, shiftyEasing, passedOpts);
+
+    this.stop();
+
+    // Trigger a layout so styles are calculated & the browser
+    // picks up the starting position before animating
+    this.path.getBoundingClientRect();
+
+    var offset = this._getComputedDashOffset();
+    var newOffset = this._progressToOffset(progress);
+
+    var self = this;
+    this._tweenable = new Tweenable();
+    this._tweenable.tween({
+        from: utils.extend({ offset: offset }, values.from),
+        to: utils.extend({ offset: newOffset }, values.to),
+        duration: opts.duration,
+        easing: shiftyEasing,
+        step: function(state) {
+            self.path.style.strokeDashoffset = state.offset;
+            var reference = opts.shape || self;
+            opts.step(state, reference, opts.attachment);
+        },
+        finish: function(state) {
+            if (utils.isFunction(cb)) {
+                cb();
+            }
+        }
+    });
+};
+
+Path.prototype._getComputedDashOffset = function _getComputedDashOffset() {
+    var computedStyle = window.getComputedStyle(this.path, null);
+    return parseFloat(computedStyle.getPropertyValue('stroke-dashoffset'), 10);
+};
+
+Path.prototype._progressToOffset = function _progressToOffset(progress) {
+    var length = this.path.getTotalLength();
+    return length - progress * length;
+};
+
+// Resolves from and to values for animation.
+Path.prototype._resolveFromAndTo = function _resolveFromAndTo(progress, easing, opts) {
+    if (opts.from && opts.to) {
+        return {
+            from: opts.from,
+            to: opts.to
+        };
+    }
+
+    return {
+        from: this._calculateFrom(easing),
+        to: this._calculateTo(progress, easing)
+    };
+};
+
+// Calculate `from` values from options passed at initialization
+Path.prototype._calculateFrom = function _calculateFrom(easing) {
+    return Tweenable.interpolate(this._opts.from, this._opts.to, this.value(), easing);
+};
+
+// Calculate `to` values from options passed at initialization
+Path.prototype._calculateTo = function _calculateTo(progress, easing) {
+    return Tweenable.interpolate(this._opts.from, this._opts.to, progress, easing);
+};
+
+Path.prototype._stopTween = function _stopTween() {
+    if (this._tweenable !== null) {
+        this._tweenable.stop();
+        this._tweenable = null;
+    }
+};
+
+Path.prototype._easing = function _easing(easing) {
+    if (EASING_ALIASES.hasOwnProperty(easing)) {
+        return EASING_ALIASES[easing];
+    }
+
+    return easing;
+};
+
+module.exports = Path;
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
@@ -10885,7 +11602,7 @@ exports.list = function (element) {
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(9);
+__webpack_require__(14);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -11012,17 +11729,53 @@ $(document).ready(function () {
 			}, 200);
 		}
 	});
+
+	/**
+  * Events Calendar
+  */
+	$("#datepicker").datepicker({
+		numberOfMonths: 2,
+		dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"]
+	});
+
+	/**
+  * Circular Progress
+  */
+
+	$(window).on('load', function () {
+		$('.course-progress__bar--active').each(function () {
+			var percent = $(this).data("percentage");
+
+			var circle = new ProgressBar.Circle($(this)[0], {
+				color: '#62D262',
+				strokeWidth: 18.75
+			});
+
+			circle.animate(percent); // Number from 0.0 to 1.0
+		});
+
+		$('.module__active').each(function () {
+			var percent = $(this).data("percentage");
+
+			var circle = new ProgressBar.Circle($(this)[0], {
+				color: '#62D262',
+				strokeWidth: 18.75
+			});
+
+			circle.animate(percent); // Number from 0.0 to 1.0
+		});
+	});
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 8 */
+/* 13 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 9 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
@@ -11034,9 +11787,12 @@ $(document).ready(function () {
  * code may be modified to fit the specific needs of your application.
  */
 
-window.$ = window.jQuery = __webpack_require__(5);
+window.$ = window.jQuery = __webpack_require__(4);
+window.datepicker = __webpack_require__(16);
 
-window.pscroll = __webpack_require__(10)($);
+window.pscroll = __webpack_require__(17)($);
+
+window.ProgressBar = __webpack_require__(34);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -11071,26 +11827,2209 @@ window.pscroll = __webpack_require__(10)($);
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 10 */
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * jQuery UI Keycode 1.12.1
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
+//>>label: Keycode
+//>>group: Core
+//>>description: Provide keycodes as keynames
+//>>docs: http://api.jqueryui.com/jQuery.ui.keyCode/
+
+( function( factory ) {
+	if ( true ) {
+
+		// AMD. Register as an anonymous module.
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(4), __webpack_require__(9) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} ( function( $ ) {
+return $.ui.keyCode = {
+	BACKSPACE: 8,
+	COMMA: 188,
+	DELETE: 46,
+	DOWN: 40,
+	END: 35,
+	ENTER: 13,
+	ESCAPE: 27,
+	HOME: 36,
+	LEFT: 37,
+	PAGE_DOWN: 34,
+	PAGE_UP: 33,
+	PERIOD: 190,
+	RIGHT: 39,
+	SPACE: 32,
+	TAB: 9,
+	UP: 38
+};
+
+} ) );
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// jscs:disable maximumLineLength
+/* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
+/*!
+ * jQuery UI Datepicker 1.12.1
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
+//>>label: Datepicker
+//>>group: Widgets
+//>>description: Displays a calendar from an input or inline for selecting dates.
+//>>docs: http://api.jqueryui.com/datepicker/
+//>>demos: http://jqueryui.com/datepicker/
+//>>css.structure: ../../themes/base/core.css
+//>>css.structure: ../../themes/base/datepicker.css
+//>>css.theme: ../../themes/base/theme.css
+
+( function( factory ) {
+	if ( true ) {
+
+		// AMD. Register as an anonymous module.
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+			__webpack_require__(4),
+			__webpack_require__(9),
+			__webpack_require__(15)
+		], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+}( function( $ ) {
+
+$.extend( $.ui, { datepicker: { version: "1.12.1" } } );
+
+var datepicker_instActive;
+
+function datepicker_getZindex( elem ) {
+	var position, value;
+	while ( elem.length && elem[ 0 ] !== document ) {
+
+		// Ignore z-index if position is set to a value where z-index is ignored by the browser
+		// This makes behavior of this function consistent across browsers
+		// WebKit always returns auto if the element is positioned
+		position = elem.css( "position" );
+		if ( position === "absolute" || position === "relative" || position === "fixed" ) {
+
+			// IE returns 0 when zIndex is not specified
+			// other browsers return a string
+			// we ignore the case of nested elements with an explicit value of 0
+			// <div style="z-index: -10;"><div style="z-index: 0;"></div></div>
+			value = parseInt( elem.css( "zIndex" ), 10 );
+			if ( !isNaN( value ) && value !== 0 ) {
+				return value;
+			}
+		}
+		elem = elem.parent();
+	}
+
+	return 0;
+}
+/* Date picker manager.
+   Use the singleton instance of this class, $.datepicker, to interact with the date picker.
+   Settings for (groups of) date pickers are maintained in an instance object,
+   allowing multiple different settings on the same page. */
+
+function Datepicker() {
+	this._curInst = null; // The current instance in use
+	this._keyEvent = false; // If the last event was a key event
+	this._disabledInputs = []; // List of date picker inputs that have been disabled
+	this._datepickerShowing = false; // True if the popup picker is showing , false if not
+	this._inDialog = false; // True if showing within a "dialog", false if not
+	this._mainDivId = "ui-datepicker-div"; // The ID of the main datepicker division
+	this._inlineClass = "ui-datepicker-inline"; // The name of the inline marker class
+	this._appendClass = "ui-datepicker-append"; // The name of the append marker class
+	this._triggerClass = "ui-datepicker-trigger"; // The name of the trigger marker class
+	this._dialogClass = "ui-datepicker-dialog"; // The name of the dialog marker class
+	this._disableClass = "ui-datepicker-disabled"; // The name of the disabled covering marker class
+	this._unselectableClass = "ui-datepicker-unselectable"; // The name of the unselectable cell marker class
+	this._currentClass = "ui-datepicker-current-day"; // The name of the current day marker class
+	this._dayOverClass = "ui-datepicker-days-cell-over"; // The name of the day hover marker class
+	this.regional = []; // Available regional settings, indexed by language code
+	this.regional[ "" ] = { // Default regional settings
+		closeText: "Done", // Display text for close link
+		prevText: "Prev", // Display text for previous month link
+		nextText: "Next", // Display text for next month link
+		currentText: "Today", // Display text for current month link
+		monthNames: [ "January","February","March","April","May","June",
+			"July","August","September","October","November","December" ], // Names of months for drop-down and formatting
+		monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ], // For formatting
+		dayNames: [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ], // For formatting
+		dayNamesShort: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ], // For formatting
+		dayNamesMin: [ "Su","Mo","Tu","We","Th","Fr","Sa" ], // Column headings for days starting at Sunday
+		weekHeader: "Wk", // Column header for week of the year
+		dateFormat: "mm/dd/yy", // See format options on parseDate
+		firstDay: 0, // The first day of the week, Sun = 0, Mon = 1, ...
+		isRTL: false, // True if right-to-left language, false if left-to-right
+		showMonthAfterYear: false, // True if the year select precedes month, false for month then year
+		yearSuffix: "" // Additional text to append to the year in the month headers
+	};
+	this._defaults = { // Global defaults for all the date picker instances
+		showOn: "focus", // "focus" for popup on focus,
+			// "button" for trigger button, or "both" for either
+		showAnim: "fadeIn", // Name of jQuery animation for popup
+		showOptions: {}, // Options for enhanced animations
+		defaultDate: null, // Used when field is blank: actual date,
+			// +/-number for offset from today, null for today
+		appendText: "", // Display text following the input box, e.g. showing the format
+		buttonText: "...", // Text for trigger button
+		buttonImage: "", // URL for trigger button image
+		buttonImageOnly: false, // True if the image appears alone, false if it appears on a button
+		hideIfNoPrevNext: false, // True to hide next/previous month links
+			// if not applicable, false to just disable them
+		navigationAsDateFormat: false, // True if date formatting applied to prev/today/next links
+		gotoCurrent: false, // True if today link goes back to current selection instead
+		changeMonth: false, // True if month can be selected directly, false if only prev/next
+		changeYear: false, // True if year can be selected directly, false if only prev/next
+		yearRange: "c-10:c+10", // Range of years to display in drop-down,
+			// either relative to today's year (-nn:+nn), relative to currently displayed year
+			// (c-nn:c+nn), absolute (nnnn:nnnn), or a combination of the above (nnnn:-n)
+		showOtherMonths: false, // True to show dates in other months, false to leave blank
+		selectOtherMonths: false, // True to allow selection of dates in other months, false for unselectable
+		showWeek: false, // True to show week of the year, false to not show it
+		calculateWeek: this.iso8601Week, // How to calculate the week of the year,
+			// takes a Date and returns the number of the week for it
+		shortYearCutoff: "+10", // Short year values < this are in the current century,
+			// > this are in the previous century,
+			// string value starting with "+" for current year + value
+		minDate: null, // The earliest selectable date, or null for no limit
+		maxDate: null, // The latest selectable date, or null for no limit
+		duration: "fast", // Duration of display/closure
+		beforeShowDay: null, // Function that takes a date and returns an array with
+			// [0] = true if selectable, false if not, [1] = custom CSS class name(s) or "",
+			// [2] = cell title (optional), e.g. $.datepicker.noWeekends
+		beforeShow: null, // Function that takes an input field and
+			// returns a set of custom settings for the date picker
+		onSelect: null, // Define a callback function when a date is selected
+		onChangeMonthYear: null, // Define a callback function when the month or year is changed
+		onClose: null, // Define a callback function when the datepicker is closed
+		numberOfMonths: 1, // Number of months to show at a time
+		showCurrentAtPos: 0, // The position in multipe months at which to show the current month (starting at 0)
+		stepMonths: 1, // Number of months to step back/forward
+		stepBigMonths: 12, // Number of months to step back/forward for the big links
+		altField: "", // Selector for an alternate field to store selected dates into
+		altFormat: "", // The date format to use for the alternate field
+		constrainInput: true, // The input is constrained by the current date format
+		showButtonPanel: false, // True to show button panel, false to not show it
+		autoSize: false, // True to size the input for the date format, false to leave as is
+		disabled: false // The initial disabled state
+	};
+	$.extend( this._defaults, this.regional[ "" ] );
+	this.regional.en = $.extend( true, {}, this.regional[ "" ] );
+	this.regional[ "en-US" ] = $.extend( true, {}, this.regional.en );
+	this.dpDiv = datepicker_bindHover( $( "<div id='" + this._mainDivId + "' class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all'></div>" ) );
+}
+
+$.extend( Datepicker.prototype, {
+	/* Class name added to elements to indicate already configured with a date picker. */
+	markerClassName: "hasDatepicker",
+
+	//Keep track of the maximum number of rows displayed (see #7043)
+	maxRows: 4,
+
+	// TODO rename to "widget" when switching to widget factory
+	_widgetDatepicker: function() {
+		return this.dpDiv;
+	},
+
+	/* Override the default settings for all instances of the date picker.
+	 * @param  settings  object - the new settings to use as defaults (anonymous object)
+	 * @return the manager object
+	 */
+	setDefaults: function( settings ) {
+		datepicker_extendRemove( this._defaults, settings || {} );
+		return this;
+	},
+
+	/* Attach the date picker to a jQuery selection.
+	 * @param  target	element - the target input field or division or span
+	 * @param  settings  object - the new settings to use for this date picker instance (anonymous)
+	 */
+	_attachDatepicker: function( target, settings ) {
+		var nodeName, inline, inst;
+		nodeName = target.nodeName.toLowerCase();
+		inline = ( nodeName === "div" || nodeName === "span" );
+		if ( !target.id ) {
+			this.uuid += 1;
+			target.id = "dp" + this.uuid;
+		}
+		inst = this._newInst( $( target ), inline );
+		inst.settings = $.extend( {}, settings || {} );
+		if ( nodeName === "input" ) {
+			this._connectDatepicker( target, inst );
+		} else if ( inline ) {
+			this._inlineDatepicker( target, inst );
+		}
+	},
+
+	/* Create a new instance object. */
+	_newInst: function( target, inline ) {
+		var id = target[ 0 ].id.replace( /([^A-Za-z0-9_\-])/g, "\\\\$1" ); // escape jQuery meta chars
+		return { id: id, input: target, // associated target
+			selectedDay: 0, selectedMonth: 0, selectedYear: 0, // current selection
+			drawMonth: 0, drawYear: 0, // month being drawn
+			inline: inline, // is datepicker inline or not
+			dpDiv: ( !inline ? this.dpDiv : // presentation div
+			datepicker_bindHover( $( "<div class='" + this._inlineClass + " ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all'></div>" ) ) ) };
+	},
+
+	/* Attach the date picker to an input field. */
+	_connectDatepicker: function( target, inst ) {
+		var input = $( target );
+		inst.append = $( [] );
+		inst.trigger = $( [] );
+		if ( input.hasClass( this.markerClassName ) ) {
+			return;
+		}
+		this._attachments( input, inst );
+		input.addClass( this.markerClassName ).on( "keydown", this._doKeyDown ).
+			on( "keypress", this._doKeyPress ).on( "keyup", this._doKeyUp );
+		this._autoSize( inst );
+		$.data( target, "datepicker", inst );
+
+		//If disabled option is true, disable the datepicker once it has been attached to the input (see ticket #5665)
+		if ( inst.settings.disabled ) {
+			this._disableDatepicker( target );
+		}
+	},
+
+	/* Make attachments based on settings. */
+	_attachments: function( input, inst ) {
+		var showOn, buttonText, buttonImage,
+			appendText = this._get( inst, "appendText" ),
+			isRTL = this._get( inst, "isRTL" );
+
+		if ( inst.append ) {
+			inst.append.remove();
+		}
+		if ( appendText ) {
+			inst.append = $( "<span class='" + this._appendClass + "'>" + appendText + "</span>" );
+			input[ isRTL ? "before" : "after" ]( inst.append );
+		}
+
+		input.off( "focus", this._showDatepicker );
+
+		if ( inst.trigger ) {
+			inst.trigger.remove();
+		}
+
+		showOn = this._get( inst, "showOn" );
+		if ( showOn === "focus" || showOn === "both" ) { // pop-up date picker when in the marked field
+			input.on( "focus", this._showDatepicker );
+		}
+		if ( showOn === "button" || showOn === "both" ) { // pop-up date picker when button clicked
+			buttonText = this._get( inst, "buttonText" );
+			buttonImage = this._get( inst, "buttonImage" );
+			inst.trigger = $( this._get( inst, "buttonImageOnly" ) ?
+				$( "<img/>" ).addClass( this._triggerClass ).
+					attr( { src: buttonImage, alt: buttonText, title: buttonText } ) :
+				$( "<button type='button'></button>" ).addClass( this._triggerClass ).
+					html( !buttonImage ? buttonText : $( "<img/>" ).attr(
+					{ src:buttonImage, alt:buttonText, title:buttonText } ) ) );
+			input[ isRTL ? "before" : "after" ]( inst.trigger );
+			inst.trigger.on( "click", function() {
+				if ( $.datepicker._datepickerShowing && $.datepicker._lastInput === input[ 0 ] ) {
+					$.datepicker._hideDatepicker();
+				} else if ( $.datepicker._datepickerShowing && $.datepicker._lastInput !== input[ 0 ] ) {
+					$.datepicker._hideDatepicker();
+					$.datepicker._showDatepicker( input[ 0 ] );
+				} else {
+					$.datepicker._showDatepicker( input[ 0 ] );
+				}
+				return false;
+			} );
+		}
+	},
+
+	/* Apply the maximum length for the date format. */
+	_autoSize: function( inst ) {
+		if ( this._get( inst, "autoSize" ) && !inst.inline ) {
+			var findMax, max, maxI, i,
+				date = new Date( 2009, 12 - 1, 20 ), // Ensure double digits
+				dateFormat = this._get( inst, "dateFormat" );
+
+			if ( dateFormat.match( /[DM]/ ) ) {
+				findMax = function( names ) {
+					max = 0;
+					maxI = 0;
+					for ( i = 0; i < names.length; i++ ) {
+						if ( names[ i ].length > max ) {
+							max = names[ i ].length;
+							maxI = i;
+						}
+					}
+					return maxI;
+				};
+				date.setMonth( findMax( this._get( inst, ( dateFormat.match( /MM/ ) ?
+					"monthNames" : "monthNamesShort" ) ) ) );
+				date.setDate( findMax( this._get( inst, ( dateFormat.match( /DD/ ) ?
+					"dayNames" : "dayNamesShort" ) ) ) + 20 - date.getDay() );
+			}
+			inst.input.attr( "size", this._formatDate( inst, date ).length );
+		}
+	},
+
+	/* Attach an inline date picker to a div. */
+	_inlineDatepicker: function( target, inst ) {
+		var divSpan = $( target );
+		if ( divSpan.hasClass( this.markerClassName ) ) {
+			return;
+		}
+		divSpan.addClass( this.markerClassName ).append( inst.dpDiv );
+		$.data( target, "datepicker", inst );
+		this._setDate( inst, this._getDefaultDate( inst ), true );
+		this._updateDatepicker( inst );
+		this._updateAlternate( inst );
+
+		//If disabled option is true, disable the datepicker before showing it (see ticket #5665)
+		if ( inst.settings.disabled ) {
+			this._disableDatepicker( target );
+		}
+
+		// Set display:block in place of inst.dpDiv.show() which won't work on disconnected elements
+		// http://bugs.jqueryui.com/ticket/7552 - A Datepicker created on a detached div has zero height
+		inst.dpDiv.css( "display", "block" );
+	},
+
+	/* Pop-up the date picker in a "dialog" box.
+	 * @param  input element - ignored
+	 * @param  date	string or Date - the initial date to display
+	 * @param  onSelect  function - the function to call when a date is selected
+	 * @param  settings  object - update the dialog date picker instance's settings (anonymous object)
+	 * @param  pos int[2] - coordinates for the dialog's position within the screen or
+	 *					event - with x/y coordinates or
+	 *					leave empty for default (screen centre)
+	 * @return the manager object
+	 */
+	_dialogDatepicker: function( input, date, onSelect, settings, pos ) {
+		var id, browserWidth, browserHeight, scrollX, scrollY,
+			inst = this._dialogInst; // internal instance
+
+		if ( !inst ) {
+			this.uuid += 1;
+			id = "dp" + this.uuid;
+			this._dialogInput = $( "<input type='text' id='" + id +
+				"' style='position: absolute; top: -100px; width: 0px;'/>" );
+			this._dialogInput.on( "keydown", this._doKeyDown );
+			$( "body" ).append( this._dialogInput );
+			inst = this._dialogInst = this._newInst( this._dialogInput, false );
+			inst.settings = {};
+			$.data( this._dialogInput[ 0 ], "datepicker", inst );
+		}
+		datepicker_extendRemove( inst.settings, settings || {} );
+		date = ( date && date.constructor === Date ? this._formatDate( inst, date ) : date );
+		this._dialogInput.val( date );
+
+		this._pos = ( pos ? ( pos.length ? pos : [ pos.pageX, pos.pageY ] ) : null );
+		if ( !this._pos ) {
+			browserWidth = document.documentElement.clientWidth;
+			browserHeight = document.documentElement.clientHeight;
+			scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+			scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+			this._pos = // should use actual width/height below
+				[ ( browserWidth / 2 ) - 100 + scrollX, ( browserHeight / 2 ) - 150 + scrollY ];
+		}
+
+		// Move input on screen for focus, but hidden behind dialog
+		this._dialogInput.css( "left", ( this._pos[ 0 ] + 20 ) + "px" ).css( "top", this._pos[ 1 ] + "px" );
+		inst.settings.onSelect = onSelect;
+		this._inDialog = true;
+		this.dpDiv.addClass( this._dialogClass );
+		this._showDatepicker( this._dialogInput[ 0 ] );
+		if ( $.blockUI ) {
+			$.blockUI( this.dpDiv );
+		}
+		$.data( this._dialogInput[ 0 ], "datepicker", inst );
+		return this;
+	},
+
+	/* Detach a datepicker from its control.
+	 * @param  target	element - the target input field or division or span
+	 */
+	_destroyDatepicker: function( target ) {
+		var nodeName,
+			$target = $( target ),
+			inst = $.data( target, "datepicker" );
+
+		if ( !$target.hasClass( this.markerClassName ) ) {
+			return;
+		}
+
+		nodeName = target.nodeName.toLowerCase();
+		$.removeData( target, "datepicker" );
+		if ( nodeName === "input" ) {
+			inst.append.remove();
+			inst.trigger.remove();
+			$target.removeClass( this.markerClassName ).
+				off( "focus", this._showDatepicker ).
+				off( "keydown", this._doKeyDown ).
+				off( "keypress", this._doKeyPress ).
+				off( "keyup", this._doKeyUp );
+		} else if ( nodeName === "div" || nodeName === "span" ) {
+			$target.removeClass( this.markerClassName ).empty();
+		}
+
+		if ( datepicker_instActive === inst ) {
+			datepicker_instActive = null;
+		}
+	},
+
+	/* Enable the date picker to a jQuery selection.
+	 * @param  target	element - the target input field or division or span
+	 */
+	_enableDatepicker: function( target ) {
+		var nodeName, inline,
+			$target = $( target ),
+			inst = $.data( target, "datepicker" );
+
+		if ( !$target.hasClass( this.markerClassName ) ) {
+			return;
+		}
+
+		nodeName = target.nodeName.toLowerCase();
+		if ( nodeName === "input" ) {
+			target.disabled = false;
+			inst.trigger.filter( "button" ).
+				each( function() { this.disabled = false; } ).end().
+				filter( "img" ).css( { opacity: "1.0", cursor: "" } );
+		} else if ( nodeName === "div" || nodeName === "span" ) {
+			inline = $target.children( "." + this._inlineClass );
+			inline.children().removeClass( "ui-state-disabled" );
+			inline.find( "select.ui-datepicker-month, select.ui-datepicker-year" ).
+				prop( "disabled", false );
+		}
+		this._disabledInputs = $.map( this._disabledInputs,
+			function( value ) { return ( value === target ? null : value ); } ); // delete entry
+	},
+
+	/* Disable the date picker to a jQuery selection.
+	 * @param  target	element - the target input field or division or span
+	 */
+	_disableDatepicker: function( target ) {
+		var nodeName, inline,
+			$target = $( target ),
+			inst = $.data( target, "datepicker" );
+
+		if ( !$target.hasClass( this.markerClassName ) ) {
+			return;
+		}
+
+		nodeName = target.nodeName.toLowerCase();
+		if ( nodeName === "input" ) {
+			target.disabled = true;
+			inst.trigger.filter( "button" ).
+				each( function() { this.disabled = true; } ).end().
+				filter( "img" ).css( { opacity: "0.5", cursor: "default" } );
+		} else if ( nodeName === "div" || nodeName === "span" ) {
+			inline = $target.children( "." + this._inlineClass );
+			inline.children().addClass( "ui-state-disabled" );
+			inline.find( "select.ui-datepicker-month, select.ui-datepicker-year" ).
+				prop( "disabled", true );
+		}
+		this._disabledInputs = $.map( this._disabledInputs,
+			function( value ) { return ( value === target ? null : value ); } ); // delete entry
+		this._disabledInputs[ this._disabledInputs.length ] = target;
+	},
+
+	/* Is the first field in a jQuery collection disabled as a datepicker?
+	 * @param  target	element - the target input field or division or span
+	 * @return boolean - true if disabled, false if enabled
+	 */
+	_isDisabledDatepicker: function( target ) {
+		if ( !target ) {
+			return false;
+		}
+		for ( var i = 0; i < this._disabledInputs.length; i++ ) {
+			if ( this._disabledInputs[ i ] === target ) {
+				return true;
+			}
+		}
+		return false;
+	},
+
+	/* Retrieve the instance data for the target control.
+	 * @param  target  element - the target input field or division or span
+	 * @return  object - the associated instance data
+	 * @throws  error if a jQuery problem getting data
+	 */
+	_getInst: function( target ) {
+		try {
+			return $.data( target, "datepicker" );
+		}
+		catch ( err ) {
+			throw "Missing instance data for this datepicker";
+		}
+	},
+
+	/* Update or retrieve the settings for a date picker attached to an input field or division.
+	 * @param  target  element - the target input field or division or span
+	 * @param  name	object - the new settings to update or
+	 *				string - the name of the setting to change or retrieve,
+	 *				when retrieving also "all" for all instance settings or
+	 *				"defaults" for all global defaults
+	 * @param  value   any - the new value for the setting
+	 *				(omit if above is an object or to retrieve a value)
+	 */
+	_optionDatepicker: function( target, name, value ) {
+		var settings, date, minDate, maxDate,
+			inst = this._getInst( target );
+
+		if ( arguments.length === 2 && typeof name === "string" ) {
+			return ( name === "defaults" ? $.extend( {}, $.datepicker._defaults ) :
+				( inst ? ( name === "all" ? $.extend( {}, inst.settings ) :
+				this._get( inst, name ) ) : null ) );
+		}
+
+		settings = name || {};
+		if ( typeof name === "string" ) {
+			settings = {};
+			settings[ name ] = value;
+		}
+
+		if ( inst ) {
+			if ( this._curInst === inst ) {
+				this._hideDatepicker();
+			}
+
+			date = this._getDateDatepicker( target, true );
+			minDate = this._getMinMaxDate( inst, "min" );
+			maxDate = this._getMinMaxDate( inst, "max" );
+			datepicker_extendRemove( inst.settings, settings );
+
+			// reformat the old minDate/maxDate values if dateFormat changes and a new minDate/maxDate isn't provided
+			if ( minDate !== null && settings.dateFormat !== undefined && settings.minDate === undefined ) {
+				inst.settings.minDate = this._formatDate( inst, minDate );
+			}
+			if ( maxDate !== null && settings.dateFormat !== undefined && settings.maxDate === undefined ) {
+				inst.settings.maxDate = this._formatDate( inst, maxDate );
+			}
+			if ( "disabled" in settings ) {
+				if ( settings.disabled ) {
+					this._disableDatepicker( target );
+				} else {
+					this._enableDatepicker( target );
+				}
+			}
+			this._attachments( $( target ), inst );
+			this._autoSize( inst );
+			this._setDate( inst, date );
+			this._updateAlternate( inst );
+			this._updateDatepicker( inst );
+		}
+	},
+
+	// Change method deprecated
+	_changeDatepicker: function( target, name, value ) {
+		this._optionDatepicker( target, name, value );
+	},
+
+	/* Redraw the date picker attached to an input field or division.
+	 * @param  target  element - the target input field or division or span
+	 */
+	_refreshDatepicker: function( target ) {
+		var inst = this._getInst( target );
+		if ( inst ) {
+			this._updateDatepicker( inst );
+		}
+	},
+
+	/* Set the dates for a jQuery selection.
+	 * @param  target element - the target input field or division or span
+	 * @param  date	Date - the new date
+	 */
+	_setDateDatepicker: function( target, date ) {
+		var inst = this._getInst( target );
+		if ( inst ) {
+			this._setDate( inst, date );
+			this._updateDatepicker( inst );
+			this._updateAlternate( inst );
+		}
+	},
+
+	/* Get the date(s) for the first entry in a jQuery selection.
+	 * @param  target element - the target input field or division or span
+	 * @param  noDefault boolean - true if no default date is to be used
+	 * @return Date - the current date
+	 */
+	_getDateDatepicker: function( target, noDefault ) {
+		var inst = this._getInst( target );
+		if ( inst && !inst.inline ) {
+			this._setDateFromField( inst, noDefault );
+		}
+		return ( inst ? this._getDate( inst ) : null );
+	},
+
+	/* Handle keystrokes. */
+	_doKeyDown: function( event ) {
+		var onSelect, dateStr, sel,
+			inst = $.datepicker._getInst( event.target ),
+			handled = true,
+			isRTL = inst.dpDiv.is( ".ui-datepicker-rtl" );
+
+		inst._keyEvent = true;
+		if ( $.datepicker._datepickerShowing ) {
+			switch ( event.keyCode ) {
+				case 9: $.datepicker._hideDatepicker();
+						handled = false;
+						break; // hide on tab out
+				case 13: sel = $( "td." + $.datepicker._dayOverClass + ":not(." +
+									$.datepicker._currentClass + ")", inst.dpDiv );
+						if ( sel[ 0 ] ) {
+							$.datepicker._selectDay( event.target, inst.selectedMonth, inst.selectedYear, sel[ 0 ] );
+						}
+
+						onSelect = $.datepicker._get( inst, "onSelect" );
+						if ( onSelect ) {
+							dateStr = $.datepicker._formatDate( inst );
+
+							// Trigger custom callback
+							onSelect.apply( ( inst.input ? inst.input[ 0 ] : null ), [ dateStr, inst ] );
+						} else {
+							$.datepicker._hideDatepicker();
+						}
+
+						return false; // don't submit the form
+				case 27: $.datepicker._hideDatepicker();
+						break; // hide on escape
+				case 33: $.datepicker._adjustDate( event.target, ( event.ctrlKey ?
+							-$.datepicker._get( inst, "stepBigMonths" ) :
+							-$.datepicker._get( inst, "stepMonths" ) ), "M" );
+						break; // previous month/year on page up/+ ctrl
+				case 34: $.datepicker._adjustDate( event.target, ( event.ctrlKey ?
+							+$.datepicker._get( inst, "stepBigMonths" ) :
+							+$.datepicker._get( inst, "stepMonths" ) ), "M" );
+						break; // next month/year on page down/+ ctrl
+				case 35: if ( event.ctrlKey || event.metaKey ) {
+							$.datepicker._clearDate( event.target );
+						}
+						handled = event.ctrlKey || event.metaKey;
+						break; // clear on ctrl or command +end
+				case 36: if ( event.ctrlKey || event.metaKey ) {
+							$.datepicker._gotoToday( event.target );
+						}
+						handled = event.ctrlKey || event.metaKey;
+						break; // current on ctrl or command +home
+				case 37: if ( event.ctrlKey || event.metaKey ) {
+							$.datepicker._adjustDate( event.target, ( isRTL ? +1 : -1 ), "D" );
+						}
+						handled = event.ctrlKey || event.metaKey;
+
+						// -1 day on ctrl or command +left
+						if ( event.originalEvent.altKey ) {
+							$.datepicker._adjustDate( event.target, ( event.ctrlKey ?
+								-$.datepicker._get( inst, "stepBigMonths" ) :
+								-$.datepicker._get( inst, "stepMonths" ) ), "M" );
+						}
+
+						// next month/year on alt +left on Mac
+						break;
+				case 38: if ( event.ctrlKey || event.metaKey ) {
+							$.datepicker._adjustDate( event.target, -7, "D" );
+						}
+						handled = event.ctrlKey || event.metaKey;
+						break; // -1 week on ctrl or command +up
+				case 39: if ( event.ctrlKey || event.metaKey ) {
+							$.datepicker._adjustDate( event.target, ( isRTL ? -1 : +1 ), "D" );
+						}
+						handled = event.ctrlKey || event.metaKey;
+
+						// +1 day on ctrl or command +right
+						if ( event.originalEvent.altKey ) {
+							$.datepicker._adjustDate( event.target, ( event.ctrlKey ?
+								+$.datepicker._get( inst, "stepBigMonths" ) :
+								+$.datepicker._get( inst, "stepMonths" ) ), "M" );
+						}
+
+						// next month/year on alt +right
+						break;
+				case 40: if ( event.ctrlKey || event.metaKey ) {
+							$.datepicker._adjustDate( event.target, +7, "D" );
+						}
+						handled = event.ctrlKey || event.metaKey;
+						break; // +1 week on ctrl or command +down
+				default: handled = false;
+			}
+		} else if ( event.keyCode === 36 && event.ctrlKey ) { // display the date picker on ctrl+home
+			$.datepicker._showDatepicker( this );
+		} else {
+			handled = false;
+		}
+
+		if ( handled ) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	},
+
+	/* Filter entered characters - based on date format. */
+	_doKeyPress: function( event ) {
+		var chars, chr,
+			inst = $.datepicker._getInst( event.target );
+
+		if ( $.datepicker._get( inst, "constrainInput" ) ) {
+			chars = $.datepicker._possibleChars( $.datepicker._get( inst, "dateFormat" ) );
+			chr = String.fromCharCode( event.charCode == null ? event.keyCode : event.charCode );
+			return event.ctrlKey || event.metaKey || ( chr < " " || !chars || chars.indexOf( chr ) > -1 );
+		}
+	},
+
+	/* Synchronise manual entry and field/alternate field. */
+	_doKeyUp: function( event ) {
+		var date,
+			inst = $.datepicker._getInst( event.target );
+
+		if ( inst.input.val() !== inst.lastVal ) {
+			try {
+				date = $.datepicker.parseDate( $.datepicker._get( inst, "dateFormat" ),
+					( inst.input ? inst.input.val() : null ),
+					$.datepicker._getFormatConfig( inst ) );
+
+				if ( date ) { // only if valid
+					$.datepicker._setDateFromField( inst );
+					$.datepicker._updateAlternate( inst );
+					$.datepicker._updateDatepicker( inst );
+				}
+			}
+			catch ( err ) {
+			}
+		}
+		return true;
+	},
+
+	/* Pop-up the date picker for a given input field.
+	 * If false returned from beforeShow event handler do not show.
+	 * @param  input  element - the input field attached to the date picker or
+	 *					event - if triggered by focus
+	 */
+	_showDatepicker: function( input ) {
+		input = input.target || input;
+		if ( input.nodeName.toLowerCase() !== "input" ) { // find from button/image trigger
+			input = $( "input", input.parentNode )[ 0 ];
+		}
+
+		if ( $.datepicker._isDisabledDatepicker( input ) || $.datepicker._lastInput === input ) { // already here
+			return;
+		}
+
+		var inst, beforeShow, beforeShowSettings, isFixed,
+			offset, showAnim, duration;
+
+		inst = $.datepicker._getInst( input );
+		if ( $.datepicker._curInst && $.datepicker._curInst !== inst ) {
+			$.datepicker._curInst.dpDiv.stop( true, true );
+			if ( inst && $.datepicker._datepickerShowing ) {
+				$.datepicker._hideDatepicker( $.datepicker._curInst.input[ 0 ] );
+			}
+		}
+
+		beforeShow = $.datepicker._get( inst, "beforeShow" );
+		beforeShowSettings = beforeShow ? beforeShow.apply( input, [ input, inst ] ) : {};
+		if ( beforeShowSettings === false ) {
+			return;
+		}
+		datepicker_extendRemove( inst.settings, beforeShowSettings );
+
+		inst.lastVal = null;
+		$.datepicker._lastInput = input;
+		$.datepicker._setDateFromField( inst );
+
+		if ( $.datepicker._inDialog ) { // hide cursor
+			input.value = "";
+		}
+		if ( !$.datepicker._pos ) { // position below input
+			$.datepicker._pos = $.datepicker._findPos( input );
+			$.datepicker._pos[ 1 ] += input.offsetHeight; // add the height
+		}
+
+		isFixed = false;
+		$( input ).parents().each( function() {
+			isFixed |= $( this ).css( "position" ) === "fixed";
+			return !isFixed;
+		} );
+
+		offset = { left: $.datepicker._pos[ 0 ], top: $.datepicker._pos[ 1 ] };
+		$.datepicker._pos = null;
+
+		//to avoid flashes on Firefox
+		inst.dpDiv.empty();
+
+		// determine sizing offscreen
+		inst.dpDiv.css( { position: "absolute", display: "block", top: "-1000px" } );
+		$.datepicker._updateDatepicker( inst );
+
+		// fix width for dynamic number of date pickers
+		// and adjust position before showing
+		offset = $.datepicker._checkOffset( inst, offset, isFixed );
+		inst.dpDiv.css( { position: ( $.datepicker._inDialog && $.blockUI ?
+			"static" : ( isFixed ? "fixed" : "absolute" ) ), display: "none",
+			left: offset.left + "px", top: offset.top + "px" } );
+
+		if ( !inst.inline ) {
+			showAnim = $.datepicker._get( inst, "showAnim" );
+			duration = $.datepicker._get( inst, "duration" );
+			inst.dpDiv.css( "z-index", datepicker_getZindex( $( input ) ) + 1 );
+			$.datepicker._datepickerShowing = true;
+
+			if ( $.effects && $.effects.effect[ showAnim ] ) {
+				inst.dpDiv.show( showAnim, $.datepicker._get( inst, "showOptions" ), duration );
+			} else {
+				inst.dpDiv[ showAnim || "show" ]( showAnim ? duration : null );
+			}
+
+			if ( $.datepicker._shouldFocusInput( inst ) ) {
+				inst.input.trigger( "focus" );
+			}
+
+			$.datepicker._curInst = inst;
+		}
+	},
+
+	/* Generate the date picker content. */
+	_updateDatepicker: function( inst ) {
+		this.maxRows = 4; //Reset the max number of rows being displayed (see #7043)
+		datepicker_instActive = inst; // for delegate hover events
+		inst.dpDiv.empty().append( this._generateHTML( inst ) );
+		this._attachHandlers( inst );
+
+		var origyearshtml,
+			numMonths = this._getNumberOfMonths( inst ),
+			cols = numMonths[ 1 ],
+			width = 17,
+			activeCell = inst.dpDiv.find( "." + this._dayOverClass + " a" );
+
+		if ( activeCell.length > 0 ) {
+			datepicker_handleMouseover.apply( activeCell.get( 0 ) );
+		}
+
+		inst.dpDiv.removeClass( "ui-datepicker-multi-2 ui-datepicker-multi-3 ui-datepicker-multi-4" ).width( "" );
+		if ( cols > 1 ) {
+			inst.dpDiv.addClass( "ui-datepicker-multi-" + cols ).css( "width", ( width * cols ) + "em" );
+		}
+		inst.dpDiv[ ( numMonths[ 0 ] !== 1 || numMonths[ 1 ] !== 1 ? "add" : "remove" ) +
+			"Class" ]( "ui-datepicker-multi" );
+		inst.dpDiv[ ( this._get( inst, "isRTL" ) ? "add" : "remove" ) +
+			"Class" ]( "ui-datepicker-rtl" );
+
+		if ( inst === $.datepicker._curInst && $.datepicker._datepickerShowing && $.datepicker._shouldFocusInput( inst ) ) {
+			inst.input.trigger( "focus" );
+		}
+
+		// Deffered render of the years select (to avoid flashes on Firefox)
+		if ( inst.yearshtml ) {
+			origyearshtml = inst.yearshtml;
+			setTimeout( function() {
+
+				//assure that inst.yearshtml didn't change.
+				if ( origyearshtml === inst.yearshtml && inst.yearshtml ) {
+					inst.dpDiv.find( "select.ui-datepicker-year:first" ).replaceWith( inst.yearshtml );
+				}
+				origyearshtml = inst.yearshtml = null;
+			}, 0 );
+		}
+	},
+
+	// #6694 - don't focus the input if it's already focused
+	// this breaks the change event in IE
+	// Support: IE and jQuery <1.9
+	_shouldFocusInput: function( inst ) {
+		return inst.input && inst.input.is( ":visible" ) && !inst.input.is( ":disabled" ) && !inst.input.is( ":focus" );
+	},
+
+	/* Check positioning to remain on screen. */
+	_checkOffset: function( inst, offset, isFixed ) {
+		var dpWidth = inst.dpDiv.outerWidth(),
+			dpHeight = inst.dpDiv.outerHeight(),
+			inputWidth = inst.input ? inst.input.outerWidth() : 0,
+			inputHeight = inst.input ? inst.input.outerHeight() : 0,
+			viewWidth = document.documentElement.clientWidth + ( isFixed ? 0 : $( document ).scrollLeft() ),
+			viewHeight = document.documentElement.clientHeight + ( isFixed ? 0 : $( document ).scrollTop() );
+
+		offset.left -= ( this._get( inst, "isRTL" ) ? ( dpWidth - inputWidth ) : 0 );
+		offset.left -= ( isFixed && offset.left === inst.input.offset().left ) ? $( document ).scrollLeft() : 0;
+		offset.top -= ( isFixed && offset.top === ( inst.input.offset().top + inputHeight ) ) ? $( document ).scrollTop() : 0;
+
+		// Now check if datepicker is showing outside window viewport - move to a better place if so.
+		offset.left -= Math.min( offset.left, ( offset.left + dpWidth > viewWidth && viewWidth > dpWidth ) ?
+			Math.abs( offset.left + dpWidth - viewWidth ) : 0 );
+		offset.top -= Math.min( offset.top, ( offset.top + dpHeight > viewHeight && viewHeight > dpHeight ) ?
+			Math.abs( dpHeight + inputHeight ) : 0 );
+
+		return offset;
+	},
+
+	/* Find an object's position on the screen. */
+	_findPos: function( obj ) {
+		var position,
+			inst = this._getInst( obj ),
+			isRTL = this._get( inst, "isRTL" );
+
+		while ( obj && ( obj.type === "hidden" || obj.nodeType !== 1 || $.expr.filters.hidden( obj ) ) ) {
+			obj = obj[ isRTL ? "previousSibling" : "nextSibling" ];
+		}
+
+		position = $( obj ).offset();
+		return [ position.left, position.top ];
+	},
+
+	/* Hide the date picker from view.
+	 * @param  input  element - the input field attached to the date picker
+	 */
+	_hideDatepicker: function( input ) {
+		var showAnim, duration, postProcess, onClose,
+			inst = this._curInst;
+
+		if ( !inst || ( input && inst !== $.data( input, "datepicker" ) ) ) {
+			return;
+		}
+
+		if ( this._datepickerShowing ) {
+			showAnim = this._get( inst, "showAnim" );
+			duration = this._get( inst, "duration" );
+			postProcess = function() {
+				$.datepicker._tidyDialog( inst );
+			};
+
+			// DEPRECATED: after BC for 1.8.x $.effects[ showAnim ] is not needed
+			if ( $.effects && ( $.effects.effect[ showAnim ] || $.effects[ showAnim ] ) ) {
+				inst.dpDiv.hide( showAnim, $.datepicker._get( inst, "showOptions" ), duration, postProcess );
+			} else {
+				inst.dpDiv[ ( showAnim === "slideDown" ? "slideUp" :
+					( showAnim === "fadeIn" ? "fadeOut" : "hide" ) ) ]( ( showAnim ? duration : null ), postProcess );
+			}
+
+			if ( !showAnim ) {
+				postProcess();
+			}
+			this._datepickerShowing = false;
+
+			onClose = this._get( inst, "onClose" );
+			if ( onClose ) {
+				onClose.apply( ( inst.input ? inst.input[ 0 ] : null ), [ ( inst.input ? inst.input.val() : "" ), inst ] );
+			}
+
+			this._lastInput = null;
+			if ( this._inDialog ) {
+				this._dialogInput.css( { position: "absolute", left: "0", top: "-100px" } );
+				if ( $.blockUI ) {
+					$.unblockUI();
+					$( "body" ).append( this.dpDiv );
+				}
+			}
+			this._inDialog = false;
+		}
+	},
+
+	/* Tidy up after a dialog display. */
+	_tidyDialog: function( inst ) {
+		inst.dpDiv.removeClass( this._dialogClass ).off( ".ui-datepicker-calendar" );
+	},
+
+	/* Close date picker if clicked elsewhere. */
+	_checkExternalClick: function( event ) {
+		if ( !$.datepicker._curInst ) {
+			return;
+		}
+
+		var $target = $( event.target ),
+			inst = $.datepicker._getInst( $target[ 0 ] );
+
+		if ( ( ( $target[ 0 ].id !== $.datepicker._mainDivId &&
+				$target.parents( "#" + $.datepicker._mainDivId ).length === 0 &&
+				!$target.hasClass( $.datepicker.markerClassName ) &&
+				!$target.closest( "." + $.datepicker._triggerClass ).length &&
+				$.datepicker._datepickerShowing && !( $.datepicker._inDialog && $.blockUI ) ) ) ||
+			( $target.hasClass( $.datepicker.markerClassName ) && $.datepicker._curInst !== inst ) ) {
+				$.datepicker._hideDatepicker();
+		}
+	},
+
+	/* Adjust one of the date sub-fields. */
+	_adjustDate: function( id, offset, period ) {
+		var target = $( id ),
+			inst = this._getInst( target[ 0 ] );
+
+		if ( this._isDisabledDatepicker( target[ 0 ] ) ) {
+			return;
+		}
+		this._adjustInstDate( inst, offset +
+			( period === "M" ? this._get( inst, "showCurrentAtPos" ) : 0 ), // undo positioning
+			period );
+		this._updateDatepicker( inst );
+	},
+
+	/* Action for current link. */
+	_gotoToday: function( id ) {
+		var date,
+			target = $( id ),
+			inst = this._getInst( target[ 0 ] );
+
+		if ( this._get( inst, "gotoCurrent" ) && inst.currentDay ) {
+			inst.selectedDay = inst.currentDay;
+			inst.drawMonth = inst.selectedMonth = inst.currentMonth;
+			inst.drawYear = inst.selectedYear = inst.currentYear;
+		} else {
+			date = new Date();
+			inst.selectedDay = date.getDate();
+			inst.drawMonth = inst.selectedMonth = date.getMonth();
+			inst.drawYear = inst.selectedYear = date.getFullYear();
+		}
+		this._notifyChange( inst );
+		this._adjustDate( target );
+	},
+
+	/* Action for selecting a new month/year. */
+	_selectMonthYear: function( id, select, period ) {
+		var target = $( id ),
+			inst = this._getInst( target[ 0 ] );
+
+		inst[ "selected" + ( period === "M" ? "Month" : "Year" ) ] =
+		inst[ "draw" + ( period === "M" ? "Month" : "Year" ) ] =
+			parseInt( select.options[ select.selectedIndex ].value, 10 );
+
+		this._notifyChange( inst );
+		this._adjustDate( target );
+	},
+
+	/* Action for selecting a day. */
+	_selectDay: function( id, month, year, td ) {
+		var inst,
+			target = $( id );
+
+		if ( $( td ).hasClass( this._unselectableClass ) || this._isDisabledDatepicker( target[ 0 ] ) ) {
+			return;
+		}
+
+		inst = this._getInst( target[ 0 ] );
+		inst.selectedDay = inst.currentDay = $( "a", td ).html();
+		inst.selectedMonth = inst.currentMonth = month;
+		inst.selectedYear = inst.currentYear = year;
+		this._selectDate( id, this._formatDate( inst,
+			inst.currentDay, inst.currentMonth, inst.currentYear ) );
+	},
+
+	/* Erase the input field and hide the date picker. */
+	_clearDate: function( id ) {
+		var target = $( id );
+		this._selectDate( target, "" );
+	},
+
+	/* Update the input field with the selected date. */
+	_selectDate: function( id, dateStr ) {
+		var onSelect,
+			target = $( id ),
+			inst = this._getInst( target[ 0 ] );
+
+		dateStr = ( dateStr != null ? dateStr : this._formatDate( inst ) );
+		if ( inst.input ) {
+			inst.input.val( dateStr );
+		}
+		this._updateAlternate( inst );
+
+		onSelect = this._get( inst, "onSelect" );
+		if ( onSelect ) {
+			onSelect.apply( ( inst.input ? inst.input[ 0 ] : null ), [ dateStr, inst ] );  // trigger custom callback
+		} else if ( inst.input ) {
+			inst.input.trigger( "change" ); // fire the change event
+		}
+
+		if ( inst.inline ) {
+			this._updateDatepicker( inst );
+		} else {
+			this._hideDatepicker();
+			this._lastInput = inst.input[ 0 ];
+			if ( typeof( inst.input[ 0 ] ) !== "object" ) {
+				inst.input.trigger( "focus" ); // restore focus
+			}
+			this._lastInput = null;
+		}
+	},
+
+	/* Update any alternate field to synchronise with the main field. */
+	_updateAlternate: function( inst ) {
+		var altFormat, date, dateStr,
+			altField = this._get( inst, "altField" );
+
+		if ( altField ) { // update alternate field too
+			altFormat = this._get( inst, "altFormat" ) || this._get( inst, "dateFormat" );
+			date = this._getDate( inst );
+			dateStr = this.formatDate( altFormat, date, this._getFormatConfig( inst ) );
+			$( altField ).val( dateStr );
+		}
+	},
+
+	/* Set as beforeShowDay function to prevent selection of weekends.
+	 * @param  date  Date - the date to customise
+	 * @return [boolean, string] - is this date selectable?, what is its CSS class?
+	 */
+	noWeekends: function( date ) {
+		var day = date.getDay();
+		return [ ( day > 0 && day < 6 ), "" ];
+	},
+
+	/* Set as calculateWeek to determine the week of the year based on the ISO 8601 definition.
+	 * @param  date  Date - the date to get the week for
+	 * @return  number - the number of the week within the year that contains this date
+	 */
+	iso8601Week: function( date ) {
+		var time,
+			checkDate = new Date( date.getTime() );
+
+		// Find Thursday of this week starting on Monday
+		checkDate.setDate( checkDate.getDate() + 4 - ( checkDate.getDay() || 7 ) );
+
+		time = checkDate.getTime();
+		checkDate.setMonth( 0 ); // Compare with Jan 1
+		checkDate.setDate( 1 );
+		return Math.floor( Math.round( ( time - checkDate ) / 86400000 ) / 7 ) + 1;
+	},
+
+	/* Parse a string value into a date object.
+	 * See formatDate below for the possible formats.
+	 *
+	 * @param  format string - the expected format of the date
+	 * @param  value string - the date in the above format
+	 * @param  settings Object - attributes include:
+	 *					shortYearCutoff  number - the cutoff year for determining the century (optional)
+	 *					dayNamesShort	string[7] - abbreviated names of the days from Sunday (optional)
+	 *					dayNames		string[7] - names of the days from Sunday (optional)
+	 *					monthNamesShort string[12] - abbreviated names of the months (optional)
+	 *					monthNames		string[12] - names of the months (optional)
+	 * @return  Date - the extracted date value or null if value is blank
+	 */
+	parseDate: function( format, value, settings ) {
+		if ( format == null || value == null ) {
+			throw "Invalid arguments";
+		}
+
+		value = ( typeof value === "object" ? value.toString() : value + "" );
+		if ( value === "" ) {
+			return null;
+		}
+
+		var iFormat, dim, extra,
+			iValue = 0,
+			shortYearCutoffTemp = ( settings ? settings.shortYearCutoff : null ) || this._defaults.shortYearCutoff,
+			shortYearCutoff = ( typeof shortYearCutoffTemp !== "string" ? shortYearCutoffTemp :
+				new Date().getFullYear() % 100 + parseInt( shortYearCutoffTemp, 10 ) ),
+			dayNamesShort = ( settings ? settings.dayNamesShort : null ) || this._defaults.dayNamesShort,
+			dayNames = ( settings ? settings.dayNames : null ) || this._defaults.dayNames,
+			monthNamesShort = ( settings ? settings.monthNamesShort : null ) || this._defaults.monthNamesShort,
+			monthNames = ( settings ? settings.monthNames : null ) || this._defaults.monthNames,
+			year = -1,
+			month = -1,
+			day = -1,
+			doy = -1,
+			literal = false,
+			date,
+
+			// Check whether a format character is doubled
+			lookAhead = function( match ) {
+				var matches = ( iFormat + 1 < format.length && format.charAt( iFormat + 1 ) === match );
+				if ( matches ) {
+					iFormat++;
+				}
+				return matches;
+			},
+
+			// Extract a number from the string value
+			getNumber = function( match ) {
+				var isDoubled = lookAhead( match ),
+					size = ( match === "@" ? 14 : ( match === "!" ? 20 :
+					( match === "y" && isDoubled ? 4 : ( match === "o" ? 3 : 2 ) ) ) ),
+					minSize = ( match === "y" ? size : 1 ),
+					digits = new RegExp( "^\\d{" + minSize + "," + size + "}" ),
+					num = value.substring( iValue ).match( digits );
+				if ( !num ) {
+					throw "Missing number at position " + iValue;
+				}
+				iValue += num[ 0 ].length;
+				return parseInt( num[ 0 ], 10 );
+			},
+
+			// Extract a name from the string value and convert to an index
+			getName = function( match, shortNames, longNames ) {
+				var index = -1,
+					names = $.map( lookAhead( match ) ? longNames : shortNames, function( v, k ) {
+						return [ [ k, v ] ];
+					} ).sort( function( a, b ) {
+						return -( a[ 1 ].length - b[ 1 ].length );
+					} );
+
+				$.each( names, function( i, pair ) {
+					var name = pair[ 1 ];
+					if ( value.substr( iValue, name.length ).toLowerCase() === name.toLowerCase() ) {
+						index = pair[ 0 ];
+						iValue += name.length;
+						return false;
+					}
+				} );
+				if ( index !== -1 ) {
+					return index + 1;
+				} else {
+					throw "Unknown name at position " + iValue;
+				}
+			},
+
+			// Confirm that a literal character matches the string value
+			checkLiteral = function() {
+				if ( value.charAt( iValue ) !== format.charAt( iFormat ) ) {
+					throw "Unexpected literal at position " + iValue;
+				}
+				iValue++;
+			};
+
+		for ( iFormat = 0; iFormat < format.length; iFormat++ ) {
+			if ( literal ) {
+				if ( format.charAt( iFormat ) === "'" && !lookAhead( "'" ) ) {
+					literal = false;
+				} else {
+					checkLiteral();
+				}
+			} else {
+				switch ( format.charAt( iFormat ) ) {
+					case "d":
+						day = getNumber( "d" );
+						break;
+					case "D":
+						getName( "D", dayNamesShort, dayNames );
+						break;
+					case "o":
+						doy = getNumber( "o" );
+						break;
+					case "m":
+						month = getNumber( "m" );
+						break;
+					case "M":
+						month = getName( "M", monthNamesShort, monthNames );
+						break;
+					case "y":
+						year = getNumber( "y" );
+						break;
+					case "@":
+						date = new Date( getNumber( "@" ) );
+						year = date.getFullYear();
+						month = date.getMonth() + 1;
+						day = date.getDate();
+						break;
+					case "!":
+						date = new Date( ( getNumber( "!" ) - this._ticksTo1970 ) / 10000 );
+						year = date.getFullYear();
+						month = date.getMonth() + 1;
+						day = date.getDate();
+						break;
+					case "'":
+						if ( lookAhead( "'" ) ) {
+							checkLiteral();
+						} else {
+							literal = true;
+						}
+						break;
+					default:
+						checkLiteral();
+				}
+			}
+		}
+
+		if ( iValue < value.length ) {
+			extra = value.substr( iValue );
+			if ( !/^\s+/.test( extra ) ) {
+				throw "Extra/unparsed characters found in date: " + extra;
+			}
+		}
+
+		if ( year === -1 ) {
+			year = new Date().getFullYear();
+		} else if ( year < 100 ) {
+			year += new Date().getFullYear() - new Date().getFullYear() % 100 +
+				( year <= shortYearCutoff ? 0 : -100 );
+		}
+
+		if ( doy > -1 ) {
+			month = 1;
+			day = doy;
+			do {
+				dim = this._getDaysInMonth( year, month - 1 );
+				if ( day <= dim ) {
+					break;
+				}
+				month++;
+				day -= dim;
+			} while ( true );
+		}
+
+		date = this._daylightSavingAdjust( new Date( year, month - 1, day ) );
+		if ( date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day ) {
+			throw "Invalid date"; // E.g. 31/02/00
+		}
+		return date;
+	},
+
+	/* Standard date formats. */
+	ATOM: "yy-mm-dd", // RFC 3339 (ISO 8601)
+	COOKIE: "D, dd M yy",
+	ISO_8601: "yy-mm-dd",
+	RFC_822: "D, d M y",
+	RFC_850: "DD, dd-M-y",
+	RFC_1036: "D, d M y",
+	RFC_1123: "D, d M yy",
+	RFC_2822: "D, d M yy",
+	RSS: "D, d M y", // RFC 822
+	TICKS: "!",
+	TIMESTAMP: "@",
+	W3C: "yy-mm-dd", // ISO 8601
+
+	_ticksTo1970: ( ( ( 1970 - 1 ) * 365 + Math.floor( 1970 / 4 ) - Math.floor( 1970 / 100 ) +
+		Math.floor( 1970 / 400 ) ) * 24 * 60 * 60 * 10000000 ),
+
+	/* Format a date object into a string value.
+	 * The format can be combinations of the following:
+	 * d  - day of month (no leading zero)
+	 * dd - day of month (two digit)
+	 * o  - day of year (no leading zeros)
+	 * oo - day of year (three digit)
+	 * D  - day name short
+	 * DD - day name long
+	 * m  - month of year (no leading zero)
+	 * mm - month of year (two digit)
+	 * M  - month name short
+	 * MM - month name long
+	 * y  - year (two digit)
+	 * yy - year (four digit)
+	 * @ - Unix timestamp (ms since 01/01/1970)
+	 * ! - Windows ticks (100ns since 01/01/0001)
+	 * "..." - literal text
+	 * '' - single quote
+	 *
+	 * @param  format string - the desired format of the date
+	 * @param  date Date - the date value to format
+	 * @param  settings Object - attributes include:
+	 *					dayNamesShort	string[7] - abbreviated names of the days from Sunday (optional)
+	 *					dayNames		string[7] - names of the days from Sunday (optional)
+	 *					monthNamesShort string[12] - abbreviated names of the months (optional)
+	 *					monthNames		string[12] - names of the months (optional)
+	 * @return  string - the date in the above format
+	 */
+	formatDate: function( format, date, settings ) {
+		if ( !date ) {
+			return "";
+		}
+
+		var iFormat,
+			dayNamesShort = ( settings ? settings.dayNamesShort : null ) || this._defaults.dayNamesShort,
+			dayNames = ( settings ? settings.dayNames : null ) || this._defaults.dayNames,
+			monthNamesShort = ( settings ? settings.monthNamesShort : null ) || this._defaults.monthNamesShort,
+			monthNames = ( settings ? settings.monthNames : null ) || this._defaults.monthNames,
+
+			// Check whether a format character is doubled
+			lookAhead = function( match ) {
+				var matches = ( iFormat + 1 < format.length && format.charAt( iFormat + 1 ) === match );
+				if ( matches ) {
+					iFormat++;
+				}
+				return matches;
+			},
+
+			// Format a number, with leading zero if necessary
+			formatNumber = function( match, value, len ) {
+				var num = "" + value;
+				if ( lookAhead( match ) ) {
+					while ( num.length < len ) {
+						num = "0" + num;
+					}
+				}
+				return num;
+			},
+
+			// Format a name, short or long as requested
+			formatName = function( match, value, shortNames, longNames ) {
+				return ( lookAhead( match ) ? longNames[ value ] : shortNames[ value ] );
+			},
+			output = "",
+			literal = false;
+
+		if ( date ) {
+			for ( iFormat = 0; iFormat < format.length; iFormat++ ) {
+				if ( literal ) {
+					if ( format.charAt( iFormat ) === "'" && !lookAhead( "'" ) ) {
+						literal = false;
+					} else {
+						output += format.charAt( iFormat );
+					}
+				} else {
+					switch ( format.charAt( iFormat ) ) {
+						case "d":
+							output += formatNumber( "d", date.getDate(), 2 );
+							break;
+						case "D":
+							output += formatName( "D", date.getDay(), dayNamesShort, dayNames );
+							break;
+						case "o":
+							output += formatNumber( "o",
+								Math.round( ( new Date( date.getFullYear(), date.getMonth(), date.getDate() ).getTime() - new Date( date.getFullYear(), 0, 0 ).getTime() ) / 86400000 ), 3 );
+							break;
+						case "m":
+							output += formatNumber( "m", date.getMonth() + 1, 2 );
+							break;
+						case "M":
+							output += formatName( "M", date.getMonth(), monthNamesShort, monthNames );
+							break;
+						case "y":
+							output += ( lookAhead( "y" ) ? date.getFullYear() :
+								( date.getFullYear() % 100 < 10 ? "0" : "" ) + date.getFullYear() % 100 );
+							break;
+						case "@":
+							output += date.getTime();
+							break;
+						case "!":
+							output += date.getTime() * 10000 + this._ticksTo1970;
+							break;
+						case "'":
+							if ( lookAhead( "'" ) ) {
+								output += "'";
+							} else {
+								literal = true;
+							}
+							break;
+						default:
+							output += format.charAt( iFormat );
+					}
+				}
+			}
+		}
+		return output;
+	},
+
+	/* Extract all possible characters from the date format. */
+	_possibleChars: function( format ) {
+		var iFormat,
+			chars = "",
+			literal = false,
+
+			// Check whether a format character is doubled
+			lookAhead = function( match ) {
+				var matches = ( iFormat + 1 < format.length && format.charAt( iFormat + 1 ) === match );
+				if ( matches ) {
+					iFormat++;
+				}
+				return matches;
+			};
+
+		for ( iFormat = 0; iFormat < format.length; iFormat++ ) {
+			if ( literal ) {
+				if ( format.charAt( iFormat ) === "'" && !lookAhead( "'" ) ) {
+					literal = false;
+				} else {
+					chars += format.charAt( iFormat );
+				}
+			} else {
+				switch ( format.charAt( iFormat ) ) {
+					case "d": case "m": case "y": case "@":
+						chars += "0123456789";
+						break;
+					case "D": case "M":
+						return null; // Accept anything
+					case "'":
+						if ( lookAhead( "'" ) ) {
+							chars += "'";
+						} else {
+							literal = true;
+						}
+						break;
+					default:
+						chars += format.charAt( iFormat );
+				}
+			}
+		}
+		return chars;
+	},
+
+	/* Get a setting value, defaulting if necessary. */
+	_get: function( inst, name ) {
+		return inst.settings[ name ] !== undefined ?
+			inst.settings[ name ] : this._defaults[ name ];
+	},
+
+	/* Parse existing date and initialise date picker. */
+	_setDateFromField: function( inst, noDefault ) {
+		if ( inst.input.val() === inst.lastVal ) {
+			return;
+		}
+
+		var dateFormat = this._get( inst, "dateFormat" ),
+			dates = inst.lastVal = inst.input ? inst.input.val() : null,
+			defaultDate = this._getDefaultDate( inst ),
+			date = defaultDate,
+			settings = this._getFormatConfig( inst );
+
+		try {
+			date = this.parseDate( dateFormat, dates, settings ) || defaultDate;
+		} catch ( event ) {
+			dates = ( noDefault ? "" : dates );
+		}
+		inst.selectedDay = date.getDate();
+		inst.drawMonth = inst.selectedMonth = date.getMonth();
+		inst.drawYear = inst.selectedYear = date.getFullYear();
+		inst.currentDay = ( dates ? date.getDate() : 0 );
+		inst.currentMonth = ( dates ? date.getMonth() : 0 );
+		inst.currentYear = ( dates ? date.getFullYear() : 0 );
+		this._adjustInstDate( inst );
+	},
+
+	/* Retrieve the default date shown on opening. */
+	_getDefaultDate: function( inst ) {
+		return this._restrictMinMax( inst,
+			this._determineDate( inst, this._get( inst, "defaultDate" ), new Date() ) );
+	},
+
+	/* A date may be specified as an exact value or a relative one. */
+	_determineDate: function( inst, date, defaultDate ) {
+		var offsetNumeric = function( offset ) {
+				var date = new Date();
+				date.setDate( date.getDate() + offset );
+				return date;
+			},
+			offsetString = function( offset ) {
+				try {
+					return $.datepicker.parseDate( $.datepicker._get( inst, "dateFormat" ),
+						offset, $.datepicker._getFormatConfig( inst ) );
+				}
+				catch ( e ) {
+
+					// Ignore
+				}
+
+				var date = ( offset.toLowerCase().match( /^c/ ) ?
+					$.datepicker._getDate( inst ) : null ) || new Date(),
+					year = date.getFullYear(),
+					month = date.getMonth(),
+					day = date.getDate(),
+					pattern = /([+\-]?[0-9]+)\s*(d|D|w|W|m|M|y|Y)?/g,
+					matches = pattern.exec( offset );
+
+				while ( matches ) {
+					switch ( matches[ 2 ] || "d" ) {
+						case "d" : case "D" :
+							day += parseInt( matches[ 1 ], 10 ); break;
+						case "w" : case "W" :
+							day += parseInt( matches[ 1 ], 10 ) * 7; break;
+						case "m" : case "M" :
+							month += parseInt( matches[ 1 ], 10 );
+							day = Math.min( day, $.datepicker._getDaysInMonth( year, month ) );
+							break;
+						case "y": case "Y" :
+							year += parseInt( matches[ 1 ], 10 );
+							day = Math.min( day, $.datepicker._getDaysInMonth( year, month ) );
+							break;
+					}
+					matches = pattern.exec( offset );
+				}
+				return new Date( year, month, day );
+			},
+			newDate = ( date == null || date === "" ? defaultDate : ( typeof date === "string" ? offsetString( date ) :
+				( typeof date === "number" ? ( isNaN( date ) ? defaultDate : offsetNumeric( date ) ) : new Date( date.getTime() ) ) ) );
+
+		newDate = ( newDate && newDate.toString() === "Invalid Date" ? defaultDate : newDate );
+		if ( newDate ) {
+			newDate.setHours( 0 );
+			newDate.setMinutes( 0 );
+			newDate.setSeconds( 0 );
+			newDate.setMilliseconds( 0 );
+		}
+		return this._daylightSavingAdjust( newDate );
+	},
+
+	/* Handle switch to/from daylight saving.
+	 * Hours may be non-zero on daylight saving cut-over:
+	 * > 12 when midnight changeover, but then cannot generate
+	 * midnight datetime, so jump to 1AM, otherwise reset.
+	 * @param  date  (Date) the date to check
+	 * @return  (Date) the corrected date
+	 */
+	_daylightSavingAdjust: function( date ) {
+		if ( !date ) {
+			return null;
+		}
+		date.setHours( date.getHours() > 12 ? date.getHours() + 2 : 0 );
+		return date;
+	},
+
+	/* Set the date(s) directly. */
+	_setDate: function( inst, date, noChange ) {
+		var clear = !date,
+			origMonth = inst.selectedMonth,
+			origYear = inst.selectedYear,
+			newDate = this._restrictMinMax( inst, this._determineDate( inst, date, new Date() ) );
+
+		inst.selectedDay = inst.currentDay = newDate.getDate();
+		inst.drawMonth = inst.selectedMonth = inst.currentMonth = newDate.getMonth();
+		inst.drawYear = inst.selectedYear = inst.currentYear = newDate.getFullYear();
+		if ( ( origMonth !== inst.selectedMonth || origYear !== inst.selectedYear ) && !noChange ) {
+			this._notifyChange( inst );
+		}
+		this._adjustInstDate( inst );
+		if ( inst.input ) {
+			inst.input.val( clear ? "" : this._formatDate( inst ) );
+		}
+	},
+
+	/* Retrieve the date(s) directly. */
+	_getDate: function( inst ) {
+		var startDate = ( !inst.currentYear || ( inst.input && inst.input.val() === "" ) ? null :
+			this._daylightSavingAdjust( new Date(
+			inst.currentYear, inst.currentMonth, inst.currentDay ) ) );
+			return startDate;
+	},
+
+	/* Attach the onxxx handlers.  These are declared statically so
+	 * they work with static code transformers like Caja.
+	 */
+	_attachHandlers: function( inst ) {
+		var stepMonths = this._get( inst, "stepMonths" ),
+			id = "#" + inst.id.replace( /\\\\/g, "\\" );
+		inst.dpDiv.find( "[data-handler]" ).map( function() {
+			var handler = {
+				prev: function() {
+					$.datepicker._adjustDate( id, -stepMonths, "M" );
+				},
+				next: function() {
+					$.datepicker._adjustDate( id, +stepMonths, "M" );
+				},
+				hide: function() {
+					$.datepicker._hideDatepicker();
+				},
+				today: function() {
+					$.datepicker._gotoToday( id );
+				},
+				selectDay: function() {
+					$.datepicker._selectDay( id, +this.getAttribute( "data-month" ), +this.getAttribute( "data-year" ), this );
+					return false;
+				},
+				selectMonth: function() {
+					$.datepicker._selectMonthYear( id, this, "M" );
+					return false;
+				},
+				selectYear: function() {
+					$.datepicker._selectMonthYear( id, this, "Y" );
+					return false;
+				}
+			};
+			$( this ).on( this.getAttribute( "data-event" ), handler[ this.getAttribute( "data-handler" ) ] );
+		} );
+	},
+
+	/* Generate the HTML for the current state of the date picker. */
+	_generateHTML: function( inst ) {
+		var maxDraw, prevText, prev, nextText, next, currentText, gotoDate,
+			controls, buttonPanel, firstDay, showWeek, dayNames, dayNamesMin,
+			monthNames, monthNamesShort, beforeShowDay, showOtherMonths,
+			selectOtherMonths, defaultDate, html, dow, row, group, col, selectedDate,
+			cornerClass, calender, thead, day, daysInMonth, leadDays, curRows, numRows,
+			printDate, dRow, tbody, daySettings, otherMonth, unselectable,
+			tempDate = new Date(),
+			today = this._daylightSavingAdjust(
+				new Date( tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate() ) ), // clear time
+			isRTL = this._get( inst, "isRTL" ),
+			showButtonPanel = this._get( inst, "showButtonPanel" ),
+			hideIfNoPrevNext = this._get( inst, "hideIfNoPrevNext" ),
+			navigationAsDateFormat = this._get( inst, "navigationAsDateFormat" ),
+			numMonths = this._getNumberOfMonths( inst ),
+			showCurrentAtPos = this._get( inst, "showCurrentAtPos" ),
+			stepMonths = this._get( inst, "stepMonths" ),
+			isMultiMonth = ( numMonths[ 0 ] !== 1 || numMonths[ 1 ] !== 1 ),
+			currentDate = this._daylightSavingAdjust( ( !inst.currentDay ? new Date( 9999, 9, 9 ) :
+				new Date( inst.currentYear, inst.currentMonth, inst.currentDay ) ) ),
+			minDate = this._getMinMaxDate( inst, "min" ),
+			maxDate = this._getMinMaxDate( inst, "max" ),
+			drawMonth = inst.drawMonth - showCurrentAtPos,
+			drawYear = inst.drawYear;
+
+		if ( drawMonth < 0 ) {
+			drawMonth += 12;
+			drawYear--;
+		}
+		if ( maxDate ) {
+			maxDraw = this._daylightSavingAdjust( new Date( maxDate.getFullYear(),
+				maxDate.getMonth() - ( numMonths[ 0 ] * numMonths[ 1 ] ) + 1, maxDate.getDate() ) );
+			maxDraw = ( minDate && maxDraw < minDate ? minDate : maxDraw );
+			while ( this._daylightSavingAdjust( new Date( drawYear, drawMonth, 1 ) ) > maxDraw ) {
+				drawMonth--;
+				if ( drawMonth < 0 ) {
+					drawMonth = 11;
+					drawYear--;
+				}
+			}
+		}
+		inst.drawMonth = drawMonth;
+		inst.drawYear = drawYear;
+
+		prevText = this._get( inst, "prevText" );
+		prevText = ( !navigationAsDateFormat ? prevText : this.formatDate( prevText,
+			this._daylightSavingAdjust( new Date( drawYear, drawMonth - stepMonths, 1 ) ),
+			this._getFormatConfig( inst ) ) );
+
+		prev = ( this._canAdjustMonth( inst, -1, drawYear, drawMonth ) ?
+			"<a class='ui-datepicker-prev ui-corner-all' data-handler='prev' data-event='click'" +
+			" title='" + prevText + "'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "e" : "w" ) + "'>" + prevText + "</span></a>" :
+			( hideIfNoPrevNext ? "" : "<a class='ui-datepicker-prev ui-corner-all ui-state-disabled' title='" + prevText + "'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "e" : "w" ) + "'>" + prevText + "</span></a>" ) );
+
+		nextText = this._get( inst, "nextText" );
+		nextText = ( !navigationAsDateFormat ? nextText : this.formatDate( nextText,
+			this._daylightSavingAdjust( new Date( drawYear, drawMonth + stepMonths, 1 ) ),
+			this._getFormatConfig( inst ) ) );
+
+		next = ( this._canAdjustMonth( inst, +1, drawYear, drawMonth ) ?
+			"<a class='ui-datepicker-next ui-corner-all' data-handler='next' data-event='click'" +
+			" title='" + nextText + "'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "w" : "e" ) + "'>" + nextText + "</span></a>" :
+			( hideIfNoPrevNext ? "" : "<a class='ui-datepicker-next ui-corner-all ui-state-disabled' title='" + nextText + "'><span class='ui-icon ui-icon-circle-triangle-" + ( isRTL ? "w" : "e" ) + "'>" + nextText + "</span></a>" ) );
+
+		currentText = this._get( inst, "currentText" );
+		gotoDate = ( this._get( inst, "gotoCurrent" ) && inst.currentDay ? currentDate : today );
+		currentText = ( !navigationAsDateFormat ? currentText :
+			this.formatDate( currentText, gotoDate, this._getFormatConfig( inst ) ) );
+
+		controls = ( !inst.inline ? "<button type='button' class='ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all' data-handler='hide' data-event='click'>" +
+			this._get( inst, "closeText" ) + "</button>" : "" );
+
+		buttonPanel = ( showButtonPanel ) ? "<div class='ui-datepicker-buttonpane ui-widget-content'>" + ( isRTL ? controls : "" ) +
+			( this._isInRange( inst, gotoDate ) ? "<button type='button' class='ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all' data-handler='today' data-event='click'" +
+			">" + currentText + "</button>" : "" ) + ( isRTL ? "" : controls ) + "</div>" : "";
+
+		firstDay = parseInt( this._get( inst, "firstDay" ), 10 );
+		firstDay = ( isNaN( firstDay ) ? 0 : firstDay );
+
+		showWeek = this._get( inst, "showWeek" );
+		dayNames = this._get( inst, "dayNames" );
+		dayNamesMin = this._get( inst, "dayNamesMin" );
+		monthNames = this._get( inst, "monthNames" );
+		monthNamesShort = this._get( inst, "monthNamesShort" );
+		beforeShowDay = this._get( inst, "beforeShowDay" );
+		showOtherMonths = this._get( inst, "showOtherMonths" );
+		selectOtherMonths = this._get( inst, "selectOtherMonths" );
+		defaultDate = this._getDefaultDate( inst );
+		html = "";
+
+		for ( row = 0; row < numMonths[ 0 ]; row++ ) {
+			group = "";
+			this.maxRows = 4;
+			for ( col = 0; col < numMonths[ 1 ]; col++ ) {
+				selectedDate = this._daylightSavingAdjust( new Date( drawYear, drawMonth, inst.selectedDay ) );
+				cornerClass = " ui-corner-all";
+				calender = "";
+				if ( isMultiMonth ) {
+					calender += "<div class='ui-datepicker-group";
+					if ( numMonths[ 1 ] > 1 ) {
+						switch ( col ) {
+							case 0: calender += " ui-datepicker-group-first";
+								cornerClass = " ui-corner-" + ( isRTL ? "right" : "left" ); break;
+							case numMonths[ 1 ] - 1: calender += " ui-datepicker-group-last";
+								cornerClass = " ui-corner-" + ( isRTL ? "left" : "right" ); break;
+							default: calender += " ui-datepicker-group-middle"; cornerClass = ""; break;
+						}
+					}
+					calender += "'>";
+				}
+				calender += "<div class='ui-datepicker-header ui-widget-header ui-helper-clearfix" + cornerClass + "'>" +
+					( /all|left/.test( cornerClass ) && row === 0 ? ( isRTL ? next : prev ) : "" ) +
+					( /all|right/.test( cornerClass ) && row === 0 ? ( isRTL ? prev : next ) : "" ) +
+					this._generateMonthYearHeader( inst, drawMonth, drawYear, minDate, maxDate,
+					row > 0 || col > 0, monthNames, monthNamesShort ) + // draw month headers
+					"</div><table class='ui-datepicker-calendar'><thead>" +
+					"<tr>";
+				thead = ( showWeek ? "<th class='ui-datepicker-week-col'>" + this._get( inst, "weekHeader" ) + "</th>" : "" );
+				for ( dow = 0; dow < 7; dow++ ) { // days of the week
+					day = ( dow + firstDay ) % 7;
+					thead += "<th scope='col'" + ( ( dow + firstDay + 6 ) % 7 >= 5 ? " class='ui-datepicker-week-end'" : "" ) + ">" +
+						"<span title='" + dayNames[ day ] + "'>" + dayNamesMin[ day ] + "</span></th>";
+				}
+				calender += thead + "</tr></thead><tbody>";
+				daysInMonth = this._getDaysInMonth( drawYear, drawMonth );
+				if ( drawYear === inst.selectedYear && drawMonth === inst.selectedMonth ) {
+					inst.selectedDay = Math.min( inst.selectedDay, daysInMonth );
+				}
+				leadDays = ( this._getFirstDayOfMonth( drawYear, drawMonth ) - firstDay + 7 ) % 7;
+				curRows = Math.ceil( ( leadDays + daysInMonth ) / 7 ); // calculate the number of rows to generate
+				numRows = ( isMultiMonth ? this.maxRows > curRows ? this.maxRows : curRows : curRows ); //If multiple months, use the higher number of rows (see #7043)
+				this.maxRows = numRows;
+				printDate = this._daylightSavingAdjust( new Date( drawYear, drawMonth, 1 - leadDays ) );
+				for ( dRow = 0; dRow < numRows; dRow++ ) { // create date picker rows
+					calender += "<tr>";
+					tbody = ( !showWeek ? "" : "<td class='ui-datepicker-week-col'>" +
+						this._get( inst, "calculateWeek" )( printDate ) + "</td>" );
+					for ( dow = 0; dow < 7; dow++ ) { // create date picker days
+						daySettings = ( beforeShowDay ?
+							beforeShowDay.apply( ( inst.input ? inst.input[ 0 ] : null ), [ printDate ] ) : [ true, "" ] );
+						otherMonth = ( printDate.getMonth() !== drawMonth );
+						unselectable = ( otherMonth && !selectOtherMonths ) || !daySettings[ 0 ] ||
+							( minDate && printDate < minDate ) || ( maxDate && printDate > maxDate );
+						tbody += "<td class='" +
+							( ( dow + firstDay + 6 ) % 7 >= 5 ? " ui-datepicker-week-end" : "" ) + // highlight weekends
+							( otherMonth ? " ui-datepicker-other-month" : "" ) + // highlight days from other months
+							( ( printDate.getTime() === selectedDate.getTime() && drawMonth === inst.selectedMonth && inst._keyEvent ) || // user pressed key
+							( defaultDate.getTime() === printDate.getTime() && defaultDate.getTime() === selectedDate.getTime() ) ?
+
+							// or defaultDate is current printedDate and defaultDate is selectedDate
+							" " + this._dayOverClass : "" ) + // highlight selected day
+							( unselectable ? " " + this._unselectableClass + " ui-state-disabled" : "" ) +  // highlight unselectable days
+							( otherMonth && !showOtherMonths ? "" : " " + daySettings[ 1 ] + // highlight custom dates
+							( printDate.getTime() === currentDate.getTime() ? " " + this._currentClass : "" ) + // highlight selected day
+							( printDate.getTime() === today.getTime() ? " ui-datepicker-today" : "" ) ) + "'" + // highlight today (if different)
+							( ( !otherMonth || showOtherMonths ) && daySettings[ 2 ] ? " title='" + daySettings[ 2 ].replace( /'/g, "&#39;" ) + "'" : "" ) + // cell title
+							( unselectable ? "" : " data-handler='selectDay' data-event='click' data-month='" + printDate.getMonth() + "' data-year='" + printDate.getFullYear() + "'" ) + ">" + // actions
+							( otherMonth && !showOtherMonths ? "&#xa0;" : // display for other months
+							( unselectable ? "<span class='ui-state-default'>" + printDate.getDate() + "</span>" : "<a class='ui-state-default" +
+							( printDate.getTime() === today.getTime() ? " ui-state-highlight" : "" ) +
+							( printDate.getTime() === currentDate.getTime() ? " ui-state-active" : "" ) + // highlight selected day
+							( otherMonth ? " ui-priority-secondary" : "" ) + // distinguish dates from other months
+							"' href='#'>" + printDate.getDate() + "</a>" ) ) + "</td>"; // display selectable date
+						printDate.setDate( printDate.getDate() + 1 );
+						printDate = this._daylightSavingAdjust( printDate );
+					}
+					calender += tbody + "</tr>";
+				}
+				drawMonth++;
+				if ( drawMonth > 11 ) {
+					drawMonth = 0;
+					drawYear++;
+				}
+				calender += "</tbody></table>" + ( isMultiMonth ? "</div>" +
+							( ( numMonths[ 0 ] > 0 && col === numMonths[ 1 ] - 1 ) ? "<div class='ui-datepicker-row-break'></div>" : "" ) : "" );
+				group += calender;
+			}
+			html += group;
+		}
+		html += buttonPanel;
+		inst._keyEvent = false;
+		return html;
+	},
+
+	/* Generate the month and year header. */
+	_generateMonthYearHeader: function( inst, drawMonth, drawYear, minDate, maxDate,
+			secondary, monthNames, monthNamesShort ) {
+
+		var inMinYear, inMaxYear, month, years, thisYear, determineYear, year, endYear,
+			changeMonth = this._get( inst, "changeMonth" ),
+			changeYear = this._get( inst, "changeYear" ),
+			showMonthAfterYear = this._get( inst, "showMonthAfterYear" ),
+			html = "<div class='ui-datepicker-title'>",
+			monthHtml = "";
+
+		// Month selection
+		if ( secondary || !changeMonth ) {
+			monthHtml += "<span class='ui-datepicker-month'>" + monthNames[ drawMonth ] + "</span>";
+		} else {
+			inMinYear = ( minDate && minDate.getFullYear() === drawYear );
+			inMaxYear = ( maxDate && maxDate.getFullYear() === drawYear );
+			monthHtml += "<select class='ui-datepicker-month' data-handler='selectMonth' data-event='change'>";
+			for ( month = 0; month < 12; month++ ) {
+				if ( ( !inMinYear || month >= minDate.getMonth() ) && ( !inMaxYear || month <= maxDate.getMonth() ) ) {
+					monthHtml += "<option value='" + month + "'" +
+						( month === drawMonth ? " selected='selected'" : "" ) +
+						">" + monthNamesShort[ month ] + "</option>";
+				}
+			}
+			monthHtml += "</select>";
+		}
+
+		if ( !showMonthAfterYear ) {
+			html += monthHtml + ( secondary || !( changeMonth && changeYear ) ? "&#xa0;" : "" );
+		}
+
+		// Year selection
+		if ( !inst.yearshtml ) {
+			inst.yearshtml = "";
+			if ( secondary || !changeYear ) {
+				html += "<span class='ui-datepicker-year'>" + drawYear + "</span>";
+			} else {
+
+				// determine range of years to display
+				years = this._get( inst, "yearRange" ).split( ":" );
+				thisYear = new Date().getFullYear();
+				determineYear = function( value ) {
+					var year = ( value.match( /c[+\-].*/ ) ? drawYear + parseInt( value.substring( 1 ), 10 ) :
+						( value.match( /[+\-].*/ ) ? thisYear + parseInt( value, 10 ) :
+						parseInt( value, 10 ) ) );
+					return ( isNaN( year ) ? thisYear : year );
+				};
+				year = determineYear( years[ 0 ] );
+				endYear = Math.max( year, determineYear( years[ 1 ] || "" ) );
+				year = ( minDate ? Math.max( year, minDate.getFullYear() ) : year );
+				endYear = ( maxDate ? Math.min( endYear, maxDate.getFullYear() ) : endYear );
+				inst.yearshtml += "<select class='ui-datepicker-year' data-handler='selectYear' data-event='change'>";
+				for ( ; year <= endYear; year++ ) {
+					inst.yearshtml += "<option value='" + year + "'" +
+						( year === drawYear ? " selected='selected'" : "" ) +
+						">" + year + "</option>";
+				}
+				inst.yearshtml += "</select>";
+
+				html += inst.yearshtml;
+				inst.yearshtml = null;
+			}
+		}
+
+		html += this._get( inst, "yearSuffix" );
+		if ( showMonthAfterYear ) {
+			html += ( secondary || !( changeMonth && changeYear ) ? "&#xa0;" : "" ) + monthHtml;
+		}
+		html += "</div>"; // Close datepicker_header
+		return html;
+	},
+
+	/* Adjust one of the date sub-fields. */
+	_adjustInstDate: function( inst, offset, period ) {
+		var year = inst.selectedYear + ( period === "Y" ? offset : 0 ),
+			month = inst.selectedMonth + ( period === "M" ? offset : 0 ),
+			day = Math.min( inst.selectedDay, this._getDaysInMonth( year, month ) ) + ( period === "D" ? offset : 0 ),
+			date = this._restrictMinMax( inst, this._daylightSavingAdjust( new Date( year, month, day ) ) );
+
+		inst.selectedDay = date.getDate();
+		inst.drawMonth = inst.selectedMonth = date.getMonth();
+		inst.drawYear = inst.selectedYear = date.getFullYear();
+		if ( period === "M" || period === "Y" ) {
+			this._notifyChange( inst );
+		}
+	},
+
+	/* Ensure a date is within any min/max bounds. */
+	_restrictMinMax: function( inst, date ) {
+		var minDate = this._getMinMaxDate( inst, "min" ),
+			maxDate = this._getMinMaxDate( inst, "max" ),
+			newDate = ( minDate && date < minDate ? minDate : date );
+		return ( maxDate && newDate > maxDate ? maxDate : newDate );
+	},
+
+	/* Notify change of month/year. */
+	_notifyChange: function( inst ) {
+		var onChange = this._get( inst, "onChangeMonthYear" );
+		if ( onChange ) {
+			onChange.apply( ( inst.input ? inst.input[ 0 ] : null ),
+				[ inst.selectedYear, inst.selectedMonth + 1, inst ] );
+		}
+	},
+
+	/* Determine the number of months to show. */
+	_getNumberOfMonths: function( inst ) {
+		var numMonths = this._get( inst, "numberOfMonths" );
+		return ( numMonths == null ? [ 1, 1 ] : ( typeof numMonths === "number" ? [ 1, numMonths ] : numMonths ) );
+	},
+
+	/* Determine the current maximum date - ensure no time components are set. */
+	_getMinMaxDate: function( inst, minMax ) {
+		return this._determineDate( inst, this._get( inst, minMax + "Date" ), null );
+	},
+
+	/* Find the number of days in a given month. */
+	_getDaysInMonth: function( year, month ) {
+		return 32 - this._daylightSavingAdjust( new Date( year, month, 32 ) ).getDate();
+	},
+
+	/* Find the day of the week of the first of a month. */
+	_getFirstDayOfMonth: function( year, month ) {
+		return new Date( year, month, 1 ).getDay();
+	},
+
+	/* Determines if we should allow a "next/prev" month display change. */
+	_canAdjustMonth: function( inst, offset, curYear, curMonth ) {
+		var numMonths = this._getNumberOfMonths( inst ),
+			date = this._daylightSavingAdjust( new Date( curYear,
+			curMonth + ( offset < 0 ? offset : numMonths[ 0 ] * numMonths[ 1 ] ), 1 ) );
+
+		if ( offset < 0 ) {
+			date.setDate( this._getDaysInMonth( date.getFullYear(), date.getMonth() ) );
+		}
+		return this._isInRange( inst, date );
+	},
+
+	/* Is the given date in the accepted range? */
+	_isInRange: function( inst, date ) {
+		var yearSplit, currentYear,
+			minDate = this._getMinMaxDate( inst, "min" ),
+			maxDate = this._getMinMaxDate( inst, "max" ),
+			minYear = null,
+			maxYear = null,
+			years = this._get( inst, "yearRange" );
+			if ( years ) {
+				yearSplit = years.split( ":" );
+				currentYear = new Date().getFullYear();
+				minYear = parseInt( yearSplit[ 0 ], 10 );
+				maxYear = parseInt( yearSplit[ 1 ], 10 );
+				if ( yearSplit[ 0 ].match( /[+\-].*/ ) ) {
+					minYear += currentYear;
+				}
+				if ( yearSplit[ 1 ].match( /[+\-].*/ ) ) {
+					maxYear += currentYear;
+				}
+			}
+
+		return ( ( !minDate || date.getTime() >= minDate.getTime() ) &&
+			( !maxDate || date.getTime() <= maxDate.getTime() ) &&
+			( !minYear || date.getFullYear() >= minYear ) &&
+			( !maxYear || date.getFullYear() <= maxYear ) );
+	},
+
+	/* Provide the configuration settings for formatting/parsing. */
+	_getFormatConfig: function( inst ) {
+		var shortYearCutoff = this._get( inst, "shortYearCutoff" );
+		shortYearCutoff = ( typeof shortYearCutoff !== "string" ? shortYearCutoff :
+			new Date().getFullYear() % 100 + parseInt( shortYearCutoff, 10 ) );
+		return { shortYearCutoff: shortYearCutoff,
+			dayNamesShort: this._get( inst, "dayNamesShort" ), dayNames: this._get( inst, "dayNames" ),
+			monthNamesShort: this._get( inst, "monthNamesShort" ), monthNames: this._get( inst, "monthNames" ) };
+	},
+
+	/* Format the given date for display. */
+	_formatDate: function( inst, day, month, year ) {
+		if ( !day ) {
+			inst.currentDay = inst.selectedDay;
+			inst.currentMonth = inst.selectedMonth;
+			inst.currentYear = inst.selectedYear;
+		}
+		var date = ( day ? ( typeof day === "object" ? day :
+			this._daylightSavingAdjust( new Date( year, month, day ) ) ) :
+			this._daylightSavingAdjust( new Date( inst.currentYear, inst.currentMonth, inst.currentDay ) ) );
+		return this.formatDate( this._get( inst, "dateFormat" ), date, this._getFormatConfig( inst ) );
+	}
+} );
+
+/*
+ * Bind hover events for datepicker elements.
+ * Done via delegate so the binding only occurs once in the lifetime of the parent div.
+ * Global datepicker_instActive, set by _updateDatepicker allows the handlers to find their way back to the active picker.
+ */
+function datepicker_bindHover( dpDiv ) {
+	var selector = "button, .ui-datepicker-prev, .ui-datepicker-next, .ui-datepicker-calendar td a";
+	return dpDiv.on( "mouseout", selector, function() {
+			$( this ).removeClass( "ui-state-hover" );
+			if ( this.className.indexOf( "ui-datepicker-prev" ) !== -1 ) {
+				$( this ).removeClass( "ui-datepicker-prev-hover" );
+			}
+			if ( this.className.indexOf( "ui-datepicker-next" ) !== -1 ) {
+				$( this ).removeClass( "ui-datepicker-next-hover" );
+			}
+		} )
+		.on( "mouseover", selector, datepicker_handleMouseover );
+}
+
+function datepicker_handleMouseover() {
+	if ( !$.datepicker._isDisabledDatepicker( datepicker_instActive.inline ? datepicker_instActive.dpDiv.parent()[ 0 ] : datepicker_instActive.input[ 0 ] ) ) {
+		$( this ).parents( ".ui-datepicker-calendar" ).find( "a" ).removeClass( "ui-state-hover" );
+		$( this ).addClass( "ui-state-hover" );
+		if ( this.className.indexOf( "ui-datepicker-prev" ) !== -1 ) {
+			$( this ).addClass( "ui-datepicker-prev-hover" );
+		}
+		if ( this.className.indexOf( "ui-datepicker-next" ) !== -1 ) {
+			$( this ).addClass( "ui-datepicker-next-hover" );
+		}
+	}
+}
+
+/* jQuery extend now ignores nulls! */
+function datepicker_extendRemove( target, props ) {
+	$.extend( target, props );
+	for ( var name in props ) {
+		if ( props[ name ] == null ) {
+			target[ name ] = props[ name ];
+		}
+	}
+	return target;
+}
+
+/* Invoke the datepicker functionality.
+   @param  options  string - a command, optionally followed by additional parameters or
+					Object - settings for attaching new datepicker functionality
+   @return  jQuery object */
+$.fn.datepicker = function( options ) {
+
+	/* Verify an empty collection wasn't passed - Fixes #6976 */
+	if ( !this.length ) {
+		return this;
+	}
+
+	/* Initialise the date picker. */
+	if ( !$.datepicker.initialized ) {
+		$( document ).on( "mousedown", $.datepicker._checkExternalClick );
+		$.datepicker.initialized = true;
+	}
+
+	/* Append datepicker main container to body if not exist. */
+	if ( $( "#" + $.datepicker._mainDivId ).length === 0 ) {
+		$( "body" ).append( $.datepicker.dpDiv );
+	}
+
+	var otherArgs = Array.prototype.slice.call( arguments, 1 );
+	if ( typeof options === "string" && ( options === "isDisabled" || options === "getDate" || options === "widget" ) ) {
+		return $.datepicker[ "_" + options + "Datepicker" ].
+			apply( $.datepicker, [ this[ 0 ] ].concat( otherArgs ) );
+	}
+	if ( options === "option" && arguments.length === 2 && typeof arguments[ 1 ] === "string" ) {
+		return $.datepicker[ "_" + options + "Datepicker" ].
+			apply( $.datepicker, [ this[ 0 ] ].concat( otherArgs ) );
+	}
+	return this.each( function() {
+		typeof options === "string" ?
+			$.datepicker[ "_" + options + "Datepicker" ].
+				apply( $.datepicker, [ this ].concat( otherArgs ) ) :
+			$.datepicker._attachDatepicker( this, options );
+	} );
+};
+
+$.datepicker = new Datepicker(); // singleton instance
+$.datepicker.initialized = false;
+$.datepicker.uuid = new Date().getTime();
+$.datepicker.version = "1.12.1";
+
+return $.datepicker;
+
+} ) );
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(18);
 
 
 /***/ }),
-/* 11 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
-var ps = __webpack_require__(14);
+var ps = __webpack_require__(21);
 var psInstances = __webpack_require__(0);
 
 function mountJQuery(jQuery) {
@@ -11120,7 +14059,7 @@ function mountJQuery(jQuery) {
 
 if (true) {
   // AMD. Register as an anonymous module.
-  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(5)], __WEBPACK_AMD_DEFINE_FACTORY__ = (mountJQuery),
+  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(4)], __WEBPACK_AMD_DEFINE_FACTORY__ = (mountJQuery),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -11135,7 +14074,7 @@ module.exports = mountJQuery;
 
 
 /***/ }),
-/* 12 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11213,7 +14152,7 @@ module.exports = EventManager;
 
 
 /***/ }),
-/* 13 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11233,15 +14172,15 @@ module.exports = (function () {
 
 
 /***/ }),
-/* 14 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var destroy = __webpack_require__(16);
-var initialize = __webpack_require__(24);
-var update = __webpack_require__(25);
+var destroy = __webpack_require__(23);
+var initialize = __webpack_require__(31);
+var update = __webpack_require__(32);
 
 module.exports = {
   initialize: initialize,
@@ -11251,7 +14190,7 @@ module.exports = {
 
 
 /***/ }),
-/* 15 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11274,14 +14213,14 @@ module.exports = {
 
 
 /***/ }),
-/* 16 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var _ = __webpack_require__(1);
-var dom = __webpack_require__(4);
+var dom = __webpack_require__(5);
 var instances = __webpack_require__(0);
 
 module.exports = function (element) {
@@ -11303,7 +14242,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 17 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11349,14 +14288,14 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 18 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var _ = __webpack_require__(1);
-var dom = __webpack_require__(4);
+var dom = __webpack_require__(5);
 var instances = __webpack_require__(0);
 var updateGeometry = __webpack_require__(2);
 var updateScroll = __webpack_require__(3);
@@ -11459,14 +14398,14 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 19 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var _ = __webpack_require__(1);
-var dom = __webpack_require__(4);
+var dom = __webpack_require__(5);
 var instances = __webpack_require__(0);
 var updateGeometry = __webpack_require__(2);
 var updateScroll = __webpack_require__(3);
@@ -11620,7 +14559,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 20 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11768,7 +14707,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 21 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11790,7 +14729,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 22 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11912,7 +14851,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 23 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12098,27 +15037,27 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 24 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var _ = __webpack_require__(1);
-var cls = __webpack_require__(6);
+var cls = __webpack_require__(7);
 var instances = __webpack_require__(0);
 var updateGeometry = __webpack_require__(2);
 
 // Handlers
 var handlers = {
-  'click-rail': __webpack_require__(17),
-  'drag-scrollbar': __webpack_require__(18),
-  'keyboard': __webpack_require__(19),
-  'wheel': __webpack_require__(20),
-  'touch': __webpack_require__(23),
-  'selection': __webpack_require__(22)
+  'click-rail': __webpack_require__(24),
+  'drag-scrollbar': __webpack_require__(25),
+  'keyboard': __webpack_require__(26),
+  'wheel': __webpack_require__(27),
+  'touch': __webpack_require__(30),
+  'selection': __webpack_require__(29)
 };
-var nativeScrollHandler = __webpack_require__(21);
+var nativeScrollHandler = __webpack_require__(28);
 
 module.exports = function (element, userSettings) {
   userSettings = typeof userSettings === 'object' ? userSettings : {};
@@ -12142,14 +15081,14 @@ module.exports = function (element, userSettings) {
 
 
 /***/ }),
-/* 25 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var _ = __webpack_require__(1);
-var dom = __webpack_require__(4);
+var dom = __webpack_require__(5);
 var instances = __webpack_require__(0);
 var updateGeometry = __webpack_require__(2);
 var updateScroll = __webpack_require__(3);
@@ -12186,11 +15125,1780 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 26 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(7);
-module.exports = __webpack_require__(8);
+// Line shaped progress bar
+
+var Shape = __webpack_require__(8);
+var utils = __webpack_require__(6);
+
+var Line = function Line(container, options) {
+    this._pathTemplate = 'M 0,{center} L 100,{center}';
+    Shape.apply(this, arguments);
+};
+
+Line.prototype = new Shape();
+Line.prototype.constructor = Line;
+
+Line.prototype._initializeSvg = function _initializeSvg(svg, opts) {
+    svg.setAttribute('viewBox', '0 0 100 ' + opts.strokeWidth);
+    svg.setAttribute('preserveAspectRatio', 'none');
+};
+
+Line.prototype._pathString = function _pathString(opts) {
+    return utils.render(this._pathTemplate, {
+        center: opts.strokeWidth / 2
+    });
+};
+
+Line.prototype._trailString = function _trailString(opts) {
+    return this._pathString(opts);
+};
+
+module.exports = Line;
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = {
+    // Higher level API, different shaped progress bars
+    Line: __webpack_require__(33),
+    Circle: __webpack_require__(10),
+    SemiCircle: __webpack_require__(35),
+
+    // Lower level API to use any SVG path
+    Path: __webpack_require__(11),
+
+    // Base-class for creating new custom shapes
+    // to be in line with the API of built-in shapes
+    // Undocumented.
+    Shape: __webpack_require__(8),
+
+    // Internal utils, undocumented.
+    utils: __webpack_require__(6)
+};
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Semi-SemiCircle shaped progress bar
+
+var Shape = __webpack_require__(8);
+var Circle = __webpack_require__(10);
+var utils = __webpack_require__(6);
+
+var SemiCircle = function SemiCircle(container, options) {
+    // Use one arc to form a SemiCircle
+    // See this answer http://stackoverflow.com/a/10477334/1446092
+    this._pathTemplate =
+        'M 50,50 m -{radius},0' +
+        ' a {radius},{radius} 0 1 1 {2radius},0';
+
+    this.containerAspectRatio = 2;
+
+    Shape.apply(this, arguments);
+};
+
+SemiCircle.prototype = new Shape();
+SemiCircle.prototype.constructor = SemiCircle;
+
+SemiCircle.prototype._initializeSvg = function _initializeSvg(svg, opts) {
+    svg.setAttribute('viewBox', '0 0 100 50');
+};
+
+SemiCircle.prototype._initializeTextContainer = function _initializeTextContainer(
+    opts,
+    container,
+    textContainer
+) {
+    if (opts.text.style) {
+        // Reset top style
+        textContainer.style.top = 'auto';
+        textContainer.style.bottom = '0';
+
+        if (opts.text.alignToBottom) {
+            utils.setStyle(textContainer, 'transform', 'translate(-50%, 0)');
+        } else {
+            utils.setStyle(textContainer, 'transform', 'translate(-50%, 50%)');
+        }
+    }
+};
+
+// Share functionality with Circle, just have different path
+SemiCircle.prototype._pathString = Circle.prototype._pathString;
+SemiCircle.prototype._trailString = Circle.prototype._trailString;
+
+module.exports = SemiCircle;
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* shifty - v1.5.3 - 2016-11-29 - http://jeremyckahn.github.io/shifty */
+;(function () {
+  var root = this || Function('return this')();
+
+/**
+ * Shifty Core
+ * By Jeremy Kahn - jeremyckahn@gmail.com
+ */
+
+var Tweenable = (function () {
+
+  'use strict';
+
+  // Aliases that get defined later in this function
+  var formula;
+
+  // CONSTANTS
+  var DEFAULT_SCHEDULE_FUNCTION;
+  var DEFAULT_EASING = 'linear';
+  var DEFAULT_DURATION = 500;
+  var UPDATE_TIME = 1000 / 60;
+
+  var _now = Date.now
+       ? Date.now
+       : function () {return +new Date();};
+
+  var now = typeof SHIFTY_DEBUG_NOW !== 'undefined' ? SHIFTY_DEBUG_NOW : _now;
+
+  if (typeof window !== 'undefined') {
+    // requestAnimationFrame() shim by Paul Irish (modified for Shifty)
+    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+    DEFAULT_SCHEDULE_FUNCTION = window.requestAnimationFrame
+       || window.webkitRequestAnimationFrame
+       || window.oRequestAnimationFrame
+       || window.msRequestAnimationFrame
+       || (window.mozCancelRequestAnimationFrame
+       && window.mozRequestAnimationFrame)
+       || setTimeout;
+  } else {
+    DEFAULT_SCHEDULE_FUNCTION = setTimeout;
+  }
+
+  function noop () {
+    // NOOP!
+  }
+
+  /**
+   * Handy shortcut for doing a for-in loop. This is not a "normal" each
+   * function, it is optimized for Shifty.  The iterator function only receives
+   * the property name, not the value.
+   * @param {Object} obj
+   * @param {Function(string)} fn
+   * @private
+   */
+  function each (obj, fn) {
+    var key;
+    for (key in obj) {
+      if (Object.hasOwnProperty.call(obj, key)) {
+        fn(key);
+      }
+    }
+  }
+
+  /**
+   * Perform a shallow copy of Object properties.
+   * @param {Object} targetObject The object to copy into
+   * @param {Object} srcObject The object to copy from
+   * @return {Object} A reference to the augmented `targetObj` Object
+   * @private
+   */
+  function shallowCopy (targetObj, srcObj) {
+    each(srcObj, function (prop) {
+      targetObj[prop] = srcObj[prop];
+    });
+
+    return targetObj;
+  }
+
+  /**
+   * Copies each property from src onto target, but only if the property to
+   * copy to target is undefined.
+   * @param {Object} target Missing properties in this Object are filled in
+   * @param {Object} src
+   * @private
+   */
+  function defaults (target, src) {
+    each(src, function (prop) {
+      if (typeof target[prop] === 'undefined') {
+        target[prop] = src[prop];
+      }
+    });
+  }
+
+  /**
+   * Calculates the interpolated tween values of an Object for a given
+   * timestamp.
+   * @param {Number} forPosition The position to compute the state for.
+   * @param {Object} currentState Current state properties.
+   * @param {Object} originalState: The original state properties the Object is
+   * tweening from.
+   * @param {Object} targetState: The destination state properties the Object
+   * is tweening to.
+   * @param {number} duration: The length of the tween in milliseconds.
+   * @param {number} timestamp: The UNIX epoch time at which the tween began.
+   * @param {Object} easing: This Object's keys must correspond to the keys in
+   * targetState.
+   * @private
+   */
+  function tweenProps (forPosition, currentState, originalState, targetState,
+    duration, timestamp, easing) {
+    var normalizedPosition =
+        forPosition < timestamp ? 0 : (forPosition - timestamp) / duration;
+
+
+    var prop;
+    var easingObjectProp;
+    var easingFn;
+    for (prop in currentState) {
+      if (currentState.hasOwnProperty(prop)) {
+        easingObjectProp = easing[prop];
+        easingFn = typeof easingObjectProp === 'function'
+          ? easingObjectProp
+          : formula[easingObjectProp];
+
+        currentState[prop] = tweenProp(
+          originalState[prop],
+          targetState[prop],
+          easingFn,
+          normalizedPosition
+        );
+      }
+    }
+
+    return currentState;
+  }
+
+  /**
+   * Tweens a single property.
+   * @param {number} start The value that the tween started from.
+   * @param {number} end The value that the tween should end at.
+   * @param {Function} easingFunc The easing curve to apply to the tween.
+   * @param {number} position The normalized position (between 0.0 and 1.0) to
+   * calculate the midpoint of 'start' and 'end' against.
+   * @return {number} The tweened value.
+   * @private
+   */
+  function tweenProp (start, end, easingFunc, position) {
+    return start + (end - start) * easingFunc(position);
+  }
+
+  /**
+   * Applies a filter to Tweenable instance.
+   * @param {Tweenable} tweenable The `Tweenable` instance to call the filter
+   * upon.
+   * @param {String} filterName The name of the filter to apply.
+   * @private
+   */
+  function applyFilter (tweenable, filterName) {
+    var filters = Tweenable.prototype.filter;
+    var args = tweenable._filterArgs;
+
+    each(filters, function (name) {
+      if (typeof filters[name][filterName] !== 'undefined') {
+        filters[name][filterName].apply(tweenable, args);
+      }
+    });
+  }
+
+  var timeoutHandler_endTime;
+  var timeoutHandler_currentTime;
+  var timeoutHandler_isEnded;
+  var timeoutHandler_offset;
+  /**
+   * Handles the update logic for one step of a tween.
+   * @param {Tweenable} tweenable
+   * @param {number} timestamp
+   * @param {number} delay
+   * @param {number} duration
+   * @param {Object} currentState
+   * @param {Object} originalState
+   * @param {Object} targetState
+   * @param {Object} easing
+   * @param {Function(Object, *, number)} step
+   * @param {Function(Function,number)}} schedule
+   * @param {number=} opt_currentTimeOverride Needed for accurate timestamp in
+   * Tweenable#seek.
+   * @private
+   */
+  function timeoutHandler (tweenable, timestamp, delay, duration, currentState,
+    originalState, targetState, easing, step, schedule,
+    opt_currentTimeOverride) {
+
+    timeoutHandler_endTime = timestamp + delay + duration;
+
+    timeoutHandler_currentTime =
+    Math.min(opt_currentTimeOverride || now(), timeoutHandler_endTime);
+
+    timeoutHandler_isEnded =
+      timeoutHandler_currentTime >= timeoutHandler_endTime;
+
+    timeoutHandler_offset = duration - (
+      timeoutHandler_endTime - timeoutHandler_currentTime);
+
+    if (tweenable.isPlaying()) {
+      if (timeoutHandler_isEnded) {
+        step(targetState, tweenable._attachment, timeoutHandler_offset);
+        tweenable.stop(true);
+      } else {
+        tweenable._scheduleId =
+          schedule(tweenable._timeoutHandler, UPDATE_TIME);
+
+        applyFilter(tweenable, 'beforeTween');
+
+        // If the animation has not yet reached the start point (e.g., there was
+        // delay that has not yet completed), just interpolate the starting
+        // position of the tween.
+        if (timeoutHandler_currentTime < (timestamp + delay)) {
+          tweenProps(1, currentState, originalState, targetState, 1, 1, easing);
+        } else {
+          tweenProps(timeoutHandler_currentTime, currentState, originalState,
+            targetState, duration, timestamp + delay, easing);
+        }
+
+        applyFilter(tweenable, 'afterTween');
+
+        step(currentState, tweenable._attachment, timeoutHandler_offset);
+      }
+    }
+  }
+
+
+  /**
+   * Creates a usable easing Object from a string, a function or another easing
+   * Object.  If `easing` is an Object, then this function clones it and fills
+   * in the missing properties with `"linear"`.
+   * @param {Object.<string|Function>} fromTweenParams
+   * @param {Object|string|Function} easing
+   * @return {Object.<string|Function>}
+   * @private
+   */
+  function composeEasingObject (fromTweenParams, easing) {
+    var composedEasing = {};
+    var typeofEasing = typeof easing;
+
+    if (typeofEasing === 'string' || typeofEasing === 'function') {
+      each(fromTweenParams, function (prop) {
+        composedEasing[prop] = easing;
+      });
+    } else {
+      each(fromTweenParams, function (prop) {
+        if (!composedEasing[prop]) {
+          composedEasing[prop] = easing[prop] || DEFAULT_EASING;
+        }
+      });
+    }
+
+    return composedEasing;
+  }
+
+  /**
+   * Tweenable constructor.
+   * @class Tweenable
+   * @param {Object=} opt_initialState The values that the initial tween should
+   * start at if a `from` object is not provided to `{{#crossLink
+   * "Tweenable/tween:method"}}{{/crossLink}}` or `{{#crossLink
+   * "Tweenable/setConfig:method"}}{{/crossLink}}`.
+   * @param {Object=} opt_config Configuration object to be passed to
+   * `{{#crossLink "Tweenable/setConfig:method"}}{{/crossLink}}`.
+   * @module Tweenable
+   * @constructor
+   */
+  function Tweenable (opt_initialState, opt_config) {
+    this._currentState = opt_initialState || {};
+    this._configured = false;
+    this._scheduleFunction = DEFAULT_SCHEDULE_FUNCTION;
+
+    // To prevent unnecessary calls to setConfig do not set default
+    // configuration here.  Only set default configuration immediately before
+    // tweening if none has been set.
+    if (typeof opt_config !== 'undefined') {
+      this.setConfig(opt_config);
+    }
+  }
+
+  /**
+   * Configure and start a tween.
+   * @method tween
+   * @param {Object=} opt_config Configuration object to be passed to
+   * `{{#crossLink "Tweenable/setConfig:method"}}{{/crossLink}}`.
+   * @chainable
+   */
+  Tweenable.prototype.tween = function (opt_config) {
+    if (this._isTweening) {
+      return this;
+    }
+
+    // Only set default config if no configuration has been set previously and
+    // none is provided now.
+    if (opt_config !== undefined || !this._configured) {
+      this.setConfig(opt_config);
+    }
+
+    this._timestamp = now();
+    this._start(this.get(), this._attachment);
+    return this.resume();
+  };
+
+  /**
+   * Configure a tween that will start at some point in the future.
+   *
+   * @method setConfig
+   * @param {Object} config The following values are valid:
+   * - __from__ (_Object=_): Starting position.  If omitted, `{{#crossLink
+   *   "Tweenable/get:method"}}get(){{/crossLink}}` is used.
+   * - __to__ (_Object=_): Ending position.
+   * - __duration__ (_number=_): How many milliseconds to animate for.
+   * - __delay__ (_delay=_): How many milliseconds to wait before starting the
+   *   tween.
+   * - __start__ (_Function(Object, *)_): Function to execute when the tween
+   *   begins.  Receives the state of the tween as the first parameter and
+   *   `attachment` as the second parameter.
+   * - __step__ (_Function(Object, *, number)_): Function to execute on every
+   *   tick.  Receives `{{#crossLink
+   *   "Tweenable/get:method"}}get(){{/crossLink}}` as the first parameter,
+   *   `attachment` as the second parameter, and the time elapsed since the
+   *   start of the tween as the third. This function is not called on the
+   *   final step of the animation, but `finish` is.
+   * - __finish__ (_Function(Object, *)_): Function to execute upon tween
+   *   completion.  Receives the state of the tween as the first parameter and
+   *   `attachment` as the second parameter.
+   * - __easing__ (_Object.<string|Function>|string|Function=_): Easing curve
+   *   name(s) or function(s) to use for the tween.
+   * - __attachment__ (_*_): Cached value that is passed to the
+   *   `step`/`start`/`finish` methods.
+   * @chainable
+   */
+  Tweenable.prototype.setConfig = function (config) {
+    config = config || {};
+    this._configured = true;
+
+    // Attach something to this Tweenable instance (e.g.: a DOM element, an
+    // object, a string, etc.);
+    this._attachment = config.attachment;
+
+    // Init the internal state
+    this._pausedAtTime = null;
+    this._scheduleId = null;
+    this._delay = config.delay || 0;
+    this._start = config.start || noop;
+    this._step = config.step || noop;
+    this._finish = config.finish || noop;
+    this._duration = config.duration || DEFAULT_DURATION;
+    this._currentState = shallowCopy({}, config.from || this.get());
+    this._originalState = this.get();
+    this._targetState = shallowCopy({}, config.to || this.get());
+
+    var self = this;
+    this._timeoutHandler = function () {
+      timeoutHandler(self,
+        self._timestamp,
+        self._delay,
+        self._duration,
+        self._currentState,
+        self._originalState,
+        self._targetState,
+        self._easing,
+        self._step,
+        self._scheduleFunction
+      );
+    };
+
+    // Aliases used below
+    var currentState = this._currentState;
+    var targetState = this._targetState;
+
+    // Ensure that there is always something to tween to.
+    defaults(targetState, currentState);
+
+    this._easing = composeEasingObject(
+      currentState, config.easing || DEFAULT_EASING);
+
+    this._filterArgs =
+      [currentState, this._originalState, targetState, this._easing];
+
+    applyFilter(this, 'tweenCreated');
+    return this;
+  };
+
+  /**
+   * @method get
+   * @return {Object} The current state.
+   */
+  Tweenable.prototype.get = function () {
+    return shallowCopy({}, this._currentState);
+  };
+
+  /**
+   * @method set
+   * @param {Object} state The current state.
+   */
+  Tweenable.prototype.set = function (state) {
+    this._currentState = state;
+  };
+
+  /**
+   * Pause a tween.  Paused tweens can be resumed from the point at which they
+   * were paused.  This is different from `{{#crossLink
+   * "Tweenable/stop:method"}}{{/crossLink}}`, as that method
+   * causes a tween to start over when it is resumed.
+   * @method pause
+   * @chainable
+   */
+  Tweenable.prototype.pause = function () {
+    this._pausedAtTime = now();
+    this._isPaused = true;
+    return this;
+  };
+
+  /**
+   * Resume a paused tween.
+   * @method resume
+   * @chainable
+   */
+  Tweenable.prototype.resume = function () {
+    if (this._isPaused) {
+      this._timestamp += now() - this._pausedAtTime;
+    }
+
+    this._isPaused = false;
+    this._isTweening = true;
+
+    this._timeoutHandler();
+
+    return this;
+  };
+
+  /**
+   * Move the state of the animation to a specific point in the tween's
+   * timeline.  If the animation is not running, this will cause the `step`
+   * handlers to be called.
+   * @method seek
+   * @param {millisecond} millisecond The millisecond of the animation to seek
+   * to.  This must not be less than `0`.
+   * @chainable
+   */
+  Tweenable.prototype.seek = function (millisecond) {
+    millisecond = Math.max(millisecond, 0);
+    var currentTime = now();
+
+    if ((this._timestamp + millisecond) === 0) {
+      return this;
+    }
+
+    this._timestamp = currentTime - millisecond;
+
+    if (!this.isPlaying()) {
+      this._isTweening = true;
+      this._isPaused = false;
+
+      // If the animation is not running, call timeoutHandler to make sure that
+      // any step handlers are run.
+      timeoutHandler(this,
+        this._timestamp,
+        this._delay,
+        this._duration,
+        this._currentState,
+        this._originalState,
+        this._targetState,
+        this._easing,
+        this._step,
+        this._scheduleFunction,
+        currentTime
+      );
+
+      this.pause();
+    }
+
+    return this;
+  };
+
+  /**
+   * Stops and cancels a tween.
+   * @param {boolean=} gotoEnd If `false` or omitted, the tween just stops at
+   * its current state, and the `finish` handler is not invoked.  If `true`,
+   * the tweened object's values are instantly set to the target values, and
+   * `finish` is invoked.
+   * @method stop
+   * @chainable
+   */
+  Tweenable.prototype.stop = function (gotoEnd) {
+    this._isTweening = false;
+    this._isPaused = false;
+    this._timeoutHandler = noop;
+
+    (root.cancelAnimationFrame            ||
+    root.webkitCancelAnimationFrame     ||
+    root.oCancelAnimationFrame          ||
+    root.msCancelAnimationFrame         ||
+    root.mozCancelRequestAnimationFrame ||
+    root.clearTimeout)(this._scheduleId);
+
+    if (gotoEnd) {
+      applyFilter(this, 'beforeTween');
+      tweenProps(
+        1,
+        this._currentState,
+        this._originalState,
+        this._targetState,
+        1,
+        0,
+        this._easing
+      );
+      applyFilter(this, 'afterTween');
+      applyFilter(this, 'afterTweenEnd');
+      this._finish.call(this, this._currentState, this._attachment);
+    }
+
+    return this;
+  };
+
+  /**
+   * @method isPlaying
+   * @return {boolean} Whether or not a tween is running.
+   */
+  Tweenable.prototype.isPlaying = function () {
+    return this._isTweening && !this._isPaused;
+  };
+
+  /**
+   * Set a custom schedule function.
+   *
+   * If a custom function is not set,
+   * [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame)
+   * is used if available, otherwise
+   * [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/Window.setTimeout)
+   * is used.
+   * @method setScheduleFunction
+   * @param {Function(Function,number)} scheduleFunction The function to be
+   * used to schedule the next frame to be rendered.
+   */
+  Tweenable.prototype.setScheduleFunction = function (scheduleFunction) {
+    this._scheduleFunction = scheduleFunction;
+  };
+
+  /**
+   * `delete` all "own" properties.  Call this when the `Tweenable` instance
+   * is no longer needed to free memory.
+   * @method dispose
+   */
+  Tweenable.prototype.dispose = function () {
+    var prop;
+    for (prop in this) {
+      if (this.hasOwnProperty(prop)) {
+        delete this[prop];
+      }
+    }
+  };
+
+  /**
+   * Filters are used for transforming the properties of a tween at various
+   * points in a Tweenable's life cycle.  See the README for more info on this.
+   * @private
+   */
+  Tweenable.prototype.filter = {};
+
+  /**
+   * This object contains all of the tweens available to Shifty.  It is
+   * extensible - simply attach properties to the `Tweenable.prototype.formula`
+   * Object following the same format as `linear`.
+   *
+   * `pos` should be a normalized `number` (between 0 and 1).
+   * @property formula
+   * @type {Object(function)}
+   */
+  Tweenable.prototype.formula = {
+    linear: function (pos) {
+      return pos;
+    }
+  };
+
+  formula = Tweenable.prototype.formula;
+
+  shallowCopy(Tweenable, {
+    'now': now
+    ,'each': each
+    ,'tweenProps': tweenProps
+    ,'tweenProp': tweenProp
+    ,'applyFilter': applyFilter
+    ,'shallowCopy': shallowCopy
+    ,'defaults': defaults
+    ,'composeEasingObject': composeEasingObject
+  });
+
+  // `root` is provided in the intro/outro files.
+
+  // A hook used for unit testing.
+  if (typeof SHIFTY_DEBUG_NOW === 'function') {
+    root.timeoutHandler = timeoutHandler;
+  }
+
+  // Bootstrap Tweenable appropriately for the environment.
+  if (true) {
+    // CommonJS
+    module.exports = Tweenable;
+  } else if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(function () {return Tweenable;});
+  } else if (typeof root.Tweenable === 'undefined') {
+    // Browser: Make `Tweenable` globally accessible.
+    root.Tweenable = Tweenable;
+  }
+
+  return Tweenable;
+
+} ());
+
+/*!
+ * All equations are adapted from Thomas Fuchs'
+ * [Scripty2](https://github.com/madrobby/scripty2/blob/master/src/effects/transitions/penner.js).
+ *
+ * Based on Easing Equations (c) 2003 [Robert
+ * Penner](http://www.robertpenner.com/), all rights reserved. This work is
+ * [subject to terms](http://www.robertpenner.com/easing_terms_of_use.html).
+ */
+
+/*!
+ *  TERMS OF USE - EASING EQUATIONS
+ *  Open source under the BSD License.
+ *  Easing Equations (c) 2003 Robert Penner, all rights reserved.
+ */
+
+;(function () {
+
+  Tweenable.shallowCopy(Tweenable.prototype.formula, {
+    easeInQuad: function (pos) {
+      return Math.pow(pos, 2);
+    },
+
+    easeOutQuad: function (pos) {
+      return -(Math.pow((pos - 1), 2) - 1);
+    },
+
+    easeInOutQuad: function (pos) {
+      if ((pos /= 0.5) < 1) {return 0.5 * Math.pow(pos,2);}
+      return -0.5 * ((pos -= 2) * pos - 2);
+    },
+
+    easeInCubic: function (pos) {
+      return Math.pow(pos, 3);
+    },
+
+    easeOutCubic: function (pos) {
+      return (Math.pow((pos - 1), 3) + 1);
+    },
+
+    easeInOutCubic: function (pos) {
+      if ((pos /= 0.5) < 1) {return 0.5 * Math.pow(pos,3);}
+      return 0.5 * (Math.pow((pos - 2),3) + 2);
+    },
+
+    easeInQuart: function (pos) {
+      return Math.pow(pos, 4);
+    },
+
+    easeOutQuart: function (pos) {
+      return -(Math.pow((pos - 1), 4) - 1);
+    },
+
+    easeInOutQuart: function (pos) {
+      if ((pos /= 0.5) < 1) {return 0.5 * Math.pow(pos,4);}
+      return -0.5 * ((pos -= 2) * Math.pow(pos,3) - 2);
+    },
+
+    easeInQuint: function (pos) {
+      return Math.pow(pos, 5);
+    },
+
+    easeOutQuint: function (pos) {
+      return (Math.pow((pos - 1), 5) + 1);
+    },
+
+    easeInOutQuint: function (pos) {
+      if ((pos /= 0.5) < 1) {return 0.5 * Math.pow(pos,5);}
+      return 0.5 * (Math.pow((pos - 2),5) + 2);
+    },
+
+    easeInSine: function (pos) {
+      return -Math.cos(pos * (Math.PI / 2)) + 1;
+    },
+
+    easeOutSine: function (pos) {
+      return Math.sin(pos * (Math.PI / 2));
+    },
+
+    easeInOutSine: function (pos) {
+      return (-0.5 * (Math.cos(Math.PI * pos) - 1));
+    },
+
+    easeInExpo: function (pos) {
+      return (pos === 0) ? 0 : Math.pow(2, 10 * (pos - 1));
+    },
+
+    easeOutExpo: function (pos) {
+      return (pos === 1) ? 1 : -Math.pow(2, -10 * pos) + 1;
+    },
+
+    easeInOutExpo: function (pos) {
+      if (pos === 0) {return 0;}
+      if (pos === 1) {return 1;}
+      if ((pos /= 0.5) < 1) {return 0.5 * Math.pow(2,10 * (pos - 1));}
+      return 0.5 * (-Math.pow(2, -10 * --pos) + 2);
+    },
+
+    easeInCirc: function (pos) {
+      return -(Math.sqrt(1 - (pos * pos)) - 1);
+    },
+
+    easeOutCirc: function (pos) {
+      return Math.sqrt(1 - Math.pow((pos - 1), 2));
+    },
+
+    easeInOutCirc: function (pos) {
+      if ((pos /= 0.5) < 1) {return -0.5 * (Math.sqrt(1 - pos * pos) - 1);}
+      return 0.5 * (Math.sqrt(1 - (pos -= 2) * pos) + 1);
+    },
+
+    easeOutBounce: function (pos) {
+      if ((pos) < (1 / 2.75)) {
+        return (7.5625 * pos * pos);
+      } else if (pos < (2 / 2.75)) {
+        return (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+      } else if (pos < (2.5 / 2.75)) {
+        return (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
+      } else {
+        return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
+      }
+    },
+
+    easeInBack: function (pos) {
+      var s = 1.70158;
+      return (pos) * pos * ((s + 1) * pos - s);
+    },
+
+    easeOutBack: function (pos) {
+      var s = 1.70158;
+      return (pos = pos - 1) * pos * ((s + 1) * pos + s) + 1;
+    },
+
+    easeInOutBack: function (pos) {
+      var s = 1.70158;
+      if ((pos /= 0.5) < 1) {
+        return 0.5 * (pos * pos * (((s *= (1.525)) + 1) * pos - s));
+      }
+      return 0.5 * ((pos -= 2) * pos * (((s *= (1.525)) + 1) * pos + s) + 2);
+    },
+
+    elastic: function (pos) {
+      // jshint maxlen:90
+      return -1 * Math.pow(4,-8 * pos) * Math.sin((pos * 6 - 1) * (2 * Math.PI) / 2) + 1;
+    },
+
+    swingFromTo: function (pos) {
+      var s = 1.70158;
+      return ((pos /= 0.5) < 1) ?
+          0.5 * (pos * pos * (((s *= (1.525)) + 1) * pos - s)) :
+          0.5 * ((pos -= 2) * pos * (((s *= (1.525)) + 1) * pos + s) + 2);
+    },
+
+    swingFrom: function (pos) {
+      var s = 1.70158;
+      return pos * pos * ((s + 1) * pos - s);
+    },
+
+    swingTo: function (pos) {
+      var s = 1.70158;
+      return (pos -= 1) * pos * ((s + 1) * pos + s) + 1;
+    },
+
+    bounce: function (pos) {
+      if (pos < (1 / 2.75)) {
+        return (7.5625 * pos * pos);
+      } else if (pos < (2 / 2.75)) {
+        return (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+      } else if (pos < (2.5 / 2.75)) {
+        return (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
+      } else {
+        return (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
+      }
+    },
+
+    bouncePast: function (pos) {
+      if (pos < (1 / 2.75)) {
+        return (7.5625 * pos * pos);
+      } else if (pos < (2 / 2.75)) {
+        return 2 - (7.5625 * (pos -= (1.5 / 2.75)) * pos + 0.75);
+      } else if (pos < (2.5 / 2.75)) {
+        return 2 - (7.5625 * (pos -= (2.25 / 2.75)) * pos + 0.9375);
+      } else {
+        return 2 - (7.5625 * (pos -= (2.625 / 2.75)) * pos + 0.984375);
+      }
+    },
+
+    easeFromTo: function (pos) {
+      if ((pos /= 0.5) < 1) {return 0.5 * Math.pow(pos,4);}
+      return -0.5 * ((pos -= 2) * Math.pow(pos,3) - 2);
+    },
+
+    easeFrom: function (pos) {
+      return Math.pow(pos,4);
+    },
+
+    easeTo: function (pos) {
+      return Math.pow(pos,0.25);
+    }
+  });
+
+}());
+
+// jshint maxlen:100
+/**
+ * The Bezier magic in this file is adapted/copied almost wholesale from
+ * [Scripty2](https://github.com/madrobby/scripty2/blob/master/src/effects/transitions/cubic-bezier.js),
+ * which was adapted from Apple code (which probably came from
+ * [here](http://opensource.apple.com/source/WebCore/WebCore-955.66/platform/graphics/UnitBezier.h)).
+ * Special thanks to Apple and Thomas Fuchs for much of this code.
+ */
+
+/**
+ *  Copyright (c) 2006 Apple Computer, Inc. All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice,
+ *  this list of conditions and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice,
+ *  this list of conditions and the following disclaimer in the documentation
+ *  and/or other materials provided with the distribution.
+ *
+ *  3. Neither the name of the copyright holder(s) nor the names of any
+ *  contributors may be used to endorse or promote products derived from
+ *  this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *  POSSIBILITY OF SUCH DAMAGE.
+ */
+;(function () {
+  // port of webkit cubic bezier handling by http://www.netzgesta.de/dev/
+  function cubicBezierAtTime(t,p1x,p1y,p2x,p2y,duration) {
+    var ax = 0,bx = 0,cx = 0,ay = 0,by = 0,cy = 0;
+    function sampleCurveX(t) {
+      return ((ax * t + bx) * t + cx) * t;
+    }
+    function sampleCurveY(t) {
+      return ((ay * t + by) * t + cy) * t;
+    }
+    function sampleCurveDerivativeX(t) {
+      return (3.0 * ax * t + 2.0 * bx) * t + cx;
+    }
+    function solveEpsilon(duration) {
+      return 1.0 / (200.0 * duration);
+    }
+    function solve(x,epsilon) {
+      return sampleCurveY(solveCurveX(x, epsilon));
+    }
+    function fabs(n) {
+      if (n >= 0) {
+        return n;
+      } else {
+        return 0 - n;
+      }
+    }
+    function solveCurveX(x, epsilon) {
+      var t0,t1,t2,x2,d2,i;
+      for (t2 = x, i = 0; i < 8; i++) {
+        x2 = sampleCurveX(t2) - x;
+        if (fabs(x2) < epsilon) {
+          return t2;
+        }
+        d2 = sampleCurveDerivativeX(t2);
+        if (fabs(d2) < 1e-6) {
+          break;
+        }
+        t2 = t2 - x2 / d2;
+      }
+      t0 = 0.0;
+      t1 = 1.0;
+      t2 = x;
+      if (t2 < t0) {
+        return t0;
+      }
+      if (t2 > t1) {
+        return t1;
+      }
+      while (t0 < t1) {
+        x2 = sampleCurveX(t2);
+        if (fabs(x2 - x) < epsilon) {
+          return t2;
+        }
+        if (x > x2) {
+          t0 = t2;
+        }else {
+          t1 = t2;
+        }
+        t2 = (t1 - t0) * 0.5 + t0;
+      }
+      return t2; // Failure.
+    }
+    cx = 3.0 * p1x;
+    bx = 3.0 * (p2x - p1x) - cx;
+    ax = 1.0 - cx - bx;
+    cy = 3.0 * p1y;
+    by = 3.0 * (p2y - p1y) - cy;
+    ay = 1.0 - cy - by;
+    return solve(t, solveEpsilon(duration));
+  }
+  /**
+   *  getCubicBezierTransition(x1, y1, x2, y2) -> Function
+   *
+   *  Generates a transition easing function that is compatible
+   *  with WebKit's CSS transitions `-webkit-transition-timing-function`
+   *  CSS property.
+   *
+   *  The W3C has more information about CSS3 transition timing functions:
+   *  http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+   *
+   *  @param {number} x1
+   *  @param {number} y1
+   *  @param {number} x2
+   *  @param {number} y2
+   *  @return {function}
+   *  @private
+   */
+  function getCubicBezierTransition (x1, y1, x2, y2) {
+    return function (pos) {
+      return cubicBezierAtTime(pos,x1,y1,x2,y2,1);
+    };
+  }
+  // End ported code
+
+  /**
+   * Create a Bezier easing function and attach it to `{{#crossLink
+   * "Tweenable/formula:property"}}Tweenable#formula{{/crossLink}}`.  This
+   * function gives you total control over the easing curve.  Matthew Lein's
+   * [Ceaser](http://matthewlein.com/ceaser/) is a useful tool for visualizing
+   * the curves you can make with this function.
+   * @method setBezierFunction
+   * @param {string} name The name of the easing curve.  Overwrites the old
+   * easing function on `{{#crossLink
+   * "Tweenable/formula:property"}}Tweenable#formula{{/crossLink}}` if it
+   * exists.
+   * @param {number} x1
+   * @param {number} y1
+   * @param {number} x2
+   * @param {number} y2
+   * @return {function} The easing function that was attached to
+   * Tweenable.prototype.formula.
+   */
+  Tweenable.setBezierFunction = function (name, x1, y1, x2, y2) {
+    var cubicBezierTransition = getCubicBezierTransition(x1, y1, x2, y2);
+    cubicBezierTransition.displayName = name;
+    cubicBezierTransition.x1 = x1;
+    cubicBezierTransition.y1 = y1;
+    cubicBezierTransition.x2 = x2;
+    cubicBezierTransition.y2 = y2;
+
+    return Tweenable.prototype.formula[name] = cubicBezierTransition;
+  };
+
+
+  /**
+   * `delete` an easing function from `{{#crossLink
+   * "Tweenable/formula:property"}}Tweenable#formula{{/crossLink}}`.  Be
+   * careful with this method, as it `delete`s whatever easing formula matches
+   * `name` (which means you can delete standard Shifty easing functions).
+   * @method unsetBezierFunction
+   * @param {string} name The name of the easing function to delete.
+   * @return {function}
+   */
+  Tweenable.unsetBezierFunction = function (name) {
+    delete Tweenable.prototype.formula[name];
+  };
+
+})();
+
+;(function () {
+
+  function getInterpolatedValues (
+    from, current, targetState, position, easing, delay) {
+    return Tweenable.tweenProps(
+      position, current, from, targetState, 1, delay, easing);
+  }
+
+  // Fake a Tweenable and patch some internals.  This approach allows us to
+  // skip uneccessary processing and object recreation, cutting down on garbage
+  // collection pauses.
+  var mockTweenable = new Tweenable();
+  mockTweenable._filterArgs = [];
+
+  /**
+   * Compute the midpoint of two Objects.  This method effectively calculates a
+   * specific frame of animation that `{{#crossLink
+   * "Tweenable/tween:method"}}{{/crossLink}}` does many times over the course
+   * of a full tween.
+   *
+   *     var interpolatedValues = Tweenable.interpolate({
+   *       width: '100px',
+   *       opacity: 0,
+   *       color: '#fff'
+   *     }, {
+   *       width: '200px',
+   *       opacity: 1,
+   *       color: '#000'
+   *     }, 0.5);
+   *
+   *     console.log(interpolatedValues);
+   *     // {opacity: 0.5, width: "150px", color: "rgb(127,127,127)"}
+   *
+   * @static
+   * @method interpolate
+   * @param {Object} from The starting values to tween from.
+   * @param {Object} targetState The ending values to tween to.
+   * @param {number} position The normalized position value (between `0.0` and
+   * `1.0`) to interpolate the values between `from` and `to` for.  `from`
+   * represents `0` and `to` represents `1`.
+   * @param {Object.<string|Function>|string|Function} easing The easing
+   * curve(s) to calculate the midpoint against.  You can reference any easing
+   * function attached to `Tweenable.prototype.formula`, or provide the easing
+   * function(s) directly.  If omitted, this defaults to "linear".
+   * @param {number=} opt_delay Optional delay to pad the beginning of the
+   * interpolated tween with.  This increases the range of `position` from (`0`
+   * through `1`) to (`0` through `1 + opt_delay`).  So, a delay of `0.5` would
+   * increase all valid values of `position` to numbers between `0` and `1.5`.
+   * @return {Object}
+   */
+  Tweenable.interpolate = function (
+    from, targetState, position, easing, opt_delay) {
+
+    var current = Tweenable.shallowCopy({}, from);
+    var delay = opt_delay || 0;
+    var easingObject = Tweenable.composeEasingObject(
+      from, easing || 'linear');
+
+    mockTweenable.set({});
+
+    // Alias and reuse the _filterArgs array instead of recreating it.
+    var filterArgs = mockTweenable._filterArgs;
+    filterArgs.length = 0;
+    filterArgs[0] = current;
+    filterArgs[1] = from;
+    filterArgs[2] = targetState;
+    filterArgs[3] = easingObject;
+
+    // Any defined value transformation must be applied
+    Tweenable.applyFilter(mockTweenable, 'tweenCreated');
+    Tweenable.applyFilter(mockTweenable, 'beforeTween');
+
+    var interpolatedValues = getInterpolatedValues(
+      from, current, targetState, position, easingObject, delay);
+
+    // Transform values back into their original format
+    Tweenable.applyFilter(mockTweenable, 'afterTween');
+
+    return interpolatedValues;
+  };
+
+}());
+
+/**
+ * This module adds string interpolation support to Shifty.
+ *
+ * The Token extension allows Shifty to tween numbers inside of strings.  Among
+ * other things, this allows you to animate CSS properties.  For example, you
+ * can do this:
+ *
+ *     var tweenable = new Tweenable();
+ *     tweenable.tween({
+ *       from: { transform: 'translateX(45px)' },
+ *       to: { transform: 'translateX(90xp)' }
+ *     });
+ *
+ * `translateX(45)` will be tweened to `translateX(90)`.  To demonstrate:
+ *
+ *     var tweenable = new Tweenable();
+ *     tweenable.tween({
+ *       from: { transform: 'translateX(45px)' },
+ *       to: { transform: 'translateX(90px)' },
+ *       step: function (state) {
+ *         console.log(state.transform);
+ *       }
+ *     });
+ *
+ * The above snippet will log something like this in the console:
+ *
+ *     translateX(60.3px)
+ *     ...
+ *     translateX(76.05px)
+ *     ...
+ *     translateX(90px)
+ *
+ * Another use for this is animating colors:
+ *
+ *     var tweenable = new Tweenable();
+ *     tweenable.tween({
+ *       from: { color: 'rgb(0,255,0)' },
+ *       to: { color: 'rgb(255,0,255)' },
+ *       step: function (state) {
+ *         console.log(state.color);
+ *       }
+ *     });
+ *
+ * The above snippet will log something like this:
+ *
+ *     rgb(84,170,84)
+ *     ...
+ *     rgb(170,84,170)
+ *     ...
+ *     rgb(255,0,255)
+ *
+ * This extension also supports hexadecimal colors, in both long (`#ff00ff`)
+ * and short (`#f0f`) forms.  Be aware that hexadecimal input values will be
+ * converted into the equivalent RGB output values.  This is done to optimize
+ * for performance.
+ *
+ *     var tweenable = new Tweenable();
+ *     tweenable.tween({
+ *       from: { color: '#0f0' },
+ *       to: { color: '#f0f' },
+ *       step: function (state) {
+ *         console.log(state.color);
+ *       }
+ *     });
+ *
+ * This snippet will generate the same output as the one before it because
+ * equivalent values were supplied (just in hexadecimal form rather than RGB):
+ *
+ *     rgb(84,170,84)
+ *     ...
+ *     rgb(170,84,170)
+ *     ...
+ *     rgb(255,0,255)
+ *
+ * ## Easing support
+ *
+ * Easing works somewhat differently in the Token extension.  This is because
+ * some CSS properties have multiple values in them, and you might need to
+ * tween each value along its own easing curve.  A basic example:
+ *
+ *     var tweenable = new Tweenable();
+ *     tweenable.tween({
+ *       from: { transform: 'translateX(0px) translateY(0px)' },
+ *       to: { transform:   'translateX(100px) translateY(100px)' },
+ *       easing: { transform: 'easeInQuad' },
+ *       step: function (state) {
+ *         console.log(state.transform);
+ *       }
+ *     });
+ *
+ * The above snippet will create values like this:
+ *
+ *     translateX(11.56px) translateY(11.56px)
+ *     ...
+ *     translateX(46.24px) translateY(46.24px)
+ *     ...
+ *     translateX(100px) translateY(100px)
+ *
+ * In this case, the values for `translateX` and `translateY` are always the
+ * same for each step of the tween, because they have the same start and end
+ * points and both use the same easing curve.  We can also tween `translateX`
+ * and `translateY` along independent curves:
+ *
+ *     var tweenable = new Tweenable();
+ *     tweenable.tween({
+ *       from: { transform: 'translateX(0px) translateY(0px)' },
+ *       to: { transform:   'translateX(100px) translateY(100px)' },
+ *       easing: { transform: 'easeInQuad bounce' },
+ *       step: function (state) {
+ *         console.log(state.transform);
+ *       }
+ *     });
+ *
+ * The above snippet will create values like this:
+ *
+ *     translateX(10.89px) translateY(82.35px)
+ *     ...
+ *     translateX(44.89px) translateY(86.73px)
+ *     ...
+ *     translateX(100px) translateY(100px)
+ *
+ * `translateX` and `translateY` are not in sync anymore, because `easeInQuad`
+ * was specified for `translateX` and `bounce` for `translateY`.  Mixing and
+ * matching easing curves can make for some interesting motion in your
+ * animations.
+ *
+ * The order of the space-separated easing curves correspond the token values
+ * they apply to.  If there are more token values than easing curves listed,
+ * the last easing curve listed is used.
+ * @submodule Tweenable.token
+ */
+
+// token function is defined above only so that dox-foundation sees it as
+// documentation and renders it.  It is never used, and is optimized away at
+// build time.
+
+;(function (Tweenable) {
+
+  /**
+   * @typedef {{
+   *   formatString: string
+   *   chunkNames: Array.<string>
+   * }}
+   * @private
+   */
+  var formatManifest;
+
+  // CONSTANTS
+
+  var R_NUMBER_COMPONENT = /(\d|\-|\.)/;
+  var R_FORMAT_CHUNKS = /([^\-0-9\.]+)/g;
+  var R_UNFORMATTED_VALUES = /[0-9.\-]+/g;
+  var R_RGB = new RegExp(
+    'rgb\\(' + R_UNFORMATTED_VALUES.source +
+    (/,\s*/.source) + R_UNFORMATTED_VALUES.source +
+    (/,\s*/.source) + R_UNFORMATTED_VALUES.source + '\\)', 'g');
+  var R_RGB_PREFIX = /^.*\(/;
+  var R_HEX = /#([0-9]|[a-f]){3,6}/gi;
+  var VALUE_PLACEHOLDER = 'VAL';
+
+  // HELPERS
+
+  /**
+   * @param {Array.number} rawValues
+   * @param {string} prefix
+   *
+   * @return {Array.<string>}
+   * @private
+   */
+  function getFormatChunksFrom (rawValues, prefix) {
+    var accumulator = [];
+
+    var rawValuesLength = rawValues.length;
+    var i;
+
+    for (i = 0; i < rawValuesLength; i++) {
+      accumulator.push('_' + prefix + '_' + i);
+    }
+
+    return accumulator;
+  }
+
+  /**
+   * @param {string} formattedString
+   *
+   * @return {string}
+   * @private
+   */
+  function getFormatStringFrom (formattedString) {
+    var chunks = formattedString.match(R_FORMAT_CHUNKS);
+
+    if (!chunks) {
+      // chunks will be null if there were no tokens to parse in
+      // formattedString (for example, if formattedString is '2').  Coerce
+      // chunks to be useful here.
+      chunks = ['', ''];
+
+      // If there is only one chunk, assume that the string is a number
+      // followed by a token...
+      // NOTE: This may be an unwise assumption.
+    } else if (chunks.length === 1 ||
+      // ...or if the string starts with a number component (".", "-", or a
+      // digit)...
+    formattedString.charAt(0).match(R_NUMBER_COMPONENT)) {
+      // ...prepend an empty string here to make sure that the formatted number
+      // is properly replaced by VALUE_PLACEHOLDER
+      chunks.unshift('');
+    }
+
+    return chunks.join(VALUE_PLACEHOLDER);
+  }
+
+  /**
+   * Convert all hex color values within a string to an rgb string.
+   *
+   * @param {Object} stateObject
+   *
+   * @return {Object} The modified obj
+   * @private
+   */
+  function sanitizeObjectForHexProps (stateObject) {
+    Tweenable.each(stateObject, function (prop) {
+      var currentProp = stateObject[prop];
+
+      if (typeof currentProp === 'string' && currentProp.match(R_HEX)) {
+        stateObject[prop] = sanitizeHexChunksToRGB(currentProp);
+      }
+    });
+  }
+
+  /**
+   * @param {string} str
+   *
+   * @return {string}
+   * @private
+   */
+  function  sanitizeHexChunksToRGB (str) {
+    return filterStringChunks(R_HEX, str, convertHexToRGB);
+  }
+
+  /**
+   * @param {string} hexString
+   *
+   * @return {string}
+   * @private
+   */
+  function convertHexToRGB (hexString) {
+    var rgbArr = hexToRGBArray(hexString);
+    return 'rgb(' + rgbArr[0] + ',' + rgbArr[1] + ',' + rgbArr[2] + ')';
+  }
+
+  var hexToRGBArray_returnArray = [];
+  /**
+   * Convert a hexadecimal string to an array with three items, one each for
+   * the red, blue, and green decimal values.
+   *
+   * @param {string} hex A hexadecimal string.
+   *
+   * @returns {Array.<number>} The converted Array of RGB values if `hex` is a
+   * valid string, or an Array of three 0's.
+   * @private
+   */
+  function hexToRGBArray (hex) {
+
+    hex = hex.replace(/#/, '');
+
+    // If the string is a shorthand three digit hex notation, normalize it to
+    // the standard six digit notation
+    if (hex.length === 3) {
+      hex = hex.split('');
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+
+    hexToRGBArray_returnArray[0] = hexToDec(hex.substr(0, 2));
+    hexToRGBArray_returnArray[1] = hexToDec(hex.substr(2, 2));
+    hexToRGBArray_returnArray[2] = hexToDec(hex.substr(4, 2));
+
+    return hexToRGBArray_returnArray;
+  }
+
+  /**
+   * Convert a base-16 number to base-10.
+   *
+   * @param {Number|String} hex The value to convert
+   *
+   * @returns {Number} The base-10 equivalent of `hex`.
+   * @private
+   */
+  function hexToDec (hex) {
+    return parseInt(hex, 16);
+  }
+
+  /**
+   * Runs a filter operation on all chunks of a string that match a RegExp
+   *
+   * @param {RegExp} pattern
+   * @param {string} unfilteredString
+   * @param {function(string)} filter
+   *
+   * @return {string}
+   * @private
+   */
+  function filterStringChunks (pattern, unfilteredString, filter) {
+    var pattenMatches = unfilteredString.match(pattern);
+    var filteredString = unfilteredString.replace(pattern, VALUE_PLACEHOLDER);
+
+    if (pattenMatches) {
+      var pattenMatchesLength = pattenMatches.length;
+      var currentChunk;
+
+      for (var i = 0; i < pattenMatchesLength; i++) {
+        currentChunk = pattenMatches.shift();
+        filteredString = filteredString.replace(
+          VALUE_PLACEHOLDER, filter(currentChunk));
+      }
+    }
+
+    return filteredString;
+  }
+
+  /**
+   * Check for floating point values within rgb strings and rounds them.
+   *
+   * @param {string} formattedString
+   *
+   * @return {string}
+   * @private
+   */
+  function sanitizeRGBChunks (formattedString) {
+    return filterStringChunks(R_RGB, formattedString, sanitizeRGBChunk);
+  }
+
+  /**
+   * @param {string} rgbChunk
+   *
+   * @return {string}
+   * @private
+   */
+  function sanitizeRGBChunk (rgbChunk) {
+    var numbers = rgbChunk.match(R_UNFORMATTED_VALUES);
+    var numbersLength = numbers.length;
+    var sanitizedString = rgbChunk.match(R_RGB_PREFIX)[0];
+
+    for (var i = 0; i < numbersLength; i++) {
+      sanitizedString += parseInt(numbers[i], 10) + ',';
+    }
+
+    sanitizedString = sanitizedString.slice(0, -1) + ')';
+
+    return sanitizedString;
+  }
+
+  /**
+   * @param {Object} stateObject
+   *
+   * @return {Object} An Object of formatManifests that correspond to
+   * the string properties of stateObject
+   * @private
+   */
+  function getFormatManifests (stateObject) {
+    var manifestAccumulator = {};
+
+    Tweenable.each(stateObject, function (prop) {
+      var currentProp = stateObject[prop];
+
+      if (typeof currentProp === 'string') {
+        var rawValues = getValuesFrom(currentProp);
+
+        manifestAccumulator[prop] = {
+          'formatString': getFormatStringFrom(currentProp)
+          ,'chunkNames': getFormatChunksFrom(rawValues, prop)
+        };
+      }
+    });
+
+    return manifestAccumulator;
+  }
+
+  /**
+   * @param {Object} stateObject
+   * @param {Object} formatManifests
+   * @private
+   */
+  function expandFormattedProperties (stateObject, formatManifests) {
+    Tweenable.each(formatManifests, function (prop) {
+      var currentProp = stateObject[prop];
+      var rawValues = getValuesFrom(currentProp);
+      var rawValuesLength = rawValues.length;
+
+      for (var i = 0; i < rawValuesLength; i++) {
+        stateObject[formatManifests[prop].chunkNames[i]] = +rawValues[i];
+      }
+
+      delete stateObject[prop];
+    });
+  }
+
+  /**
+   * @param {Object} stateObject
+   * @param {Object} formatManifests
+   * @private
+   */
+  function collapseFormattedProperties (stateObject, formatManifests) {
+    Tweenable.each(formatManifests, function (prop) {
+      var currentProp = stateObject[prop];
+      var formatChunks = extractPropertyChunks(
+        stateObject, formatManifests[prop].chunkNames);
+      var valuesList = getValuesList(
+        formatChunks, formatManifests[prop].chunkNames);
+      currentProp = getFormattedValues(
+        formatManifests[prop].formatString, valuesList);
+      stateObject[prop] = sanitizeRGBChunks(currentProp);
+    });
+  }
+
+  /**
+   * @param {Object} stateObject
+   * @param {Array.<string>} chunkNames
+   *
+   * @return {Object} The extracted value chunks.
+   * @private
+   */
+  function extractPropertyChunks (stateObject, chunkNames) {
+    var extractedValues = {};
+    var currentChunkName, chunkNamesLength = chunkNames.length;
+
+    for (var i = 0; i < chunkNamesLength; i++) {
+      currentChunkName = chunkNames[i];
+      extractedValues[currentChunkName] = stateObject[currentChunkName];
+      delete stateObject[currentChunkName];
+    }
+
+    return extractedValues;
+  }
+
+  var getValuesList_accumulator = [];
+  /**
+   * @param {Object} stateObject
+   * @param {Array.<string>} chunkNames
+   *
+   * @return {Array.<number>}
+   * @private
+   */
+  function getValuesList (stateObject, chunkNames) {
+    getValuesList_accumulator.length = 0;
+    var chunkNamesLength = chunkNames.length;
+
+    for (var i = 0; i < chunkNamesLength; i++) {
+      getValuesList_accumulator.push(stateObject[chunkNames[i]]);
+    }
+
+    return getValuesList_accumulator;
+  }
+
+  /**
+   * @param {string} formatString
+   * @param {Array.<number>} rawValues
+   *
+   * @return {string}
+   * @private
+   */
+  function getFormattedValues (formatString, rawValues) {
+    var formattedValueString = formatString;
+    var rawValuesLength = rawValues.length;
+
+    for (var i = 0; i < rawValuesLength; i++) {
+      formattedValueString = formattedValueString.replace(
+        VALUE_PLACEHOLDER, +rawValues[i].toFixed(4));
+    }
+
+    return formattedValueString;
+  }
+
+  /**
+   * Note: It's the duty of the caller to convert the Array elements of the
+   * return value into numbers.  This is a performance optimization.
+   *
+   * @param {string} formattedString
+   *
+   * @return {Array.<string>|null}
+   * @private
+   */
+  function getValuesFrom (formattedString) {
+    return formattedString.match(R_UNFORMATTED_VALUES);
+  }
+
+  /**
+   * @param {Object} easingObject
+   * @param {Object} tokenData
+   * @private
+   */
+  function expandEasingObject (easingObject, tokenData) {
+    Tweenable.each(tokenData, function (prop) {
+      var currentProp = tokenData[prop];
+      var chunkNames = currentProp.chunkNames;
+      var chunkLength = chunkNames.length;
+
+      var easing = easingObject[prop];
+      var i;
+
+      if (typeof easing === 'string') {
+        var easingChunks = easing.split(' ');
+        var lastEasingChunk = easingChunks[easingChunks.length - 1];
+
+        for (i = 0; i < chunkLength; i++) {
+          easingObject[chunkNames[i]] = easingChunks[i] || lastEasingChunk;
+        }
+
+      } else {
+        for (i = 0; i < chunkLength; i++) {
+          easingObject[chunkNames[i]] = easing;
+        }
+      }
+
+      delete easingObject[prop];
+    });
+  }
+
+  /**
+   * @param {Object} easingObject
+   * @param {Object} tokenData
+   * @private
+   */
+  function collapseEasingObject (easingObject, tokenData) {
+    Tweenable.each(tokenData, function (prop) {
+      var currentProp = tokenData[prop];
+      var chunkNames = currentProp.chunkNames;
+      var chunkLength = chunkNames.length;
+
+      var firstEasing = easingObject[chunkNames[0]];
+      var typeofEasings = typeof firstEasing;
+
+      if (typeofEasings === 'string') {
+        var composedEasingString = '';
+
+        for (var i = 0; i < chunkLength; i++) {
+          composedEasingString += ' ' + easingObject[chunkNames[i]];
+          delete easingObject[chunkNames[i]];
+        }
+
+        easingObject[prop] = composedEasingString.substr(1);
+      } else {
+        easingObject[prop] = firstEasing;
+      }
+    });
+  }
+
+  Tweenable.prototype.filter.token = {
+    'tweenCreated': function (currentState, fromState, toState, easingObject) {
+      sanitizeObjectForHexProps(currentState);
+      sanitizeObjectForHexProps(fromState);
+      sanitizeObjectForHexProps(toState);
+      this._tokenData = getFormatManifests(currentState);
+    },
+
+    'beforeTween': function (currentState, fromState, toState, easingObject) {
+      expandEasingObject(easingObject, this._tokenData);
+      expandFormattedProperties(currentState, this._tokenData);
+      expandFormattedProperties(fromState, this._tokenData);
+      expandFormattedProperties(toState, this._tokenData);
+    },
+
+    'afterTween': function (currentState, fromState, toState, easingObject) {
+      collapseFormattedProperties(currentState, this._tokenData);
+      collapseFormattedProperties(fromState, this._tokenData);
+      collapseFormattedProperties(toState, this._tokenData);
+      collapseEasingObject(easingObject, this._tokenData);
+    }
+  };
+
+} (Tweenable));
+
+}).call(null);
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(12);
+module.exports = __webpack_require__(13);
 
 
 /***/ })

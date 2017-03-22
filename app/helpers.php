@@ -1,6 +1,8 @@
 <?php
 /**
  * Change Header elements when on routes for Course, Module, Lesson
+ *
+ * @return boolean
  */
 if ( !function_exists('changeHeader') ) {
 	function changeHeader() {
@@ -14,6 +16,8 @@ if ( !function_exists('changeHeader') ) {
 
 /**
  * Check if it is home page / front page
+ *
+ * @return boolean
  */
 if ( !function_exists('is_home') ) {
 	function is_home() {
@@ -27,6 +31,11 @@ if ( !function_exists('is_home') ) {
 
 /**
  * Truncate string to number of characters
+ *
+ * @param  string  $string
+ * @param  integer $length [length of returned string]
+ * @param  string  $append [string to append at the end of the returned string]
+ * @return string
  */
 if ( !function_exists('truncate_string') ) {
 	function truncate_string( $string, $length=100, $append="&hellip;" ) {
@@ -44,6 +53,9 @@ if ( !function_exists('truncate_string') ) {
 
 /**
  * Make first word in string bold / strong
+ *
+ * @param string $string
+ * @return string
  */
 if ( !function_exists('bold_first_word') ) {
 	function bold_first_word( $string ) {
@@ -52,5 +64,22 @@ if ( !function_exists('bold_first_word') ) {
 		$title = join(' ', $title);
 
 		return $title;
+	}
+}
+
+/**
+ * Set active class to current path
+ * 
+ * @param string  $path 
+ * @param boolean $attr [Set active class together with attribute class]
+ * @return string
+ */
+if ( !function_exists('set_active_link') ) {	
+	function set_active_link( $path, $attr=false ) {
+		if ( $attr ) {
+			return Request::is($path . '*') ? ' class=active' :  '';	
+		}
+
+		return Request::is($path . '*') ? ' active' :  '';
 	}
 }
