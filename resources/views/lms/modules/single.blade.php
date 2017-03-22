@@ -81,7 +81,7 @@
                                             </div>
                                         @endif
                                     @else
-                                        <div class="course-progress">{{ $lesson->getProgressPercentage() }}%<span class="course-progress__bar"></span></div>
+                                        <div class="course-progress"><span class="course-progress__bar course-progress__bar--active" data-percentage="{!! $lesson->getProgressPercentage() / 100 !!}"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            

@@ -132,4 +132,40 @@ $(document).ready( function() {
 			}, 200);
 		}
 	});
+
+	/**
+	 * Events Calendar
+	 */
+	$( "#datepicker" ).datepicker({
+      numberOfMonths: 2,
+      dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"]
+    });
+
+    /**
+     * Circular Progress
+     */
+    
+    $(window).on('load', function() {
+	    $('.course-progress__bar--active').each(function() {
+	    	var percent = $(this).data("percentage");
+
+	    	var circle = new ProgressBar.Circle($(this)[0], {
+			    color: '#62D262',
+			    strokeWidth: 18.75
+			});
+
+			circle.animate(percent);  // Number from 0.0 to 1.0
+	    });
+
+	    $('.module__active').each(function() {
+	    	var percent = $(this).data("percentage");
+
+	    	var circle = new ProgressBar.Circle($(this)[0], {
+			    color: '#62D262',
+			    strokeWidth: 18.75
+			});
+
+			circle.animate(percent);  // Number from 0.0 to 1.0
+	    });
+	});	
 });

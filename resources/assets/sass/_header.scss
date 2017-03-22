@@ -247,7 +247,19 @@
 
   &__calendar {
     border-left: 1px solid $brand-grey-light-variant;
-    padding: 0.5rem 1.5rem;
+
+    a {
+      padding: 0.5rem 1.5rem 0;
+      border-bottom: 0.6rem solid transparent;
+
+      &:hover {
+        border-bottom: 0.6rem solid $brand-yellow;
+      }
+
+      &.active {
+        border-bottom: 0.6rem solid $brand-yellow;
+      }
+    }
   }
 
   &__progress {

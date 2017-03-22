@@ -52,10 +52,11 @@
                         <a class="js-header-progress" href="javascript:;">Course Progress</a>
                     </div>
                     
-                    <div class="masthead__calendar grid--flex flex--align-center">
-                        <a href="#"><i class="icon--calendar"></i></a>
-                    </div>
                 @endif
+
+                <div class="masthead__calendar grid--flex">
+                    <a class="masthead__calendar grid--flex flex--align-center{!! set_active_link('calendar') !!}"" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
+                </div>
                 
                 <div class="masthead__notifications grid--flex flex--align-center">
                     <a class="js-header-notifications" href="javascript:;"><i class="icon--notification"></i></a>

@@ -47,7 +47,7 @@
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Last Session</p>
                             <h2 class="course-reminder__title">Welcome to {{ $nextSession->title }}</h2>
-                            <p>{{ strip_tags($nextSession->description) }}</p>
+                            <p>{{ truncate_string($nextSession->description) }}</p>
                         </div>
 
                         <div class="grid--flex flex--align-center">
@@ -82,7 +82,7 @@
 
                                 <div class="module__featured-image">
                                     @if(! $module->is_locked)
-                                        {{ $module->getProgressPercentage() }}% 
+                                        <div class="module__active" data-percentage="{!! $module->getProgressPercentage() / 100 !!}"></div>
                                     @endif
 
                                     @if($module->is_completed)

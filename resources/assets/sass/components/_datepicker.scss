@@ -1,0 +1,110 @@
+.ui-datepicker {
+  width: 100% !important;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 28rem;
+  position: relative;
+
+  &-group {
+    background: $brand-white;
+    width: 49.5%;
+    max-width: 47rem;
+    padding-top: 4rem;
+  }
+
+  &-header {
+    margin: 0 0 0.5rem;
+  }
+
+  &-prev,
+  &-next {
+    position: absolute;
+    top: 50%;
+    width: 4.4rem;
+    height: 4.4rem;
+    margin-top: -2.2rem;
+    border-radius: 100%;
+    box-shadow: 0 0 0.5rem $brand-grey-light;
+    cursor: pointer;
+  }
+
+  &-prev-hover,
+  &-next-hover {
+    box-shadow: 0 0 1rem $brand-grey-light;
+  }
+
+  &-prev {
+    left: -2.2rem;
+    background: $brand-white url('../images/icons/icon--arrow-prev_grey.svg') no-repeat center / 1.6rem auto;
+  }
+
+  &-next {
+    right: -2.2rem;
+    background: $brand-white url('../images/icons/icon--arrow-next_grey.svg') no-repeat center / 1.6rem auto;
+  }
+
+  &-prev-hover {
+    
+  }
+
+  &-next-hover {
+    
+  }
+
+  &-prev span,
+  &-next span {
+    display: none;
+  }
+
+  &-title {
+    font-family: $font-family-sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: $brand-dark;
+    text-align: center;
+  }
+
+  table {
+    width: 100%;
+    max-width: 22rem;
+    font-size: 1.2rem;
+    border-collapse: collapse;
+    margin: 0 auto;
+    color: #7B6A54;
+  }
+
+  th {
+    padding: .7rem .3rem;
+    text-align: center;
+    font-weight: 400;
+    color: $brand-grey-super-light;
+    border: 0;
+  }
+
+  td {
+    border: 0;
+    padding: 1px;
+  }
+
+  td span,
+  td a {
+    display: block;
+    padding: .4rem .2rem;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  td a {
+    color: #7B6A54;
+  }
+
+  &-row-break {
+    display: none;
+  }
+}
