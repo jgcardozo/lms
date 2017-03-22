@@ -53,7 +53,8 @@ class HomeController extends Controller
 		return view('auth.login');
 	}
 
-	public function test() {
+	public function test()
+	{
 		// $item = Course::find(1);
 		// activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
 		// dd($item->getNextSession());
