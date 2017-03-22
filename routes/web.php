@@ -43,6 +43,11 @@ Route::get('/', [
 	'uses' => 'HomeController@index'
 ]);
 
+// Test calendar
+Route::get('calendar', function() {
+	return view('lms.calendar.index');
+})->name('calendar');
+
 Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	Route::get('course/{course}', [
 		'as' => 'single.course',
@@ -50,7 +55,7 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	]);
 
 	Route::get('course/{course}/intro', [
-		'as' => 'single.course.intro',
+		'as' => 'single.course.starter',
 		'uses' => 'CourseController@starter_videos'
 	]);
 
@@ -95,23 +100,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
     ]);
 });
 
-Route::get('user/register', 'UserController@register');
+Route::post('user/register', 'UserController@register');
 
-
-/**
- * Infusionsoft route
- */
-Route::get('is/sync', [
-    'uses' => 'InfusionsoftController@sync'
-]);
-
-Route::get('is/sign', [
-    'uses' => 'InfusionsoftController@signin'
-]);
-
-Route::get('is/callback', [
-    'uses' => 'InfusionsoftController@callback'
-]);
 
 /*
 |--------------------------------------------------------------------------
@@ -127,15 +117,6 @@ Route::get('/auto-login', [
 | Backpack admin panel routes
 |--------------------------------------------------------------------------
 */
-Route::get('admin/', [
-	'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect',
-	'middleware' => ['role:Administrator']
-]);
-
-Route::get('admin/dashboard', function() {
-	return view('backpack::dashboard', ['title' => trans('backpack::base.dashboard')]);
-});
-
 Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], function()
 {
     CRUD::resource('course', 'Admin\CourseCrudController');
@@ -146,12 +127,31 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator']], func
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 
-    Route::get('settings', [
-		'uses' => 'Admin\SettingsController@index'
+	Route::get('/', [
+		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
 	]);
 
-	Route::post('settings', [
-		'uses' => 'Admin\SettingsController@save'
+	Route::get('dashboard', function() {
+		return view('backpack::dashboard', ['title' => trans('backpack::base.dashboard')]);
+	});
+
+	// Settings
+	Route::group(['prefix' => 'settings'], function() {
+		Route::get('/', [
+			'uses' => 'Admin\SettingsController@index'
+		]);
+
+		Route::get('is/callback', [
+			'uses' => 'Admin\SettingsController@InfusionsoftCallback'
+		]);
+
+		Route::post('/', [
+			'uses' => 'Admin\SettingsController@save'
+		]);
+	});
+
+	Route::get('log', [
+		'uses' => 'Admin\LoglistController@index'
 	]);
 });
 

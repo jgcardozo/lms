@@ -9,13 +9,19 @@ use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Lesson extends Model
 {
-	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait, ISLock;
+	use ISLock;
+	use CrudTrait;
+	use Sluggable;
+	use LogsActivity;
+	use BackpackCrudTrait;
+	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'description', 'video_url', 'module_id', 'featured_image', 'lock_date'];
+	protected $fillable = ['title', 'description', 'video_url', 'bonus_video_url', 'module_id', 'featured_image', 'lock_date'];
 
 	/**
 	 * The "booting" method of the model.
@@ -99,7 +105,8 @@ class Lesson extends Model
 	 */
 	public function getIsDateLockedAttribute()
 	{
-		if(!empty($this->lock_date)) {
+		if(!empty($this->lock_date))
+		{
 			$expire = strtotime($this->lock_date);
 			$today = strtotime('today midnight');
 
@@ -135,11 +142,53 @@ class Lesson extends Model
 		return true;
 	}
 
+	/**
+	 * Get lesson duration. Sum of all sessions
+	 *
+	 * @return mixed
+	 */
+	public function getDurationAttribute()
+	{
+		return $this->sessions->sum('video_duration');
+	}
+
+	/**
+	 * Get sessions count in this lesson
+	 *
+	 * @return int
+	 */
+	public function getSessionsCountAttribute()
+	{
+		return count($this->sessions);
+	}
+
+	/**
+	 * Check If this lesson has bonus video
+	 *
+	 * @return bool
+	 */
+	public function getHasBonusAttribute()
+	{
+		return !empty($this->bonus_video_url);
+	}
+
+	public function getIsFbPostedAttribute()
+	{
+		$user = Auth::user();
+
+		return $this->usersPosted()->where('user_id', $user->id)->exists();
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+	public function course()
+	{
+		return $this->module()->getResults()->belongsTo('App\Models\Course');
+	}
+
 	public function module()
 	{
 		return $this->belongsTo('App\Models\Module');
@@ -150,7 +199,13 @@ class Lesson extends Model
 		return $this->hasMany('App\Models\Session');
 	}
 
-	public function sluggable() {
+	public function usersPosted()
+	{
+		return $this->belongsToMany('App\Models\User', 'fb_lesson');
+	}
+
+	public function sluggable()
+	{
 		return [
 			'slug' => [
 				'source' => 'title'
@@ -163,7 +218,8 @@ class Lesson extends Model
 	| Mutators
 	|--------------------------------------------------------------------------
 	*/
-	public function setFeaturedImageAttribute($value) {
+	public function setFeaturedImageAttribute($value)
+	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
 		$destination_path = 'lesson_' . $this->slug . '/';

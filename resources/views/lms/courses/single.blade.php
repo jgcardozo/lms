@@ -10,7 +10,7 @@
             <div class="grid grid--w950 course-single__content">
                 <div class="grid--flex flex--space-between">
                     <div class="single-header-block">
-                        <h2 class="single-header-block__title">{{ $course->title }}</h2>
+                        <h2 class="single-header-block__title ucase">{!! bold_first_word($course->title) !!}</h2>
                         <p class="single-header-block__content">{{ $course->short_description }}</p>
                         <div class="single-header-block__separator"></div>
                         <div class="single-header-block__content single-header-block__content--small">
@@ -33,7 +33,7 @@
         <div class="grid grid--w950 course-reminder">
             <div class="course-reminder__block">
                 <div class="grid--flex flex--space-between">
-                    @if(!$starterSeen)
+                    @if($starterSeen === false)
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Hi there</p>
                             <h2 class="course-reminder__title">Welcome to {{ $course->title }}</h2>
@@ -43,15 +43,15 @@
                         <div class="grid--flex flex--align-center">
                             <a href="{{ route('single.course.starter', $course->slug) }}" class="course-reminder__link">Watch videos</a>
                         </div>
-                    @elseif(!empty($nextSession))
+                    @elseif(!empty($nextSession) && $nextSession !== true)
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Last Session</p>
                             <h2 class="course-reminder__title">Welcome to {{ $nextSession->title }}</h2>
-                            <p>{{ strip_tags($nextSession->description) }}</p>
+                            <p>{{ truncate_string($nextSession->description) }}</p>
                         </div>
 
                         <div class="grid--flex flex--align-center">
-                            <a href="{{ route('single.lesson', $nextSession->lesson->slug) }}" class="course-reminder__link">Resume Lesson ></a>
+                            <a href="{{ route('single.lesson', $nextSession->lesson->slug) }}" class="course-reminder__link">Resume Lesson</a>
                         </div>                    
                     @else
                         <div class="course-reminder__content">
@@ -72,26 +72,28 @@
                         <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}">
                             <div class="module__component grid--flex flex--column">
                                 @if($module->is_locked)
-                                    <div class="module__locked"
-                                        @if($module->is_date_locked)
-                                            data-date=" until {{ date('d-m-Y', strtotime($module->lock_date)) }}"
-                                        @endif
-                                    ><i class="icon--lock"></i></div>
+                                    <div class="module__locked">
+
+                                    @if($module->is_date_locked)
+                                            <p>Unlocks {{ date('d-m-Y', strtotime($module->lock_date)) }}</p>
+                                    @endif
+                                    <i class="icon--lock"></i></div>
                                 @endif
 
                                 <div class="module__featured-image">
+                                    @if(! $module->is_locked)
+                                        <div class="module__active" data-percentage="{!! $module->getProgressPercentage() / 100 !!}"></div>
+                                    @endif
+
                                     @if($module->is_completed)
-                                        <span class="completed">Completed</span>
+                                        <div class="module__completed">Completed</div>
                                     @endif
                                 </div>
                                 
                                 <div class="module__content">
-                                    <h2 class="module__title">{{ $module->title }}</h2>                                
-                                    <?php 
-                                        //Get 80 characters from description
-                                        $strArray = substr(strip_tags($module->description),0,80).'...';
-                                    ?>
-                                    <p>{{ $strArray }}</p>
+                                    <h2 class="module__title">{{ $module->title }}</h2>
+
+                                    <p>{{ truncate_string($module->description) }}</p>
 
                                     @if($module->is_locked)
                                         <a href="javascript:;" class="module__link">Go To Lesson</a>

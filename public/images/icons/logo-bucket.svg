@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="165" y="129" width="950" height="1281" rx="3"></rect>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-3" x="685" y="949" width="173" height="50" rx="3"></rect>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-1" y="-1" width="175" height="52">
+            <rect x="684" y="948" width="175" height="52" fill="white"></rect>
+            <use xlink:href="#path-3" fill="black"></use>
+        </mask>
+        <polygon id="path-5" points="28 14.0000286 28 28 0 28 0 14.0000286 0 5.71428573e-05 28 5.71428573e-05 28 14.0000286"></polygon>
+    </defs>
+    <g id="LMS-Styles" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Masterclass-Sesson-Detail---Desktop" transform="translate(-705.000000, -960.000000)">
+            <rect id="Rectangle-7" fill="#928880" opacity="0.7" x="0" y="0" width="1280" height="1627"></rect>
+            <g id="Rectangle-Copy-4">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+            <use id="Rectangle-3-Copy-2" stroke="#FA6900" mask="url(#mask-4)" stroke-width="2" xlink:href="#path-3"></use>
+            <g id="Page-1" transform="translate(705.000000, 960.000000)">
+                <mask id="mask-6" fill="white">
+                    <use xlink:href="#path-5"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <path d="M23.2857143,8.62862857 L23.2857143,8.71434286 L22.3428571,12.3714857 C20.7142857,14.2000571 18.3428571,15.8286286 16.0285714,16.3714857 C15.7428571,16.0000571 15.2857143,15.9429143 14.7714286,15.9429143 L13.4,15.9429143 C12.8571429,15.9429143 12.4,16.0000571 12.1142857,16.3714857 C9.77142857,15.8286286 7.31428571,14.2857714 5.68571429,12.4286286 L4.74285714,8.71434286 L4.74285714,8.60005714 L4.74285714,8.68577143 C4.74285714,7.77148571 5.48571429,7.34291429 6.37142857,7.34291429 L21.7142857,7.34291429 C22.6285714,7.34291429 23.3428571,7.77148571 23.3428571,8.6572 C23.2857143,8.82862857 23.2857143,8.57148571 23.2857143,8.62862857 L23.2857143,8.62862857 Z M20.3428571,20.3714857 C19.8857143,22.3140571 18.1714286,24.0000571 16.1714286,24.0000571 L11.8,24.0000571 C9.8,24.0000571 8.08571429,22.3140571 7.62857143,20.3714857 L7.6,20.1143429 L6.37142857,15.2572 C8.05714286,16.5997714 10.0285714,17.8572 11.9428571,18.2572 C12.2,18.7714857 12.7428571,19.4000571 13.3428571,19.4000571 L14.7142857,19.4000571 C15.3428571,19.4000571 15.8857143,18.6857714 16.1428571,18.1712 C18.0285714,17.7426286 19.9428571,16.8000571 21.5714286,15.4857714 L20.3428571,20.3714857 Z M14,5.71428573e-05 C6.28571429,5.71428573e-05 0,6.28577143 0,14.0000571 C0,21.7143429 6.28571429,28.0000571 14,28.0000571 C21.7428571,28.0000571 28,21.7143429 28,14.0000571 C28,6.28577143 21.7428571,5.71428573e-05 14,5.71428573e-05 L14,5.71428573e-05 Z" id="Fill-1" fill="#FA6900" mask="url(#mask-6)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -20,17 +20,21 @@
         ]) !!};
     </script>
 </head>
-@if(Request::is('/'))
+
+@if(changeHeader())
+    <body>
+@elseif(is_home())
     <body class="home">
 @else
-    <body>
+    <body class="inner-page">
 @endif
+
     <div id="app">
         @include('layouts.header')            
 
         @yield('content')
 
-        @include('layouts.footer') 
+        @include('layouts.footer')
     </div>
 
     <!-- Scripts -->

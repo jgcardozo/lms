@@ -177,6 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 		App\Providers\GamificationServiceProvider::class,
+		App\Providers\InfusionsoftFlow::class,
+		App\Providers\ComposerServiceProvider::class,
 
         /*
          * Backpack Service Providers...
@@ -194,6 +196,12 @@ return [
          * Infusionsoft
          */
         Infusionsoft\FrameworkSupport\Laravel\InfusionsoftServiceProvider::class,
+
+		/**
+		 * Spatie activity log & permissions
+		 */
+		Spatie\Permission\PermissionServiceProvider::class,
+		Spatie\Activitylog\ActivitylogServiceProvider::class,
     ],
 
     /*
@@ -244,6 +252,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		'Gamification' => App\Gamification\Contracts\Gamification::class,
         'Infusionsoft' => Infusionsoft\FrameworkSupport\Laravel\InfusionsoftFacade::class,
+		'InfusionsoftFlow' => App\InfusionsoftFlow\Facades\InfusionsoftFlow::class
     ],
 
 ];

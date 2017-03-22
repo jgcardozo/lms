@@ -23,7 +23,8 @@ class CoachingCall extends Model
 	 *
 	 * @return void
 	 */
-	protected static function boot() {
+	protected static function boot()
+	{
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
@@ -35,11 +36,13 @@ class CoachingCall extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
-	public function course() {
+	public function course()
+	{
 		return $this->belongsTo('App\Models\Course', 'course_id', 'id');
 	}
 
-	public function sluggable() {
+	public function sluggable()
+	{
 		return [
 			'slug' => [
 				'source' => 'title'
@@ -47,7 +50,8 @@ class CoachingCall extends Model
 		];
 	}
 
-	public function getRouteKeyName() {
+	public function getRouteKeyName()
+	{
 		return 'slug';
 	}
 }

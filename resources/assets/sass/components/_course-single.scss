@@ -1,5 +1,5 @@
 .course-single {
-  background-image: url("images/course-placeholder.jpg");
+  background-image: url("../images/course-placeholder.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -35,6 +35,12 @@
     color: $brand-white;
     font-size: 3.6rem;
     margin: 0 0 1rem;
+    font-family: $headings-font-family-light;
+    font-weight: 300;
+
+    strong {
+      font-family: $headings-font-family;
+    }
   }
 
   &__content {
@@ -67,7 +73,7 @@
         width: 2.1rem;
         height: 1.5rem;
         vertical-align: middle;
-        background: url('images/icons/icon--arrow-back.svg') no-repeat center / 100% auto;
+        background: url('../images/icons/icon--arrow-back.svg') no-repeat center / 100% auto;
         margin-right: 3rem;
       }
     }
@@ -116,6 +122,7 @@
     background: $brand-white-dark;
     margin: 0 0 1rem;
     position: relative;
+    width: 100%;
   }
 
   &__locked {
@@ -125,6 +132,7 @@
     width: 100%;
     height: 100%;
     background: rgba(#b4ada7,0.8);
+    z-index: 2;
 
     .icon--lock {
       display: block;
@@ -135,7 +143,7 @@
       right: 4rem;
       border: 0.9rem solid #928880;
       border-radius: 100%;
-      background: url('images/icons/icon--lock.svg') no-repeat center / 1.4rem auto;
+      background: url('../images/icons/icon--lock.svg') no-repeat center / 1.4rem auto;
     }
   }
 
@@ -163,11 +171,50 @@
   }
 
   &__featured-image {
-    background-image: url("images/course-placeholder.jpg");
+    background-image: url("../images/course-placeholder.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     height: 26rem;
+    position: relative;
+  }
+
+  &__completed {
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    font-size: 1.4rem;
+    color: $brand-green;
+
+    &:after {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      width: 4.8rem;
+      height: 4.8rem;
+      border: 0.9rem solid $brand-green;
+      border-radius: 100%;
+      background: url(../images/icons/icon--complete.svg) no-repeat center / 1.6rem auto;
+      margin-left: 1rem;
+    }
+  }
+
+  &__active {
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 100%;
+    border: 0.9rem solid $brand-white-dark;
+
+    svg {
+      width: 4.8rem !important;
+      height: 4.8rem;
+      position: absolute;
+      top: -0.9rem;
+      left: -0.9rem;
+    }
   }
 
   p {
@@ -208,5 +255,50 @@
     border-radius: 0.2rem;
     white-space: nowrap;
     display: inline-block;
+    text-transform: uppercase;
+
+    &:after {
+      content: "";
+      width: 2.1rem;
+      height: 1.5rem;
+      display: inline-block;
+      background: url('../images/icons/icon--arrow-next.svg') no-repeat center;
+      vertical-align: middle;
+      margin-left: 1rem;
+      position: relative;
+      top: -0.2rem;
+    }
+
+    &:hover {
+      color: $brand-white;
+    }
+  }
+}
+
+.course-progress {
+  font-size: 1.4rem;
+  color: $brand-grey-light;
+
+  &__bar {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    vertical-align: middle;
+    border: 0.1rem solid $brand-grey-light;
+    border-radius: 100%;
+    margin-left: 3rem;
+
+    &--completed {
+      border: 0.1rem solid $brand-green;
+      background: url('../images/icons/icon--complete.svg') no-repeat center;
+    }
+
+    &--locked {
+      background: url('../images/icons/icon--lock.svg') no-repeat center;
+    }
+  }
+
+  &--completed {
+    color: $brand-green;
   }
 }

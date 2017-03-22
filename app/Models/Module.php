@@ -9,15 +9,17 @@ use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Module extends Model
 {
+	use ISLock;
 	use CrudTrait;
 	use Sluggable;
+	use LogsActivity;
 	use SluggableScopeHelpers;
 	use BackpackCrudTrait;
-	use ISLock;
 
 	protected $fillable = ['title', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
 
@@ -42,23 +44,19 @@ class Module extends Model
 	 */
 	public function getProgress($user = null)
 	{
-		if(!$user) {
-			$user = Auth::user();
-		}
-
-		$lessons = $this->lessons;
-
-		$watched = [];
-		foreach($lessons as $lesson) {
-			if($lesson->is_completed) {
-				$watched[] = $lesson->id;
-			}
-		}
-
-		return [
-			'lessons' => $lessons->pluck('id')->toArray(),
-			'watched' => $watched
+		$progress = [
+			'sessions' => [],
+			'watched' => []
 		];
+
+		foreach($this->lessons as $lesson)
+		{
+			$_progress = $lesson->getProgress($user);
+			$progress['sessions'] = array_merge($progress['sessions'], $_progress['sessions']);
+			$progress['watched'] = array_merge($progress['watched'], $_progress['watched']);
+		}
+
+		return $progress;
 	}
 
 	/**
@@ -69,7 +67,7 @@ class Module extends Model
 	public function getProgressPercentage()
 	{
 		$progress = $this->getProgress();
-		$sCount = count($progress['lessons']);
+		$sCount = count($progress['sessions']);
 		$wCount = count($progress['watched']);
 		$percentage = ($wCount / $sCount) * 100;
 
@@ -96,9 +94,15 @@ class Module extends Model
 	 */
 	public function getIsCompletedAttribute()
 	{
-		$progress = $this->getProgress();
+		foreach($this->lessons as $lesson)
+		{
+			if(!$lesson->is_completed)
+			{
+				return false;
+			}
+		}
 
-		return count($progress['lessons']) == count($progress['watched']);
+		return true;
 	}
 
 	/**
@@ -126,7 +130,8 @@ class Module extends Model
 	 */
 	public function getIsLockedAttribute()
 	{
-		if($this->course->is_locked || !$this->course->areAllStarterSeen()) {
+		if($this->course->is_locked || !$this->course->areAllStarterSeen())
+		{
 			return true;
 		}
 
@@ -137,7 +142,8 @@ class Module extends Model
 
 		// Get previous module
 		$prevModule = $this->previous_module;
-		if((!$prevModule || $prevModule->is_completed) && !$this->is_date_locked) {
+		if((!$prevModule || $prevModule->is_completed) && !$this->is_date_locked)
+		{
 			return false;
 		}
 
@@ -173,7 +179,8 @@ class Module extends Model
 	| Mutators
 	|--------------------------------------------------------------------------
 	*/
-	public function setFeaturedImageAttribute($value) {
+	public function setFeaturedImageAttribute($value)
+	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
 		$destination_path = 'module_' . $this->slug . '/';
@@ -197,7 +204,8 @@ class Module extends Model
 	| Backpack model callbacks
 	|--------------------------------------------------------------------------
 	*/
-	public function view_lessons_button() {
+	public function view_lessons_button()
+	{
 		ob_start();
 		?>
 		<a href="<?php echo route('crud.lesson.index', ['module' => $this->id]); ?>" class="btn btn-xs btn-default">
@@ -209,7 +217,8 @@ class Module extends Model
 		return $button;
 	}
 
-	public function admin_course_link() {
+	public function admin_course_link()
+	{
 		if(!$this->course) return;
 
 		ob_start();

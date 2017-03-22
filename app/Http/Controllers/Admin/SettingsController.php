@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use Session;
 use Infusionsoft;
+use InfusionsoftFlow;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,27 +14,20 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 Class SettingsController extends BaseController
 {
-	protected $infusionsoft;
-
-	public function __construct(Infusionsoft $infusionsoft)
-	{
-		$this->infusionsoft = $infusionsoft;
-	}
-
 	public function index()
 	{
-		Infusionsoft::setToken(unserialize(Session::get('token')));
+		$isTagCategories = InfusionsoftFlow::getTagCategories();
 
-		// 68
-		/*$t = Infusionsoft::data()->query('ContactGroup', 1000, 0, ['GroupCategoryId' => '68'], ['Id', 'GroupName'], '', false);
-		dump($t);
-		die();*/
-
-		$isTagCategories = Infusionsoft::data()->query('ContactGroupCategory', 1000, 0, ['Id' => '%'], ['Id', 'CategoryName'], '', false);
+		$settingsDB = DB::table('settings')->get()->toArray();
 
 		$settings_data = [
-			'is_tag_categories' => $isTagCategories
+			'is_tag_categories' => $isTagCategories !== false ? $isTagCategories : []
 		];
+
+		foreach($settingsDB as $key => $value)
+		{
+			$settings_data[$value->key] = $value->value;
+		}
 
 		return view('lms.admin.settings', $settings_data);
 	}
@@ -45,19 +39,29 @@ Class SettingsController extends BaseController
 		{
 			$this->syncTags($is_tag_cats);
 		}
+		
+		$auto_login_key = $request->get('auto_login_key');
+		if(!empty($auto_login_key))
+		{
+			$row = DB::table('settings')->where('key', 'auto_login_key')->first();
+			if(empty($row))
+			{
+				DB::insert("insert into settings (`key`, `value`) values ('auto_login_key', ?)", [$auto_login_key]);
+			}else{
+				DB::update("update settings set `value` = ? where `key`='auto_login_key'", [$auto_login_key]);
+			}
+		}
 
 		return redirect()->back();
 	}
 
 	public function syncTags($categories)
 	{
-		Infusionsoft::setToken(unserialize(Session::get('token')));
-
 		$sql = "INSERT INTO is_tags (id, title) VALUES ";
 		$sqlVal = "";
 		foreach($categories as $category)
 		{
-			$catTags = Infusionsoft::data()->query('ContactGroup', 1000, 0, ['GroupCategoryId' => $category], ['Id', 'GroupName'], '', false);
+			$catTags = InfusionsoftFlow::getCategoryTags($category);
 			if(!empty($catTags))
 			{
 				foreach($catTags as $tag)
@@ -75,5 +79,20 @@ Class SettingsController extends BaseController
 
 		DB::insert($sql);
 		\Alert::success('Tags were successfully synchronized.')->flash();
+	}
+
+	public function InfusionsoftCallback(Request $request)
+	{
+		if($request->has('code') and !InfusionsoftFlow::is()->getToken())
+		{
+			InfusionsoftFlow::is()->requestAccessToken($request->get('code'));
+		}
+
+		if(InfusionsoftFlow::is()->getToken())
+		{
+			InfusionsoftFlow::saveTokenToDB();
+		}
+
+		return redirect()->back();
 	}
 }

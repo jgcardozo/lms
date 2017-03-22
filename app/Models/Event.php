@@ -10,7 +10,10 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Event extends Model
 {
-	use CrudTrait, Sluggable, SluggableScopeHelpers, BackpackCrudTrait;
+	use CrudTrait;
+	use Sluggable;
+	use BackpackCrudTrait;
+	use SluggableScopeHelpers;
 
 	protected $fillable = ['title', 'short_description', 'description', 'start_date', 'end_date', 'event_image', 'course_id'];
 
@@ -19,11 +22,13 @@ class Event extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
-	public function course() {
+	public function course()
+	{
 		return $this->belongsTo('App\Models\Course');
 	}
 
-	public function sluggable() {
+	public function sluggable()
+	{
 		return [
 			'slug' => [
 				'source' => 'title'
@@ -36,7 +41,8 @@ class Event extends Model
 	| Backpack model callbacks
 	|--------------------------------------------------------------------------
 	*/
-	public function admin_course_link() {
+	public function admin_course_link()
+	{
 		if(!$this->course) return;
 
 		ob_start();

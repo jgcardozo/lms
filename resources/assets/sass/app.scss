@@ -4,15 +4,25 @@
 @import "normalize";
 
 /**
+ * Variables
+ */
+@import "variables";
+
+/**
  * Fonts
  */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700');
 @import "fonts";
 
 /**
- * Variables
+ * Perfect Scrollbar
  */
-@import "variables";
+@import "node_modules/perfect-scrollbar/dist/css/perfect-scrollbar";
+
+/**
+ * jQuery Datepicker custom style
+ */
+@import "components/datepicker";
 
 /**
  * Main
@@ -55,11 +65,36 @@
 @import "components/lesson-sessions-single";
 
 /**
+ * Single Lessons 
+ */
+@import "components/lessons";
+
+/**
  * Single Module Lessons 
  */
 @import "components/module-lessons-single";
 
 /**
+ * Course Starter Videos
+ */
+@import "components/course-starter";
+
+/**
  * Single Module Lessons 
  */
 @import "login/login";
+
+/**
+ * User Settings 
+ */
+@import "user/user";
+
+/**
+ * Course Progress
+ */
+@import "components/course-progress";
+
+/**
+ * Calendar
+ */
+@import "calendar/calendar";
