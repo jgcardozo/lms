@@ -76,6 +76,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	]);
 });
 
+Route::get('calendar', [
+	'as' => 'calendar',
+	'uses' => 'EventsController@index'
+])->middleware('auth');
+
 /**
  * User routes
  */

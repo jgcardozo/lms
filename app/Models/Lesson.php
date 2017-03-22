@@ -21,7 +21,7 @@ class Lesson extends Model
 	use BackpackCrudTrait;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'description', 'video_url', 'module_id', 'featured_image', 'lock_date'];
+	protected $fillable = ['title', 'description', 'video_url', 'bonus_video_url', 'module_id', 'featured_image', 'lock_date'];
 
 	/**
 	 * The "booting" method of the model.
@@ -143,7 +143,7 @@ class Lesson extends Model
 	}
 
 	/**
-	 * Get lesson duration. Sum of all sessions.
+	 * Get lesson duration. Sum of all sessions
 	 *
 	 * @return mixed
 	 */
@@ -152,9 +152,31 @@ class Lesson extends Model
 		return $this->sessions->sum('video_duration');
 	}
 
+	/**
+	 * Get sessions count in this lesson
+	 *
+	 * @return int
+	 */
 	public function getSessionsCountAttribute()
 	{
 		return count($this->sessions);
+	}
+
+	/**
+	 * Check If this lesson has bonus video
+	 *
+	 * @return bool
+	 */
+	public function getHasBonusAttribute()
+	{
+		return !empty($this->bonus_video_url);
+	}
+
+	public function getIsFbPostedAttribute()
+	{
+		$user = Auth::user();
+
+		return $this->usersPosted()->where('user_id', $user->id)->exists();
 	}
 
 	/*
@@ -175,6 +197,11 @@ class Lesson extends Model
 	public function sessions()
 	{
 		return $this->hasMany('App\Models\Session');
+	}
+
+	public function usersPosted()
+	{
+		return $this->belongsToMany('App\Models\User', 'fb_lesson');
 	}
 
 	public function sluggable()

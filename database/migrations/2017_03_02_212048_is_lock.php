@@ -30,6 +30,6 @@ class IsLock extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('is_lock');
+        Schema::dropIfExists('is_lockables');
     }
 }
