@@ -42,6 +42,19 @@ class LoginStreak implements StreakInterface
 		if(is_null($this->log))
 		{
 			$this->log = $this->loadFromDb();
+
+			// If there is no such log, insert it
+			if(empty($this->log))
+			{
+				$id = DB::table('g_streak_logs')->insertGetId([
+					'user_id' => Auth::user()->id,
+					'count' => 0,
+					'type' => self::class,
+					'updated_at' => Carbon::yesterday()
+				]);
+
+				$this->log = $this->loadFromDb();
+			}
 		}
 
 		return $this->log;

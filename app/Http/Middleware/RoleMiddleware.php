@@ -14,14 +14,14 @@ class RoleMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-	public function handle($request, Closure $next, $role)
+	public function handle($request, Closure $next, ...$roles)
 	{
 		if (Auth::guest())
 		{
 			return redirect()->to('/');
 		}
 
-		if (!$request->user()->hasRole($role))
+		if (!$request->user()->hasRole($roles))
 		{
 			return redirect()->to('/');
 		}
