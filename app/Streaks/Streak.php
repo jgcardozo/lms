@@ -18,6 +18,7 @@ class Streak
 		$user = Auth::user();
 		$type = get_class($streak);
 
+		// Check if streak is logged by its rule
 		if(!$streak->is_logged())
 		{
 			$streak->log();

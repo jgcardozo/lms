@@ -34,15 +34,19 @@
           <li class="header">Events</li>
           <li><a href="{{ url('admin/event') }}"><i class="fa fa-calendar"></i> <span>Events</span></a></li>
 
+          @role('Administrator')
           <li class="header">Users</li>
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}"><i class="fa fa-user"></i> <span>Users</span></a></li>
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/role') }}"><i class="fa fa-group"></i> <span>Roles</span></a></li>
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/permission') }}"><i class="fa fa-key"></i> <span>Permissions</span></a></li>
+          @endrole
 
           <!-- ======================================= -->
           <li class="header">{{ trans('backpack::base.user') }}</li>
+          @role('Administrator')
           <li><a href="{{ url('admin/settings') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
           <li><a href="{{ url('admin/log') }}"><i class="fa fa-sticky-note-o"></i> <span>Log</span></a></li>
+          @endrole
           <li><a href="{{ url('admin/elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/logout') }}"><i class="fa fa-sign-out"></i> <span>{{ trans('backpack::base.logout') }}</span></a></li>
         </ul>

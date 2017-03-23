@@ -8,7 +8,6 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\Admin\CourseCrudRequest as StoreRequest;
 use App\Http\Requests\Admin\CourseCrudRequest as UpdateRequest;
 
-
 class CourseCrudController extends CrudController
 {
 	use BackpackCrudTrait;

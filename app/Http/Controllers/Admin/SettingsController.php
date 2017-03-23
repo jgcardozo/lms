@@ -14,6 +14,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 Class SettingsController extends BaseController
 {
+	public function __construct()
+	{
+		$this->middleware('role:Administrator');
+	}
+
 	public function index()
 	{
 		$isTagCategories = InfusionsoftFlow::getTagCategories();
