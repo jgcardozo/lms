@@ -35,12 +35,13 @@ class InfusionsoftAccess
 		{
 			$slug = $parameters['session'];
 			$model = \App\Models\Session::findBySlug($slug);
+		}else{
+			return $result;
 		}
 
 		if($model->is_locked)
 		{
 			abort(403);
-			// return redirect()->route('test');
 		}
 
         return $result;

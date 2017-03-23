@@ -43,11 +43,6 @@ Route::get('/', [
 	'uses' => 'HomeController@index'
 ]);
 
-// Test calendar
-Route::get('calendar', function() {
-	return view('lms.calendar.index');
-})->name('calendar');
-
 Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	Route::get('course/{course}', [
 		'as' => 'single.course',
@@ -67,6 +62,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	Route::get('lesson/{lesson}', [
 		'as' => 'single.lesson',
 		'uses' => 'LessonController@index'
+	]);
+
+	Route::get('calendar', [
+		'as' => 'calendar',
+		'uses' => 'EventsController@index'
 	]);
 
 	// Mark session as completed

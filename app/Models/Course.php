@@ -128,6 +128,17 @@ class Course extends Model
 		return $this->is_tag_locked();
 	}
 
+	/**
+	 * Get image from S3
+	 */
+	public function getFeaturedImageUrlAttribute()
+	{
+		// TODO: Check why this is not working
+		// $s3image = \Storage::disk('s3')->url($this->featured_image);
+
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
@@ -176,7 +187,7 @@ class Course extends Model
 	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
-		$destination_path = 'course_' . $this->slug . '/';
+		$destination_path = 'courses/';
 
 		$request = \Request::instance();
 		$file = $request->file($attribute_name);

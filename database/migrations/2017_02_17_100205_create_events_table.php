@@ -24,6 +24,7 @@ class CreateEventsTable extends Migration
             $table->date('end_date');
 
             $table->longText('event_image')->nullable();
+            $table->string('url')->nullable();
 
             $table->integer('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('courses');

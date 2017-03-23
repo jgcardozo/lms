@@ -85,7 +85,18 @@ class EventCrudController extends CrudController
 			'label' => 'Assign this event to course:',
 			'type' => 'select2',
 			'attribute' => 'title',
-			'model' => 'App\Models\Course'
+			'model' => 'App\Models\Course',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'url',
+			'label' => 'Apply URL',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		$this->crud->addField([
@@ -126,14 +137,6 @@ class EventCrudController extends CrudController
 		},  function($value) {
 			$this->crud->addClause('where', 'course_id', $value);
 		});
-
-
-		/**
-		 * Enable CRUD reorder
-		 */
-		$this->crud->enableReorder('title', 1);
-		$this->crud->allowAccess('reorder');
-		$this->crud->orderBy('lft');
 	}
 
 	public function store(StoreRequest $request)

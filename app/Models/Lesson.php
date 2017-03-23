@@ -163,6 +163,17 @@ class Lesson extends Model
 	}
 
 	/**
+	 * Get image from S3
+	 */
+	public function getFeaturedImageUrlAttribute()
+	{
+		// TODO: Check why this is not working
+		// $s3image = \Storage::disk('s3')->url($this->featured_image);
+
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+	}
+
+	/**
 	 * Check If this lesson has bonus video
 	 *
 	 * @return bool
@@ -222,7 +233,7 @@ class Lesson extends Model
 	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
-		$destination_path = 'lesson_' . $this->slug . '/';
+		$destination_path = 'lessons/';
 
 		$request = \Request::instance();
 		$file = $request->file($attribute_name);

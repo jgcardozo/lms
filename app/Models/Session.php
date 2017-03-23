@@ -81,6 +81,9 @@ class Session extends Model
 		return false;
 	}
 
+	/**
+	 * Get image from S3
+	 */
 	public function getFeaturedImageUrlAttribute()
 	{
 		// TODO: Check why this is not working
@@ -142,7 +145,7 @@ class Session extends Model
 	{
 		$attribute_name = 'featured_image';
 		$disk = 's3';
-		$destination_path = 'session_' . $this->slug . '/';
+		$destination_path = 'sessions/';
 
 		$request = \Request::instance();
 		$file = $request->file($attribute_name);

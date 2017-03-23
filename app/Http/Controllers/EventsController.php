@@ -16,7 +16,7 @@ class EventsController extends Controller
     {
         $events = Event::get();
 
-		return view('lms.events.list')->with('events', $events);
+		return view('lms.calendar.index')->with('events', $events);
     }
 
     /**

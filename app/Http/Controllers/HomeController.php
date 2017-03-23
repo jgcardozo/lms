@@ -58,8 +58,8 @@ class HomeController extends Controller
 		// $item = Course::find(1);
 		// activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
 		// dd($item->getNextSession());
-		$item = Lesson::find(1);
-		dd($item->is_fb_posted);
+		$item = Course::find(9);
+		dd($item->featured_image_url);
 
 		$user = User::find(1);
 		dd($user->fb_posted);

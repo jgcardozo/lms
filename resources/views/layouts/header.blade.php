@@ -51,7 +51,6 @@
                     <div class="masthead__progress grid--flex flex--align-center">
                         <a class="js-header-progress" href="javascript:;">Course Progress</a>
                     </div>
-                    
                 @endif
 
                 <div class="masthead__calendar grid--flex">
@@ -137,12 +136,14 @@
         <ul class="grid--flex list--inline course-progress-box__list">
             <li class="course-progress-box__item course-progress-box__item--start"></li>
 
-            <?php 
+            <?php
             if ( isset($progress_items) ) {
                 $current_lesson_id = null;
 
                 if ( $progress_items->getNextSession() ) {
-                    $current_lesson_id = $progress_items->getNextSession()->lesson->id;
+                    if ( isset($progress_items->getNextSession()->lesson) ) {
+                        $current_lesson_id = $progress_items->getNextSession()->lesson->id;
+                    }
                 }
 
                 $module_count = 1;

@@ -15,7 +15,7 @@ class Event extends Model
 	use BackpackCrudTrait;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'short_description', 'description', 'start_date', 'end_date', 'event_image', 'course_id'];
+	protected $fillable = ['title', 'short_description', 'description', 'start_date', 'end_date', 'event_image', 'url', 'course_id'];
 
 	/*
 	|--------------------------------------------------------------------------

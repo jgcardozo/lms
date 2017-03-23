@@ -20,7 +20,7 @@ class CreateLessonsTable extends Migration
             $table->longText('description');
             $table->longText('featured_image')->nullable();
             $table->string('video_url');
-            $table->string('bonus_video_url');
+            $table->string('bonus_video_url')->nullable();
             $table->integer('lft')->default(0);
 
             $table->integer('module_id')->unsigned();
