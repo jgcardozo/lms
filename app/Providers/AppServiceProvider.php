@@ -6,6 +6,7 @@ use Auth;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('oldpassword', function ($attribute, $value, $parameters, $validator) {
             return Hash::check($value, Auth::user()->password);
         });
+
+        Schema::defaultStringLength(191);
     }
 
     /**

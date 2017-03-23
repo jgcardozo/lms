@@ -8,6 +8,11 @@ use Spatie\Activitylog\Models\Activity;
 
 class LoglistController extends Controller
 {
+	public function __construct()
+	{
+		$this->middleware('role:Administrator');
+	}
+
 	public function index()
 	{
 		$logs = Activity::get();
