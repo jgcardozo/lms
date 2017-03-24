@@ -71,7 +71,7 @@ class CoachingCallsCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'video_url',
-			'label' => 'Video URL'
+			'label' => 'Wistia Video ID'
 		]);
 
 		$this->crud->addField([

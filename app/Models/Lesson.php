@@ -36,6 +36,16 @@ class Lesson extends Model
 	}
 
 	/**
+	 * Backpack title fix for session selector. Lessons with same name.
+	 *
+	 * @return string
+	 */
+	public function getBackpackCrudTitleAttribute()
+	{
+		return '[' . $this->module->title . '] - ' . $this->title;
+	}
+
+	/**
 	 * Get progress array,
 	 * all sessions vs completed sessions
 	 *
@@ -67,7 +77,13 @@ class Lesson extends Model
 		$progress = $this->getProgress();
 		$sCount = count($progress['sessions']);
 		$wCount = count($progress['watched']);
-		$percentage = ($wCount / $sCount) * 100;
+
+		if($sCount == 0 || $wCount == 0)
+		{
+			$percentage = 0;
+		}else{
+			$percentage = ($wCount / $sCount) * 100;
+		}
 
 		return number_format($percentage, 2);
 	}

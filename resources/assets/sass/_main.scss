@@ -67,3 +67,24 @@ a:hover {
 .ucase {
   text-transform: uppercase;
 }
+
+.wistia {
+
+  &_responsive_padding {
+    position: relative;
+    padding: 56.67% 0 0 0;
+  }
+
+  &_responsive_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  &_embed {
+    width: 100%;
+    height: 100%;
+  }
+}

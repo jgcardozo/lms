@@ -15,10 +15,7 @@ class Streak
 	 */
 	public static function log(StreakInterface $streak)
 	{
-		$user = Auth::user();
-		$type = get_class($streak);
-
-		// Check if streak is logged by its rule
+		// Check if streak is logged by its rule (daily, 3 days ...)
 		if(!$streak->is_logged())
 		{
 			$streak->log();

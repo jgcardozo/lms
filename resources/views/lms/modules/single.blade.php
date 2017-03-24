@@ -2,6 +2,10 @@
 
 @section('title', $module->title)
 
+@section('scripts_before')
+    <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
+@endsection
+
 @section('content')
     <main>
         <div class="grid grid--full course-single">
@@ -23,10 +27,9 @@
                     </div>
 
                     <div class="single-header-video">
-                         <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
-                         <div class="wistia_responsive_padding" style="padding:56.67% 0 0 0;position:relative;">
-                             <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
-                                 <div class="wistia_embed wistia_async_gpc49zomb2" style="width:100%;height:100%;"></div>
+                         <div class="wistia_responsive_padding">
+                             <div class="wistia_responsive_wrapper">
+                                 <div class="wistia_embed wistia_async_{{ $module->video_url }}"></div>
                              </div>
                          </div>
                     </div>

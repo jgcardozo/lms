@@ -34,6 +34,7 @@ class Module extends Model
 
 		static::addGlobalScope(new OrderScope);
 	}
+	
 
 	/**
 	 * Get progress array,

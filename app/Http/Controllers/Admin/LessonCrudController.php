@@ -39,6 +39,10 @@ class LessonCrudController extends CrudController
 				'label' => 'Video URL'
 			],
 			[
+				'name' => 'lock_date',
+				'label' => 'Lock date'
+			],
+			[
 				'label' => 'Module',
 				'type' => 'model_function',
 				'function_name' => 'admin_module_link'
@@ -62,7 +66,7 @@ class LessonCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'video_url',
-			'label' => 'Video URL',
+			'label' => 'Wistia Video ID',
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
 			]
@@ -70,7 +74,7 @@ class LessonCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'bonus_video_url',
-			'label' => 'Bonus video URL',
+			'label' => 'Bonus Wistia Video ID',
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
 			]

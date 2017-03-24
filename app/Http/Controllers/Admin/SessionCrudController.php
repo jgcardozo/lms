@@ -37,11 +37,15 @@ class SessionCrudController extends CrudController
 			],
 			[
 				'name' => 'video_url',
-				'label' => 'Video URL'
+				'label' => 'Wistia Video ID'
 			],
 			[
 				'name' => 'video_duration',
 				'label' => 'Video duration'
+			],
+			[
+				'name' => 'lock_date',
+				'label' => 'Lock date'
 			],
 			[
 				'label' => 'Lesson',
@@ -72,12 +76,18 @@ class SessionCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'video_url',
-			'label' => 'Video URL'
+			'label' => 'Wistia Video ID',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		$this->crud->addField([
 			'name' => 'video_duration',
-			'label' => 'Video duration (in minutes)'
+			'label' => 'Video duration (in minutes)',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		$this->crud->addField([
@@ -102,7 +112,7 @@ class SessionCrudController extends CrudController
 			'label' => 'Assign this session to lesson:',
 			'type' => 'select',
 			'name' => 'lesson_id',
-			'attribute' => 'title',
+			'attribute' => 'backpack_crud_title',
 			'model' => 'App\Models\Lesson'
 		]);
 

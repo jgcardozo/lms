@@ -11,9 +11,16 @@ trait BackpackCrudTrait {
 	public function admin_editable_title()
 	{
 		$modelname = strtolower(class_basename($this));
+
 		ob_start();
+		$title = $this->title;
+		if($modelname == 'lesson')
+		{
+			$title = '[' . $this->module->title . '] - ' . $this->title;
+		}
+
 		?>
-		<a href="<?php echo route('crud.' . $modelname . '.edit', $this->id); ?>" title="Edit <?php echo $modelname; ?>"><?php echo $this->title; ?></a>
+		<a href="<?php echo route('crud.' . $modelname . '.edit', $this->id); ?>" title="Edit <?php echo $modelname; ?>"><?php echo $title; ?></a>
 		<?php
 		$title = ob_get_clean();
 		return $title;

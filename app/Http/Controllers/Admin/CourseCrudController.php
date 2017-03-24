@@ -41,7 +41,11 @@ class CourseCrudController extends CrudController
 			],
 			[
 				'name' => 'video_url',
-				'label' => 'Video URL'
+				'label' => 'Wistia Video ID'
+			],
+			[
+				'name' => 'lock_date',
+				'label' => 'Lock date'
 			],
 			[
 				'name' => 'module_group_title',
@@ -70,7 +74,7 @@ class CourseCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'video_url',
-			'label' => 'Video URL'
+			'label' => 'Wistia Video ID'
 		]);
 
 		$this->crud->addField([
