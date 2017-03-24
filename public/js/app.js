@@ -11811,6 +11811,17 @@ $(document).ready(function () {
 
 		$('.chars-count[data-chars="' + charsShow + '"] span').html(text_remaining);
 	});
+
+	$('body').on('click', '.course-progress', function () {
+		var $this = $(this),
+		    completeHtml = '<div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>';
+
+		$.ajax({
+			url: $this.data('complete')
+		}).always(function (res) {
+			$this.replaceWith(completeHtml);
+		});
+	});
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 

@@ -1,7 +1,7 @@
 <div class="session-single__video">
      <div class="wistia_responsive_padding">
          <div class="wistia_responsive_wrapper">
-             <div class="wistia_embed wistia_async_{{ $course->video_url }}"></div>
+             <div class="wistia_embed wistia_async_eeww27k7yw"></div>
          </div>
      </div>
 </div>

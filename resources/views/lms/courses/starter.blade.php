@@ -90,7 +90,7 @@
                                     @if($video->is_completed)
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                     @else
-                                        <div class="course-progress">Mark as completed <span class="course-progress__bar"></span></div>
+                                        <div class="course-progress" data-complete="{{ route('session.completed', $video->slug) }}">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            

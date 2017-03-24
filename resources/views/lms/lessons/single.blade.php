@@ -72,7 +72,7 @@
                                             Unlocks {{ date('d-m-Y', strtotime($session->lock_date)) }} 
                                         </div>
                                     @else
-                                        <div class="course-progress">Mark as completed <span class="course-progress__bar"></span></div>
+                                        <div class="course-progress" data-complete="{{ route('session.completed', $session->slug) }}">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            

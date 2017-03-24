@@ -65,6 +65,7 @@
 .course-progress {
   font-size: 1.4rem;
   color: $brand-grey-light;
+  cursor: pointer;
 
   &__bar {
     display: inline-block;
@@ -78,6 +79,7 @@
     &--completed {
       border: 0.1rem solid $brand-green;
       background: url('../images/icons/icon--complete.svg') no-repeat center;
+      cursor: auto;
     }
   }
 

@@ -2190,6 +2190,7 @@ p {
 .course-progress {
   font-size: 1.4rem;
   color: #928780;
+  cursor: pointer;
 }
 
 .course-progress__bar {
@@ -2205,6 +2206,7 @@ p {
 .course-progress__bar--completed {
   border: 0.1rem solid #62D262;
   background: url("../images/icons/icon--complete.svg") no-repeat center;
+  cursor: auto;
 }
 
 .course-progress--completed {
