@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Resource;
 use DB;
 use Auth;
 // use Facebook\Facebook;
@@ -55,11 +56,12 @@ class HomeController extends Controller
 
 	public function test()
 	{
+
 		// $item = Course::find(1);
 		// activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
 		// dd($item->getNextSession());
-		$item = Course::find(9);
-		dd($item->featured_image_url);
+		$item = Resource::find(1);
+		dd($item->file);
 
 		$user = User::find(1);
 		dd($user->fb_posted);

@@ -62,6 +62,11 @@ class CourseCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'name' => 'slug',
+			'label' => 'Slug'
+		]);
+
+		$this->crud->addField([
 			'name' => 'short_description',
 			'label' => 'Short description'
 		]);

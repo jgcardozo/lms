@@ -21,7 +21,7 @@ class Module extends Model
 	use SluggableScopeHelpers;
 	use BackpackCrudTrait;
 
-	protected $fillable = ['title', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
+	protected $fillable = ['title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
 
 	/**
 	 * The "booting" method of the model.

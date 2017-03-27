@@ -69,6 +69,11 @@ class SessionCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'name' => 'slug',
+			'label' => 'Slug'
+		]);
+
+		$this->crud->addField([
 			'name' => 'description',
 			'label' => 'Description',
 			'type' => 'wysiwyg'

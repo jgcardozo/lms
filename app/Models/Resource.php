@@ -32,13 +32,20 @@ class Resource extends Model
 	{
 		$attribute_name = 'file_url';
 		$disk = 's3';
-		$destination_path = '';
+		$destination_path = 'resources/';
 
 		$request = \Request::instance();
 		$file = $request->file($attribute_name);
 		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+		$filesize = !empty($file->getClientSize()) ? $file->getClientSize() : 0;
 
 		\Storage::disk($disk)->put($destination_path . $filename, file_get_contents($file));
 		$this->attributes[$attribute_name] = $destination_path . $filename;
+		$this->attributes['file_size'] = $filesize;
+	}
+
+	public function getFileAttribute()
+	{
+		return !empty($this->file_url) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->file_url : '';
 	}
 }

@@ -25,7 +25,7 @@ class Course extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'short_description', 'description', 'video_url', 'featured_image', 'module_group_title', 'lock_date'];
+	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'module_group_title', 'lock_date'];
 
 	/**
 	 * The "booting" method of the model.

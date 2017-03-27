@@ -31,7 +31,11 @@ class ResourceCrudController extends CrudController
                 'label' => 'Title',
                 'type' => 'model_function',
                 'function_name' => 'admin_editable_title'
-            ]
+            ],
+			[
+				'label' => 'Size',
+				'name' => 'file_size'
+			]
         ]);
 
 

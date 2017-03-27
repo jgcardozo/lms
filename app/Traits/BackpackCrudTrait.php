@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Cviebrock\EloquentSluggable\Services\SlugService;
+
 trait BackpackCrudTrait {
 	/*
 	|--------------------------------------------------------------------------
@@ -24,6 +26,13 @@ trait BackpackCrudTrait {
 		<?php
 		$title = ob_get_clean();
 		return $title;
+	}
+
+	public function setSlugAttribute($value)
+	{
+		if(empty($value)) $this->attributes['slug'] = '';
+
+		$this->attributes['slug'] = SlugService::createSlug(self::class, 'slug', $value, ['unique' => true]);
 	}
 
 	/*

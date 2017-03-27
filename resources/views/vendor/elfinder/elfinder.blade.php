@@ -1,5 +1,17 @@
 @extends('backpack::layout')
 
+@section('header')
+    <section class="content-header">
+        <h1>
+            {{ trans('backpack::crud.file_manager') }}
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url(config('backpack.base.route_prefix')) }}">Admin</a></li>
+            <li class="active">{{ trans('backpack::crud.file_manager') }}</li>
+        </ol>
+    </section>
+@endsection
+
 @section('after_scripts')
     <!-- jQuery and jQuery UI (REQUIRED) -->
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
@@ -38,17 +50,7 @@
     </script>
 @endsection
 
-@section('header')
-    <section class="content-header">
-      <h1>
-        {{ trans('backpack::crud.file_manager') }}
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{ url(config('backpack.base.route_prefix')) }}">Admin</a></li>
-        <li class="active">{{ trans('backpack::crud.file_manager') }}</li>
-      </ol>
-    </section>
-@endsection
+
 
 @section('content')
 
