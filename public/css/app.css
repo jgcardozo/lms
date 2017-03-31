@@ -3000,3 +3000,158 @@ p {
   background: #232c40;
   color: #fff;
 }
+
+/**
+ * Surveys
+ */
+.survey-popup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 98;
+  overflow: auto;
+  background: rgba(146, 135, 128, 0.8);
+}
+
+.survey-popup form {
+  position: relative;
+  background: #fff;
+  width: 100%;
+  max-width: 85rem;
+  padding: 4rem;
+}
+
+.survey-popup__question {
+  color: #060606;
+  font-size: 2.4rem;
+  line-height: 3rem;
+  margin-bottom: 3rem;
+}
+
+.survey-popup input[type="text"],
+.survey-popup textarea {
+  background: #f7f7f7;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 250px;
+  border: 1px solid #dbdcde;
+  border-radius: 1px;
+  color: #383838;
+  font-size: 1.4rem;
+}
+
+.survey-popup textarea {
+  height: 250px;
+  line-height: 1.8rem;
+  padding: 1rem;
+}
+
+.survey-popup input[type="text"] {
+  height: 45px;
+  line-height: 45px;
+  padding: 0 1rem;
+}
+
+.survey-popup label {
+  display: block;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  color: #060606;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  font-weight: bold;
+}
+
+.survey-popup label > span {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.survey-popup .survey-popup__answers__desc {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  font-style: italic;
+  font-weight: 300;
+  margin-top: 0.5rem;
+}
+
+.survey-popup .radio-control input,
+.survey-popup .checkbox-control input {
+  display: none;
+}
+
+.survey-popup .radio-control span,
+.survey-popup .checkbox-control span {
+  position: relative;
+  display: block;
+  padding-left: 3rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+.survey-popup .radio-control span:before,
+.survey-popup .radio-control span:after,
+.survey-popup .checkbox-control span:before,
+.survey-popup .checkbox-control span:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+}
+
+.survey-popup .radio-control span:before {
+  width: 1.2rem;
+  height: 1.2rem;
+  background: #ced0d2;
+  border-radius: 100%;
+}
+
+.survey-popup .radio-control span:after {
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #4d73a5;
+  top: 0.7rem;
+  left: 0.7rem;
+  border-radius: 100%;
+  opacity: 0;
+}
+
+.survey-popup .radio-control input:checked + span:after,
+.survey-popup .checkbox-control input:checked + span:after {
+  opacity: 1;
+}
+
+.survey-popup__navigation {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.survey-popup__navigation a {
+  display: inline-block;
+  background: #ffb90c;
+  max-width: 26rem;
+  width: 97%;
+  height: 6rem;
+  margin: 0 1.5rem;
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  line-height: 6rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 0.3rem;
+}
+
+.survey-popup__navigation a:hover {
+  background: #dea312;
+}

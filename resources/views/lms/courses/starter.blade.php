@@ -29,6 +29,7 @@
                     </div>
 
                     <div class="single-header-video">
+                        <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js" async></script>
                         <div class="wistia_responsive_padding">
                             <div class="wistia_responsive_wrapper">
                                 <div class="wistia_embed wistia_async_{{ $course->video_url }}"></div>
@@ -38,11 +39,12 @@
                         <script>
                             window._wq = window._wq || [];
 
-                            _wq.push({ id: "gpc49zomb2", onReady: function(video) {
+                            _wq.push({ id: "{{ $course->video_url }}", onReady: function(video) {
                                 var watchRule = parseInt(video.duration()*0.8);
-                              
+
                                 video.bind('secondchange', function(s) {
-                                    if (s === watchRule) {                                 
+                                    console.log( s );
+                                    if (s >= watchRule) {
                                         console.log("We just reached " + s + " seconds!");
                                     }
 
@@ -76,7 +78,7 @@
                     @foreach($videos as $video)
                         <div id="session-{{ $video->id }}" class="course-starter__item grid--flex flex--space-between">
                             <div class="course-starter__video grid--flex">
-                                <a href="{{ route('session.completed', $video->slug) }}" class="block__link js-open-session"></a>
+                                <a href="{{ route('session.show', $video->id) }}" class="block__link js-open-session"></a>
                             </div>
 
                             <div class="course-starter__content grid--flex flex--space-between flex--align-center">
@@ -101,13 +103,15 @@
         </div>        
     </main>
 
-    <div class="session-single">
-        <div class="session-single__content">
-            <div class="session-single__close"></div>
+     <div class="session-single">
+         <div class="session-single__content">
+             <div class="session-single__close"></div>
 
-            @include('lms.courses.session-popup')
+             <div class="session-single__content-ajax">
 
-        </div>
-    </div>
+             </div>
+
+         </div>
+     </div>
 
 @endsection

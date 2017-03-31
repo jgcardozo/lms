@@ -68,13 +68,38 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 		'as' => 'calendar',
 		'uses' => 'EventsController@index'
 	]);
+});
+
+Route::group(['middleware' => ['onlyajax', 'auth']], function() {
+	Route::get('session/{session}', [
+		'as' => 'session.show',
+		'uses' => 'SessionController@show'
+	]);
 
 	// Mark session as completed
 	Route::get('session/{session}/completed', [
 		'as' => 'session.completed',
 		'uses' => 'SessionController@complete'
 	]);
+
+	Route::post('session/{session}/videoprogress', [
+		'as' => 'session.videoprogress',
+		'uses' => 'SessionController@videoprogress'
+	]);
 });
+
+/**
+ * Survey forms
+ */
+Route::post('survey/store', [
+	'as' => 'survey.store',
+	'uses' => 'SurveyController@storeSurvey'
+]);
+
+Route::get('/test/form', [
+	'as' => 'survey.test',
+	'uses' => 'SurveyController@testSurvey'
+]);
 
 /**
  * User routes

@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 trait BackpackCrudTrait {
@@ -30,7 +31,18 @@ trait BackpackCrudTrait {
 
 	public function setSlugAttribute($value)
 	{
-		if(empty($value)) $this->attributes['slug'] = '';
+		$request = request();
+
+		if(empty($value))
+		{
+			$this->attributes['slug'] = '';
+		}
+
+		if($request->has('slug') && $value == $request->get('slug'))
+		{
+			$this->attributes['slug'] = $value;
+			return;
+		}
 
 		$this->attributes['slug'] = SlugService::createSlug(self::class, 'slug', $value, ['unique' => true]);
 	}

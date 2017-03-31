@@ -92,6 +92,14 @@ class Session extends Model
 		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
 	}
 
+	public function getVideoProgressAttribute()
+	{
+		$user_id = Auth::user()->id;
+		$key = 'session_' . $this->id . '_' . $user_id;
+
+		return session($key, 0);
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations

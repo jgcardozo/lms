@@ -5,7 +5,8 @@
  * @return boolean
  */
 if ( !function_exists('changeHeader') ) {
-	function changeHeader() {
+	function changeHeader()
+	{
 		if ( Request::is('course/*') || Request::is('module/*') || Request::is('lesson/*') ) { 
 		  return true;
 		}
@@ -20,7 +21,8 @@ if ( !function_exists('changeHeader') ) {
  * @return boolean
  */
 if ( !function_exists('is_home') ) {
-	function is_home() {
+	function is_home()
+	{
 		if (Request::is('/')) { 
 		  return true;
 		}
@@ -38,7 +40,8 @@ if ( !function_exists('is_home') ) {
  * @return string
  */
 if ( !function_exists('truncate_string') ) {
-	function truncate_string( $string, $length=100, $append="&hellip;" ) {
+	function truncate_string( $string, $length=100, $append="&hellip;" )
+	{
 	  $string = strip_tags( trim( $string ) );
 
 	  if( strlen($string) > $length ) {
@@ -58,7 +61,8 @@ if ( !function_exists('truncate_string') ) {
  * @return string
  */
 if ( !function_exists('bold_first_word') ) {
-	function bold_first_word( $string ) {
+	function bold_first_word( $string )
+	{
 		$title = preg_split("/\s+/",  $string);
 		$title[0] = "<strong> $title[0] </strong>";
 		$title = join(' ', $title);
@@ -75,11 +79,28 @@ if ( !function_exists('bold_first_word') ) {
  * @return string
  */
 if ( !function_exists('set_active_link') ) {	
-	function set_active_link( $path, $attr=false ) {
+	function set_active_link( $path, $attr=false )
+	{
 		if ( $attr ) {
 			return Request::is($path . '*') ? ' class=active' :  '';	
 		}
 
 		return Request::is($path . '*') ? ' active' :  '';
+	}
+}
+
+/**
+ * Make bytes human readable
+ *
+ * @param float $bytes
+ * @param int   $decimals
+ * @return string
+ */
+if ( !function_exists('human_filesize') ) {
+	function human_filesize($bytes, $decimals = 2)
+	{
+		$size = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+		$factor = floor((strlen($bytes) - 1) / 3);
+		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
 	}
 }

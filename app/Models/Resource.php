@@ -13,6 +13,33 @@ class Resource extends Model
 
 	protected $fillable = ['title', 'file_url'];
 
+	public function getFileAttribute()
+	{
+		return !empty($this->file_url) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->file_url : '';
+	}
+
+	public function getFileExtensionAttribute()
+	{
+		return pathinfo($this->file_url, PATHINFO_EXTENSION);
+	}
+
+	public function getShortFilenameAttribute($len = 8)
+	{
+		$filename = pathinfo($this->file_url, PATHINFO_FILENAME);
+
+		if(strlen($filename) > $len)
+		{
+			return substr($filename, 0, 8) . '&hellip;' . $this->file_extension;
+		}
+
+		return $filename . '.' . $this->file_extension;
+	}
+
+	public function getFileSizeMbAttribute()
+	{
+		return human_filesize($this->file_size);
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
@@ -42,10 +69,5 @@ class Resource extends Model
 		\Storage::disk($disk)->put($destination_path . $filename, file_get_contents($file));
 		$this->attributes[$attribute_name] = $destination_path . $filename;
 		$this->attributes['file_size'] = $filesize;
-	}
-
-	public function getFileAttribute()
-	{
-		return !empty($this->file_url) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->file_url : '';
 	}
 }
