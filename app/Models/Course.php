@@ -125,7 +125,7 @@ class Course extends Model
 	 */
 	public function getIsLockedAttribute()
 	{
-		return $this->is_tag_locked();
+		return $this->is_tag_locked() && !is_role_admin();
 	}
 
 	/**
