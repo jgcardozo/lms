@@ -49,24 +49,34 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 		'uses' => 'CourseController@index'
 	]);
 
-	Route::get('course/{course}/intro', [
-		'as' => 'single.course.starter',
-		'uses' => 'CourseController@starter_videos'
-	]);
+	// Check If course survey is finished
+	Route::group(['middleware' => ['survey']], function() {
+		Route::get('course/{course}/intro', [
+			'as' => 'single.course.starter',
+			'uses' => 'CourseController@starter_videos'
+		]);
 
-	Route::get('module/{module}', [
-		'as' => 'single.module',
-		'uses' => 'ModuleController@index'
-	]);
+		Route::get('module/{module}', [
+			'as' => 'single.module',
+			'uses' => 'ModuleController@index'
+		]);
 
-	Route::get('lesson/{lesson}', [
-		'as' => 'single.lesson',
-		'uses' => 'LessonController@index'
-	]);
+		Route::get('lesson/{lesson}', [
+			'as' => 'single.lesson',
+			'uses' => 'LessonController@index'
+		]);
+	});
 
 	Route::get('calendar', [
 		'as' => 'calendar',
 		'uses' => 'EventsController@index'
+	]);
+});
+
+Route::group(['middleware' => ['onlyajax', 'auth']], function() {
+	Route::get('session/{session}', [
+		'as' => 'session.show',
+		'uses' => 'SessionController@show'
 	]);
 
 	// Mark session as completed
@@ -74,7 +84,25 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 		'as' => 'session.completed',
 		'uses' => 'SessionController@complete'
 	]);
+
+	Route::post('session/{session}/videoprogress', [
+		'as' => 'session.videoprogress',
+		'uses' => 'SessionController@videoprogress'
+	]);
 });
+
+/**
+ * Survey forms
+ */
+Route::post('survey/store', [
+	'as' => 'survey.store',
+	'uses' => 'SurveyController@storeSurvey'
+]);
+
+Route::get('/test/form', [
+	'as' => 'survey.test',
+	'uses' => 'SurveyController@testSurvey'
+]);
 
 /**
  * User routes

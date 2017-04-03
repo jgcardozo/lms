@@ -22,26 +22,26 @@ class InfusionsoftAccess
 		if(array_key_exists('course', $parameters))
 		{
 			$slug = $parameters['course'];
-			$model = \App\Models\Course::findBySlug($slug);
+			$model = \App\Models\Course::findBySlugOrFail($slug);
 		}elseif(array_key_exists('module', $parameters))
 		{
 			$slug = $parameters['module'];
-			$model = \App\Models\Module::findBySlug($slug);
+			$model = \App\Models\Module::findBySlugOrFail($slug);
 		}elseif(array_key_exists('lesson', $parameters))
 		{
 			$slug = $parameters['lesson'];
-			$model = \App\Models\Lesson::findBySlug($slug);
+			$model = \App\Models\Lesson::findBySlugOrFail($slug);
 		}elseif(array_key_exists('session', $parameters))
 		{
 			$slug = $parameters['session'];
-			$model = \App\Models\Session::findBySlug($slug);
+			$model = \App\Models\Session::findBySlugOrFail($slug);
 		}else{
 			return $result;
 		}
 
 		if($model->is_locked)
 		{
-			abort(403);
+			abort(403, 'This item is locked for this user. Return to <a href="/">homepage</a>');
 		}
 
         return $result;

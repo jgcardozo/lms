@@ -53,7 +53,7 @@
                                         <span class="course-progress__bar course-progress__bar--locked"></span>
                                     </div>
                                 @else
-                                    <a href="{{ route('session.completed', $session->slug) }}" class="block__link js-open-session"></a>
+                                    <a href="{{ route('session.show', $session->id) }}" class="block__link js-open-session"></a>
                                 @endif
                             </div>
 
@@ -72,7 +72,7 @@
                                             Unlocks {{ date('d-m-Y', strtotime($session->lock_date)) }} 
                                         </div>
                                     @else
-                                        <div class="course-progress" data-complete="{{ route('session.completed', $session->slug) }}">Mark as completed <span class="course-progress__bar"></span></div>
+                                        <div style="{{ $session->video_progress >= 80 ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $session->slug) }}">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            
@@ -100,10 +100,9 @@
 
                             <div class="grid--flex flex--space-between">
                                 <div class="lesson-sessions__item--bonus-video">
-                                    <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
-                                    <div class="wistia_responsive_padding" style="padding:56.67% 0 0 0;position:relative;">
-                                        <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
-                                            <div class="wistia_embed wistia_async_eeww27k7yw" style="width:100%;height:100%;"></div>
+                                    <div class="wistia_responsive_padding">
+                                        <div class="wistia_responsive_wrapper">
+                                            <div class="wistia_embed wistia_async_{{ $lesson->bonus_video_url }}"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +124,9 @@
         <div class="session-single__content">
             <div class="session-single__close"></div>
 
-            @include('lms.courses.session-popup')
+            <div class="session-single__content-ajax">
+
+            </div>
 
         </div>
     </div>

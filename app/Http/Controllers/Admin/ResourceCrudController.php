@@ -13,7 +13,8 @@ class ResourceCrudController extends CrudController
 {
     use BackpackCrudTrait;
 
-    public function setup() {
+    public function setup()
+	{
         $this->crud->setModel('App\Models\Resource');
         $this->crud->setRoute('admin/resource');
         $this->crud->setEntityNameStrings('resource', 'resources');

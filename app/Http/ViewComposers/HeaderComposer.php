@@ -18,6 +18,7 @@ class HeaderComposer
 	{
 		$lms_items = null;
 		$notifications = [];
+
 		if($user = Auth::user())
 		{
 			$notifications['general'] = $user->unreadNotifications->where('type', 'App\Notifications\UnlockedByTag');
@@ -36,6 +37,13 @@ class HeaderComposer
 			$lms_items = $view->lesson->course()->with('modules.lessons.sessions')->first();
 		}
 
-		$view->with('notifications', $notifications)->with('progress_items', $lms_items);
+		if(!empty($lms_items))
+		{
+			$courses = Course::where('id', '!=', $lms_items->id)->get();
+		}else{
+			$courses = Course::get();
+		}
+
+		$view->with('notifications', $notifications)->with('progress_items', $lms_items)->with('courses', $courses);
 	}
 }

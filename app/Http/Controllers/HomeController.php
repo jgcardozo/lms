@@ -46,9 +46,9 @@ class HomeController extends Controller
 	public function index() {
 		if(Auth::user())
 		{
-			$courses = Course::all();
-
-			return view('lms.courses.list')->with(['courses' => $courses]);
+			// Courses data set in View composers [HeaderComposer.php]
+			// $courses = Course::all();
+			return view('lms.courses.list'); //->with(['courses' => $courses]);
 		}
 
 		return view('auth.login');
@@ -56,12 +56,19 @@ class HomeController extends Controller
 
 	public function test()
 	{
-
+		/*$key = 'session_4_1';
+		session([$key => 79]);
+		session()->save();*/
+		// session(['session_1' => '330']);
+		// session()->save();
+		$val = session()->all();
+		dd($val);
+		die();
 		// $item = Course::find(1);
 		// activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
 		// dd($item->getNextSession());
 		$item = Resource::find(1);
-		dd($item->file);
+		dd($item->file_size_mb);
 
 		$user = User::find(1);
 		dd($user->fb_posted);

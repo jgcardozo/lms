@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Auth;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -26,10 +28,17 @@ class CourseController extends Controller
 			'starterSeen' => $course->areAllStarterSeen()
 		];
 
+		// Popup before course start
+		$popupCheck = DB::table('surveys')->where('user_id', Auth::user()->id)->get()->toArray();
+        if($slug == 'ask-masterclass' && empty($popupCheck)) {
+            $viewArgs['popupBefore'] = 'lms.survey';
+        }
+
         return view('lms.courses.single')->with($viewArgs);
     }
 
-    public function starter_videos($slug) {
+    public function starter_videos($slug)
+    {
         $course = Course::findBySlugOrFail($slug);
 
         if(!$course) {
