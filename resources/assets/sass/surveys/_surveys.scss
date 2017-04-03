@@ -1,3 +1,7 @@
+.parsley-errors-list {
+  display: none!important;
+}
+
 .survey-popup {
   display: flex;
   position: fixed;
@@ -8,13 +12,18 @@
   z-index: 98;
   overflow: auto;
   background: rgba($brand-grey-light, 0.8);
+  display: none;
+
+  &__header {
+    margin-bottom: 2rem;
+  }
 
   form {
     position: relative;
     background: #fff;
     width: 100%;
     max-width: 85rem;
-    padding: 4rem;
+    padding: 2.5rem 4rem;
   }
 
   &__question {
@@ -49,6 +58,11 @@
     height: 4.5rem;
     line-height: 4.5rem;
     padding: 0 1rem;
+  }
+
+  input[type="text"].parsley-error,
+  textarea.parsley-error {
+    border-color: #db3333;
   }
 
   label {
@@ -89,6 +103,7 @@
 
     font-size: 1.6rem;
     line-height: 2rem;
+    font-weight: normal;
   }
 
   .radio-control span:before,
@@ -132,7 +147,8 @@
     text-align: center;
     margin-top: 3rem;
 
-    a {
+    a,
+    input[type="submit"] {
       display: inline-block;
       background: #ffb90c;
       max-width: 26rem;
@@ -148,10 +164,19 @@
       font-weight: bold;
 
       border-radius: 0.3rem;
+      border: 0;
+    }
+
+    a.survey-popup__navigation__prev {
+      background: #e0e0e0;
     }
 
     a:hover {
       background: #dea312;
+    }
+
+    a.survey-popup__navigation__prev:hover {
+      background: #ccc;
     }
   }
 }

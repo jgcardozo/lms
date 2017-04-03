@@ -12,6 +12,7 @@
     "jquery": "^3.1.1",
     "jquery-ui": "^1.12.1",
     "laravel-mix": "^0.8.1",
+    "parsleyjs": "^2.7.0",
     "perfect-scrollbar": "^0.6.16",
     "progressbar.js": "^1.0.1",
     "resolve-url-loader": "^2.0.0",

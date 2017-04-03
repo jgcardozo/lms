@@ -49,20 +49,23 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 		'uses' => 'CourseController@index'
 	]);
 
-	Route::get('course/{course}/intro', [
-		'as' => 'single.course.starter',
-		'uses' => 'CourseController@starter_videos'
-	]);
+	// Check If course survey is finished
+	Route::group(['middleware' => ['survey']], function() {
+		Route::get('course/{course}/intro', [
+			'as' => 'single.course.starter',
+			'uses' => 'CourseController@starter_videos'
+		]);
 
-	Route::get('module/{module}', [
-		'as' => 'single.module',
-		'uses' => 'ModuleController@index'
-	]);
+		Route::get('module/{module}', [
+			'as' => 'single.module',
+			'uses' => 'ModuleController@index'
+		]);
 
-	Route::get('lesson/{lesson}', [
-		'as' => 'single.lesson',
-		'uses' => 'LessonController@index'
-	]);
+		Route::get('lesson/{lesson}', [
+			'as' => 'single.lesson',
+			'uses' => 'LessonController@index'
+		]);
+	});
 
 	Route::get('calendar', [
 		'as' => 'calendar',

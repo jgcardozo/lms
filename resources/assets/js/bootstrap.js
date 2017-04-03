@@ -13,6 +13,7 @@ window.datepicker = require('jquery-ui/ui/widgets/datepicker');
 window.pscroll = require('perfect-scrollbar/jquery')($);
 
 window.ProgressBar = require('progressbar.js');
+window.parsley = require('parsleyjs');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces

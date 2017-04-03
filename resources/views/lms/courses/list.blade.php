@@ -34,7 +34,7 @@
 							@if($course->is_locked)
 				            	<a href="#" class="courseblock__link">Apply Now</a>
 				            @else
-				            	<a href="{{ route('single.course', $course->slug)  }}" class="courseblock__link">Resume</a>
+				            	<a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Resume</a>
 				            @endif
 			        	</div>			            
 			        </div>

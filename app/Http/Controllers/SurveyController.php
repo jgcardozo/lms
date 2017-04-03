@@ -15,8 +15,6 @@ class SurveyController extends Controller
 
 	public function testSurvey()
 	{
-		$items = DB::table('surveys')->whereRaw("items->>'q' = '*'")->toSql();
-		dd($items);
 		return view('lms.surveytest');
 	}
 
@@ -48,5 +46,7 @@ class SurveyController extends Controller
 				]);
 			}
 		}
+
+		return redirect()->back();
 	}
 }

@@ -46,9 +46,9 @@ class HomeController extends Controller
 	public function index() {
 		if(Auth::user())
 		{
-			$courses = Course::all();
-
-			return view('lms.courses.list')->with(['courses' => $courses]);
+			// Courses data set in View composers [HeaderComposer.php]
+			// $courses = Course::all();
+			return view('lms.courses.list'); //->with(['courses' => $courses]);
 		}
 
 		return view('auth.login');

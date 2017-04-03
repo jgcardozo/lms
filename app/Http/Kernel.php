@@ -58,6 +58,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
 		'infusionsoft_access' => \App\Http\Middleware\InfusionsoftAccess::class,
-        'onlyajax' => \App\Http\Middleware\AllowOnlyAjaxRequests::class
+        'onlyajax' => \App\Http\Middleware\AllowOnlyAjaxRequests::class,
+        'survey' => \App\Http\Middleware\SurveyMiddleware::class
     ];
 }

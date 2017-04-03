@@ -326,4 +326,57 @@ $(document).ready( function() {
             $this.replaceWith(completeHtml);
         });
     });
+
+	/**
+	 * Survey popup
+	 */
+	$('body').on('click', '.survey-popup__navigation a', function(e) {
+        e.preventDefault();
+
+		var $this = $(this),
+			surPopupWrap = $this.closest('.survey-popup'),
+			form = surPopupWrap.find('form'),
+			currentStep = surPopupWrap.find('.survey-popup__step:visible'),
+            nextBtn = form.find('.survey-popup__navigation__next'),
+            prevBtn = form.find('.survey-popup__navigation__prev'),
+            subBtn = form.find('.survey-popup__navigation__submit'),
+            stepIndex = form.find('.survey-popup__step').index(currentStep);
+        
+        if($this.is('.next'))
+        {
+            var stepToShow = currentStep.next('.survey-popup__step');
+
+            if(!form.parsley().validate({group: 'block-' + stepIndex}))
+                return false;
+        }else{
+            var stepToShow = currentStep.prev('.survey-popup__step');
+        }
+
+        if(stepToShow.is(form.find('.survey-popup__step').first())) {
+            nextBtn.show();
+            prevBtn.hide();
+            subBtn.hide();
+        }else if(stepToShow.is(form.find('.survey-popup__step').last())) {
+            nextBtn.hide();
+            prevBtn.show();
+            subBtn.show();
+        }else{
+            nextBtn.show();
+            prevBtn.show();
+            subBtn.hide();
+        }
+
+		currentStep.fadeOut(250, function() {
+            stepToShow.fadeIn(250);
+		});
+	});
+
+    $('body').on('click', '.js-open-surveyPopup', function() {
+        var popup = $('body').find('.survey-popup');
+
+        if(popup.length)
+            popup.css('display', 'flex').hide().fadeIn(250);
+
+        return false;
+    });
 });

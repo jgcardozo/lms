@@ -3004,6 +3004,10 @@ p {
 /**
  * Surveys
  */
+.parsley-errors-list {
+  display: none !important;
+}
+
 .survey-popup {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3016,6 +3020,11 @@ p {
   z-index: 98;
   overflow: auto;
   background: rgba(146, 135, 128, 0.8);
+  display: none;
+}
+
+.survey-popup__header {
+  margin-bottom: 2rem;
 }
 
 .survey-popup form {
@@ -3023,7 +3032,7 @@ p {
   background: #fff;
   width: 100%;
   max-width: 85rem;
-  padding: 4rem;
+  padding: 2.5rem 4rem;
 }
 
 .survey-popup__question {
@@ -3039,23 +3048,28 @@ p {
   display: block;
   width: 100%;
   max-width: 100%;
-  height: 250px;
-  border: 1px solid #dbdcde;
-  border-radius: 1px;
+  height: 25rem;
+  border: 0.1rem solid #dbdcde;
+  border-radius: 0.1rem;
   color: #383838;
   font-size: 1.4rem;
 }
 
 .survey-popup textarea {
-  height: 250px;
+  height: 25rem;
   line-height: 1.8rem;
   padding: 1rem;
 }
 
 .survey-popup input[type="text"] {
-  height: 45px;
-  line-height: 45px;
+  height: 4.5rem;
+  line-height: 4.5rem;
   padding: 0 1rem;
+}
+
+.survey-popup input[type="text"].parsley-error,
+.survey-popup textarea.parsley-error {
+  border-color: #db3333;
 }
 
 .survey-popup label {
@@ -3094,6 +3108,7 @@ p {
   padding-left: 3rem;
   font-size: 1.6rem;
   line-height: 2rem;
+  font-weight: normal;
 }
 
 .survey-popup .radio-control span:before,
@@ -3136,7 +3151,8 @@ p {
   margin-top: 3rem;
 }
 
-.survey-popup__navigation a {
+.survey-popup__navigation a,
+.survey-popup__navigation input[type="submit"] {
   display: inline-block;
   background: #ffb90c;
   max-width: 26rem;
@@ -3150,8 +3166,17 @@ p {
   text-transform: uppercase;
   font-weight: bold;
   border-radius: 0.3rem;
+  border: 0;
+}
+
+.survey-popup__navigation a.survey-popup__navigation__prev {
+  background: #e0e0e0;
 }
 
 .survey-popup__navigation a:hover {
   background: #dea312;
+}
+
+.survey-popup__navigation a.survey-popup__navigation__prev:hover {
+  background: #ccc;
 }

@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="grid--flex flex--align-center">
-                            <a href="{{ route('single.course.starter', $course->slug) }}" class="course-reminder__link">Watch videos</a>
+                            <a href="{{ route('single.course.starter', $course->slug) }}" class="course-reminder__link {{ !empty($popupBefore) ? 'js-open-surveyPopup' : '' }}">Watch videos</a>
                         </div>
                     @elseif(!empty($nextSession) && $nextSession !== true)
                         <div class="course-reminder__content">
@@ -110,5 +110,9 @@
                 </div>
             </div>
         </div>
+
+        @if(!empty($popupBefore))
+            @include('lms.survey')
+        @endif
     </main>
 @endsection

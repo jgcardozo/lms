@@ -5,26 +5,16 @@
                 @if(changeHeader())                    
                     <div class="masthead__classes grid--flex flex--align-center">
                         <a class="masthead__classes-link masthead__classes-link--active js-header-classes" href="javascript:;">
-                            <strong>Ask</strong> Masterclass
+                            {!! bold_first_word($progress_items->title) !!}
                         </a>
                         
                         <div class="masthead__classes-wrap">
                             <ul class="masthead__classes-list list--unstyled">
-                                <li class="masthead__classes-list__item">
-                                    <a class="masthead__classes-link" href="#"><strong>Elite</strong> Mastermind</a>
-                                </li>
-                                <li class="masthead__classes-list__item">
-                                    <a class="masthead__classes-link" href="#"><strong>Ask</strong> Certification</a>
-                                </li>
-                                <li class="masthead__classes-list__item">
-                                    <a class="masthead__classes-link" href="#"><strong>Ask</strong> Coaching</a>
-                                </li>
-                                <li class="masthead__classes-list__item">
-                                    <a class="masthead__classes-link" href="#"><strong>Ask</strong> Masterclass</a>
-                                </li>
-                                <li class="masthead__classes-list__item">
-                                    <a class="masthead__classes-link" href="#"><strong>Ask</strong> Workshop</a>
-                                </li>
+                                @foreach($courses as $course)
+                                    <li class="masthead__classes-list__item">
+                                        <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}">{!! bold_first_word($course->title) !!}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
 
