@@ -104,3 +104,15 @@ if ( !function_exists('human_filesize') ) {
 		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
 	}
 }
+
+/**
+ * Determinate if the current user is Administrator or Editor, same thing
+ *
+ * @return boolean
+ */
+if ( !function_exists('is_role_admin') ) {
+	function is_role_admin()
+	{
+		return \Auth::user()->hasRole(['Administrator','Editor']);
+	}
+}

@@ -141,6 +141,9 @@ class Lesson extends Model
 	 */
 	public function getIsLockedAttribute()
 	{
+		if(is_role_admin())
+			return false;
+
 		if($this->module->is_locked) {
 			return true;
 		}

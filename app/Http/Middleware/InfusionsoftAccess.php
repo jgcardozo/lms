@@ -39,6 +39,11 @@ class InfusionsoftAccess
 			return $result;
 		}
 
+		if(is_role_admin())
+		{
+			return $result;
+		}
+
 		if($model->is_locked)
 		{
 			abort(403, 'This item is locked for this user. Return to <a href="/">homepage</a>');
