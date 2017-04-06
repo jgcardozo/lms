@@ -2420,6 +2420,28 @@ p {
   min-width: 19rem;
 }
 
+.user-settings .billing-course {
+  border: 0.1rem solid #dadada;
+  border-radius: 0.3rem;
+  padding: 1.7rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.user-settings .billing-course__course-title {
+  color: #928780;
+  font-size: 1.4rem;
+}
+
+.user-settings .billing-course__details-btn {
+  float: right;
+  font-size: 1.4rem;
+  color: #606e89;
+}
+
+.user-settings .billing-course__details {
+  /*display: none;*/
+}
+
 /**
  * Course Progress
  */
@@ -3021,6 +3043,16 @@ p {
   overflow: auto;
   background: rgba(146, 135, 128, 0.8);
   display: none;
+}
+
+.survey-popup__close {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url("../images/icons/icon--close.svg") no-repeat center/cover;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
 }
 
 .survey-popup__header {

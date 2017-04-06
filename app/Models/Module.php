@@ -227,28 +227,32 @@ class Module extends Model
 	*/
 	public function view_lessons_button()
 	{
-		ob_start();
 		?>
 		<a href="<?php echo route('crud.lesson.index', ['module' => $this->id]); ?>" class="btn btn-xs btn-default">
 			<i class="fa fa-eye"></i>
 			View lessons
 		</a>
 		<?php
-		$button = ob_get_clean();
-		return $button;
 	}
 
 	public function admin_course_link()
 	{
 		if(!$this->course) return;
 
-		ob_start();
 		?>
 		<a href="<?php echo route('crud.course.edit', [$this->course->id]); ?>">
 			<?php echo $this->course->title ?>
 		</a>
 		<?php
-		$button = ob_get_clean();
-		return $button;
+	}
+
+	public function view_in_frontend_button()
+	{
+		?>
+		<a target="_blank" href="<?php echo route('single.module', $this->slug); ?>" class="btn btn-xs btn-default">
+			<i class="fa fa-eye"></i>
+			View module
+		</a>
+		<?php
 	}
 }

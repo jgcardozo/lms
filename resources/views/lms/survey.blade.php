@@ -1,6 +1,9 @@
 <div class="survey-popup grid--flex flex--align-center flex--just-center">
+
     <form method="post" action="{{ route('survey.store') }}" data-parsley-validate="">
         {{ csrf_field() }}
+
+        <div class="survey-popup__close"></div>
 
         <div class="survey-popup__header grid--flex flex--align-center flex--just-center">
             <img src="{{ asset('images/survey_logo_masterclass.png') }}" class="" />

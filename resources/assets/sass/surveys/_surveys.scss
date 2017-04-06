@@ -14,6 +14,16 @@
   background: rgba($brand-grey-light, 0.8);
   display: none;
 
+  &__close {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url('../images/icons/icon--close.svg') no-repeat center/cover;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+  }
+
   &__header {
     margin-bottom: 2rem;
   }

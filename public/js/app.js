@@ -11701,12 +11701,34 @@ $(document).ready(function () {
 	/**
   * Session Popup handlers
   */
+
 	/**
-  * Wistia on second change event handler
+  * Get parameter from url query
   *
-  * @param s
-  * @param video
-     */
+  * @param sParam
+  * @returns {*}
+  */
+	function getUrlParameter(sParam) {
+		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		    sURLVariables = sPageURL.split('&'),
+		    sParameterName,
+		    i;
+
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+
+			if (sParameterName[0] === sParam) {
+				return sParameterName[1] === undefined ? true : sParameterName[1];
+			}
+		}
+	}
+
+	/**
+ * Wistia on second change event handler
+ *
+ * @param s
+ * @param video
+  */
 	function handleVideoSeconds(s, video) {
 		var activeVideo = getVideoDetails();
 
@@ -11757,7 +11779,7 @@ $(document).ready(function () {
 		e.preventDefault();
 
 		var $this = $(this),
-		    url = this.href;
+		    url = $(this).data('href');
 
 		$.ajax({
 			url: url
@@ -11830,6 +11852,16 @@ $(document).ready(function () {
 			}
 		});
 	});
+
+	/**
+  * Check if there is an session ID in url, and auto-open that popup
+  */
+	if (typeof getUrlParameter('session') != 'undefined') {
+		var sessionId = getUrlParameter('session'),
+		    sessionWrap = $('body').find('#session-' + sessionId);
+
+		if (sessionWrap.length) sessionWrap.find('.js-open-session').trigger('click');
+	}
 
 	/**
   * Course Progress
@@ -11995,6 +12027,21 @@ $(document).ready(function () {
 		if (popup.length) popup.css('display', 'flex').hide().fadeIn(250);
 
 		return false;
+	});
+
+	$('body').on('click', '.survey-popup__close', function (e) {
+		e.preventDefault();
+
+		$(this).parents('.survey-popup').fadeOut(250);
+	});
+
+	/**
+  * User billing
+  */
+	$('body').on('click', 'a.js-open-billing-details', function (e) {
+		e.preventDefault();
+
+		$(this).parent().find('.billing-course__details').stop().slideToggle(250);
 	});
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))

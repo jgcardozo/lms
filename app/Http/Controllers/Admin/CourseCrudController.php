@@ -114,11 +114,22 @@ class CourseCrudController extends CrudController
 			'pivot' => true
 		]);
 
+		$this->crud->addField([
+			'label' => 'Infusionsoft Product ID attached to this course:',
+			'type' => 'select2_multiple',
+			'name' => 'is_course_products',
+			'entity' => 'is_course_products',
+			'attribute' => 'product_id',
+			'model' => 'App\Models\ISCourseProductId',
+			'pivot' => true
+		]);
+
 		/**
 		 * Add CRUD action button
 		 */
 		$this->crud->addButton('line', 'view_modules', 'model_function', 'view_modules_button', 'end');
 		$this->crud->addButton('line', 'view_intros', 'model_function', 'view_intros_button', 'end');
+		$this->crud->addButton('line', 'view_in_frontend', 'model_function', 'view_in_frontend_button', 'end');
 
 		/**
 		 * Enable CRUD reorder

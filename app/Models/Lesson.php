@@ -277,28 +277,32 @@ class Lesson extends Model
 	*/
 	public function view_sessions_button()
 	{
-		ob_start();
 		?>
 		<a href="<?php echo route('crud.session.index', ['lesson' => $this->id]); ?>" class="btn btn-xs btn-default">
 			<i class="fa fa-eye"></i>
 			View sessions
 		</a>
 		<?php
-		$button = ob_get_clean();
-		return $button;
 	}
 
 	public function admin_module_link()
 	{
 		if(!$this->module) return;
 
-		ob_start();
 		?>
 		<a href="<?php echo route('crud.module.edit', [$this->module->id]); ?>">
 			<?php echo $this->module->title ?>
 		</a>
 		<?php
-		$button = ob_get_clean();
-		return $button;
+	}
+
+	public function view_in_frontend_button()
+	{
+		?>
+		<a target="_blank" href="<?php echo route('single.lesson', $this->slug); ?>" class="btn btn-xs btn-default">
+			<i class="fa fa-eye"></i>
+			View lesson
+		</a>
+		<?php
 	}
 }

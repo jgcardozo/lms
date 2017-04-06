@@ -22,6 +22,8 @@ use App\Streaks\Types\LoginStreak;
 use App\Notifications\UnlockedByTag;
 
 use App\Events\WatchedSession;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Session as z;
 
 use InfusionsoftFlow;
@@ -56,6 +58,99 @@ class HomeController extends Controller
 
 	public function test()
 	{
+
+		$course = Course::find(1);
+		dd($course->is_invoice_details);
+
+		/*
+		$contactId = 294378;
+		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
+		$product_id = 130;
+		$amount = 25;
+		$ccId = 28848;
+
+		$invoice_id = InfusionsoftFlow::is()->invoices()->createBlankOrder($contactId, '', $datetime, 0, 0);
+		InfusionsoftFlow::is()->invoices()->addOrderItem($invoice_id, $product_id, 4, (double)$amount, 1, '', '');
+		$a = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $ccId, 10, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+		$result = InfusionsoftFlow::is()->invoices()->chargeInvoice($invoice_id, 'asdasda', $ccId, 10, false);
+		dd($result);
+		*/
+
+		$payplan = InfusionsoftFlow::is()->data()->query('PayPlan', 1000, 0, ['InvoiceId' => 58144], ['Id'], '', false);
+		$payplan_items = InfusionsoftFlow::is()->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $payplan[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
+		dd($payplan_items);
+
+		$payments = InfusionsoftFlow::is()->invoices()->getPayments(58148);
+		var_dump(empty($payments));
+		die();
+
+		$courses = Course::get();
+		$course_invoice = [];
+		foreach($courses as $course)
+		{
+			$course_products = $course->is_course_products->pluck('product_id')->toArray();
+			if(!$course_products)
+				continue;
+
+			// Get user invoices
+			$invoices = InfusionsoftFlow::is()->data()->query('Invoice', 1000, 0, ['ContactId' => Auth::user()->contact_id], ['Id'], '', false);
+			foreach($invoices as $invoice)
+			{
+				$invoiceItems = InfusionsoftFlow::is()->data()->query('OrderItem', 1000, 0, ['OrderId' => $invoice['Id']], ['ProductId'], '', false);
+				$invoiceItems = array_pluck($invoiceItems, 'ProductId');
+				if(!count(array_intersect($course_products, $invoiceItems)))
+					continue;
+
+				$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
+				$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
+				$course_invoice[$course->id] = [
+					'invoice' => $invoice['Id'],
+					'cc' => $charges[0]['CCId']
+				];
+				break;
+			}
+		}
+
+		dd($course_invoice);
+
+		die();
+
+		$kur = InfusionsoftFlow::is()->data()->query('PayPlan', 1000, 0, ['InvoiceId' => 58112], ['Id'], '', false);
+		$plans = InfusionsoftFlow::is()->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $kur[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
+
+		dump($invoiceItems);
+
+		dump($kur);
+		dump($plans);
+		die();
+
+		$contactId = 294378;
+		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
+		$product_id = 130;
+		$amount = 25;
+		$ccId = 28822;
+
+		/*$invoice_id = InfusionsoftFlow::is()->invoices()->createBlankOrder($contactId, '', $datetime, 0, 0);
+		InfusionsoftFlow::is()->invoices()->addOrderItem($invoice_id, $product_id, 4, (double)$amount, 1, '', '');
+		$a = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $ccId, 6, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+		dd($a);
+		*/
+		//$result = $this->infusionsoft->invoices()->chargeInvoice(57742, 'asdasda', 28610, 6, false);
+		// var_dump($result);
+
+// $payPlan = Infusionsoft_DataService::query(new Infusionsoft_PayPlan(), array('InvoiceId' => $invoiceId));
+// $kur = $this->infusionsoft->data()->query('PayPlan', 1000, 0, ['InvoiceId' => 57734], ['Id'], '', false);
+// $plans = $this->infusionsoft->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $kur[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
+		var_dump($a);
+		dump($invoices);
+		dump($invoiceItems);
+		die();
+		// Log::info('Test log | Data here');
+		/*Mail::raw('Hello there', function($message) {
+			$message->from('test@codeart.mk', 'Codeart');
+			$message->to('argirco.popov@gmail.com');
+		});
+		*/
 		/*$key = 'session_4_1';
 		session([$key => 79]);
 		session()->save();*/

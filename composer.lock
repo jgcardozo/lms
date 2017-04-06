@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a6b7e885603b0ecf9b2b204556c19621",
-    "content-hash": "2d868b9a6c435f2724610945333ecd1d",
+    "hash": "103b374dc3a6e9f5b57acd99e4410757",
+    "content-hash": "2949b42f661f3e33ff6f7b6eca352782",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -3094,6 +3094,49 @@
                 "string"
             ],
             "time": "2016-12-01 13:46:28"
+        },
+        {
+            "name": "stephanecoinon/papertrail",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stephanecoinon/papertrail.git",
+                "reference": "003492d3c699ea079a12fa2637930e3950439309"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stephanecoinon/papertrail/zipball/003492d3c699ea079a12fa2637930e3950439309",
+                "reference": "003492d3c699ea079a12fa2637930e3950439309",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "crysalead/kahlan": "^1.2",
+                "guzzlehttp/guzzle": "^6.1",
+                "illuminate/log": "~4.2",
+                "monolog/monolog": "~1.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "StephaneCoinon\\Papertrail\\": "src/",
+                    "StephaneCoinon\\Papertrail\\Spec\\": "spec//"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stéphane Coinon",
+                    "email": "me@stephanecoinon.co.uk"
+                }
+            ],
+            "description": "Integrate Papertrail log monitor in your PHP applications",
+            "time": "2015-11-01 22:51:31"
         },
         {
             "name": "studio-42/elfinder",

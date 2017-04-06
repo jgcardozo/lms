@@ -101,4 +101,21 @@ class InfusionsoftFlow
 			return false;
 		}
 	}
+
+	public function getCreditCards($contactID = 0, $fields = [])
+	{
+		if(!$this->is->getToken())
+		{
+			return false;
+		}
+
+		if(!$fields)
+			$fields = ['Id', 'CardType', 'Last4', 'ExpirationMonth', 'ExpirationYear', 'BillAddress1', 'BillName'];
+
+		try {
+			return $this->is->data()->query('CreditCard', 1000, 0, ['ContactId' => $contactID, 'Status' => 3], $fields, '', false);
+		} catch (\Exception $e) {
+			return false;
+		}
+	}
 }

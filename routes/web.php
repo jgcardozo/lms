@@ -126,6 +126,11 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
     Route::post('settings', [
         'uses' => 'UserController@settingsStore'
     ]);
+
+	Route::get('billing', [
+		'as' => 'user.billing',
+		'uses' => 'UserController@billing'
+	]);
 });
 
 Route::post('user/register', 'UserController@register');

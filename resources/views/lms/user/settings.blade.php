@@ -13,7 +13,7 @@
                         <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('user.profile') }}">Account</a></li>
                         <li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Progress</a></li>
                         <li class="grid--flex"><a class="grid--flex flex--align-center active" href="#">Settings</a></li>
-                        <li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Billing</a></li>
+                        <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('user.billing') }}">Billing</a></li>
                     </ul>
                 </div>
 
