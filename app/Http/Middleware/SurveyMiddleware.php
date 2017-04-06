@@ -29,7 +29,7 @@ class SurveyMiddleware
 		}
 
 		$popupCheck = DB::table('surveys')->where('user_id', $request->user()->id)->get()->toArray();
-		if($model->slug == 'ask-masterclass' && empty($popupCheck)) {
+		if($model->slug == 'ask-masterclass' && empty($popupCheck) && !is_role_admin()) {
 			return redirect()->route('single.course', $model->slug);
         }else{
             return $result;

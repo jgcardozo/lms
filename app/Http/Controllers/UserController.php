@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Auth;
 use Validator;
 use App\Models\User;
+use InfusionsoftFlow;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -63,6 +65,19 @@ class UserController extends Controller
 	public function settings()
 	{
 		return view('lms.user.settings');
+	}
+	
+	public function billing()
+	{
+		$userCards = InfusionsoftFlow::getCreditCards(Auth::user()->contact_id);
+		$courses = Course::get();
+
+		$viewArgs = [
+			'courses' => $courses,
+			'ccards' => $userCards
+		];
+
+		return view('lms.user.billing', $viewArgs);
 	}
 
 	public function store(Request $request)

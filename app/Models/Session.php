@@ -201,4 +201,14 @@ class Session extends Model
 		$button = ob_get_clean();
 		return $button;
 	}
+
+	public function view_in_frontend_button()
+	{
+		?>
+		<a target="_blank" href="<?php echo route('single.lesson', [$this->lesson->slug, 'session' => $this->id]); ?>" class="btn btn-xs btn-default">
+			<i class="fa fa-eye"></i>
+			View session
+		</a>
+		<?php
+	}
 }

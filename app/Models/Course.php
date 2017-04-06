@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Auth;
-use App\Models\Session;
+use InfusionsoftFlow;
 use App\Traits\ISLock;
+use App\Models\Session;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
@@ -139,6 +140,59 @@ class Course extends Model
 		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
 	}
 
+	/**
+	 * Get Infusionsoft invoice details
+	 * attached to this course
+	 */
+	public function getIsInvoiceDetailsAttribute()
+	{
+		if(!empty($this->invoice_details))
+		{
+			return $this->invoice_details;
+		}
+
+		$course_products = $this->is_course_products->pluck('product_id')->toArray();
+		if(!$course_products)
+			return [];
+
+		// Get user invoices
+		$invoices = InfusionsoftFlow::is()->data()->query('Invoice', 1000, 0, ['ContactId' => Auth::user()->contact_id], ['Id'], '', false);
+		$result = [];
+
+		foreach($invoices as $invoice)
+		{
+			// Get invoice order items and check their Ids against the one in course table
+			$invoiceItems = InfusionsoftFlow::is()->data()->query('OrderItem', 1000, 0, ['OrderId' => $invoice['Id']], ['ProductId'], '', false);
+			$invoiceItems = array_pluck($invoiceItems, 'ProductId');
+			if(!count(array_intersect($course_products, $invoiceItems)))
+				continue;
+
+			$result[$this->id]['invoice_id'] = $invoice['Id'];
+			$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
+			if(!empty($payments))
+			{
+				$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
+				if(!empty($charges))
+				{
+					$result[$this->id]['ccard'] = $charges[0]['CCId'];
+				}
+			}
+
+			$payplan = InfusionsoftFlow::is()->data()->query('PayPlan', 1000, 0, ['InvoiceId' => $invoice['Id']], ['Id'], '', false);
+			if(!empty($payplan))
+			{
+				$payplan_items = InfusionsoftFlow::is()->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $payplan[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
+				if(!empty($payplan_items))
+				{
+					$result[$this->id]['payment_plans'] = $payplan_items;
+				}
+			}
+		}
+
+		$this->invoice_details = $result;
+		return $result;
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
@@ -178,6 +232,11 @@ class Course extends Model
 		];
 	}
 
+	public function is_course_products()
+	{
+		return $this->hasMany('App\Models\ISCourseProductId', 'course_id', 'id');
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Mutators
@@ -210,15 +269,12 @@ class Course extends Model
 	*/
 	public function view_modules_button()
 	{
-		ob_start();
 		?>
 		<a href="<?php echo route('crud.module.index', ['course' => $this->id]); ?>" class="btn btn-xs btn-default">
 			<i class="fa fa-eye"></i>
 			View modules
 		</a>
 		<?php
-		$button = ob_get_clean();
-		return $button;
 	}
 
 	public function view_intros_button()
@@ -228,6 +284,16 @@ class Course extends Model
 		<a href="<?php echo route('crud.session.index', ['course' => $this->id]); ?>" class="btn btn-xs btn-default">
 			<i class="fa fa-eye"></i>
 			View intros
+		</a>
+		<?php
+	}
+
+	public function view_in_frontend_button()
+	{
+		?>
+		<a target="_blank" href="<?php echo route('single.course', $this->slug); ?>" class="btn btn-xs btn-default">
+			<i class="fa fa-eye"></i>
+			View course
 		</a>
 		<?php
 	}

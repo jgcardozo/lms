@@ -128,6 +128,7 @@ class ModuleCrudController extends CrudController
 		 * Add CRUD action button
 		 */
 		$this->crud->addButton('line', 'view_modules', 'model_function', 'view_lessons_button', 'end');
+		$this->crud->addButton('line', 'view_in_frontend', 'model_function', 'view_in_frontend_button', 'end');
 
 		/**
 		 * Enable CRUD reorder

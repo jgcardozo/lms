@@ -92,4 +92,26 @@
       min-width: 19rem;
     }
   }
+
+  .billing-course {
+    border: 0.1rem solid $brand-grey-light-variant;
+    border-radius: 0.3rem;
+    padding: 1.7rem 2rem;
+    margin-bottom: 2rem;
+
+    &__course-title {
+      color: $brand-grey-light;
+      font-size: 1.4rem;
+    }
+    
+    &__details-btn {
+      float: right;
+      font-size: 1.4rem;
+      color: #606e89;
+    }
+
+    &__details {
+      /*display: none;*/
+    }
+  }
 }

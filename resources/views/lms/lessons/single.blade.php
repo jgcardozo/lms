@@ -53,7 +53,7 @@
                                         <span class="course-progress__bar course-progress__bar--locked"></span>
                                     </div>
                                 @else
-                                    <a href="{{ route('session.show', $session->id) }}" class="block__link js-open-session"></a>
+                                    <a href="#" data-href="{{ route('session.show', $session->id) }}" class="block__link js-open-session"></a>
                                 @endif
                             </div>
 

@@ -15,7 +15,8 @@
         "laravel/tinker": "~1.0",
         "league/flysystem-aws-s3-v3": "~1.0",
         "spatie/laravel-activitylog": "^1.12",
-        "spatie/laravel-permission": "^1.12"
+        "spatie/laravel-permission": "^1.12",
+        "stephanecoinon/papertrail": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
