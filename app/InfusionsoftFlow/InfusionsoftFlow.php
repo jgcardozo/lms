@@ -7,6 +7,88 @@ use Infusionsoft;
 
 class InfusionsoftFlow
 {
+	protected static $cards = array(
+		'visaelectron' => array(
+			'type' => 'visaelectron',
+			'pattern' => '/^4(026|17500|405|508|844|91[37])/',
+			'length' => array(16),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		'maestro' => array(
+			'type' => 'maestro',
+			'pattern' => '/^(5(018|0[23]|[68])|6(39|7))/',
+			'length' => array(12, 13, 14, 15, 16, 17, 18, 19),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		'forbrugsforeningen' => array(
+			'type' => 'forbrugsforeningen',
+			'pattern' => '/^600/',
+			'length' => array(16),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		'dankort' => array(
+			'type' => 'dankort',
+			'pattern' => '/^5019/',
+			'length' => array(16),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		// Credit cards
+		'visa' => array(
+			'type' => 'visa',
+			'pattern' => '/^4/',
+			'length' => array(13, 16),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		'mastercard' => array(
+			'type' => 'mastercard',
+			'pattern' => '/^(5[0-5]|2[2-7])/',
+			'length' => array(16),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		'amex' => array(
+			'type' => 'amex',
+			'pattern' => '/^3[47]/',
+			'format' => '/(\d{1,4})(\d{1,6})?(\d{1,5})?/',
+			'length' => array(15),
+			'cvcLength' => array(3, 4),
+			'luhn' => true,
+		),
+		'dinersclub' => array(
+			'type' => 'dinersclub',
+			'pattern' => '/^3[0689]/',
+			'length' => array(14),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		'discover' => array(
+			'type' => 'discover',
+			'pattern' => '/^6([045]|22)/',
+			'length' => array(16),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+		'unionpay' => array(
+			'type' => 'unionpay',
+			'pattern' => '/^(62|88)/',
+			'length' => array(16, 17, 18, 19),
+			'cvcLength' => array(3),
+			'luhn' => false,
+		),
+		'jcb' => array(
+			'type' => 'jcb',
+			'pattern' => '/^35/',
+			'length' => array(16),
+			'cvcLength' => array(3),
+			'luhn' => true,
+		),
+	);
+
 	public function __construct($is)
 	{
 		$this->is = $is;
@@ -68,7 +150,7 @@ class InfusionsoftFlow
 		}
 
 		try {
-			return $this->is()->data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $contactID], ['GroupId', 'ContactGroup'], '', false);
+			return $this->is->data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $contactID], ['GroupId', 'ContactGroup'], '', false);
 		} catch (\Exception $e) {
 			return false;
 		}
@@ -117,5 +199,72 @@ class InfusionsoftFlow
 		} catch (\Exception $e) {
 			return false;
 		}
+	}
+
+	public function validateCreditCard($contact_id, $creditCard)
+	{
+		$validateCreditCard = $this->is->invoices()->validateCreditCard($this->creditCardType($creditCard->cc_number), $contact_id, $creditCard->cc_number, $creditCard->cc_expiry_month, $creditCard->cc_expiry_year, $creditCard->cc_cvv);
+
+		if($validateCreditCard['Valid'] == 'false')
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	public function createCreditCard($user, $creditCard)
+	{
+		if(!is_object($creditCard))
+		{
+			$creditCard = (object) $creditCard;
+		}
+
+		if(!$this->validateCreditCard($user->contact_id, $creditCard))
+		{
+			return (object) [
+				'status' => false,
+				'message' => 'This credit card can not be validated.'
+			];
+		}
+
+		$creditCardValues = [
+			'ContactId' => $user->contact_id,
+			'CardNumber' => $creditCard->cc_number,
+			'ExpirationMonth' => $creditCard->cc_expiry_month,
+			'ExpirationYear' => $creditCard->cc_expiry_year,
+			'CardType' => ucfirst($this->creditCardType($creditCard->cc_number)),
+			'NameOnCard' => $user->name,
+			'BillAddress1' => $user->profile->address,
+			'BillCity' => $user->profile->city,
+			'BillCountry' => $user->profile->country
+		];
+
+		try {
+			$newCC = $this->is->data()->add('CreditCard', $creditCardValues);
+		} catch (Exception $e) {
+			return (object) [
+				'status' => false,
+				'message' => 'This credit card can not be created.'
+			];
+		}
+
+		return (object) [
+			'status' => true,
+			'id' => $newCC
+		];
+	}
+
+	protected function creditCardType($number)
+	{
+		foreach (self::$cards as $type => $card)
+		{
+			if(preg_match($card['pattern'], $number))
+			{
+				return $type;
+			}
+		}
+
+		return false;
 	}
 }

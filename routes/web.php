@@ -131,6 +131,12 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 		'as' => 'user.billing',
 		'uses' => 'UserController@billing'
 	]);
+
+	Route::post('billing/changeccard/{invoice_id}', [
+		'as' => 'user.billing.changecard',
+		'uses' => 'UserController@changeCreditCard',
+		'middleware' => 'onlyajax'
+	]);
 });
 
 Route::post('user/register', 'UserController@register');

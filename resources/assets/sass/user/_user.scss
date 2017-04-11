@@ -111,7 +111,29 @@
     }
 
     &__details {
-      /*display: none;*/
+      display: none;
+      margin-top: 2rem;
+
+      table {
+        width: 100%;
+        font-size: 1.5rem;
+        text-align: left;
+        margin-bottom: 2rem;
+
+        thead {
+          border-bottom: 0.1rem solid #dadada;
+        }
+
+        th, td {
+          padding: 0.3rem;
+        }
+
+        td {
+          font-size: 1.4rem;
+          padding: 0.8rem 0.3rem;
+          border-bottom: 0.1rem solid #f1f1f1;
+        }
+      }
     }
   }
 }
