@@ -58,9 +58,20 @@ class HomeController extends Controller
 
 	public function test()
 	{
+		$creditCard = (object) [
+			'cc_type' => '',
+			'cc_number' => '4242424242424242',
+			'cc_expiry_month' => '03',
+			'cc_expiry_year' => '2019',
+			'cc_cvv' => ''
+		];
 
-		$course = Course::find(1);
-		dd($course->is_invoice_details);
+		// Add new credit card for this invoice Id
+		$newCC = InfusionsoftFlow::createCreditCard(Auth::user(), $creditCard);
+		dd($newCC);
+
+
+		die();
 
 		/*
 		$contactId = 294378;

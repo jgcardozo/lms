@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('./jquery.payment.min');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -25,6 +26,27 @@ $(document).ready( function() {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	});
+
+    /**
+     * Loading
+     */
+    $.fn.createLoading = function()
+    {
+        var template = $( '#loading-template' ).html();
+
+        this.each( function()
+        {
+            $( this ).append( template );
+        });
+    }
+
+    $.fn.removeLoading = function()
+    {
+        this.each( function()
+        {
+            $( this ).find( 'div.loading' ).remove();
+        });
+    }
 
 	/**
 	 * User menu
@@ -422,9 +444,56 @@ $(document).ready( function() {
 	/**
 	 * User billing
 	 */
-	$('body').on('click', 'a.js-open-billing-details', function(e) {
+	$('body').on('click', '.js-open-billing-details', function(e) {
 		e.preventDefault();
 
 		$(this).parent().find('.billing-course__details').stop().slideToggle(250);
+	});
+
+    $('.js-stripe-cc-num').payment('formatCardNumber');
+    $('.js-stripe-cc-expiration').payment('formatCardExpiry');
+
+    $('body').on('submit', '.billing-course__ccard__form', function(e) {
+        e.preventDefault();
+
+        var frm = $(this);
+
+        if(frm.is('.doing'))
+        {
+            return false;
+        }
+
+        var ccNum = frm.find('[name="cc_number"]'),
+            ccName = frm.find('[name="nameoncard"]'),
+            ccExpiry = frm.find('[name="cc_expiration"]'),
+            ccAddress = frm.find('[name="billing_address"]');
+
+        var validCC = $.payment.validateCardNumber(ccNum.val());
+        if (!validCC) {
+            alert('Your card is not valid!');
+            return false;
+        }
+
+        var ccExpiryExtracted = ccExpiry.payment('cardExpiryVal');
+
+        var ajaxData = {
+            cc_number: ccNum.val(),
+            cc_expiry_month: ccExpiryExtracted.month,
+            cc_expiry_year: ccExpiryExtracted.year
+        };
+
+        frm.addClass('doing');
+        $('body').createLoading();
+
+        $.ajax({
+            type: 'POST',
+            url: frm.attr('action'),
+            data: ajaxData,
+            success: function(res) {
+                frm.removeClass('doing');
+                $('body').removeLoading();
+                console.log( res );
+            }
+        });
 	});
 });

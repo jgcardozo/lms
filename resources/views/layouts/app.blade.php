@@ -19,6 +19,13 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+    <!-- Loading template -->
+    <script id="loading-template" type="text/template">
+        <div class="loading">
+            <div class="loading__spinner"></div>
+        </div>
+    </script>
 </head>
 
 @if(changeHeader())

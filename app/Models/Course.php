@@ -29,6 +29,14 @@ class Course extends Model
 	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'module_group_title', 'lock_date'];
 
 	/**
+	 * Billing attributes
+	 */
+
+	public $billing_invoice_id = null;
+	public $billing_ccard = null;
+	public $billing_plans = [];
+
+	/**
 	 * The "booting" method of the model.
 	 *
 	 * @return void
@@ -141,23 +149,17 @@ class Course extends Model
 	}
 
 	/**
-	 * Get Infusionsoft invoice details
-	 * attached to this course
+	 * Setup all billing details attached
+	 * to this course from Infusionsoft
 	 */
-	public function getIsInvoiceDetailsAttribute()
+	public function setup_billing($userCards = [])
 	{
-		if(!empty($this->invoice_details))
-		{
-			return $this->invoice_details;
-		}
-
 		$course_products = $this->is_course_products->pluck('product_id')->toArray();
 		if(!$course_products)
 			return [];
 
 		// Get user invoices
 		$invoices = InfusionsoftFlow::is()->data()->query('Invoice', 1000, 0, ['ContactId' => Auth::user()->contact_id], ['Id'], '', false);
-		$result = [];
 
 		foreach($invoices as $invoice)
 		{
@@ -167,30 +169,40 @@ class Course extends Model
 			if(!count(array_intersect($course_products, $invoiceItems)))
 				continue;
 
-			$result[$this->id]['invoice_id'] = $invoice['Id'];
+			// Set the Infusionsoft invoice Id to this course
+			$this->billing_invoice_id = (int) $invoice['Id'];
+
+			// Try to find out the credit card used for this payment plan on this invoice
 			$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
 			if(!empty($payments))
 			{
 				$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
 				if(!empty($charges))
 				{
-					$result[$this->id]['ccard'] = $charges[0]['CCId'];
+					$this->billing_ccard = (int) $charges[0]['CCId'];
+
+					if(!empty($userCards))
+					{
+						$ccardIndex = array_search($this->billing_ccard, array_column($userCards, 'Id'));
+						if($ccardIndex !== false)
+						{
+							$this->billing_ccard = $userCards[$ccardIndex];
+						}
+					}
 				}
 			}
 
+			// Get pay plans
 			$payplan = InfusionsoftFlow::is()->data()->query('PayPlan', 1000, 0, ['InvoiceId' => $invoice['Id']], ['Id'], '', false);
 			if(!empty($payplan))
 			{
 				$payplan_items = InfusionsoftFlow::is()->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $payplan[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
 				if(!empty($payplan_items))
 				{
-					$result[$this->id]['payment_plans'] = $payplan_items;
+					$this->billing_plans = $payplan_items;
 				}
 			}
 		}
-
-		$this->invoice_details = $result;
-		return $result;
 	}
 
 	/*

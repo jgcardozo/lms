@@ -72,12 +72,43 @@ class UserController extends Controller
 		$userCards = InfusionsoftFlow::getCreditCards(Auth::user()->contact_id);
 		$courses = Course::get();
 
+		// Setup billing details for every course. Needs to refactored
+		$courses->each->setup_billing($userCards);
+
 		$viewArgs = [
 			'courses' => $courses,
-			'ccards' => $userCards
+			'cards' => $userCards
 		];
 
 		return view('lms.user.billing', $viewArgs);
+	}
+
+	public function changeCreditCard(Request $request, $invoice_id)
+	{
+		$creditCard = (object) [
+			'cc_number' => $request->get('cc_number'),
+			'cc_expiry_month' => $request->get('cc_expiry_month'),
+			'cc_expiry_year' => $request->get('cc_expiry_year'),
+			// 'cc_cvv' => $request->has('cc_cvv') ? $request->get('cc_cvv') : ''
+			'cc_cvv' => ''
+		];
+
+		// Add new credit card for this invoice Id
+		$newCC = InfusionsoftFlow::createCreditCard(Auth::user(), $creditCard);
+		if(!$newCC->status)
+		{
+			return response()->json([
+				'status' => false,
+				'message' => $newCC->message
+			]);
+		}
+
+		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
+		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 6, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+
+		return response()->json([
+			'status' => true
+		]);
 	}
 
 	public function store(Request $request)
