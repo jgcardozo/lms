@@ -496,4 +496,28 @@ $(document).ready( function() {
             }
         });
 	});
+
+	/**
+	 * Calendar event
+	 */
+    $('body').on('click', '.js-open-event', function (e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            url = this.href;
+
+        $.ajax({
+            url: url
+        }).always(function(res) {
+            $('.event-single__content-ajax').html(res);
+
+            $('.event-single').fadeIn();
+        });
+    });
+
+    $('body').on('click', '.event-single__close', function(e) {
+        e.preventDefault();
+
+        $('.event-single').fadeOut();
+    });
 });

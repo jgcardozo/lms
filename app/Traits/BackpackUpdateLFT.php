@@ -20,8 +20,6 @@ trait BackpackUpdateLFT
 		{
 			if(!array_key_exists('slug', $model->attributes))
 				return;
-
-			// $model->slug = 'zzzzzzzzzzzzzzzz';
 		});
 	}
 }

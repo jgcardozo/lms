@@ -57,6 +57,18 @@ Class SettingsController extends BaseController
 			}
 		}
 
+		$max_ip_logins = $request->get('max_ip_logins');
+		if(!empty($max_ip_logins))
+		{
+			$row = DB::table('settings')->where('key', 'max_ip_logins')->first();
+			if(empty($row))
+			{
+				DB::insert("insert into settings (`key`, `value`) values ('max_ip_logins', ?)", [$max_ip_logins]);
+			}else{
+				DB::update("update settings set `value` = ? where `key`='max_ip_logins'", [$max_ip_logins]);
+			}
+		}
+
 		return redirect()->back();
 	}
 

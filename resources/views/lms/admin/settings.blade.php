@@ -73,6 +73,27 @@
                     {{ csrf_field() }}
                 </form>
             </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="box-title">Max IP logins per user</div>
+                </div>
+
+                <form method="post">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Number: (by default: 10)</label>
+                            <input type="text" class="form-control" name="max_ip_logins" value="{{ @$max_ip_logins }}" />
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                    {{ csrf_field() }}
+                </form>
+            </div>
         </div>
     </div>
 @endsection

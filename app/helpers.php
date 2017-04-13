@@ -116,3 +116,20 @@ if ( !function_exists('is_role_admin') ) {
 		return \Auth::user()->hasRole(['Administrator','Editor']);
 	}
 }
+
+/**
+ * Get setting via key
+ */
+if ( !function_exists('lms_get_setting') ) {
+	function lms_get_setting($key, $default = null)
+	{
+		$row = \DB::table('settings')->where('key', $key)->pluck('value')->first();
+
+		if(empty($row))
+		{
+			return !empty($default) ? $default : false;
+		}
+
+		return $row;
+	}
+}

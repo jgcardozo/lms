@@ -147,8 +147,8 @@ class SessionCrudController extends CrudController
 			'name' => 'lesson',
 			'label'=> 'Lesson'
 		], function() {
-			$courses = \App\Models\Lesson::all()->pluck('title', 'id')->toArray();
-			return $courses;
+			$lessons = \App\Models\Lesson::all()->pluck('title', 'id')->toArray();
+			return $lessons;
 		},  function($value) {
 			$this->crud->addClause('where', 'lesson_id', $value);
 		});

@@ -37,7 +37,9 @@
           @role('Administrator')
           <li class="header">Users</li>
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}"><i class="fa fa-user"></i> <span>Users</span></a></li>
+          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user-logins') }}"><i class="fa fa-database"></i> <span>User logins</span></a></li>
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/role') }}"><i class="fa fa-group"></i> <span>Roles</span></a></li>
+          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/notify') }}"><i class="fa fa-commenting-o"></i> <span>Notify</span></a></li>
           @endrole
 
           <!-- ======================================= -->
@@ -47,6 +49,7 @@
           <li><a href="{{ url('admin/log') }}"><i class="fa fa-sticky-note-o"></i> <span>Log</span></a></li>
           @endrole
           <li><a href="{{ url('admin/elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>
+          <li><a href="{{ url('admin/survey') }}"><i class="fa fa-table"></i> <span>Survey</span></a></li>
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/logout') }}"><i class="fa fa-sign-out"></i> <span>{{ trans('backpack::base.logout') }}</span></a></li>
         </ul>
       </section>

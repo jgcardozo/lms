@@ -58,6 +58,11 @@ class HomeController extends Controller
 
 	public function test()
 	{
+		Mail::raw('Hello there', function($message) {
+			$message->from('abuse@asklms.dev', 'Codeart');
+			$message->to('argirco.popov@gmail.com');
+		});
+		die();
 		$creditCard = (object) [
 			'cc_type' => '',
 			'cc_number' => '4242424242424242',
