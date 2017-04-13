@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
 
         Schema::defaultStringLength(191);
 
-        \StephaneCoinon\Papertrail\Laravel5::boot();
+        // \StephaneCoinon\Papertrail\Laravel5::boot();
     }
 
     /**
