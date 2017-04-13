@@ -33,6 +33,7 @@
                                         <th tabindex="7" rowspan="1" colspan="1">User</th>
                                         <th tabindex="8" rowspan="1" colspan="1">Q1 Char… Count</th>
                                         <th tabindex="9" rowspan="1" colspan="1">Score</th>
+                                        <th tabindex="10" rowspan="1" colspan="1">Action</th>
                                     </tr>
                                 </thead>
 
@@ -57,6 +58,12 @@
                                                     @endif
                                                 </strong>
                                             </td>
+                                            <td>
+                                                <a href="#" data-href="{{ route('survey.delete', $row->id) }}" class="btn btn-xs btn-default js-delete-survey">
+                                                    <i class="fa fa-trash"></i>
+                                                    Delete
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -73,6 +80,7 @@
                                         <th tabindex="7" rowspan="1" colspan="1">User</th>
                                         <th tabindex="8" rowspan="1" colspan="1">Q1 Char… Count</th>
                                         <th tabindex="9" rowspan="1" colspan="1">Score</th>
+                                        <th tabindex="10" rowspan="1" colspan="1">Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -103,6 +111,27 @@
                 buttons: [
                     'csv', 'pdf', 'print'
                 ]
+            });
+
+            $('body').on('click', '.js-delete-survey', function(e) {
+                e.preventDefault();
+
+                var el = $(this);
+                var token = '{{ csrf_token() }}';
+                var href = el.data('href');
+
+                $.ajax({
+                    url: href,
+                    type: 'post',
+                    data: {_method: 'delete', _token :token},
+                    success:function(msg)
+                    {
+                        if(msg.status)
+                        {
+                            el.closest('tr').remove();
+                        }
+                    }
+                });
             });
         });
     </script>

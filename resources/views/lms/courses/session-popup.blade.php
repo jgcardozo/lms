@@ -8,9 +8,15 @@
 
 <div class="session-single__inner">
     <div class="session-single__content-main">
-        <h5>Module: {{ $session->lesson->module->title }} / {{ $session->lesson->title }}</h5>
-        <h2>{{ $session->title }}</h2>
-        <p>{!! $session->description !!}</p>
+        @if(!empty($session->lesson))
+            <h5>Module: {{ $session->lesson->module->title }} / {{ $session->lesson->title }}</h5>
+            <h2>{{ $session->title }}</h2>
+            <p>{!! $session->description !!}</p>
+        @else
+            <h5>Course: {{ $session->course->title }}</h5>
+            <h2>{{ $session->title }}</h2>
+            <p>{!! $session->description !!}</p>
+        @endif
 
         <hr>
     </div>
@@ -33,46 +39,47 @@
         </div>                    
     </div>
 
-    <hr>
+    @if(!$session->resources->isEmpty())
+        <hr>
+        <div class="session-single__content-resources">
+            <div class="session-single__content-resources--main grid--flex flex--space-between">
+                <h3>Files ({{ count($session->resources) }})</h3>
+                {{-- <a class="session-single__content-resources--download-all" href="#">Download All</a> --}}
+            </div>
 
-    <div class="session-single__content-resources">
-        <div class="session-single__content-resources--main grid--flex flex--space-between">
-            <h3>Files ({{ count($session->resources) }})</h3>
-            {{-- <a class="session-single__content-resources--download-all" href="#">Download All</a> --}}
-        </div>
-        
-        <div class="session-single__content-resources--links">
-            <ul class="list--unstyled">
-                @foreach($session->resources as $resource)
-                    <li>
-                        <div class="session-single__content-resource--item grid--flex flex--space-between flex--align-center">
-                            <div class="session-single__content-resource--name">
-                                {{ $resource->title }}
+            <div class="session-single__content-resources--links">
+                <ul class="list--unstyled">
+                    @foreach($session->resources as $resource)
+                        <li>
+                            <div class="session-single__content-resource--item grid--flex flex--space-between flex--align-center">
+                                <div class="session-single__content-resource--name">
+                                    {{ $resource->title }}
+                                </div>
+
+                                <div class="session-single__content-resource--info grid--flex">
+                                    <div class="session-single__content-resource--type session-single__content-resource--type-{{ $resource->file_extension }}">
+                                        {{ $resource->file_extension }}
+                                    </div>
+
+                                    <div class="session-single__content-resource--file">
+                                        {{ $resource->short_filename }}
+                                    </div>
+
+                                    <div class="session-single__content-resource--file-size">
+                                        {{ $resource->file_size_mb }}
+                                    </div>
+
+                                    <div class="session-single__content-resource--file-download">
+                                        <a href="{{ $resource->file }}" target="_blank">Download</a>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="session-single__content-resource--info grid--flex">
-                                <div class="session-single__content-resource--type session-single__content-resource--type-{{ $resource->file_extension }}">
-                                    {{ $resource->file_extension }}
-                                </div>
-
-                                <div class="session-single__content-resource--file">
-                                    {{ $resource->short_filename }}
-                                </div>
-
-                                <div class="session-single__content-resource--file-size">
-                                    {{ $resource->file_size_mb }}
-                                </div>
-
-                                <div class="session-single__content-resource--file-download">
-                                    <a href="{{ $resource->file }}" target="_blank">Download</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-    </div>
+    @endif
 
     <hr>
 

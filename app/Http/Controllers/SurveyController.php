@@ -50,6 +50,13 @@ class SurveyController extends Controller
 		return redirect()->back();
 	}
 
+	public function deleteSurvey($id)
+	{
+		DB::table('surveys')->where('id', $id)->delete();
+
+		return response()->json(['status' => true]);
+	}
+
 	public function table()
 	{
 		$data = DB::table('surveys')->get()->toArray();
