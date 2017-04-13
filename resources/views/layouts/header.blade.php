@@ -97,8 +97,11 @@
                                 <div class="dropdown-menu-wrap">
                                     <ul class="dropdown-menu list--unstyled" role="menu">
                                         <li class="list__item"><a href="{{ route('user.profile') }}">My Profile</a></li>
-                                        <li class="list__item"><a href="#">Progress</a></li>
+                                        {{-- <li class="list__item"><a href="#">Progress</a></li> --}}
                                         <li class="list__item"><a href="{{ route('user.settings') }}">Settings</a></li>
+                                        @role('Administrator')
+                                            <li class="list__item"><a href="{{ url('admin') }}">Admin</a></li>
+                                        @endrole
                                         <li class="list__item">
                                             <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();

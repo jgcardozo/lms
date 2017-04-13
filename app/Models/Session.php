@@ -23,7 +23,7 @@ class Session extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date'];
+	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date'];
 
 	/**
 	 * The "booting" method of the model.

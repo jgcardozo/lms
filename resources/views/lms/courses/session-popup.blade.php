@@ -32,11 +32,13 @@
             </ul>
         </div>
 
-        <div class="session-single__content-learn__links">
-            <h3>Sign in to BUCKET.IO</h3>
+        @if(!empty($session->bucket_url))
+            <div class="session-single__content-learn__links">
+                <h3>Try in to BUCKET.IO</h3>
 
-            <a class="session-single__content-learn__bucket-link" href="#">Take Me There</a>
-        </div>                    
+                <a class="session-single__content-learn__bucket-link" href="{{ $session->bucket_url }}" target="_blank">Take Me There</a>
+            </div>
+        @endif
     </div>
 
     @if(!$session->resources->isEmpty())
