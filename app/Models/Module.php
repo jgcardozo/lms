@@ -7,6 +7,7 @@ use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
+use App\Traits\BackpackUpdateLFT;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -18,8 +19,9 @@ class Module extends Model
 	use CrudTrait;
 	use Sluggable;
 	use LogsActivity;
-	use SluggableScopeHelpers;
 	use BackpackCrudTrait;
+	use BackpackUpdateLFT;
+	use SluggableScopeHelpers;
 
 	protected $fillable = ['title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
 

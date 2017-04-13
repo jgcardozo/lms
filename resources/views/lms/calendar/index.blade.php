@@ -39,9 +39,15 @@
 							<h5>1pm/2pm ET</h5>
 						</div>
 
-						<div class="events__item-featured-box--bottom">
-							<a class="events__item-featured-link" href="{{ $events->first()->url }}" target="_blank">Apply Now</a>
-						</div>
+                        @if(!empty($events->first()->url))
+                            <div class="events__item-featured-box--bottom">
+                                <a class="events__item-featured-link" href="{{ $events->first()->url }}" target="_blank">Apply Now</a>
+                            </div>
+                        @else
+                            <div class="events__item-featured-box--bottom">
+                                <a class="events__item-featured-link js-open-event" href="{{ route('event.show', $events->first()->id) }}" target="_blank">View</a>
+                            </div>
+                        @endif
 					</div>
 				</div>
 
@@ -72,73 +78,31 @@
                                     <p>{!! $event->description !!}</p>
                                 </div>
                             </div>
-                            <div class="events__item--link grid--flex flex--align-center flex--end">
-                                <a class="events__item--link-view" href="{{ $event->url }}" target="_blank">View</a>
-                            </div>
+
+                            @if(!empty($event->url))
+                                <div class="events__item--link grid--flex flex--align-center flex--end">
+                                    <a class="events__item--link-apply" href="{{ $event->url }}" target="_blank">Apply Now</a>
+                                </div>
+                            @else
+                                <div class="events__item--link grid--flex flex--align-center flex--end">
+                                    <a class="events__item--link-view js-open-event" href="{{ route('event.show', $event->id) }}">View</a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                 @endforeach
-
-				<div class="events__item grid--flex flex--space-between">
-					<div class="events__item--activity grid--flex flex--align-center flex--just-center">
-						<div class="events__item--activity-active"></div>
-					</div>
-					
-					<div class="events__item--date">
-						<h3>December 2</h3>
-						<h5>1pm/2pm ET</h5>
-					</div>
-
-					<div class="events__item--content grid--flex">
-						<div class="events__item--content-image grid--flex flex--align-center flex--just-center">
-							<div class="events__item--content-image--overlay"></div>
-
-							<div class="events__item--content-logo">
-								<img class="events__item--content-logo--icon" src="{{ asset('images/icons/logo-big.svg') }}" alt="Course Event Name">	
-							</div>
-						</div>
-
-						<div class="events__item--content-info grid--flex flex--column">
-							<h5>ASK Live</h5>
-							<h2>Lorem ipsum dolor sit amet</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vehicula, dolor sed.</p>
-						</div>
-					</div>
-					<div class="events__item--link grid--flex flex--align-center flex--end">
-						<a class="events__item--link-apply" href="#">Apply Now</a>
-					</div>
-				</div>
-
-				<div class="events__item grid--flex flex--space-between">
-					<div class="events__item--activity grid--flex flex--align-center flex--just-center">
-						<div class="events__item--activity-inactive"></div>
-					</div>
-					
-					<div class="events__item--date">
-						<h3>November 2</h3>
-						<h5>1pm/2pm ET</h5>
-					</div>
-
-					<div class="events__item--content grid--flex">
-						<div class="events__item--content-image grid--flex flex--align-center flex--just-center">
-							<div class="events__item--content-image--overlay"></div>
-
-							<div class="events__item--content-logo">
-								<img class="events__item--content-logo--icon" src="{{ asset('images/icons/logo-big.svg') }}" alt="Course Event Name">	
-							</div>
-						</div>
-
-						<div class="events__item--content-info grid--flex flex--column">
-							<h5>ASK Live</h5>
-							<h2>Lorem ipsum dolor sit amet</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vehicula, dolor sed.</p>
-						</div>
-					</div>
-					<div class="events__item--link grid--flex flex--align-center flex--end">
-						<a class="events__item--link-view" href="#">View</a>
-					</div>
-				</div>
 			</div>
 		</section>
 	</main>
+
+    <div class="event-single">
+        <div class="event-single__content">
+            <div class="event-single__close"></div>
+
+            <div class="event-single__content-ajax">
+
+            </div>
+
+        </div>
+    </div>
 @endsection

@@ -9,8 +9,8 @@
 
 			<div class="footer-component">
 				<ul class="list--inline">
-					<li class="list__item"><a href="#">Support</a></li>
-					<li class="list__item"><a href="#">Contact</a></li>
+					<li class="list__item"><a href="{{ route('page.support') }}">Support</a></li>
+					<li class="list__item"><a href="{{ route('page.contact') }}">Contact</a></li>
 				</ul>
 			</div>
 		</div>		

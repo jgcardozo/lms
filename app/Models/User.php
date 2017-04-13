@@ -11,12 +11,12 @@ use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNo
 
 class User extends Authenticatable
 {
-    use Notifiable;
-	use CrudTrait;
-	use HasRoles;
 	use ISLock;
+	use HasRoles;
+	use CrudTrait;
+	use Notifiable;
 
-    /**
+	/**
      * The attributes that are mass assignable.
      *
      * @var array

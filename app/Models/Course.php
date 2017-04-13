@@ -249,6 +249,15 @@ class Course extends Model
 		return $this->hasMany('App\Models\ISCourseProductId', 'course_id', 'id');
 	}
 
+	/**
+	 * Users that have Infusionsoft access to this course
+	 */
+	public function subscribers($tags)
+	{
+		// $users = User::
+		return $this->lock_tags;
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Mutators

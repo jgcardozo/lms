@@ -7,6 +7,7 @@ use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
+use App\Traits\BackpackUpdateLFT;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -19,6 +20,7 @@ class Session extends Model
 	use Sluggable;
 	use LogsActivity;
 	use BackpackCrudTrait;
+	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
 	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date'];
@@ -204,6 +206,8 @@ class Session extends Model
 
 	public function view_in_frontend_button()
 	{
+		if(!$this->lesson)
+			return;
 		?>
 		<a target="_blank" href="<?php echo route('single.lesson', [$this->lesson->slug, 'session' => $this->id]); ?>" class="btn btn-xs btn-default">
 			<i class="fa fa-eye"></i>

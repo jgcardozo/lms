@@ -89,7 +89,14 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 		'as' => 'session.videoprogress',
 		'uses' => 'SessionController@videoprogress'
 	]);
+
+
 });
+
+Route::get('calendar/{event}', [
+	'as' => 'event.show',
+	'uses' => 'EventsController@show'
+]);
 
 /**
  * Survey forms
@@ -153,6 +160,21 @@ Route::get('/auto-login', [
 
 /*
 |--------------------------------------------------------------------------
+| Support and Contact pages
+|--------------------------------------------------------------------------
+*/
+Route::get('support', [
+	'as' => 'page.support',
+	'uses' => 'PageController@support'
+]);
+
+Route::get('contact', [
+	'as' => 'page.contact',
+	'uses' => 'PageController@contact'
+]);
+
+/*
+|--------------------------------------------------------------------------
 | Backpack admin panel routes
 |--------------------------------------------------------------------------
 */
@@ -192,6 +214,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 
 	Route::get('log', [
 		'uses' => 'Admin\LoglistController@index'
+	]);
+
+	Route::get('user-logins', [
+		'uses' => 'Admin\UserLoginsController@index'
+	]);
+
+	Route::get('notify', [
+		'uses' => 'Admin\NotifyController@index'
+	]);
+
+	Route::post('notify', [
+		'as' => 'notify.send',
+		'uses' => 'Admin\NotifyController@notify'
+	]);
+
+	Route::get('survey', [
+		'uses' => 'SurveyController@table'
 	]);
 });
 

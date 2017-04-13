@@ -49,4 +49,15 @@ class SurveyController extends Controller
 
 		return redirect()->back();
 	}
+
+	public function table()
+	{
+		$data = DB::table('surveys')->get()->toArray();
+		$data = array_map(function($el) {
+			$el->items = json_decode($el->items);
+			return $el;
+		}, $data);
+
+		return view('lms.admin.survey')->with('surveyData', $data);
+	}
 }
