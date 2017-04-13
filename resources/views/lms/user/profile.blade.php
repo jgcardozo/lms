@@ -11,13 +11,13 @@
                 <div class="user-settings__main-links grid--flex">
                     <ul class="list--inline grid--flex">
                         <li class="grid--flex"><a class="grid--flex flex--align-center active" href="javascript:;">Account</a></li>
-                        <li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Progress</a></li>
+                        {{--<li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Progress</a></li>--}}
                         <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('user.settings') }}">Settings</a></li>
                         <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('user.billing') }}">Billing</a></li>
                     </ul>
                 </div>
 
-                <div class="user-settings__content">            
+                <div class="user-settings__content">
                     <div class="grid--flex flex--space-between">
                         <div class="user-settings__info">
                             <h2>Profile Details</h2>
@@ -65,8 +65,8 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </main>
-    
+
 @endsection

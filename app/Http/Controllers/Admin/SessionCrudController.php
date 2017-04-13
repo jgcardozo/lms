@@ -110,7 +110,18 @@ class SessionCrudController extends CrudController
 			'entity' => 'resources',
 			'attribute' => 'title',
 			'model' => 'App\Models\Resource',
-			'pivot' => true
+			'pivot' => true,
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'bucket_url',
+			'label' => 'Bucket URL',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		$this->crud->addField([

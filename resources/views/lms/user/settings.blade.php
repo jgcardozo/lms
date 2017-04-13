@@ -11,7 +11,7 @@
                 <div class="user-settings__main-links grid--flex">
                     <ul class="list--inline grid--flex">
                         <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('user.profile') }}">Account</a></li>
-                        <li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Progress</a></li>
+                        {{--<li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Progress</a></li>--}}
                         <li class="grid--flex"><a class="grid--flex flex--align-center active" href="#">Settings</a></li>
                         <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('user.billing') }}">Billing</a></li>
                     </ul>
@@ -53,5 +53,4 @@
             </div>            
         </div>
     </main>
-
 @endsection
