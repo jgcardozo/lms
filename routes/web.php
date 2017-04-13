@@ -89,8 +89,6 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 		'as' => 'session.videoprogress',
 		'uses' => 'SessionController@videoprogress'
 	]);
-
-
 });
 
 Route::get('calendar/{event}', [
@@ -104,6 +102,11 @@ Route::get('calendar/{event}', [
 Route::post('survey/store', [
 	'as' => 'survey.store',
 	'uses' => 'SurveyController@storeSurvey'
+]);
+
+Route::delete('survey/{id}/delete', [
+	'as' => 'survey.delete',
+	'uses' => 'SurveyController@deleteSurvey'
 ]);
 
 Route::get('/test/form', [

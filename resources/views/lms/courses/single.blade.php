@@ -101,7 +101,7 @@
                                     @if($module->is_locked)
                                         <a href="javascript:;" class="module__link">Go To Lesson</a>
                                     @else
-                                        <a href="{{ route('single.module', $module->slug) }}" class="module__link">Go To Lesson</a>
+                                        <a href="{{ route('single.module', $module->slug) }}" class="module__link">Go To Module</a>
                                     @endif
                                 </div>
                             </div>
