@@ -96,6 +96,14 @@ class CourseCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'label' => 'Course logo image',
+			'name' => 'logo_image',
+			'type' => 'upload',
+			'upload' => true,
+			'disk' => 's3'
+		]);
+
+		$this->crud->addField([
 			'label' => 'Lock the course until this date:',
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
@@ -115,14 +123,24 @@ class CourseCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
-			'label' => 'Infusionsoft Product ID attached to this course:',
-			'type' => 'select2_multiple',
-			'name' => 'is_course_products',
-			'entity' => 'is_course_products',
-			'attribute' => 'product_id',
-			'model' => 'App\Models\ISCourseProductId',
-			'pivot' => true
+			'name' => 'apply_now',
+			'label' => 'Apply Now Link'
 		]);
+
+		$this->crud->addField([
+			'name' => 'facebook_group_id',
+			'label' => 'Facebook Group ID'
+		]);
+
+		// $this->crud->addField([
+		// 	'label' => 'Infusionsoft Product ID attached to this course:',
+		// 	'type' => 'select2_multiple',
+		// 	'name' => 'is_course_products',
+		// 	'entity' => 'is_course_products',
+		// 	'attribute' => 'product_id',
+		// 	'model' => 'App\Models\ISCourseProductId',
+		// 	'pivot' => true
+		// ]);
 
 		/**
 		 * Add CRUD action button

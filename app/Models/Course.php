@@ -26,7 +26,7 @@ class Course extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'module_group_title', 'lock_date'];
+	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'module_group_title', 'lock_date', 'facebook_group_id'];
 
 	/**
 	 * Billing attributes
@@ -149,6 +149,17 @@ class Course extends Model
 	}
 
 	/**
+	 * Get image from S3
+	 */
+	public function getLogoImageUrlAttribute()
+	{
+		// TODO: Check why this is not working
+		// $s3image = \Storage::disk('s3')->url($this->featured_image);
+
+		return !empty($this->logo_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->logo_image : '';
+	}
+
+	/**
 	 * Setup all billing details attached
 	 * to this course from Infusionsoft
 	 */
@@ -227,7 +238,7 @@ class Course extends Model
 
 	public function coachingcall()
     {
-		return $this->hasOne('App\Models\CoachingCall');
+		return $this->hasMany('App\Models\CoachingCall');
 	}
 
 	public function events()
@@ -266,6 +277,26 @@ class Course extends Model
 	public function setFeaturedImageAttribute($value)
 	{
 		$attribute_name = 'featured_image';
+		$disk = 's3';
+		$destination_path = 'courses/';
+
+		$request = \Request::instance();
+		$file = $request->file($attribute_name);
+		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+
+		// Make the image
+		$image = \Image::make($file);
+
+		// Store the image on disk
+		\Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
+
+		// Save the path to the database
+		$this->attributes[$attribute_name] = $destination_path . $filename;
+	}
+
+	public function setLogoImageAttribute($value)
+	{
+		$attribute_name = 'logo_image';
 		$disk = 's3';
 		$destination_path = 'courses/';
 

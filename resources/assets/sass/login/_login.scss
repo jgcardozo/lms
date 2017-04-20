@@ -39,6 +39,12 @@
     height: 20rem;
     margin: 7rem auto 4rem;
     background: url('../images/icons/logo-login.svg') no-repeat center;
+
+    @media only screen and (max-width: $mobile) {
+      height: 15rem;
+      background-size: 20rem auto;
+      margin: 4rem auto;
+    }
   }
 
   &__form-box {
@@ -56,6 +62,16 @@
     }
   }
 
+  &__form-group {    
+
+    @media only screen and (max-width: $mobile) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+  }
+
   &__form-link {
     color: $brand-white;
     font-size: 1.4rem;
@@ -63,6 +79,10 @@
     &:hover {
       color: $brand-white;
       text-decoration: underline;
+    }
+
+    @media only screen and (max-width: $mobile) {
+      margin-top: 2rem;
     }
   }
 
@@ -76,6 +96,10 @@
     text-transform: uppercase;
     font-size: 1.6rem;
     font-weight: 700;
+
+    @media only screen and (max-width: $mobile-sm) {
+      width: 100%;
+    }
   }
 
   #app {
@@ -87,6 +111,17 @@
     background: rgba(#272e40,0.8);
     color: $brand-white;
     padding: 3rem 4rem;
+
+    @media only screen and (max-width: $mobile) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+
+    @media only screen and (max-width: $mobile-sm) {
+      padding: 3rem;
+    }
   }
 
   &__component-left {
@@ -94,6 +129,17 @@
     flex-basis: 50%;
     max-width: 50%;
     padding-right: 4.5rem;
+
+    @media only screen and (max-width: $tablet) {
+      padding-right: 0;
+    }
+
+    @media only screen and (max-width: $mobile) {
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+      max-width: 100%;
+      padding: 0;
+    }
   }
 
   &__component-right {
@@ -101,5 +147,16 @@
     flex-basis: 50%;
     max-width: 50%;
     padding-left: 4.5rem;
+
+    @media only screen and (max-width: $tablet) {
+      padding-left: 3.5rem;
+    }
+
+    @media only screen and (max-width: $mobile) {
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+      max-width: 100%;
+      padding: 5rem 0 0;
+    }
   }
 }

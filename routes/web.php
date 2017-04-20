@@ -56,6 +56,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 			'uses' => 'CourseController@starter_videos'
 		]);
 
+		Route::get('course/{course}/coaching-calls', [
+			'as' => 'single.course.coaching-call',
+			'uses' => 'CoachingCallController@index'
+		]);
+
 		Route::get('module/{module}', [
 			'as' => 'single.module',
 			'uses' => 'ModuleController@index'
@@ -88,6 +93,16 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 	Route::post('session/{session}/videoprogress', [
 		'as' => 'session.videoprogress',
 		'uses' => 'SessionController@videoprogress'
+	]);
+
+	Route::get('course/{course}/coaching-calls/{coachingcall}', [
+		'as' => 'coachingcall.show',
+		'uses' => 'CoachingCallController@show'
+	]);
+
+	Route::get('course/{course}/coaching-calls/{coachingcall}/completed', [
+		'as' => 'coachingcall.completed',
+		'uses' => 'CoachingCallController@complete'
 	]);
 });
 

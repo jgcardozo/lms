@@ -14,7 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-		View::composer(['lms.courses.*', 'lms.modules.*', 'lms.lessons.*'], 'App\Http\ViewComposers\HeaderComposer');
+		View::composer(['lms.courses.*', 'lms.modules.*', 'lms.lessons.*', 'lms.coachingcalls.*'], 'App\Http\ViewComposers\HeaderComposer');
     }
 
     /**

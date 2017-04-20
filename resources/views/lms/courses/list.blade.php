@@ -9,8 +9,9 @@
 
 			<section class="grid--flex flex--column">
 			    @foreach($courses as $course)
+			    <?php //dd($course); ?>
 			    	@if($course->is_locked)
-			        	<div class="courseblock courseblock--locked">
+			        	<div class="courseblock courseblock--locked" @if($course->featured_image) style="background-image: url({{ $course->getFeaturedImageUrlAttribute() }});" @endif>
 
                         <div class="courseblock--locked-sign"
                             @if($course->is_date_locked)
@@ -20,19 +21,23 @@
 
                         <div class="courseblock__overlay courseblock__overlay--locked"></div>                               
 			        @else
-						<div class="courseblock">
+						<div class="courseblock" @if($course->featured_image) style="background-image: url({{ $course->getFeaturedImageUrlAttribute() }});" @endif>
 			        	<div class="courseblock__overlay"></div>
 			        @endif
 
 			        	<div class="courseblock__content">
-			        		<div class="courseblock__logo"></div>
+			        		<div class="courseblock__logo" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif></div>
 			        		
 			        		<h2 class="courseblock__title ucase">{!! bold_first_word($course->title) !!}</h2>
 
 				            <p>{!! $course->short_description !!}</p>
 							
 							@if($course->is_locked)
-				            	<a href="#" class="courseblock__link">Apply Now</a>
+								@if($course->apply_now)
+				            		<a href="{{ $course->apply_now }}" class="courseblock__link" target="_blank">Apply Now</a>
+				            	@else
+					            	<button type="button" class="courseblock__link">Comming Soon</button>
+					            @endif
 				            @else
 				            	<a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Resume</a>
 				            @endif

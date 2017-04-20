@@ -125,6 +125,12 @@ class SessionCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'name' => 'learn_more',
+			'label' => 'Learn More',
+			'type' => 'wysiwyg'
+		]);
+
+		$this->crud->addField([
 			'label' => 'Assign this session to lesson:',
 			'type' => 'select',
 			'name' => 'lesson_id',
