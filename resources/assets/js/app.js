@@ -152,24 +152,27 @@ $(document).ready( function() {
 		if(!popupWrap.is(':visible'))
 			return false;
 
-		var videoWrap = popupWrap.find('.session-single__video'),
-			session_id = videoWrap.data('session');
+		var videoWrap = popupWrap.find('.session-single__video');
+
+		if (videoWrap) {
+			var session_id = videoWrap.data('session');
 			video = Wistia.api(videoWrap.find('.wistia_embed').attr('id'));
 
-		if(typeof session_id == 'undefined' || video == null)
-			return false;
+			if(typeof session_id == 'undefined' || video == null)
+				return false;
 
-		var _progress = parseInt((video.secondsWatched() / video.duration()) * 100),
-            updated_progress = videoWrap.data('updated');
+			var _progress = parseInt((video.secondsWatched() / video.duration()) * 100),
+	            updated_progress = videoWrap.data('updated');
 
-        return {
-			popupWrap: popupWrap,                       // Popup HTML wrap
-			video: video,                               // Wistia Video Object
-			session: session_id,                        // Session ID
-			initProgress: videoWrap.data('progress'),   // Progress of the Wistia video, stored in the session when the video is played
-			progress: _progress,                        // Progress of the Wistia video since it is started
-            currentProgress: updated_progress           // Progress that is updated in PHP session from the time the video is played
-		};
+	        return {
+				popupWrap: popupWrap,                       // Popup HTML wrap
+				video: video,                               // Wistia Video Object
+				session: session_id,                        // Session ID
+				initProgress: videoWrap.data('progress'),   // Progress of the Wistia video, stored in the session when the video is played
+				progress: _progress,                        // Progress of the Wistia video since it is started
+	            currentProgress: updated_progress           // Progress that is updated in PHP session from the time the video is played
+			};
+		}
 	}
 
 	$('body').on('click', '.js-open-session', function(e) {
@@ -183,32 +186,35 @@ $(document).ready( function() {
 		}).always(function(res) {
 			$('.session-single__content-ajax').html(res);
 
-            var videoWrap = $('body').find('.session-single .session-single__video'),
-                wistiaId = videoWrap.data('video');
+            var videoWrap = $('body').find('.session-single .session-single__video');                
 
-            videoWrap.data('updated', 0);
+            if (videoWrap) {
+            	var wistiaId = videoWrap.data('video');
+	            videoWrap.data('updated', 0);
 
-            window._wq = [];
+	            window._wq = [];
 
-            _wq.push({ id: wistiaId, onReady: function(video) {
-				video.unbind('secondchange');
-				video.unbind('pause');
+	            _wq.push({ id: wistiaId, onReady: function(video) {
+					video.unbind('secondchange');
+					video.unbind('pause');
 
-                video.bind('secondchange', function(s) {
-                    handleVideoSeconds(s, video);
-                });
+	                video.bind('secondchange', function(s) {
+	                    handleVideoSeconds(s, video);
+	                });
 
-                video.bind('pause', function() {
-					var activeVideo = getVideoDetails();
+	                video.bind('pause', function() {
+						var activeVideo = getVideoDetails();
 
-					if(!activeVideo)
-						return false;
+						if(!activeVideo)
+							return false;
 
-                    if(activeVideo.currentProgress < activeVideo.progress)
-                        $('body').trigger('session.watch.stop', [activeVideo.session, activeVideo.video, activeVideo.progress - activeVideo.currentProgress]);
-                });
-            }});
+	                    if(activeVideo.currentProgress < activeVideo.progress)
+	                        $('body').trigger('session.watch.stop', [activeVideo.session, activeVideo.video, activeVideo.progress - activeVideo.currentProgress]);
+	                });
+	            }});
+        	}
 
+            $('body').css('overflow', 'hidden');
 			$('.session-single').fadeIn();
 		});
 	});
@@ -221,6 +227,7 @@ $(document).ready( function() {
 		if(activeVideo)
 			activeVideo.video.pause();
 
+		$('body').css('overflow', 'initial');
 		$('.session-single').fadeOut();
 	});
 
@@ -235,24 +242,26 @@ $(document).ready( function() {
         var activeVideo = getVideoDetails(),
             videoWrap = activeVideo.popupWrap.find('.session-single__video');
 
-		var ajaxData = {
-            id: session_id,
-			progress: progress
-		};
+        if (videoWrap) {
+			var ajaxData = {
+	            id: session_id,
+				progress: progress
+			};
 
-		$.ajax({
-			type: 'POST',
-			url: videoWrap.data('route'),
-			data: ajaxData,
-			success: function(res) {
-				if(!activeVideo)
-					return;
+			$.ajax({
+				type: 'POST',
+				url: videoWrap.data('route'),
+				data: ajaxData,
+				success: function(res) {
+					if(!activeVideo)
+						return;
 
-                var updated = videoWrap.data('updated');
+	                var updated = videoWrap.data('updated');
 
-				videoWrap.data('updated', updated + progress);
-			}
-		});
+					videoWrap.data('updated', updated + progress);
+				}
+			});
+		}
     });
 
     /**

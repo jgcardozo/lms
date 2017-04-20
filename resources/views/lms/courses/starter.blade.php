@@ -12,7 +12,7 @@
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">
-                <div class="grid--flex flex--space-between">
+                <div class="course-single__content-wrap grid--flex flex--space-between">
                     <div class="single-header-block">
                         <div class="single-header-block__step-back">
                             <a href="{{ route('single.course', $course->slug) }}">

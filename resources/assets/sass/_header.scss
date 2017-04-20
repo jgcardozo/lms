@@ -56,9 +56,8 @@
       background-position: center left;
       background-size: 3rem auto;
       background-image: url('../images/icons/logo.svg');
-      padding-left: 4rem;
-      height: 3rem;
-      line-height: 3rem;
+      padding: 0.5rem 0 0.5rem 4rem;
+      line-height: 2rem;
 
       &:hover {
         color: $brand-grey-light;
@@ -72,7 +71,7 @@
         &:after {
           content: "";
           width: 1.5rem;
-          height: 3rem;
+          height: 100%;
           display: block;
           background: url('../images/icons/icon--arrow-down.svg') no-repeat center;
           position: absolute;
@@ -88,7 +87,7 @@
       top: 5.1rem;
       right: 0;
       padding-top: 0.6rem;
-      width: 23rem;
+      width: 28rem;
       border-radius: 0.3rem;
 
       &:before {
@@ -109,7 +108,7 @@
     &-list {
       overflow: hidden;
       border-radius: 0.3rem;
-      box-shadow: 0 0 1rem #cfcfcf;
+      box-shadow: 0 0 1rem #555;
       background: #fff;
     
       &__item {
@@ -219,7 +218,7 @@
     height: 240px;
     overflow: hidden;    
     border-radius: 0.3rem;
-    box-shadow: 0 0 1rem #cfcfcf;
+    box-shadow: 0 0 1rem #555;
     background: #fff;
     border-radius: 0.3rem;
   }
@@ -319,7 +318,7 @@
   background: $brand-white;
   width: 100%;
   overflow: hidden;
-  box-shadow: 0 0 1rem $border-grey-light;
+  box-shadow: 0 0 1rem #555;
   border-radius: 0.3rem;
 
   .list__item {

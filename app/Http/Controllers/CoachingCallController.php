@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CoachingCall;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class CoachingCallController extends Controller
@@ -12,9 +13,16 @@ class CoachingCallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug)
     {
-        //
+        $course = Course::findBySlugOrFail($slug);
+        $coaching_calls = $course->coachingcall->all();          
+
+        if(!$coaching_calls) {
+            abort(404);
+        }
+
+        return view('lms.coachingcalls.single')->with(['coaching_calls' => $coaching_calls])->with(['course' => $course]);
     }
 
     /**
@@ -44,9 +52,11 @@ class CoachingCallController extends Controller
      * @param  \App\Models\CoachingCall  $coachingCall
      * @return \Illuminate\Http\Response
      */
-    public function show(CoachingCall $coachingCall)
+    public function show($course, $id)
     {
-        //
+        $coaching_call = CoachingCall::findOrFail($id);
+
+        return view('lms.coachingcalls.session-popup')->with('coaching_call', $coaching_call);
     }
 
     /**

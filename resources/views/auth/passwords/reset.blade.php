@@ -66,8 +66,8 @@
                 </div>
 
                 <div class="login__component-right">
-                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                    <p>Donec faucibus sagittis posuere. Maecenas consectetur vel eros elementum ultricies. Pellentesque turpis lorem, tincidunt accumsan magna vel, iaculis convallis sapien. Suspendisse vestibulum varius magna, nec venenatis est cursus nec.</p>
+                    <h3>We're Here To Help</h3>
+                    <p>You can reset your password at any time. Simply enter the email address that you used to register and we'll send you an email with your username and a link to reset your password so you can keep #kickingask!</p>
                 </div>
             </div>        
         </div>

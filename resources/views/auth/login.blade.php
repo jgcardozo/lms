@@ -50,8 +50,10 @@
                 </div>
 
                 <div class="login__component-right">
-                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                    <p>Donec faucibus sagittis posuere. Maecenas consectetur vel eros elementum ultricies. Pellentesque turpis lorem, tincidunt accumsan magna vel, iaculis convallis sapien. Suspendisse vestibulum varius magna, nec venenatis est cursus nec.</p>
+                    <h3>Welcome to the ASK Method!</h3>
+                    <p>Grow Your Business</p>
+                    <p>Make a Bigger Impact</p>
+                    <p>Lead an Amazing Life!</p>
                 </div>
             </div>        
         </div>

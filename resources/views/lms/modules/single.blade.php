@@ -8,11 +8,11 @@
 
 @section('content')
     <main>
-        <div class="grid grid--full course-single">
+        <div class="grid grid--full course-single" @if($module->featured_image) style="background-image: url({{ $module->getFeaturedImageUrlAttribute() }});" @endif>
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">
-                <div class="grid--flex flex--space-between">
+                <div class="course-single__content-wrap grid--flex flex--space-between">
                     <div class="single-header-block">
                         <div class="single-header-block__step-back">
                             <a href="{{ route('single.course', $module->course->slug) }}">

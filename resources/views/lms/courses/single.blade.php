@@ -8,11 +8,11 @@
 
 @section('content')
     <main>
-        <div class="grid grid--full course-single">
+        <div class="grid grid--full course-single" @if($course->featured_image) style="background-image: url({{ $course->getFeaturedImageUrlAttribute() }});" @endif>
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">
-                <div class="grid--flex flex--space-between">
+                <div class="course-single__content-wrap grid--flex flex--space-between">
                     <div class="single-header-block">
                         <h2 class="single-header-block__title ucase">{!! bold_first_word($course->title) !!}</h2>
                         <p class="single-header-block__content">{{ $course->short_description }}</p>
@@ -35,12 +35,11 @@
 
         <div class="grid grid--w950 course-reminder">
             <div class="course-reminder__block">
-                <div class="grid--flex flex--space-between">
+                <div class="course-reminder__block-wrap grid--flex flex--space-between">
                     @if($starterSeen === false)
                         <div class="course-reminder__content">
-                            <p class="course-reminder__blurb">Hi there</p>
-                            <h2 class="course-reminder__title">Welcome to {{ $course->title }}</h2>
-                            <p>{{ $course->short_description }}</p>
+                            <h2 class="course-reminder__title">Watch These Important Intro Videos First</h2>
+                            <p>How to access invaluable resources and win great prizes</p>
                         </div>
 
                         <div class="grid--flex flex--align-center">
@@ -83,7 +82,7 @@
                                     <i class="icon--lock"></i></div>
                                 @endif
 
-                                <div class="module__featured-image">
+                                <div class="module__featured-image" @if($module->featured_image) style="background-image: url({{ $module->getFeaturedImageUrlAttribute() }});" @endif>
                                     @if(! $module->is_locked)
                                         <div class="module__active" data-percentage="{!! $module->getProgressPercentage() / 100 !!}"></div>
                                     @endif

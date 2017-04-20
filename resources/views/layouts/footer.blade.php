@@ -1,7 +1,7 @@
 <footer class="mastfoot">
 	<div class="grid grid--w950">
 		<hr>
-		<div class="grid--flex flex--space-between">
+		<div class="mastfoot__content grid--flex flex--space-between">
 			<div class="footer-component">
 				<h5>{{ config('app.name') }}</h5>
 				<p>&copy; 2016 Ask LMS Island, Inc.</p>

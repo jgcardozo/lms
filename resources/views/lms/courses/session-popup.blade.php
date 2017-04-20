@@ -20,32 +20,32 @@
 
         <hr>
     </div>
+    
+    @if(!empty($session->learn_more) || !empty($session->bucket_url)) 
+        <div class="session-single__content-learn grid--flex flex--space-between">
+            @if(!empty($session->learn_more))
+                <div class="session-single__content-learn__links">
+                    <h3>Learn More</h3>
 
-    <div class="session-single__content-learn grid--flex flex--space-between">
-        <div class="session-single__content-learn__links">
-            <h3>Learn More</h3>
+                    {!! $session->learn_more !!}
+                </div>
+            @endif
 
-            <ul class="list--unstyled">
-                <li><a href="#">Donec faucibius saggitis posuere. Macenas consectetur</a></li>
-                <li><a href="#">Donec faucibius saggitis.</a></li>
-                <li><a href="#">Donec faucibius saggitis posuere.</a></li>
-            </ul>
+            @if(!empty($session->bucket_url))
+                <div class="session-single__content-learn__links">
+                    <h3>Try in to BUCKET.IO</h3>
+
+                    <a class="session-single__content-learn__bucket-link" href="{{ $session->bucket_url }}" target="_blank">Take Me There</a>
+                </div>
+            @endif
         </div>
-
-        @if(!empty($session->bucket_url))
-            <div class="session-single__content-learn__links">
-                <h3>Try in to BUCKET.IO</h3>
-
-                <a class="session-single__content-learn__bucket-link" href="{{ $session->bucket_url }}" target="_blank">Take Me There</a>
-            </div>
-        @endif
-    </div>
-
-    @if(!$session->resources->isEmpty())
         <hr>
+    @endif
+
+    @if(!$session->resources->isEmpty())        
         <div class="session-single__content-resources">
             <div class="session-single__content-resources--main grid--flex flex--space-between">
-                <h3>Files ({{ count($session->resources) }})</h3>
+                <h3>Resources ({{ count($session->resources) }})</h3>
                 {{-- <a class="session-single__content-resources--download-all" href="#">Download All</a> --}}
             </div>
 
