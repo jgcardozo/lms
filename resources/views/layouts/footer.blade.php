@@ -4,7 +4,7 @@
 		<div class="mastfoot__content grid--flex flex--space-between">
 			<div class="footer-component">
 				<h5>{{ config('app.name') }}</h5>
-				<p>&copy; 2016 Ask LMS Island, Inc.</p>
+				<p>&copy; 2017 All Rights Reserved.</p>
 			</div>
 
 			<div class="footer-component">

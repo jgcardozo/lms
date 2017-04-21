@@ -1,6 +1,7 @@
 <header class="masthead">
     <div class="grid grid--full">
         <div class="grid--flex flex--space-between">
+            <div class="mobile-menu__open"></div>
             <div class="masthead__left grid--flex">
                 @if(changeHeader())                    
                     <div class="masthead__classes grid--flex flex--align-center">
@@ -229,7 +230,7 @@
                     //dd($progress_items, $progress_items->modules, $progress_items->getNextSession()->lesson->id); 
                 }
             ?>  
-                <li class="course-progress-box__item course-progress-box__item--end @if($all_watched) course-progress-box__item--lesson-mark__completed @endif"></li>
+                <li class="course-progress-box__item course-progress-box__item--end @if($all_watched) course-progress-box__item course-progress-box__item--end__completed @endif"></li>
             </ul>
         </div>
 

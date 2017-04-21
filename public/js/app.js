@@ -12107,6 +12107,31 @@ $(document).ready(function () {
 
 		$('.event-single').fadeOut();
 	});
+
+	/**
+  * Mobile menu
+  */
+	$('body').on('click', '.mobile-menu__open', function (e) {
+		e.stopPropagation();
+
+		if ($('.mobile-menu').hasClass('mobile-menu__show')) {
+			$('.mobile-menu').removeClass('mobile-menu__show');
+		} else {
+			$('.mobile-menu').addClass('mobile-menu__show');
+		}
+	});
+
+	$('body').on('click', '.mobile-menu__close', function (e) {
+		$('.mobile-menu').removeClass('mobile-menu__show');
+	});
+
+	$('body').on('click', '.mobile-menu', function (e) {
+		e.stopPropagation();
+	});
+
+	$('body').on('click', function (e) {
+		$('.mobile-menu').removeClass('mobile-menu__show');
+	});
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
