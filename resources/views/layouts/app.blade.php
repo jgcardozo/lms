@@ -37,7 +37,8 @@
 @endif
 
     <div id="app">
-        @include('layouts.header')            
+        @include('layouts.header')          
+        @include('layouts.mobile-menu')          
 
         @yield('content')
 
