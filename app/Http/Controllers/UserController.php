@@ -37,11 +37,13 @@ class UserController extends Controller
 			return;
 		}
 
+		$password = bcrypt(str_random(8));
+
 		$newUser = new User();
 		$newUser->contact_id = $request->get('contactId');
 		$newUser->name = $request->get('email');
 		$newUser->email = $request->get('email');
-		$newUser->password = bcrypt(str_random(8));
+		$newUser->password = $password;
 		$newUser->save();
 
 		$profile = new Profile();
@@ -52,6 +54,7 @@ class UserController extends Controller
 
 		$newUser->assignRole('Customer');
 
+		Mail::to($newUser)->send(new \App\Mail\UserRegistered($password));
 		activity('user-registered-success')->causedBy($newUser)->log('New user with email: <strong>:causer.email</strong> registered.');
 	}
 
