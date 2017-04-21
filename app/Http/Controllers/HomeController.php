@@ -58,10 +58,11 @@ class HomeController extends Controller
 
 	public function test()
 	{
-		// die('here');
-		Mail::raw('Hello there', function($message) {
+		// dd(Auth::user());
+		// Mail::to(Auth::user())->send(new \App\Mail\UserRegistered('test-pass'));
+		/*Mail::raw('Hello there', function($message) {
 			$message->to('argirco.popov@gmail.com');
-		});
+		});*/
 
 		die();
 
