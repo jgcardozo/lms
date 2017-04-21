@@ -25,7 +25,7 @@
 
                     <div class="masthead__main-links grid--flex">
                         <ul class="list--inline grid--flex">
-                            <li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Training</a></li>
+                            {{-- <li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Training</a></li> --}}
                             @if(isset($progress_items))
                                 <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Coaching Calls</a></li>
 
