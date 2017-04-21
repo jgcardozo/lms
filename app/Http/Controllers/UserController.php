@@ -9,6 +9,7 @@ use App\Models\User;
 use InfusionsoftFlow;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
