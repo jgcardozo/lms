@@ -380,7 +380,7 @@ $(document).ready( function() {
         $('.chars-count[data-chars="' + charsShow + '"] span').html(text_remaining);
     });
 
-	$('body').on('click', '.course-progress', function() {
+	$('body').on('click', '.course-progress:not(.course-progress__lesson)', function() {
         var $this = $(this),
             completeHtml = '<div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>';
 
