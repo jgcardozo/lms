@@ -1339,11 +1339,15 @@ p {
   border-left: 0.1rem solid #d7d7d7;
   margin-left: -0.4rem;
   padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .mastfoot .list__item:first-of-type {
   border-left: none;
-  padding-right: 2rem;
+}
+
+.mastfoot .list__item:last-of-type {
+  padding-right: 0;
 }
 
 .mastfoot .list__item a {

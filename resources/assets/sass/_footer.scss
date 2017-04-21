@@ -49,10 +49,14 @@
 		border-left: 0.1rem solid #d7d7d7;
 		margin-left: -0.4rem;
     	padding-left: 2rem;
+    	padding-right: 2rem;
 
 		&:first-of-type {
 			border-left: none;
-			padding-right: 2rem;
+		}
+
+		&:last-of-type {
+			padding-right: 0;
 		}
 
 		a {
