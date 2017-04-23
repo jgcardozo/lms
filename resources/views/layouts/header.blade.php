@@ -12,11 +12,9 @@
                         <div class="masthead__classes-wrap">
                             <ul class="masthead__classes-list list--unstyled">
                                 @foreach($courses as $course)
-                                    @if(! $course->is_locked)
-                                        <li class="masthead__classes-list__item">
-                                            <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
-                                        </li>
-                                    @endif
+                                    <li class="masthead__classes-list__item">
+                                        <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>

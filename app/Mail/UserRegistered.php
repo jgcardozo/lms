@@ -32,6 +32,8 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        return $this->view('lms.mail.newuser')->with('password', $this->password)->with('email', $this->mail);
+        return $this->view('lms.mail.newuser')->with('password', $this->password)->with('email', $this->mail)
+            ->from('contact@askmethod.com', 'Ryan Levesque')
+            ->subject('IMPORTANT: Login Details ASK Method Masterclass! (Save this Email)');
     }
 }

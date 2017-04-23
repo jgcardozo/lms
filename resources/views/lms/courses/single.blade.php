@@ -38,8 +38,8 @@
                 <div class="course-reminder__block-wrap grid--flex flex--space-between">
                     @if($starterSeen === false)
                         <div class="course-reminder__content">
-                            <h2 class="course-reminder__title">Watch These Important Intro Videos First</h2>
-                            <p>How to access invaluable resources and win great prizes</p>
+                            <h2 class="course-reminder__title">Getting Started: Begin by Watching these Intro Videos First</h2>
+                            <p>How to find your way around, access important resources, and win great prizes!</p>
                         </div>
 
                         <div class="grid--flex flex--align-center">

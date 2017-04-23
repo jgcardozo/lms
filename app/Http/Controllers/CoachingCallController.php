@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CoachingCall;
 use App\Models\Course;
+use App\Models\CoachingCall;
 use Illuminate\Http\Request;
 
 class CoachingCallController extends Controller
@@ -16,11 +16,7 @@ class CoachingCallController extends Controller
     public function index($slug)
     {
         $course = Course::findBySlugOrFail($slug);
-        $coaching_calls = $course->coachingcall->all();          
-
-        if(!$coaching_calls) {
-            abort(404);
-        }
+        $coaching_calls = $course->coachingcall;
 
         return view('lms.coachingcalls.single')->with(['coaching_calls' => $coaching_calls])->with(['course' => $course]);
     }

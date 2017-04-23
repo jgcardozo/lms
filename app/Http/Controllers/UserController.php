@@ -48,9 +48,9 @@ class UserController extends Controller
 		$newUser->save();
 
 		$profile = new Profile();
-		$profile->phone1 = $request->get('phone');
-		$profile->company = $request->get('company');
-		$profile->address = $request->get('address');
+		// $profile->phone1 = $request->get('phone');
+		// $profile->company = $request->get('company');
+		// $profile->address = $request->get('address');
 		$newUser->profile()->save($profile);
 
 		$newUser->assignRole('Customer');

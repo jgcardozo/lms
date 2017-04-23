@@ -51,9 +51,9 @@
 
                 <div class="login__component-right">
                     <h3>Welcome to the ASK Method!</h3>
-                    <p>Grow Your Business</p>
-                    <p>Make a Bigger Impact</p>
-                    <p>Lead an Amazing Life!</p>
+                    <p>The most powerful way to discover exactly what your customers want and how to give it to them, based on their specific situation - and create a mass of raving fans and take YOUR business to the next level in the process.</p>
+
+                    <p>Enter your email address and password to get access to ASK Method Training, Resources, and Community of fellow entrepreneurs implementing the ASK Method as we speak!</p>
                 </div>
             </div>        
         </div>

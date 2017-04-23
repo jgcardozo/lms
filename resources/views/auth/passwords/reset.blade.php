@@ -67,7 +67,7 @@
 
                 <div class="login__component-right">
                     <h3>We're Here To Help</h3>
-                    <p>You can reset your password at any time. Simply enter the email address that you used to register and we'll send you an email with your username and a link to reset your password so you can keep #kickingask!</p>
+                    <p>You can reset your password at any time. Simply enter the email address that you used to register and we'll send you an email with your username and a link to reset your password so you can keep #KickingASK!</p>
                 </div>
             </div>        
         </div>

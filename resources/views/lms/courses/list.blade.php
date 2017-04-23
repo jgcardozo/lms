@@ -36,10 +36,10 @@
 								@if($course->apply_now)
 				            		<a href="{{ $course->apply_now }}" class="courseblock__link" target="_blank">Apply Now</a>
 				            	@else
-					            	<button type="button" class="courseblock__link">Comming Soon</button>
+					            	<button type="button" class="courseblock__link">Coming Soon</button>
 					            @endif
 				            @else
-				            	<a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Resume</a>
+				            	<a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Access Training</a>
 				            @endif
 			        	</div>			            
 			        </div>

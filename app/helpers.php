@@ -40,8 +40,9 @@ if ( !function_exists('is_home') ) {
  * @return string
  */
 if ( !function_exists('truncate_string') ) {
-	function truncate_string( $string, $length=100, $append="&hellip;" )
+	function truncate_string( $string, $length=20, $append="&hellip;" )
 	{
+    /*
 	  $string = strip_tags( trim( $string ) );
 
 	  if( strlen($string) > $length ) {
@@ -51,6 +52,16 @@ if ( !function_exists('truncate_string') ) {
 	  }
 
 	  return $string;
+    */
+        $string = strip_tags($string);
+        $text = '';
+        if (str_word_count($string, 0) > $length) {
+            $words = str_word_count($string, 2);
+            $pos = array_keys($words);
+            $text = substr($string, 0, $pos[$length]) . $append;
+        }
+
+        return $text;
 	}
 }
 
