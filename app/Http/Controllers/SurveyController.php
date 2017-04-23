@@ -47,7 +47,7 @@ class SurveyController extends Controller
 			}
 		}
 
-		return redirect()->back();
+		return redirect()->route('single.course.starter', 'ask-masterclass');
 	}
 
 	public function deleteSurvey($id)

@@ -52,9 +52,31 @@
                             <p>{{ truncate_string($nextSession->description) }}</p>
                         </div>
 
-                        <div class="grid--flex flex--align-center">
-                            <a href="{{ route('single.lesson', $nextSession->lesson->slug) }}" class="course-reminder__link">Resume Lesson</a>
-                        </div>                    
+                        <?php
+                            $t = false;
+                            foreach($course->modules as $key => $module)
+                            {
+                                if($module->is_locked)
+                                    continue;
+
+                                $t = true;
+                            }
+
+                            if($t)
+                            {
+                                ?>
+                                <div class="grid--flex flex--align-center">
+                                    <a href="{{ route('single.lesson', $nextSession->lesson->slug) }}" class="course-reminder__link">Resume Lesson</a>
+                                </div>
+                                <?php
+                            }else{
+                                ?>
+                                <div class="grid--flex flex--align-center">
+                                    <a href="#" class="course-reminder__link">Unlocks soon</a>
+                                </div>
+                                <?php
+                            }
+                        ?>
                     @else
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Congrats</p>
