@@ -42,19 +42,18 @@ if ( !function_exists('is_home') ) {
 if ( !function_exists('truncate_string') ) {
 	function truncate_string( $string, $length=20, $append="&hellip;" )
 	{
-    /*
-	  $string = strip_tags( trim( $string ) );
+        $string = strip_tags( trim( $string ) );
+        /*
+        if( strlen($string) > $length ) {
+            $string = wordwrap( $string, $length );
+            $string = explode( "\n", $string, 2 );
+            $string = $string[0] . $append;
+        }
 
-	  if( strlen($string) > $length ) {
-	    $string = wordwrap( $string, $length );
-	    $string = explode( "\n", $string, 2 );
-	    $string = $string[0] . $append;
-	  }
+        return $string;
+        */
 
-	  return $string;
-    */
-        $string = strip_tags($string);
-        $text = '';
+        /*$text = '';
         if (str_word_count($string, 0) > $length) {
             $words = str_word_count($string, 2);
             $pos = array_keys($words);
@@ -62,6 +61,9 @@ if ( !function_exists('truncate_string') ) {
         }
 
         return $text;
+        */
+        $words = explode(" ",$string);
+        return implode(" ",array_splice($words, 0, $length)) . $append;
 	}
 }
 

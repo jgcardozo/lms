@@ -204,7 +204,7 @@
                         $module_box = "<div class='course-progress-box__item--module'>";    
                         $module_box .= "<h6>Module $module_count</h6>";
                         $module_box .= "<h2>$module->title</h2>";
-                        $module_box .= "<p>" . truncate_string($module->description) . "</p>";
+                        $module_box .= "<p>" . truncate_string($module->description, 16) . "</p>";
                         // Check if module is locked
                         if ( $module->is_locked ) {
                             if ( $module->is_date_locked ) {
