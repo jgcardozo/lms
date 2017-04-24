@@ -73,6 +73,8 @@ class UserController extends Controller
 	
 	public function billing()
 	{
+		return view('lms.user.billing');
+
 		$userCards = InfusionsoftFlow::getCreditCards(Auth::user()->contact_id);
 		$courses = Course::get();
 
