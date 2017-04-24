@@ -29,11 +29,12 @@
                     </div>
 
                     <div class="single-header-video">
-                         <div class="wistia_responsive_padding">
+                         {{--<div class="wistia_responsive_padding">
                              <div class="wistia_responsive_wrapper">
                                  <div class="wistia_embed wistia_async_{{ $course->video_url }}"></div>
                              </div>
-                         </div>
+                         </div>--}}
+                        <img style="display: block; max-width: 100%;" src="{{ asset('images/thumb-coaching.png') }}" />
                     </div>
                 </div>
             </div>
