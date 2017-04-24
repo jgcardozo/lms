@@ -47,7 +47,7 @@
                                             <td>{{ $row->name }}</td>
                                             <td>{{ $row->email }}</td>
                                             <td>{{ $row->phone }}</td>
-                                            <td>{{ \App\Models\User::find($row->user_id) ? \App\Models\User::find($row->user_id)->first()->email : '' }}</td>
+                                            <td>{{ \App\Models\User::find($row->user_id) ? \App\Models\User::find($row->user_id)->email : '' }}</td>
                                             <td><strong>{{ mb_strlen($row->items[0]->a) }}</strong></td>
                                             <td>
                                                 <strong>

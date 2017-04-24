@@ -16,13 +16,15 @@
                     <div class="single-header-block">
                         <div class="single-header-block__step-back">
                             <a href="{{ route('single.course', $course->slug) }}">
-                                Back to <strong>{{ $course->title }}</strong>
+                                Back to <strong>{!! $course->title !!}</strong>
                             </a>
                         </div>
 
-                        <h2 class="single-header-block__title">{{ $course->title }}</h2>
+                        <h2 class="single-header-block__title">Your Q&A Coaching Calls</h2>
                         <div class="single-header-block__content single-header-block__content--small">
-                            {!! $course->description !!}
+                            <p>As a special BONUS, we’ve got LIVE Q&A Calls planned for you throughout the Masterclass…</p>
+
+                            <p>This is your chance to ASK me ANYTHING when it comes to applying the ASK Method to YOUR business.</p>
                         </div>
                     </div>
 
@@ -39,7 +41,7 @@
         
         <div class="grid grid--w950">
             <div class="lesson-sessions">
-                <h2 class="lesson-sessions__title">Sessions</h2>
+                <h2 class="lesson-sessions__title">Coaching Calls</h2>
 
                 <div class="lesson-sessions__list">
                     @foreach($coaching_calls as $key => $coaching_call)

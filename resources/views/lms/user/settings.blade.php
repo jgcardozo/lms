@@ -21,7 +21,8 @@
                     <div class="grid--flex flex--space-between">
                         <div class="user-settings__info">
                             <h2>Change Password</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                            <p>You may use this section to change your password.</p>
+                            <p>Please make sure it is safe and secure.</p>
                         </div>
 
                         <div class="user-settings__manage">

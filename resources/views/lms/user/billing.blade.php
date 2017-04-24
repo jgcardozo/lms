@@ -21,14 +21,14 @@
                     <div class="grid--flex flex--space-between">
                         <div class="user-settings__info">
                             <h2>Payment</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                            <p>You may use this section to change your payment details.</p>
                         </div>
 
                         <div class="user-settings__manage">
                             @foreach($courses as $course)
                                 <div id="course-{{ $course->id }}" class="billing-course" data-invoice="{{ @$course->billing_invoice_id }}">
                                     <a href="#" class="billing-course__details-btn js-open-billing-details">View billing details</a>
-                                    <div class="billing-course__course-title">{{ $course->title }}</div>
+                                    <div class="billing-course__course-title">{!! $course->title !!}</div>
 
                                     <div class="billing-course__details">
                                         @if(!empty($course->billing_plans))

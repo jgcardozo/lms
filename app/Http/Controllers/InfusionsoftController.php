@@ -53,7 +53,7 @@ class InfusionsoftController extends Controller
         }
 
         $syncUserTags = array_column($userTags, 'id');
-        $result = $this->user->is_tags()->sync($syncUserTags, false);
+        $result = $this->user->is_tags()->sync($syncUserTags, true);
 
 		return $result['attached'];
     }

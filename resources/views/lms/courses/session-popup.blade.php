@@ -85,7 +85,7 @@
 
     <hr>
 
-    <div class="session-single__completed session-single__completed--mark-complete js-complete-session" style="{{ $videoprogress >= 80 ? '' : 'display: none' }}">
+    <div class="course-progress session-single__completed session-single__completed--mark-complete js-complete-session" data-complete="{{ route('session.completed', $session->slug) }}" style="{{ $videoprogress >= 80 ? '' : 'display: none' }}">
         <span class="course-progress__bar"></span> Mark as completed
     </div>
 </div>

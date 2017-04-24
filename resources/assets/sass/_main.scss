@@ -134,3 +134,18 @@ a:hover {
       opacity: 0;
     }
 }
+
+/**
+ * Alert boxes
+ */
+.alert {
+  color: #383838;
+  border-radius: 0.5rem;
+  padding: 1.5rem 2.0rem;
+  margin: 2rem 0;
+}
+
+.alert--success {
+  background: #e9ffd9;
+  border: 1px solid #a6ca8a;
+}
