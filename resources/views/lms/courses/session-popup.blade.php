@@ -13,7 +13,7 @@
             <h2>{!! $session->title !!}</h2>
             <p>{!! $session->description !!}</p>
         @else
-            <h5>Course: {{ $session->course->title }}</h5>
+            <h5>Course: {!! $session->course->title !!}</h5>
             <h2>{!! $session->title !!}</h2>
             <p>{!! $session->description !!}</p>
         @endif
