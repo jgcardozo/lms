@@ -25,6 +25,7 @@
                         </div>
 
                         <div class="user-settings__manage">
+                            {{--
                             @foreach($courses as $course)
                                 <div id="course-{{ $course->id }}" class="billing-course" data-invoice="{{ @$course->billing_invoice_id }}">
                                     <a href="#" class="billing-course__details-btn js-open-billing-details">View billing details</a>
@@ -85,6 +86,8 @@
                                     </div>
                                 </div>
                             @endforeach
+                            --}}
+                            <h2>Coming soon</h2>
                         </div>
                     </div>
                 </div>

@@ -85,13 +85,7 @@
                                     <a href="#"><strong>Session Name</strong> It's available now.</a>
                                 </li>
                                 <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>Session Name</strong> It's available now.</a>
-                                </li>
-                                <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>Session Name 2</strong> It's available now.</a>
-                                </li>
-                                <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>New Session Name</strong> It's available now.</a>
+                                    <a href="#" style="text-align: center"><strong>See all notifications.</strong></a>
                                 </li>
                             </ul>
                         </div>
