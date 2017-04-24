@@ -68,8 +68,8 @@
         </div>
 
         <div class="survey-popup__step" style="display: none">
-            <input type="hidden" name="q[4]" value="If we were to create a paid program on one of the following topics (and you had to choose just one), which of the following are you most likely to have signed up for if it was already available?" />
-            <p class="survey-popup__question"><strong>Last Question: If we were to create a paid program on one of the following topics (and you had to choose just one), which of the following are you most likely to have signed up for if it was already available?</strong></p>
+            <input type="hidden" name="q[4]" value="If we were to create a training on one of the following topics (and you had to choose just one), which of the following are you most likely to have signed up for if it was already available?" />
+            <p class="survey-popup__question"><strong>Last Question: If we were to create a training on one of the following topics (and you had to choose just one), which of the following are you most likely to have signed up for if it was already available?</strong></p>
 
             <div class="survey-popup__answers">
                 <label class="radio-control">
@@ -108,9 +108,9 @@
                     <input type="text" name="email" data-parsley-group="block-4" data-parsley-type="email" required />
                 </label>
 
-                <label style="max-width: 35rem;">
+                <label>
                     <span>Phone (optional): <span class="survey-popup__answers__desc">Lastly, I may wish to follow up with a few people on the phone personally to better understand your situation. Would you be open to speaking on the phone for a few minutes on the condition that i promise not to sell you anything? If so, would you please leave your phone number below? Thank you!</span></span>
-                    <input type="text" name="phone"  />
+                    <input type="text" name="phone" style="max-width: 35rem;" />
                 </label>
             </div>
         </div>

@@ -118,7 +118,7 @@ class UserController extends Controller
 	public function store(Request $request)
 	{
 		$rules = [
-			'name' => 'required',
+			'first_name' => 'required',
 			'email' => 'required',
 			'phone1' => 'required'
 		];
@@ -131,18 +131,17 @@ class UserController extends Controller
 		}
 
 		$user = Auth::user();
-		$user->name = $request->get('name');
+		$user->name = $request->get('first_name') . ' ' . $request->get('last_name');
 		$user->email = $request->get('email');
 		$user->save();
 
 		$profile = $user->profile ?: new Profile();
-		$profile->phone1 = $request->get('phone1');
-		$profile->phone2 = $request->get('phone2');
+		$profile->first_name = $request->get('first_name');
+		$profile->last_name = $request->get('last_name');
 		$profile->company = $request->get('company');
-		$profile->address = $request->get('address');
 		$user->profile()->save($profile);
 
-		return redirect()->back();
+		return redirect()->back()->with('message', 'Profile successfully updated');
 	}
 
 	public function settingsStore(Request $request)

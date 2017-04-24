@@ -21,14 +21,22 @@
                     <div class="grid--flex flex--space-between">
                         <div class="user-settings__info">
                             <h2>Profile Details</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                            <p>You may use this section to update your name, email address and contact details.</p>
                         </div>
 
                         <div class="user-settings__manage">
+                            @if(Session::has('message'))
+                                <div class="alert alert--success"> {{ Session::get('message') }} </div>
+                            @endif
                             <form class="block" method="POST" action="{{ route('user.profile') }}">
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
-                                    <label for="name">Name</label>
-                                    <input type="text" id="name" name="name" value="{{ $user->name }}" />
+                                    <label for="first_name">First Name</label>
+                                    <input type="text" id="first_name" name="first_name" value="{{ $user->profile->first_name }}" />
+                                </div>
+
+                                <div class="form-control grid--flex flex--space-between flex--align-center">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text" id="last_name" name="last_name" value="{{ $user->profile->last_name }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
@@ -37,23 +45,13 @@
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
-                                    <label for="phone1">Phone 1</label>
+                                    <label for="phone1">Phone</label>
                                     <input type="text" id="phone1" name="phone1" value="{{ @$user->profile->phone1 }}" />
-                                </div>
-
-                                <div class="form-control grid--flex flex--space-between flex--align-center">
-                                    <label for="phone2">Phone 2</label>
-                                    <input type="text" id="phone2" name="phone2" value="{{ @$user->profile->phone2 }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
                                     <label for="company">Company</label>
                                     <input type="text" id="company" name="company" value="{{ @$user->profile->company }}" />
-                                </div>
-
-                                <div class="form-control grid--flex flex--space-between flex--align-center">
-                                    <label for="address">Personal Address</label>
-                                    <input type="text" id="address" name="address" value="{{ @$user->profile->address }}" />
                                 </div>
 
                                 {{ csrf_field() }}
