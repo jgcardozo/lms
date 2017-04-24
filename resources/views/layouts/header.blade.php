@@ -62,8 +62,8 @@
                 <div class="masthead__calendar grid--flex">
                     <a class="grid--flex flex--align-center{!! set_active_link('calendar') !!}"" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
                 </div>
-                
-                <div class="masthead__notifications grid--flex flex--align-center">
+
+                {{--<div class="masthead__notifications grid--flex flex--align-center">
                     <a class="js-header-notifications" href="javascript:;"><i class="icon--notification"></i></a>
 
                     <div class="masthead__notifications-outer-wrap">
@@ -90,7 +90,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div>--}}
 
                 <div class="masthead__user grid--flex">
                     <ul class="list--inline grid--flex flex--align-center">

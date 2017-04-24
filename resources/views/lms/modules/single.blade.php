@@ -16,7 +16,7 @@
                     <div class="single-header-block">
                         <div class="single-header-block__step-back">
                             <a href="{{ route('single.course', $module->course->slug) }}">
-                                Back to <strong>{{ $module->course->title }}</strong>
+                                Back to <strong>{!! $module->course->title !!}</strong>
                             </a>
                         </div>
 

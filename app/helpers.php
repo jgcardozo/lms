@@ -63,6 +63,11 @@ if ( !function_exists('truncate_string') ) {
         return $text;
         */
         $words = explode(" ",$string);
+		if(count($words) < $length)
+		{
+			$append = '';
+		}
+
         return implode(" ",array_splice($words, 0, $length)) . $append;
 	}
 }

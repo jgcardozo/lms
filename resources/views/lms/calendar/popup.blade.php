@@ -1,5 +1,5 @@
 <div class="event-popup">
-	<div class="event-popup__featured" style="background-image: url({!! $event->getEventImageUrlAttribute() !!});">
+	<div class="event-popup__featured" @if($event->event_image) style="background-image: url({!! $event->getEventImageUrlAttribute() !!});" @endif>
 		<div class="event-popup__featured-overlay"></div>
 
 		<div class="event-popup__featured-content">
