@@ -48,9 +48,9 @@ class UserController extends Controller
 		$newUser->save();
 
 		$profile = new Profile();
-		$profile->first_name = $request->get('firstname');
-		$profile->last_name = $request->get('lastname');
-		$profile->phone1 = $request->get('phone');
+		$profile->first_name = $request->has('firstname') ? $request->get('firstname') : '';
+		$profile->last_name = $request->has('lastname') ? $request->get('lastname') : '';
+		$profile->phone1 = $request->has('phone') ? $request->get('phone') : '';
 		$newUser->profile()->save($profile);
 
 		$newUser->assignRole('Customer');
