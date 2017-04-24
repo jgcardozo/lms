@@ -139,9 +139,10 @@ class UserController extends Controller
 		$user->save();
 
 		$profile = $user->profile ?: new Profile();
-		$profile->first_name = $request->get('first_name');
-		$profile->last_name = $request->get('last_name');
-		$profile->company = $request->get('company');
+        $profile->first_name = $request->has('firstname') ? $request->get('firstname') : '';
+        $profile->last_name = $request->has('lastname') ? $request->get('lastname') : '';
+        $profile->phone1 = $request->has('phone') ? $request->get('phone') : '';
+		$profile->company = $request->has('company') ? $request->get('company') : '';
 		$user->profile()->save($profile);
 
 		InfusionsoftFlow::syncContactDetails($user);
