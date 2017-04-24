@@ -10,11 +10,11 @@
     <div class="session-single__content-main">
         @if(!empty($session->lesson))
             <h5>Module: {{ $session->lesson->module->title }} / {{ $session->lesson->title }}</h5>
-            <h2>{{ $session->title }}</h2>
+            <h2>{!! $session->title !!}</h2>
             <p>{!! $session->description !!}</p>
         @else
             <h5>Course: {{ $session->course->title }}</h5>
-            <h2>{{ $session->title }}</h2>
+            <h2>{!! $session->title !!}</h2>
             <p>{!! $session->description !!}</p>
         @endif
 
