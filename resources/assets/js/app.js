@@ -520,6 +520,7 @@ $(document).ready( function() {
         }).always(function(res) {
             $('.event-single__content-ajax').html(res);
 
+            $('body').css('overflow', 'hidden');
             $('.event-single').fadeIn();
         });
     });
@@ -527,6 +528,7 @@ $(document).ready( function() {
     $('body').on('click', '.event-single__close', function(e) {
         e.preventDefault();
 
+        $('body').css('overflow', 'initial');
         $('.event-single').fadeOut();
     });
 

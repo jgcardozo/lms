@@ -36,6 +36,17 @@ class Event extends Model
 		];
 	}
 
+	/**
+	 * Get image from S3
+	 */
+	public function getEventImageUrlAttribute()
+	{
+		// TODO: Check why this is not working
+		// $s3image = \Storage::disk('s3')->url($this->featured_image);
+
+		return !empty($this->event_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->event_image : '';
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Backpack model callbacks
@@ -53,5 +64,29 @@ class Event extends Model
 		<?php
 		$button = ob_get_clean();
 		return $button;
+	}
+	/*
+	|--------------------------------------------------------------------------
+	| Mutators
+	|--------------------------------------------------------------------------
+	*/
+	public function setEventImageAttribute($value)
+	{
+		$attribute_name = 'event_image';
+		$disk = 's3';
+		$destination_path = 'events/';
+
+		$request = \Request::instance();
+		$file = $request->file($attribute_name);
+		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+
+		// Make the image
+		$image = \Image::make($file);
+
+		// Store the image on disk
+		\Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
+
+		// Save the path to the database
+		$this->attributes[$attribute_name] = $destination_path . $filename;
 	}
 }

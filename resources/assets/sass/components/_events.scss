@@ -1,0 +1,113 @@
+.event-popup {
+	
+	&__featured {
+		margin: -1rem -1rem 0;
+		background-color: $brand-grey-light;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: relative;
+		color: $brand-white;
+		height: 40rem;
+
+		&-overlay {
+			background: rgba(#3e352c,0.8);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 0;
+		}
+
+		&-content {
+			position: absolute;
+			width: 100%;
+			left: 0;
+			bottom: 0;
+			padding: 4rem;
+			z-index: 1;
+
+			h1, h2, h3, h4, h5, h6, p, a {
+				color: $brand-white;
+			}
+
+			h2 {
+				font-size: 3.6rem;
+    		margin: 0 0 1rem;
+			}
+
+			p {
+				font-size: 1.4rem;
+    		font-weight: 400;
+			}
+		}
+	}
+
+	&__content {
+		padding: 4rem 3rem;
+
+		&-top {
+			margin-bottom: 3rem;
+
+			h3 {
+				font-family: $font-family-sans-serif;
+		    font-size: 2rem;
+		    margin: 0 4rem 0 0;
+		    color: $brand-dark;
+		    font-weight: 700;
+
+		    &:before {
+		    	content: "";
+		    	display: block;
+		    	width: 100%;
+		    	height: 2.6rem;
+		    	background: url('../images/icons/icon--calendar.svg') no-repeat center left;
+		    	margin: 0 0 0.5rem;
+		    }
+			}
+
+			h5 {
+				font-family: $font-family-sans-serif;
+		    font-size: 2rem;
+		    margin: 0;
+		    color: $brand-grey-light;
+		    font-weight: 400;
+		    font-style: italic;
+
+		    &:before {
+		    	content: "";
+		    	display: block;
+		    	width: 100%;
+		    	height: 2.6rem;
+		    	background: url('../images/icons/icon--watch.svg') no-repeat center left / auto 2rem;
+		    	margin: 0 0 0.5rem;
+		    }
+			}
+		}
+	}
+
+	&__description {
+		color: $brand-grey-light;
+
+		p {
+			color: $brand-grey-light;
+		}
+	}
+
+	&__apply-link {
+		font-size: 1.4rem;
+		font-weight: 700;
+    color: $brand-dark;
+
+    &:after {
+		    content: "";
+		    display: inline-block;
+		    vertical-align: middle;
+		    width: 1.5rem;
+		    height: 1rem;
+		    background: url(../images/icons/icon--arrow-next_grey.svg) no-repeat center/100% auto;
+		    margin-left: 1rem;
+		}
+	}
+}

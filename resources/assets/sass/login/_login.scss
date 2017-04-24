@@ -156,7 +156,10 @@
       -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
       max-width: 100%;
-      padding: 5rem 0 0;
+      padding: 0 0 5rem;
+      -webkit-box-ordinal-group: 0;
+      -ms-flex-order: -1;
+      order: -1;
     }
   }
 }

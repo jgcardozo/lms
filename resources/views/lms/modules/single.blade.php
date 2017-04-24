@@ -72,7 +72,7 @@
                                 
                                 <div class="lessons-list__content--right">
                                     @if($lesson->is_completed)
-                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
+                                        <div class="course-progress course-progress--completed course-progress__lesson">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                     @elseif($lesson->is_locked)
                                         @if($lesson->is_date_locked)
                                             <div class="course-progress course-progress__lesson" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}">
