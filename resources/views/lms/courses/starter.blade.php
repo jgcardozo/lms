@@ -16,11 +16,11 @@
                     <div class="single-header-block">
                         <div class="single-header-block__step-back">
                             <a href="{{ route('single.course', $course->slug) }}">
-                                Back to <strong>{{ $course->title }}</strong>
+                                Back to <strong>{!! $course->title !!}</strong>
                             </a>
                         </div>
                         
-                        <h2 class="single-header-block__title">{{ $course->title }}</h2>
+                        <h2 class="single-header-block__title">{!! $course->title !!}</h2>
                         <p class="single-header-block__content">{{ $course->short_description }}</p>
                         <div class="single-header-block__separator"></div>
                         <div class="single-header-block__content single-header-block__content--small">

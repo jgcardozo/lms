@@ -36,7 +36,7 @@
 					<div class="events__item-featured-box grid--flex flex--column">
 						<div class="events__item-featured-box--top">
 							<h3>{{ \Carbon\Carbon::parse($events->first()->start_date)->format('F j') }}</h3>
-							<h5>{{ \Carbon\Carbon::parse($events->first()->start_date)->format('g:ia') }}/{{ \Carbon\Carbon::parse($events->first()->end_date)->format('g:ia') }} ET</h5>
+							<h5>{{ \Carbon\Carbon::parse($events->first()->start_date)->format('g:ia') }} ET</h5>
 						</div>
 
                         <div class="events__item-featured-box--bottom">
@@ -54,7 +54,7 @@
 
                             <div class="events__item--date">
                                 <h3>{{ \Carbon\Carbon::parse($event->start_date)->format('F j') }}</h3>
-                                <h5>{{ \Carbon\Carbon::parse($event->start_date)->format('g:ia') }}/{{ \Carbon\Carbon::parse($event->end_date)->format('g:ia') }} ET</h5>
+                                <h5>{{ \Carbon\Carbon::parse($event->start_date)->format('g:ia') }} ET</h5>
                             </div>
 
                             <div class="events__item--content grid--flex">
@@ -67,7 +67,7 @@
                                 </div>
 
                                 <div class="events__item--content-info grid--flex flex--column">
-                                    <h5>{{ $event->course->title }}</h5>
+                                    <h5>{!! $event->course->title !!}</h5>
                                     <h2>{{ $event->title }}</h2>
                                     <p>{!! $event->short_description !!}</p>
                                 </div>
