@@ -1569,6 +1569,8 @@ p {
   color: #fff;
   font-size: 3.6rem;
   margin: 0 0 1rem;
+  font-family: "BrandonLight", "Open Sans", sans-serif;
+  font-weight: 300;
 }
 
 .single-header-block__title strong {
