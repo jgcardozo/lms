@@ -28,30 +28,35 @@
                             @if(Session::has('message'))
                                 <div class="alert alert--success"> {{ Session::get('message') }} </div>
                             @endif
+
+                            @if(Session::has('errors'))
+                                <div class="alert alert--error"> {{ Session::get('message') }} </div>
+                            @endif
+
                             <form class="block" method="POST" action="{{ route('user.profile') }}">
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
                                     <label for="first_name">First Name</label>
-                                    <input type="text" id="first_name" name="first_name" value="{{ $user->profile->first_name }}" />
+                                    <input type="text" id="first_name" name="first_name" value="{{ old('first_name', $user->profile->first_name) }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
                                     <label for="last_name">Last Name</label>
-                                    <input type="text" id="last_name" name="last_name" value="{{ $user->profile->last_name }}" />
+                                    <input type="text" id="last_name" name="last_name" value="{{ old('last_name', $user->profile->last_name) }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
                                     <label for="email">Email</label>
-                                    <input type="text" id="email" name="email" value="{{ $user->email }}" />
+                                    <input type="text" id="email" name="email" value="{{ old('email', $user->email) }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
                                     <label for="phone1">Phone</label>
-                                    <input type="text" id="phone1" name="phone1" value="{{ @$user->profile->phone1 }}" />
+                                    <input type="text" id="phone1" name="phone1" value="{{ old('phone1', $user->profile->phone1) }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
                                     <label for="company">Company</label>
-                                    <input type="text" id="company" name="company" value="{{ @$user->profile->company }}" />
+                                    <input type="text" id="company" name="company" value="{{ old('company', $user->profile->company) }}" />
                                 </div>
 
                                 {{ csrf_field() }}

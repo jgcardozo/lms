@@ -267,4 +267,19 @@ class InfusionsoftFlow
 
 		return false;
 	}
+
+	public function syncContactDetails($user)
+	{
+		$fields = [
+			'FirstName' => $user->profile->first_name,
+			'LastName' => $user->profile->last_name,
+			'Email' => $user->email,
+			'Phone1' => $user->profile->phone1,
+			'Company' => $user->profile->company
+		];
+
+		$fields = array_filter($fields);
+
+		$this->is->contacts()->update((int) $user->contact_id, $fields);
+	}
 }

@@ -34,7 +34,7 @@
 							
 							@if($course->is_locked)
 								@if($course->apply_now)
-				            		<a href="{{ $course->apply_now }}" class="courseblock__link" target="_blank">Apply Now</a>
+				            		<a href="{{ $course->apply_now }}" class="courseblock__link" target="_blank">{{ $course->apply_now_label }}</a>
 				            	@else
 					            	<button type="button" class="courseblock__link">Coming Soon</button>
 					            @endif

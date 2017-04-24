@@ -128,6 +128,11 @@ class CourseCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'name' => 'apply_now_label',
+			'label' => 'Apply Now Label'
+		]);
+
+		$this->crud->addField([
 			'name' => 'facebook_group_id',
 			'label' => 'Facebook Group ID'
 		]);
