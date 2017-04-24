@@ -59,12 +59,16 @@
       height: 0.4rem;
       background: $brand-white-dark;
       pointer-events: none;
-      z-index: 15;
+      z-index: 25;
     }
   }
   
   &__item {
     width: 100%;
+
+    &--lessons {
+      max-height: 1rem;
+    }
 
     &--lesson-mark {
       width: 1rem;
@@ -289,7 +293,7 @@
       border-radius: 100%;
       position: relative;
       top: -1.6rem;
-      z-index: 15;
+      z-index: 25;
     }
 
     &--end {

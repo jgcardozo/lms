@@ -11,11 +11,11 @@
 	<div class="event-popup__content">
 		<div class="event-popup__content-top grid--flex">
 			<h3>{{ \Carbon\Carbon::parse($event->start_date)->format('F j') }}</h3>
-			<h5>{{ \Carbon\Carbon::parse($event->start_date)->format('g:ia') }}/{{ \Carbon\Carbon::parse($event->end_date)->format('g:ia') }} ET</h5>
+			<h5>{{ \Carbon\Carbon::parse($event->start_date)->format('g:ia') }} ET</h5>
 		</div>
 
 		<div class="event-popup__description">{!! $event->description !!}</div>
 
-		<a class="event-popup__apply-link" href="{{ $event->url }}" target="_blank">Apply Now</a>
+		<a class="event-popup__apply-link" href="{{ $event->url }}" target="_blank">Register</a>
 	</div>
 </div>
