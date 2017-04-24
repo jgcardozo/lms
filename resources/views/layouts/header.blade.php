@@ -12,9 +12,19 @@
                         <div class="masthead__classes-wrap">
                             <ul class="masthead__classes-list list--unstyled">
                                 @foreach($courses as $course)
-                                    <li class="masthead__classes-list__item">
-                                        <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
-                                    </li>
+                                    @if($course->is_locked)
+                                        <li class="masthead__classes-list__item masthead__classes-list__item--locked">
+                                            @if($course->apply_now)
+                                                <a class="masthead__classes-link masthead__classes-link--locked" href="{{ $course->apply_now }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif target="_blank">{!! bold_first_word($course->title) !!}</a>
+                                            @else
+                                                <a class="masthead__classes-link masthead__classes-link--locked" href="javascript:;" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
+                                            @endif
+                                        </li>
+                                    @else
+                                        <li class="masthead__classes-list__item">
+                                            <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>
@@ -172,13 +182,13 @@
                             $lesson_box .= $current_lesson;                     
                             $lesson_box .= "<div class='course-progress-box__item--lesson-mark$current_lesson_class$is_completed'><div class='course-progress-box__item--lesson-mark__hover'></div></div>";
                             $lesson_box .= "<div class='course-progress-box__item--lesson-mark__info'>";
-                            $lesson_box .= "<h6>Lesson $lesson_count</h6>";
+                            $lesson_box .= "<h6>$module->title</h6>";
                             $lesson_box .= "<h2>$lesson->title</h2>";
                             $lesson_box .= "<p>" . truncate_string($lesson->description) . "</p>";
                             // Check if module is locked
                             if ( $lesson->is_locked ) {
                                 if ( $lesson->is_date_locked ) {
-                                    $lesson_box .= "<div class='course-progress-box__item--lesson-mark__locked'>Unlocks " . date('d-m-Y', strtotime($lesson->lock_date)) . "</div>";
+                                    $lesson_box .= "<div class='course-progress-box__item--lesson-mark__locked'>Locked</div>";
                                 } else {
                                     $lesson_box .= "<div class='course-progress-box__item--lesson-mark__locked'>Locked</div>";
                                 }
@@ -202,7 +212,7 @@
                         // Check if module is locked
                         if ( $module->is_locked ) {
                             if ( $module->is_date_locked ) {
-                                $module_box .= "<div class='course-progress-box__item--module__locked'>Unlocks " . date('d-m-Y', strtotime($module->lock_date)) . "</div>";
+                                $module_box .= "<div class='course-progress-box__item--module__locked'>Locked</div>";
                             } else {
                                 $module_box .= "<div class='course-progress-box__item--module__locked'>Locked</div>";
                             }
