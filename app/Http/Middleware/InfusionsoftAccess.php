@@ -46,7 +46,8 @@ class InfusionsoftAccess
 
 		if($model->is_locked)
 		{
-			abort(403, 'This item is locked for this user. Return to <a href="/">homepage</a>');
+			// abort(403, 'This item is locked for this user. Return to <a href="/">homepage</a>');
+			return redirect('/');
 		}
 
         return $result;
