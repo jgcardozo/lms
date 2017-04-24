@@ -72,19 +72,19 @@
                                 
                                 <div class="lessons-list__content--right">
                                     @if($lesson->is_completed)
-                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
+                                        <div class="course-progress course-progress--completed course-progress__lesson">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                     @elseif($lesson->is_locked)
                                         @if($lesson->is_date_locked)
                                             <div class="course-progress course-progress__lesson" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}">
                                                 Unlocks {{ date('d-m-Y', strtotime($lesson->lock_date)) }} <span class="course-progress__bar course-progress__bar--locked"></span>
                                             </div>
                                         @else
-                                            <div class="course-progress">
+                                            <div class="course-progress course-progress__lesson">
                                                <span class="course-progress__bar course-progress__bar--locked"></span>
                                             </div>
                                         @endif
                                     @else
-                                        <div class="course-progress"><span class="course-progress__bar course-progress__bar--active" data-percentage="{!! $lesson->getProgressPercentage() / 100 !!}"></span></div>
+                                        <div class="course-progress course-progress__lesson"><span class="course-progress__bar course-progress__bar--active" data-percentage="{!! $lesson->getProgressPercentage() / 100 !!}"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            

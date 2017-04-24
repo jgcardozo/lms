@@ -104,7 +104,7 @@ class EventCrudController extends CrudController
 			'name' => 'start_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy'
+				'format' => 'dd-mm-yyyy g:ia'
 			],
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
@@ -116,7 +116,7 @@ class EventCrudController extends CrudController
 			'name' => 'end_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy'
+				'format' => 'dd-mm-yyyy g:ia'
 			],
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'

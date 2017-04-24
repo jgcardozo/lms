@@ -1137,7 +1137,7 @@ p {
   height: 2rem;
   display: inline-block;
   vertical-align: middle;
-  background: #385b9f;
+  background: url("../images/icons/icon--fb.svg") no-repeat center/2rem;
   border-radius: 100%;
   margin-right: 1rem;
 }
@@ -2782,7 +2782,10 @@ p {
     -ms-flex-preferred-size: 100%;
     flex-basis: 100%;
     max-width: 100%;
-    padding: 5rem 0 0;
+    padding: 0 0 5rem;
+    -webkit-box-ordinal-group: 0;
+    -ms-flex-order: -1;
+    order: -1;
   }
 }
 
@@ -2810,6 +2813,21 @@ p {
   padding: 3.5rem;
 }
 
+@media only screen and (max-width: 640px) {
+  .user-settings__content {
+    padding: 3.5rem 2rem;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .user-settings__inner {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
 .user-settings__info {
   -ms-flex-preferred-size: 30%;
   flex-basis: 30%;
@@ -2817,10 +2835,27 @@ p {
   padding-right: 4rem;
 }
 
+@media only screen and (max-width: 640px) {
+  .user-settings__info {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    max-width: 100%;
+    padding-right: 0;
+  }
+}
+
 .user-settings__manage {
   -ms-flex-preferred-size: 70%;
   flex-basis: 70%;
   max-width: 70%;
+}
+
+@media only screen and (max-width: 640px) {
+  .user-settings__manage {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
 .user-settings__main-links {
@@ -2846,7 +2881,12 @@ p {
 
 .user-settings .form-control {
   margin-bottom: 2rem;
-  padding-right: 8rem;
+}
+
+@media only screen and (max-width: 640px) {
+  .user-settings .form-control {
+    padding-right: 0;
+  }
 }
 
 .user-settings .form-control label {
@@ -3086,7 +3126,7 @@ p {
 }
 
 .course-progress-box__item--lesson-mark.is-hover {
-  z-index: 10;
+  z-index: 25;
 }
 
 .course-progress-box__item--lesson-mark.is-hover .course-progress-box__item--lesson-mark__hover {
@@ -3802,4 +3842,118 @@ p {
 .page-content p {
   font-size: 1.6rem;
   line-height: 2.4rem;
+}
+
+/**
+ * Events
+ */
+.event-popup__featured {
+  margin: -1rem -1rem 0;
+  background-color: #928780;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  color: #fff;
+  height: 40rem;
+}
+
+.event-popup__featured-overlay {
+  background: rgba(62, 53, 44, 0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.event-popup__featured-content {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 4rem;
+  z-index: 1;
+}
+
+.event-popup__featured-content h1, .event-popup__featured-content h2, .event-popup__featured-content .login h3, .login .event-popup__featured-content h3, .event-popup__featured-content h3, .event-popup__featured-content h4, .event-popup__featured-content h5, .event-popup__featured-content h6, .event-popup__featured-content p, .event-popup__featured-content a {
+  color: #fff;
+}
+
+.event-popup__featured-content h2, .event-popup__featured-content .login h3, .login .event-popup__featured-content h3 {
+  font-size: 3.6rem;
+  margin: 0 0 1rem;
+}
+
+.event-popup__featured-content p {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.event-popup__content {
+  padding: 4rem 3rem;
+}
+
+.event-popup__content-top {
+  margin-bottom: 3rem;
+}
+
+.event-popup__content-top h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 2rem;
+  margin: 0 4rem 0 0;
+  color: #232c40;
+  font-weight: 700;
+}
+
+.event-popup__content-top h3:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2.6rem;
+  background: url("../images/icons/icon--calendar.svg") no-repeat center left;
+  margin: 0 0 0.5rem;
+}
+
+.event-popup__content-top h5 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 2rem;
+  margin: 0;
+  color: #928780;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.event-popup__content-top h5:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2.6rem;
+  background: url("../images/icons/icon--watch.svg") no-repeat center left/auto 2rem;
+  margin: 0 0 0.5rem;
+}
+
+.event-popup__description {
+  color: #928780;
+}
+
+.event-popup__description p {
+  color: #928780;
+}
+
+.event-popup__apply-link {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #232c40;
+}
+
+.event-popup__apply-link:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.5rem;
+  height: 1rem;
+  background: url(../images/icons/icon--arrow-next_grey.svg) no-repeat center/100% auto;
+  margin-left: 1rem;
 }

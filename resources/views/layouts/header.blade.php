@@ -28,7 +28,7 @@
                                 <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Coaching Calls</a></li>
 
                                 @if($progress_items->facebook_group_id)
-                                    <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ $progress_items->facebook_group_id }}"><i class="icon--facebook"></i> Facebook Group</a></li>
+                                    <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ $progress_items->facebook_group_id }}" target="_blank"><i class="icon--facebook"></i> Facebook Group</a></li>
                                 @endif
                             @endif
                         </ul>
