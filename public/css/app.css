@@ -3063,7 +3063,7 @@ p {
   height: 0.4rem;
   background: #f6f6f6;
   pointer-events: none;
-  z-index: 25;
+  z-index: 26;
 }
 
 .course-progress-box__item {
@@ -3294,7 +3294,7 @@ p {
   border-radius: 100%;
   position: relative;
   top: -1.6rem;
-  z-index: 25;
+  z-index: 26;
 }
 
 .course-progress-box__item--end {
