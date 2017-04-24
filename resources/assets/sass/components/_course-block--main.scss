@@ -81,15 +81,13 @@
   }
 
   &__link {
-    display: block;
-    width: 100%;
-    max-width: 16rem;
+    display: inline-block;
     font-size: 1.4rem;
     font-weight: 700;
     color: $brand-white;
     text-align: center;
-    padding: 6px 10px;
-    border: 1px solid $brand-white;
+    padding: 0.6rem 2.5rem;
+    border: 0.1rem solid $brand-white;
     border-radius: 0.3rem;
     margin: 0 auto;
     text-transform: uppercase;

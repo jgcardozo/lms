@@ -648,8 +648,8 @@ a:hover {
  */
 .alert {
   color: #383838;
-  border-radius: 0.5rem;
-  padding: 1.5rem 2.0rem;
+  border-radius: 0.3rem;
+  padding: 1rem 2rem;
   margin: 2rem 0;
 }
 
@@ -1466,15 +1466,13 @@ p {
 }
 
 .courseblock__link {
-  display: block;
-  width: 100%;
-  max-width: 16rem;
+  display: inline-block;
   font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
   text-align: center;
-  padding: 6px 10px;
-  border: 1px solid #fff;
+  padding: 0.6rem 2.5rem;
+  border: 0.1rem solid #fff;
   border-radius: 0.3rem;
   margin: 0 auto;
   text-transform: uppercase;

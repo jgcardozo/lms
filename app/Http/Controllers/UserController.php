@@ -119,6 +119,7 @@ class UserController extends Controller
 	{
 		$rules = [
 			'first_name' => 'required',
+			'last_name' => 'required',
 			'email' => 'required',
 			'phone1' => 'required'
 		];
@@ -127,7 +128,7 @@ class UserController extends Controller
 
 		if($validator->fails())
 		{
-			return redirect()->back(); // TODO: Return with errors
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
 
 		$user = Auth::user();
@@ -140,6 +141,8 @@ class UserController extends Controller
 		$profile->last_name = $request->get('last_name');
 		$profile->company = $request->get('company');
 		$user->profile()->save($profile);
+
+		InfusionsoftFlow::syncContactDetails($user);
 
 		return redirect()->back()->with('message', 'Profile successfully updated');
 	}
@@ -162,7 +165,7 @@ class UserController extends Controller
 		$user->password = bcrypt($request->get('password'));
 		$user->save();
 
-		return redirect()->back();
+		return redirect()->back()->with('message', 'Passwrod successfully updated');
 	}
 
 	public function autologin(Request $request)
