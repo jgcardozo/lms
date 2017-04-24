@@ -25,6 +25,18 @@
                             <p>As a special BONUS, we’ve got LIVE Q&A Calls planned for you throughout the Masterclass…</p>
 
                             <p>This is your chance to ASK me ANYTHING when it comes to applying the ASK Method to YOUR business.</p>
+
+                            <p>
+                                Call 1. May 4th 1 pm CT
+                                <br/>
+                                Call 2. May 11th 1 pm CT
+                                <br/>
+                                Call 3. May 18th 1 pm CT
+                                <br/>
+                                Call 4. May 25th 1 pm CT
+                                <br/>
+                                Call 5. June 1st 1 pm CT
+                            </p>
                         </div>
                     </div>
 
