@@ -18,4 +18,17 @@ class ChangeEventsStartEndDateType extends Migration
             $table->dateTime('end_date')->change();
         });
     }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('events', function (Blueprint $table) {
+            $table->date('start_date')->change();
+            $table->date('end_date')->change();
+        });
+    }
 }
