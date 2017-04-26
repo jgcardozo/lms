@@ -645,6 +645,33 @@ a:hover {
 }
 
 /**
+ * Notifications page
+ */
+.notifications-list__item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #e4e4e4;
+}
+
+.notifications-list__item--unread {
+  position: relative;
+}
+
+.notifications-list__item--unread:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 0;
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
+  background: #62D262;
+}
+
+/**
  * Typography
  */
 /* Headings*/
@@ -875,7 +902,7 @@ p {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  border-right: 1px solid #dadada;
+  border-right: 0.1rem solid #dadada;
 }
 
 @media only screen and (max-width: 640px) {
@@ -950,7 +977,7 @@ p {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 6px 6px 6px;
+  border-width: 0 0.6rem 0.6rem 0.6rem;
   border-color: transparent transparent #ffffff transparent;
   position: absolute;
   top: 0;
@@ -976,7 +1003,7 @@ p {
   background-image: url("../images/icons/logo.svg");
   display: block;
   padding: 1rem 3rem 1rem 6rem;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 0.1rem solid #dadada;
   color: #928780;
   font-size: 1.4rem;
   height: auto;
@@ -1007,7 +1034,7 @@ p {
 }
 
 .masthead__user {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
 }
 
 .masthead__user .list--inline {
@@ -1043,7 +1070,7 @@ p {
 }
 
 .masthead__notifications {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
   padding: 0.5rem 1.5rem;
   position: relative;
 }
@@ -1055,7 +1082,7 @@ p {
   top: 5.1rem;
   right: -3rem;
   width: 29rem;
-  height: 240px;
+  height: 24rem;
 }
 
 .masthead__notifications-outer-wrap:before {
@@ -1064,7 +1091,7 @@ p {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 6px 6px 6px;
+  border-width: 0 0.6rem 0.6rem 0.6rem;
   border-color: transparent transparent #ffffff transparent;
   position: absolute;
   top: 0;
@@ -1075,7 +1102,7 @@ p {
 .masthead__notifications-wrap {
   position: relative;
   width: 100%;
-  height: 240px;
+  max-height: 24rem;
   overflow: hidden;
   border-radius: 0.3rem;
   box-shadow: 0 0 1rem #555;
@@ -1090,7 +1117,7 @@ p {
 .masthead__notifications-list__item a {
   display: block;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 0.1rem solid #dadada;
   color: #928780;
   font-size: 1.4rem;
 }
@@ -1101,7 +1128,7 @@ p {
 }
 
 .masthead__calendar {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
 }
 
 .masthead__calendar a {
@@ -1124,7 +1151,7 @@ p {
 }
 
 .masthead__progress {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
   padding: 0.5rem 1.5rem;
 }
 
@@ -1173,7 +1200,7 @@ p {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 6px 6px 6px;
+  border-width: 0 0.6rem 0.6rem 0.6rem;
   border-color: transparent transparent #ffffff transparent;
   position: absolute;
   top: 0;
@@ -1197,7 +1224,7 @@ p {
 .dropdown-menu .list__item a {
   display: block;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 0.1rem solid #dadada;
   color: #928780;
   font-weight: 700;
   font-size: 1.4rem;

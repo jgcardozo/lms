@@ -155,6 +155,12 @@ class SessionCrudController extends CrudController
 			]
 		]);
 
+		$this->crud->addField([
+			'name' => 'type',
+			'type' => 'hidden',
+			'value' => \App\Models\Session::class
+		]);
+
 		
 		/**
 		 * Setup CRUD filters

@@ -46,7 +46,6 @@ class Course extends Model
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
-		static::addGlobalScope(new IgnoreCoachingCallsScope);
 	}
 
 	/**

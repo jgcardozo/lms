@@ -149,3 +149,31 @@ a:hover {
   background: #e9ffd9;
   border: 1px solid #a6ca8a;
 }
+
+/**
+ * Notifications page
+ */
+.notifications-list__item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #e4e4e4;
+}
+
+.notifications-list__item--unread {
+  position: relative;
+}
+
+.notifications-list__item--unread:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 0;
+
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
+  background: $brand-green;
+}

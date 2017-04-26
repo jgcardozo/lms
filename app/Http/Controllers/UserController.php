@@ -168,7 +168,16 @@ class UserController extends Controller
 		$user->password = bcrypt($request->get('password'));
 		$user->save();
 
-		return redirect()->back()->with('message', 'Passwrod successfully updated');
+		return redirect()->back()->with('message', 'Password successfully updated');
+	}
+
+	public function notifications()
+	{
+		$notifications = [];
+		$notifications['general'] = Auth::user()->notifications ->where('type', '!=', 'App\Notifications\UnlockedByTag');
+		$notifications['gamification'] = Auth::user()->notifications ->where('type', 'App\Notifications\Gamification');
+
+		return view('lms.notifications.index')->with('user_notifications', $notifications);
 	}
 
 	public function autologin(Request $request)

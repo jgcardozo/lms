@@ -9,6 +9,7 @@ use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -23,7 +24,7 @@ class Session extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'];
+	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'];
 
 	/**
 	 * The "booting" method of the model.
@@ -35,6 +36,7 @@ class Session extends Model
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
+		static::addGlobalScope(new IgnoreCoachingCallsScope);
 	}
 
 	/**

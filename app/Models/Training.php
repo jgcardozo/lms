@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
-class CoachingCall extends Model
+class Training extends Model
 {
 	use CrudTrait;
 	use Sluggable;
 	use BackpackCrudTrait;
 	use SluggableScopeHelpers;
 
-    protected $table = 'sessions';
+	protected $table = 'sessions';
 
 	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'];
 
