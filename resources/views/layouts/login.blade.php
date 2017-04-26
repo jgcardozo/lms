@@ -19,6 +19,9 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+    <script src="https://use.typekit.net/izh8egw.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 <body class="login">
     <div class="login__overlay"></div>
