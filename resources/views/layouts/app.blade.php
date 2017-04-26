@@ -32,6 +32,9 @@
             <div class="loading__spinner"></div>
         </div>
     </script>
+
+    <script src="https://use.typekit.net/izh8egw.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 
 @if(changeHeader())
