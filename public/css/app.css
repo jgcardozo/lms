@@ -231,20 +231,6 @@ th {
 /**
  * Fonts
  */
-@font-face {
-  font-family: 'BrandonBold';
-  src: url("../fonts/Brandon_bld.eot");
-  src: url("../fonts/Brandon_bld.eot?#iefix") format("embedded-opentype"), url("../fonts/Brandon_bld.woff") format("woff"), url("../fonts/Brandon_bld.ttf") format("truetype"), url("../fonts/Brandon_bld.svg#svgBrandonBold") format("svg");
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'BrandonLight';
-  src: url("../fonts/Brandon_light.eot");
-  src: url("../fonts/Brandon_light.eot?#iefix") format("embedded-opentype"), url("../fonts/Brandon_light.woff") format("woff"), url("../fonts/Brandon_light.ttf") format("truetype"), url("../fonts/Brandon_light.svg#svgBrandonLight") format("svg");
-  font-weight: 300;
-}
-
 /**
  * Perfect Scrollbar
  */
@@ -665,8 +651,8 @@ a:hover {
 /* -------------------------*/
 h1, h2, .login h3, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "BrandonBold", "Open Sans", sans-serif;
-  font-weight: 600;
+  font-family: "brandon-grotesque-n7", "brandon-grotesque", "Open Sans", sans-serif;
+  font-weight: 700;
   line-height: 1.6;
   color: #232c40;
 }
@@ -870,7 +856,7 @@ p {
 }
 
 .masthead__logo-link {
-  font-family: "BrandonLight", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n3", "brandon-grotesque", "Open Sans", sans-serif;
   font-size: 1.6rem;
   text-transform: uppercase;
   color: #928780;
@@ -899,7 +885,7 @@ p {
 }
 
 .masthead__classes-link {
-  font-family: "BrandonLight", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n3", "brandon-grotesque", "Open Sans", sans-serif;
   font-size: 1.4rem;
   text-transform: uppercase;
   color: #928780;
@@ -1450,12 +1436,12 @@ p {
   text-align: center;
   color: #fff;
   margin: 0 0 1rem;
-  font-family: "BrandonLight", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n3", "brandon-grotesque", "Open Sans", sans-serif;
   font-weight: 300;
 }
 
 .courseblock__title strong {
-  font-family: "BrandonBold", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n7", "brandon-grotesque", "Open Sans", sans-serif;
 }
 
 @media only screen and (max-width: 640px) {
@@ -1569,12 +1555,12 @@ p {
   color: #fff;
   font-size: 3.6rem;
   margin: 0 0 1rem;
-  font-family: "BrandonLight", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n3", "brandon-grotesque", "Open Sans", sans-serif;
   font-weight: 300;
 }
 
 .single-header-block__title strong {
-  font-family: "BrandonBold", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n7", "brandon-grotesque", "Open Sans", sans-serif;
 }
 
 @media only screen and (max-width: 640px) {
@@ -3540,7 +3526,7 @@ p {
 }
 
 .events__item-featured-title h2, .events__item-featured-title .login h3, .login .events__item-featured-title h3 {
-  font-family: "BrandonLight", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n3", "brandon-grotesque", "Open Sans", sans-serif;
   font-size: 3.6rem;
   margin: 0;
   color: #fff;
@@ -3548,7 +3534,7 @@ p {
 }
 
 .events__item-featured-title h2 strong, .events__item-featured-title .login h3 strong, .login .events__item-featured-title h3 strong {
-  font-family: "BrandonBold", "Open Sans", sans-serif;
+  font-family: "brandon-grotesque-n7", "brandon-grotesque", "Open Sans", sans-serif;
   font-weight: 700;
 }
 
