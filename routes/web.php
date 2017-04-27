@@ -109,6 +109,11 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 		'as' => 'coachingcall.completed',
 		'uses' => 'CoachingCallController@complete'
 	]);
+
+	Route::get('viewalert/{key}', [
+		'as' => 'alert.view',
+		'uses' => 'UserController@viewAlert'
+	]);
 });
 
 Route::get('calendar/{event}', [

@@ -137,6 +137,29 @@ class CourseCrudController extends CrudController
 			'label' => 'Facebook Group ID'
 		]);
 
+		$tags = \App\Models\ISTag::get()->keyBy('id')->pluck('title')->toArray();
+		$this->crud->addField([
+			'name' => 'payf_tag',
+			'label' => 'Payment fail tag:',
+			'type' => 'select2_from_array',
+			'options' => $tags,
+			'allows_null' => true,
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'cancel_tag',
+			'label' => 'Cancel tag:',
+			'type' => 'select2_from_array',
+			'options' => $tags,
+			'allows_null' => true,
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
 		// $this->crud->addField([
 		// 	'label' => 'Infusionsoft Product ID attached to this course:',
 		// 	'type' => 'select2_multiple',

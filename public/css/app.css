@@ -592,8 +592,8 @@ a:hover {
 }
 
 .loading__spinner {
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
   margin: auto;
   background-color: #fff;
   border-radius: 100%;
@@ -632,16 +632,48 @@ a:hover {
 /**
  * Alert boxes
  */
-.alert {
+.ask-alert {
   color: #383838;
   border-radius: 0.3rem;
   padding: 1rem 2rem;
   margin: 2rem 0;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
 }
 
-.alert--success {
+.ask-alert--success {
   background: #e9ffd9;
-  border: 1px solid #a6ca8a;
+  border-color: #a6ca8a;
+}
+
+.ask-alert--critical {
+  background: #f1d3d3;
+  border-color: #db3333;
+}
+
+.ask-alert--full {
+  background: #F5F5F5;
+  border-radius: 0;
+  margin: 0;
+  padding: 3rem 6rem;
+  border: 0;
+  border-bottom-width: 0.3rem;
+  border-bottom-style: solid;
+}
+
+.ask-alert--full--critical {
+  color: #DB3333;
+}
+
+.js-close-ask-alert {
+  width: 2rem;
+  height: 2rem;
+  background: url("../images/icons/icon--close.svg") no-repeat center/cover;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  cursor: pointer;
 }
 
 /**

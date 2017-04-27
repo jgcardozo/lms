@@ -234,3 +234,7 @@
         <button class="js-header-close-progress">Hide This</button>
     </div>
 @endif
+
+@if(!empty($askAlert))
+    @include('lms.alerts.alert')
+@endif

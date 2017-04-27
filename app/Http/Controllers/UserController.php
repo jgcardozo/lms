@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use Auth;
 use Validator;
+use Carbon\Carbon;
 use App\Models\User;
 use InfusionsoftFlow;
+use App\Models\Course;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -203,5 +204,16 @@ class UserController extends Controller
 		}
 
 		return redirect('/');
+	}
+	
+	public function viewAlert($key)
+	{
+		$today = Carbon::today();
+		$today->hour = 23;
+		$today->minute = 59;
+		$today->second = 59;
+
+		session([$key => $today]);
+		session()->save();
 	}
 }

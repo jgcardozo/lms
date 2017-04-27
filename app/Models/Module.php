@@ -142,7 +142,7 @@ class Module extends Model
 		if(is_role_admin())
 			return false;
 
-		if($this->course->is_locked || !$this->course->areAllStarterSeen())
+		if($this->course->is_locked || !$this->course->areAllStarterSeen() || $this->course->course_canceled)
 		{
 			return true;
 		}

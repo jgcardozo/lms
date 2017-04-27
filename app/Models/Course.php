@@ -26,12 +26,11 @@ class Course extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'facebook_group_id'];
+	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag'];
 
 	/**
 	 * Billing attributes
 	 */
-
 	public $billing_invoice_id = null;
 	public $billing_ccard = null;
 	public $billing_plans = [];
@@ -134,6 +133,14 @@ class Course extends Model
 	public function getIsLockedAttribute()
 	{
 		return $this->is_tag_locked() && !is_role_admin();
+	}
+
+	public function getCourseCanceledAttribute()
+	{
+		if(Auth::user()->hasTag($this->cancel_tag))
+			return true;
+
+		return false;
 	}
 
 	/**

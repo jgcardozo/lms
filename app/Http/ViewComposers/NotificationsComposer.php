@@ -3,7 +3,6 @@
 namespace App\Http\ViewComposers;
 
 use Auth;
-use App\Models\Course;
 use Illuminate\View\View;
 
 class NotificationsComposer
