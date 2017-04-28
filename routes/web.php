@@ -116,6 +116,12 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 	]);
 });
 
+Route::post('lesson/{lesson}/post-to-facebook', [
+	'as' => 'lesson.postToFacebook',
+	'uses' => 'LessonController@postToFb',
+	'middleware' => 'auth'
+]);
+
 Route::get('calendar/{event}', [
 	'as' => 'event.show',
 	'uses' => 'EventsController@show'
@@ -132,11 +138,6 @@ Route::post('survey/store', [
 Route::delete('survey/{id}/delete', [
 	'as' => 'survey.delete',
 	'uses' => 'SurveyController@deleteSurvey'
-]);
-
-Route::get('/test/form', [
-	'as' => 'survey.test',
-	'uses' => 'SurveyController@testSurvey'
 ]);
 
 /**
