@@ -117,7 +117,7 @@ class LessonCrudController extends CrudController
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy'
+				'format' => 'dd-mm-yyyy g:ia'
 			]
 		]);
 
