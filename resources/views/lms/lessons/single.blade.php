@@ -85,14 +85,14 @@
                         <div class="lesson-sessions__item lesson-sessions__item--bonus">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
-                            <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->course->facebook_group_id }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">
+                            <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->fb_link }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">
                                 {{ csrf_field() }}
                                 <input type="submit" value="Post to Facebook">
                             </form>
                         </div>
                     @else
                         <div class="lesson-sessions__item lesson-sessions__item--bonus">
-                            <p>Thank you! Here’s your ultra secret bonus content.</p>
+                            <p>Thank you! Special Bonus Content unlocked!</p>
 
                             <div class="grid--flex flex--space-between">
                                 <div class="lesson-sessions__item--bonus-video">
@@ -104,7 +104,7 @@
                                 </div>
 
                                 <div class="lesson-sessions__item--bonus-content">
-                                    <h3>Easter Egg Video</h3>
+                                    <h3>Module 1 - Lesson 1 - Easter Egg Video</h3>
                                     <h5>Duration {{ $lesson->bonus_video_duration }} min</h5>
                                     <p>{!! $lesson->bonus_video_text !!}</p>
                                 </div>

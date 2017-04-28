@@ -177,6 +177,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 
 Route::post('user/register', 'UserController@register');
 
+Route::post('user/sync', 'UserController@syncUserTags');
+
 
 /*
 |--------------------------------------------------------------------------
