@@ -92,7 +92,7 @@
                         </div>
                     @else
                         <div class="lesson-sessions__item lesson-sessions__item--bonus">
-                            <p>Thank you! Here’s your ultra secret bonus content.</p>
+                            <p>Thank you! Special Bonus Content unlocked!</p>
 
                             <div class="grid--flex flex--space-between">
                                 <div class="lesson-sessions__item--bonus-video">
@@ -104,7 +104,7 @@
                                 </div>
 
                                 <div class="lesson-sessions__item--bonus-content">
-                                    <h3>Easter Egg Video</h3>
+                                    <h3>Module 1 - Lesson 1 - Easter Egg Video</h3>
                                     <h5>Duration {{ $lesson->bonus_video_duration }} min</h5>
                                     <p>{!! $lesson->bonus_video_text !!}</p>
                                 </div>

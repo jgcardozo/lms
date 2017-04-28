@@ -10,6 +10,8 @@ use InfusionsoftFlow;
 use App\Models\Course;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Notifications\UnlockedByTag;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
 
@@ -215,5 +217,40 @@ class UserController extends Controller
 
 		session([$key => $today]);
 		session()->save();
+	}
+
+	public function syncUserTags(Request $request)
+	{
+		if(!request()->has('contact_id'))
+		{
+			return false;
+		}
+
+		$user = User::where('contact_id', request()->get('contact_id'))->get()->first();
+		if(empty($user))
+		{
+			return false;
+		}
+
+		// Sync Infusionsoft user tags
+		$is = new InfusionsoftController($user);
+		$newTags = $is->sync();
+
+		// Log the new tags
+		if(!empty($newTags))
+		{
+			Log::info('User tags updated. | ID: ' . implode(', ', $newTags));
+		}
+
+		// Check for unlocked course/module/lesson/session
+		// and notify the user
+		$items = $is->checkUnlockedCourses($newTags);
+		if(!empty($is))
+		{
+			foreach($items as $item)
+			{
+				$user->notify(new UnlockedByTag($item));
+			}
+		}
 	}
 }
