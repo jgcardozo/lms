@@ -85,8 +85,14 @@
 
     <hr>
 
-    <div class="course-progress session-single__completed session-single__completed--mark-complete js-complete-session" data-complete="{{ route('session.completed', $session->slug) }}" style="{{ $videoprogress >= 80 ? '' : 'display: none' }}">
-        <span class="course-progress__bar"></span> Mark as completed
-    </div>
-    <p>Note: You have to watch 80% of the video before you can mark it as complete.</p>
+    @if($session->is_completed)
+        <div class="session-single__completed session-single__completed--mark-complete">
+            <span class="course-progress__bar course-progress__bar--completed"></span> Completed
+        </div>
+    @else
+        <div class="course-progress session-single__completed session-single__completed--mark-complete js-complete-session" data-complete="{{ route('session.completed', $session->slug) }}" style="{{ $videoprogress >= 80 ? '' : 'display: none' }}">
+            <span class="course-progress__bar"></span> Mark as completed
+        </div>
+        <p>Note: You have to watch 80% of the video before you can mark it as complete.</p>
+    @endif
 </div>

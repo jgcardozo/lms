@@ -342,7 +342,6 @@ $(document).ready( function() {
     /**
      * Circular Progress
      */
-    
     $(window).on('load', function() {
 	    $('.course-progress__bar--active').each(function() {
 	    	var percent = $(this).data("percentage");
@@ -390,6 +389,32 @@ $(document).ready( function() {
             $this.replaceWith(completeHtml);
         });
     });
+
+	/**
+	 * Post to facebook on lesson view.
+	 * Delay the submit
+	 */
+	$('body').find('form.js-lesson-post-to-facebook').on('submit', function(e) {
+		e.preventDefault();
+
+		var frm = $(this),
+            fburl = frm.data('fburl');
+
+		if(frm.is('.doing'))
+			return false;
+
+		frm.addClass('doing');
+
+        var win = window.open(fburl, '_blank');
+        win.focus();
+
+		setTimeout( function () {
+            frm.off('submit');
+			frm.submit();
+		}, 3000);
+
+        return false;
+	});
 
 	/**
 	 * Survey popup

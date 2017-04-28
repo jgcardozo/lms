@@ -85,13 +85,9 @@
                         <div class="lesson-sessions__item lesson-sessions__item--bonus">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
-                            <form method="post" action="">
-                                <textarea class="js-count-chars" data-chars="bonus" name="facebook_post" maxlength="200"></textarea>
-
-                                <div class="form-group grid--flex flex--end flex--align-center">
-                                    <div class="chars-count" data-chars="bonus"><span>200</span> Left</div>
-                                    <input type="submit" value="Send">
-                                </div>
+                            <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->course->facebook_group_id }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">
+                                {{ csrf_field() }}
+                                <input type="submit" value="Post to Facebook">
                             </form>
                         </div>
                     @else
