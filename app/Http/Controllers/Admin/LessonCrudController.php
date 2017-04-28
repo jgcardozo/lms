@@ -97,6 +97,11 @@ class LessonCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'name' => 'fb_link',
+			'label' => 'Facebook easter URL'
+		]);
+
+		$this->crud->addField([
 			'label' => 'Lesson featured image',
 			'name' => 'featured_image',
 			'type' => 'upload',
