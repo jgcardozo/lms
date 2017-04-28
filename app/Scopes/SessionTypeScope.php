@@ -6,8 +6,20 @@ use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class OnlyCoachingCallsScope implements Scope
+class SessionTypeScope implements Scope
 {
+	protected $type;
+
+	/**
+	 * OnlyCoachingCallsScope constructor.
+	 *
+	 * @param string $type
+	 */
+	public function __construct($type)
+	{
+		$this->type = $type;
+	}
+
 	/**
 	 * Apply the scope to a given Eloquent query builder.
 	 *
@@ -17,6 +29,6 @@ class OnlyCoachingCallsScope implements Scope
 	 */
 	public function apply(Builder $builder, Model $model)
 	{
-		$builder->whereNotNull('course_id');
+		$builder->where('type', $this->type);
 	}
 }

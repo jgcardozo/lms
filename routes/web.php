@@ -76,6 +76,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 		'as' => 'calendar',
 		'uses' => 'EventsController@index'
 	]);
+
+	Route::get('notifications', [
+		'as' => 'notifications',
+		'uses' => 'UserController@notifications'
+	]);
 });
 
 Route::group(['middleware' => ['onlyajax', 'auth']], function() {
@@ -103,6 +108,11 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 	Route::get('course/{course}/coaching-calls/{coachingcall}/completed', [
 		'as' => 'coachingcall.completed',
 		'uses' => 'CoachingCallController@complete'
+	]);
+
+	Route::get('viewalert/{key}', [
+		'as' => 'alert.view',
+		'uses' => 'UserController@viewAlert'
 	]);
 });
 
@@ -204,6 +214,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('session', 'Admin\SessionCrudController');
     CRUD::resource('resource', 'Admin\ResourceCrudController');
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
+    CRUD::resource('training', 'Admin\TrainingCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 	CRUD::resource('user', 'Admin\UserCrudController');
 

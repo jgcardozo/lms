@@ -71,10 +71,7 @@ class LessonCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'video_url',
-			'label' => 'Wistia Video ID',
-			'wrapperAttributes' => [
-				'class' => 'form-group col-md-6'
-			]
+			'label' => 'Wistia Video ID'
 		]);
 
 		$this->crud->addField([
@@ -83,6 +80,20 @@ class LessonCrudController extends CrudController
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
 			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'bonus_video_duration',
+			'label' => 'Bonus Wistia Video Duration',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'bonus_video_text',
+			'label' => 'Bonus Wistia Video Text',
+			'type' => 'textarea'
 		]);
 
 		$this->crud->addField([
@@ -106,7 +117,7 @@ class LessonCrudController extends CrudController
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy'
+				'format' => 'dd-mm-yyyy g:ia'
 			]
 		]);
 

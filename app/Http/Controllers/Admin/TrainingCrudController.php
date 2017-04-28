@@ -9,15 +9,15 @@ use App\Http\Requests\Admin\CoachingCallRequest as StoreRequest;
 use App\Http\Requests\Admin\CoachingCallRequest as UpdateRequest;
 
 
-class CoachingCallsCrudController extends CrudController
+class TrainingCrudController extends CrudController
 {
 	use BackpackCrudTrait;
 
 	public function setup()
 	{
-		$this->crud->setModel('App\Models\CoachingCall');
-		$this->crud->setRoute("admin/coachingcall");
-		$this->crud->setEntityNameStrings('Coaching Call', 'Coaching Calls');
+		$this->crud->setModel('App\Models\Training');
+		$this->crud->setRoute("admin/training");
+		$this->crud->setEntityNameStrings('Training', 'Training');
 
 
 		/**
@@ -133,7 +133,7 @@ class CoachingCallsCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
-			'label' => 'Assign this coaching call to course:',
+			'label' => 'Assign this training to course:',
 			'type' => 'select',
 			'name' => 'course_id',
 			'attribute' => 'title',
@@ -152,7 +152,7 @@ class CoachingCallsCrudController extends CrudController
 		$this->crud->addField([
 			'name' => 'type',
 			'type' => 'hidden',
-			'value' => \App\Models\CoachingCall::class
+			'value' => \App\Models\Training::class
 		]);
 	}
 

@@ -16,6 +16,6 @@
 
 		<div class="event-popup__description">{!! $event->description !!}</div>
 
-		<a class="event-popup__apply-link" href="{{ $event->url }}" target="_blank">Register</a>
+		<a class="event-popup__apply-link" href="{{ $event->url }}" target="_blank">Register Now</a>
 	</div>
 </div>

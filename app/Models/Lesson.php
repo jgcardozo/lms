@@ -23,7 +23,7 @@ class Lesson extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'bonus_video_url', 'module_id', 'featured_image', 'lock_date'];
+	protected $fillable = ['title', 'slug', 'description', 'video_url', 'bonus_video_url', 'bonus_video_duration', 'bonus_video_text', 'module_id', 'featured_image', 'lock_date'];
 
 	/**
 	 * The "booting" method of the model.

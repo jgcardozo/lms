@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use Auth;
 use Validator;
+use Carbon\Carbon;
 use App\Models\User;
 use InfusionsoftFlow;
+use App\Models\Course;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -168,7 +169,16 @@ class UserController extends Controller
 		$user->password = bcrypt($request->get('password'));
 		$user->save();
 
-		return redirect()->back()->with('message', 'Passwrod successfully updated');
+		return redirect()->back()->with('message', 'Password successfully updated');
+	}
+
+	public function notifications()
+	{
+		$notifications = [];
+		$notifications['general'] = Auth::user()->notifications ->where('type', '!=', 'App\Notifications\UnlockedByTag');
+		$notifications['gamification'] = Auth::user()->notifications ->where('type', 'App\Notifications\Gamification');
+
+		return view('lms.notifications.index')->with('user_notifications', $notifications);
 	}
 
 	public function autologin(Request $request)
@@ -194,5 +204,16 @@ class UserController extends Controller
 		}
 
 		return redirect('/');
+	}
+	
+	public function viewAlert($key)
+	{
+		$today = Carbon::today();
+		$today->hour = 23;
+		$today->minute = 59;
+		$today->second = 59;
+
+		session([$key => $today]);
+		session()->save();
 	}
 }

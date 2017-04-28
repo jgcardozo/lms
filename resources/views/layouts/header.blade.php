@@ -63,34 +63,29 @@
                     <a class="grid--flex flex--align-center{!! set_active_link('calendar') !!}"" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
                 </div>
 
-                {{--<div class="masthead__notifications grid--flex flex--align-center">
+                <div class="masthead__notifications grid--flex flex--align-center">
                     <a class="js-header-notifications" href="javascript:;"><i class="icon--notification"></i></a>
 
                     <div class="masthead__notifications-outer-wrap">
                         <div class="masthead__notifications-wrap">
                             <ul class="masthead__notifications-list list--unstyled">
+                                @if(!empty($notifications['general']))
+                                    @foreach($notifications['general'] as $notification)
+                                        @include('lms.notifications.type.' . snake_case(class_basename($notification->type)))
+                                    @endforeach
+                                @else
+                                    <li class="masthead__notifications-list__item">
+                                        <a href="#" style="text-align: center"><strong>You are up-to-date</strong></a>
+                                    </li>
+                                @endif
+
                                 <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>Session Name</strong> It's available now.</a>
-                                </li>
-                                <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>Session Name</strong> It's available now.</a>
-                                </li>
-                                <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>Session Name</strong> It's available now.</a>
-                                </li>
-                                <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>Session Name</strong> It's available now.</a>
-                                </li>
-                                <li class="masthead__notifications-list__item">
-                                    <a href="#"><strong>Session Name</strong> It's available now.</a>
-                                </li>
-                                <li class="masthead__notifications-list__item">
-                                    <a href="#" style="text-align: center"><strong>See all notifications.</strong></a>
+                                    <a href="{{ route('notifications') }}" style="text-align: center"><strong>See all notifications.</strong></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                </div>--}}
+                </div>
 
                 <div class="masthead__user grid--flex">
                     <ul class="list--inline grid--flex flex--align-center">
@@ -238,4 +233,8 @@
 
         <button class="js-header-close-progress">Hide This</button>
     </div>
+@endif
+
+@if(!empty($askAlert))
+    @include('lms.alerts.alert')
 @endif

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeEventsStartEndDateType extends Migration
+class MakeEventEndDateNullable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class ChangeEventsStartEndDateType extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dateTime('start_date')->change();
-            $table->dateTime('end_date')->change();
+            $table->dateTime('end_date')->nullable()->change();
         });
     }
 
@@ -27,8 +26,7 @@ class ChangeEventsStartEndDateType extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->date('start_date')->change();
-            $table->date('end_date')->change();
+            $table->dateTime('end_date')->change();
         });
     }
 }

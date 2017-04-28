@@ -592,8 +592,8 @@ a:hover {
 }
 
 .loading__spinner {
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
   margin: auto;
   background-color: #fff;
   border-radius: 100%;
@@ -632,16 +632,75 @@ a:hover {
 /**
  * Alert boxes
  */
-.alert {
+.ask-alert {
   color: #383838;
   border-radius: 0.3rem;
   padding: 1rem 2rem;
   margin: 2rem 0;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
 }
 
-.alert--success {
+.ask-alert--success {
   background: #e9ffd9;
-  border: 1px solid #a6ca8a;
+  border-color: #a6ca8a;
+}
+
+.ask-alert--critical {
+  background: #f1d3d3;
+  border-color: #db3333;
+}
+
+.ask-alert--full {
+  background: #F5F5F5;
+  border-radius: 0;
+  margin: 0;
+  padding: 3rem 6rem;
+  border: 0;
+  border-bottom-width: 0.3rem;
+  border-bottom-style: solid;
+}
+
+.ask-alert--full--critical {
+  color: #DB3333;
+}
+
+.js-close-ask-alert {
+  width: 2rem;
+  height: 2rem;
+  background: url("../images/icons/icon--close.svg") no-repeat center/cover;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  cursor: pointer;
+}
+
+/**
+ * Notifications page
+ */
+.notifications-list__item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #e4e4e4;
+}
+
+.notifications-list__item--unread {
+  position: relative;
+}
+
+.notifications-list__item--unread:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 0;
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
+  background: #62D262;
 }
 
 /**
@@ -875,7 +934,7 @@ p {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  border-right: 1px solid #dadada;
+  border-right: 0.1rem solid #dadada;
 }
 
 @media only screen and (max-width: 640px) {
@@ -950,7 +1009,7 @@ p {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 6px 6px 6px;
+  border-width: 0 0.6rem 0.6rem 0.6rem;
   border-color: transparent transparent #ffffff transparent;
   position: absolute;
   top: 0;
@@ -976,7 +1035,7 @@ p {
   background-image: url("../images/icons/logo.svg");
   display: block;
   padding: 1rem 3rem 1rem 6rem;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 0.1rem solid #dadada;
   color: #928780;
   font-size: 1.4rem;
   height: auto;
@@ -1007,7 +1066,7 @@ p {
 }
 
 .masthead__user {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
 }
 
 .masthead__user .list--inline {
@@ -1043,7 +1102,7 @@ p {
 }
 
 .masthead__notifications {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
   padding: 0.5rem 1.5rem;
   position: relative;
 }
@@ -1055,7 +1114,7 @@ p {
   top: 5.1rem;
   right: -3rem;
   width: 29rem;
-  height: 240px;
+  height: 24rem;
 }
 
 .masthead__notifications-outer-wrap:before {
@@ -1064,7 +1123,7 @@ p {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 6px 6px 6px;
+  border-width: 0 0.6rem 0.6rem 0.6rem;
   border-color: transparent transparent #ffffff transparent;
   position: absolute;
   top: 0;
@@ -1075,7 +1134,7 @@ p {
 .masthead__notifications-wrap {
   position: relative;
   width: 100%;
-  height: 240px;
+  max-height: 24rem;
   overflow: hidden;
   border-radius: 0.3rem;
   box-shadow: 0 0 1rem #555;
@@ -1090,7 +1149,7 @@ p {
 .masthead__notifications-list__item a {
   display: block;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 0.1rem solid #dadada;
   color: #928780;
   font-size: 1.4rem;
 }
@@ -1101,7 +1160,7 @@ p {
 }
 
 .masthead__calendar {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
 }
 
 .masthead__calendar a {
@@ -1124,7 +1183,7 @@ p {
 }
 
 .masthead__progress {
-  border-left: 1px solid #dadada;
+  border-left: 0.1rem solid #dadada;
   padding: 0.5rem 1.5rem;
 }
 
@@ -1173,7 +1232,7 @@ p {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 6px 6px 6px;
+  border-width: 0 0.6rem 0.6rem 0.6rem;
   border-color: transparent transparent #ffffff transparent;
   position: absolute;
   top: 0;
@@ -1197,7 +1256,7 @@ p {
 .dropdown-menu .list__item a {
   display: block;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 0.1rem solid #dadada;
   color: #928780;
   font-weight: 700;
   font-size: 1.4rem;

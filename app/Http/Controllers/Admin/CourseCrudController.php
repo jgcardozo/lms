@@ -108,7 +108,7 @@ class CourseCrudController extends CrudController
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy'
+				'format' => 'dd-mm-yyyy g:ia'
 			]
 		]);
 
@@ -135,6 +135,29 @@ class CourseCrudController extends CrudController
 		$this->crud->addField([
 			'name' => 'facebook_group_id',
 			'label' => 'Facebook Group ID'
+		]);
+
+		$tags = \App\Models\ISTag::get()->keyBy('id')->pluck('title')->toArray();
+		$this->crud->addField([
+			'name' => 'payf_tag',
+			'label' => 'Payment fail tag:',
+			'type' => 'select2_from_array',
+			'options' => $tags,
+			'allows_null' => true,
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'cancel_tag',
+			'label' => 'Cancel tag:',
+			'type' => 'select2_from_array',
+			'options' => $tags,
+			'allows_null' => true,
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		// $this->crud->addField([

@@ -556,4 +556,21 @@ $(document).ready( function() {
     $('body').on('click', function(e) {
     	$('.mobile-menu').removeClass('mobile-menu__show');
     });
+
+	/**
+	 * Alerts
+	 */
+	$('body').on('click', '.js-close-ask-alert', function(e) {
+		e.preventDefault();
+
+		var el = $(this),
+            wrapper = el.closest('.ask-alert'),
+            url = wrapper.data('key');
+
+        $.ajax({
+            url: url
+        }).always(function(res) {
+            wrapper.fadeOut(250);
+        });
+	});
 });

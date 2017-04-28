@@ -85,7 +85,7 @@
                         <div class="lesson-sessions__item lesson-sessions__item--bonus">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
-                            <form>
+                            <form method="post" action="">
                                 <textarea class="js-count-chars" data-chars="bonus" name="facebook_post" maxlength="200"></textarea>
 
                                 <div class="form-group grid--flex flex--end flex--align-center">
@@ -109,8 +109,8 @@
 
                                 <div class="lesson-sessions__item--bonus-content">
                                     <h3>Easter Egg Video</h3>
-                                    <h5>Duration 12 min</h5>
-                                    <p>Donec faucibus sagittis posuere. Maecenas consectetur vel eros elementum ultricies. Pellentesque turpis lorem, tincidunt accumsan magna vel, iaculis convallis sapien. Suspendisse vestibulum varius magna, nec venenatis est cursus nec. Sed efficitur sodales diam, a faucibus orci fringilla at. In quis nisl mattis, placerat neque convallis.</p>
+                                    <h5>Duration {{ $lesson->bonus_video_duration }} min</h5>
+                                    <p>{!! $lesson->bonus_video_text !!}</p>
                                 </div>
                             </div>
                         </div>

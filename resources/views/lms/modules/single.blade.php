@@ -61,7 +61,7 @@
                                 <div class="lessons-list__content--center grid--flex flex--space-between">
                                     <div class="lessons-list__lesson-info">
                                         <p>Sessions</p>
-                                        <h4>12</h4>
+                                        <h4>{{ count($lesson->sessions) }}</h4>
                                     </div>
 
                                     <div class="lessons-list__lesson-info">
