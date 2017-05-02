@@ -11628,7 +11628,8 @@ module.exports = Path;
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {
+/* WEBPACK VAR INJECTION */(function($) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -12001,7 +12002,16 @@ $(document).ready(function () {
 		$.ajax({
 			url: $this.data('complete')
 		}).always(function (res) {
+			if ((typeof res === 'undefined' ? 'undefined' : _typeof(res)) == 'object' && res.lesson_complete == true) {
+				$('body').find('.js-bonus').show();
+			}
+
+			var sId = $this.closest('.session-single__content-ajax').find('.session-single__video').data('session'); // Get session id
 			$this.replaceWith(completeHtml);
+
+			if (typeof sId != 'undefined') {
+				$('body').find('#session-' + sId).find('.course-progress').replaceWith(completeHtml);
+			}
 		});
 	});
 
