@@ -80,9 +80,9 @@
                     @endforeach
                 </div>
 
-                @if($lesson->is_completed && $lesson->has_bonus)
+                @if($lesson->has_bonus)
                     @if(!$lesson->is_fb_posted)
-                        <div class="lesson-sessions__item lesson-sessions__item--bonus">
+                        <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus" style="display: none">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
                             <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->fb_link }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">

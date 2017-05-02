@@ -386,7 +386,18 @@ $(document).ready( function() {
         $.ajax({
             url: $this.data('complete')
         }).always(function(res) {
+			if(typeof res == 'object' && res.lesson_complete == true)
+            {
+                $('body').find('.js-bonus').show();
+            }
+
+            var sId = $this.closest('.session-single__content-ajax').find('.session-single__video').data('session'); // Get session id
             $this.replaceWith(completeHtml);
+
+            if(typeof sId != 'undefined')
+            {
+                $('body').find('#session-' + sId).find('.course-progress').replaceWith(completeHtml);
+            }
         });
     });
 
