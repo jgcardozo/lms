@@ -137,7 +137,13 @@ class CourseCrudController extends CrudController
 			'label' => 'Facebook Group ID'
 		]);
 
-		$tags = \App\Models\ISTag::get()->keyBy('id')->pluck('title')->toArray();
+		$_tags = \App\Models\ISTag::get();
+		$tags = [];
+		foreach($_tags as $tag)
+		{
+			$tags[$tag->id] = $tag->title;
+		}
+
 		$this->crud->addField([
 			'name' => 'payf_tag',
 			'label' => 'Payment fail tag:',
