@@ -129,7 +129,6 @@ $(document).ready( function() {
 
 		var complete_btn = activeVideo.popupWrap.find('.js-complete-session');
 
-
         // Show mark as complete buttons
         var totalProgress = activeVideo.progress + activeVideo.initProgress;
 		if(totalProgress >= 80 && !complete_btn.is(':visible')) {
