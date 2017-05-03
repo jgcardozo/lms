@@ -129,7 +129,6 @@ $(document).ready( function() {
 
 		var complete_btn = activeVideo.popupWrap.find('.js-complete-session');
 
-
         // Show mark as complete buttons
         var totalProgress = activeVideo.progress + activeVideo.initProgress;
 		if(totalProgress >= 80 && !complete_btn.is(':visible')) {
@@ -342,7 +341,6 @@ $(document).ready( function() {
     /**
      * Circular Progress
      */
-    
     $(window).on('load', function() {
 	    $('.course-progress__bar--active').each(function() {
 	    	var percent = $(this).data("percentage");
@@ -387,9 +385,46 @@ $(document).ready( function() {
         $.ajax({
             url: $this.data('complete')
         }).always(function(res) {
+			if(typeof res == 'object' && res.lesson_complete == true)
+            {
+                $('body').find('.js-bonus').show();
+            }
+
+            var sId = $this.closest('.session-single__content-ajax').find('.session-single__video').data('session'); // Get session id
             $this.replaceWith(completeHtml);
+
+            if(typeof sId != 'undefined')
+            {
+                $('body').find('#session-' + sId).find('.course-progress').replaceWith(completeHtml);
+            }
         });
     });
+
+	/**
+	 * Post to facebook on lesson view.
+	 * Delay the submit
+	 */
+	$('body').find('form.js-lesson-post-to-facebook').on('submit', function(e) {
+		e.preventDefault();
+
+		var frm = $(this),
+            fburl = frm.data('fburl');
+
+		if(frm.is('.doing'))
+			return false;
+
+		frm.addClass('doing');
+
+        var win = window.open(fburl, '_blank');
+        win.focus();
+
+		setTimeout( function () {
+            frm.off('submit');
+			frm.submit();
+		}, 3000);
+
+        return false;
+	});
 
 	/**
 	 * Survey popup
@@ -556,4 +591,21 @@ $(document).ready( function() {
     $('body').on('click', function(e) {
     	$('.mobile-menu').removeClass('mobile-menu__show');
     });
+
+	/**
+	 * Alerts
+	 */
+	$('body').on('click', '.js-close-ask-alert', function(e) {
+		e.preventDefault();
+
+		var el = $(this),
+            wrapper = el.closest('.ask-alert'),
+            url = wrapper.data('key');
+
+        $.ajax({
+            url: url
+        }).always(function(res) {
+            wrapper.fadeOut(250);
+        });
+	});
 });

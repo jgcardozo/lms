@@ -6,8 +6,8 @@ use App\Traits\ISLock;
 use Backpack\CRUD\CrudTrait;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPasswordNotification;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -57,5 +57,15 @@ class User extends Authenticatable
 	public function fb_posted()
 	{
 		return $this->belongsToMany('App\Models\Lesson', 'fb_lesson', 'user_id', 'lesson_id');
+	}
+
+	public function hasTag($tag)
+	{
+		if(empty($tag))
+		{
+			return false;
+		}
+
+		return (bool) $this->is_tags->contains('id', $tag);
 	}
 }

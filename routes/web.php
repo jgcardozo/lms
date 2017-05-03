@@ -76,6 +76,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 		'as' => 'calendar',
 		'uses' => 'EventsController@index'
 	]);
+
+	Route::get('notifications', [
+		'as' => 'notifications',
+		'uses' => 'UserController@notifications'
+	]);
 });
 
 Route::group(['middleware' => ['onlyajax', 'auth']], function() {
@@ -104,7 +109,18 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 		'as' => 'coachingcall.completed',
 		'uses' => 'CoachingCallController@complete'
 	]);
+
+	Route::get('viewalert/{key}', [
+		'as' => 'alert.view',
+		'uses' => 'UserController@viewAlert'
+	]);
 });
+
+Route::post('lesson/{lesson}/post-to-facebook', [
+	'as' => 'lesson.postToFacebook',
+	'uses' => 'LessonController@postToFb',
+	'middleware' => 'auth'
+]);
 
 Route::get('calendar/{event}', [
 	'as' => 'event.show',
@@ -122,11 +138,6 @@ Route::post('survey/store', [
 Route::delete('survey/{id}/delete', [
 	'as' => 'survey.delete',
 	'uses' => 'SurveyController@deleteSurvey'
-]);
-
-Route::get('/test/form', [
-	'as' => 'survey.test',
-	'uses' => 'SurveyController@testSurvey'
 ]);
 
 /**
@@ -166,6 +177,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 
 Route::post('user/register', 'UserController@register');
 
+Route::post('user/sync', 'UserController@syncUserTags');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -204,6 +217,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('session', 'Admin\SessionCrudController');
     CRUD::resource('resource', 'Admin\ResourceCrudController');
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
+    CRUD::resource('training', 'Admin\TrainingCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 	CRUD::resource('user', 'Admin\UserCrudController');
 

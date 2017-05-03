@@ -100,8 +100,8 @@ a:hover {
   background-color: rgba(146, 135, 128, 0.8);
 
   &__spinner {
-    width: 40px;
-    height: 40px;
+    width: 4rem;
+    height: 4rem;
     margin: auto;
     background-color: #fff;
     border-radius: 100%;
@@ -138,14 +138,75 @@ a:hover {
 /**
  * Alert boxes
  */
-.alert {
+.ask-alert {
   color: #383838;
   border-radius: 0.3rem;
   padding: 1rem 2rem;
   margin: 2rem 0;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
+
+  &--success {
+    background: #e9ffd9;
+    border-color: #a6ca8a;
+  }
+  
+  &--critical {
+    background: #f1d3d3;
+    border-color: #db3333;
+  }
+  
+  &--full {
+    background: #F5F5F5;
+    border-radius: 0;
+
+    margin: 0;
+    padding: 3rem 6rem;
+    border: 0;
+    border-bottom-width: 0.3rem;
+    border-bottom-style: solid;
+    
+    &--critical {
+      color: #DB3333;
+    }
+  }
 }
 
-.alert--success {
-  background: #e9ffd9;
-  border: 1px solid #a6ca8a;
+.js-close-ask-alert {
+  width: 2rem;
+  height: 2rem;
+  background: url('../images/icons/icon--close.svg') no-repeat center / cover;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  cursor: pointer;
+}
+
+/**
+ * Notifications page
+ */
+.notifications-list__item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #e4e4e4;
+}
+
+.notifications-list__item--unread {
+  position: relative;
+}
+
+.notifications-list__item--unread:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 0;
+
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
+  background: $brand-green;
 }

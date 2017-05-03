@@ -80,23 +80,19 @@
                     @endforeach
                 </div>
 
-                @if($lesson->is_completed && $lesson->has_bonus)
+                @if($lesson->has_bonus)
                     @if(!$lesson->is_fb_posted)
-                        <div class="lesson-sessions__item lesson-sessions__item--bonus">
+                        <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus" style="display: none">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
-                            <form>
-                                <textarea class="js-count-chars" data-chars="bonus" name="facebook_post" maxlength="200"></textarea>
-
-                                <div class="form-group grid--flex flex--end flex--align-center">
-                                    <div class="chars-count" data-chars="bonus"><span>200</span> Left</div>
-                                    <input type="submit" value="Send">
-                                </div>
+                            <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->fb_link }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">
+                                {{ csrf_field() }}
+                                <input type="submit" value="Post to Facebook">
                             </form>
                         </div>
                     @else
                         <div class="lesson-sessions__item lesson-sessions__item--bonus">
-                            <p>Thank you! Here’s your ultra secret bonus content.</p>
+                            <p>Thank you! Special Bonus Content unlocked!</p>
 
                             <div class="grid--flex flex--space-between">
                                 <div class="lesson-sessions__item--bonus-video">
@@ -108,9 +104,9 @@
                                 </div>
 
                                 <div class="lesson-sessions__item--bonus-content">
-                                    <h3>Easter Egg Video</h3>
-                                    <h5>Duration 12 min</h5>
-                                    <p>Donec faucibus sagittis posuere. Maecenas consectetur vel eros elementum ultricies. Pellentesque turpis lorem, tincidunt accumsan magna vel, iaculis convallis sapien. Suspendisse vestibulum varius magna, nec venenatis est cursus nec. Sed efficitur sodales diam, a faucibus orci fringilla at. In quis nisl mattis, placerat neque convallis.</p>
+                                    <h3>Module 1 - Lesson 1 - Easter Egg Video</h3>
+                                    <h5>Duration {{ $lesson->bonus_video_duration }} min</h5>
+                                    <p>{!! $lesson->bonus_video_text !!}</p>
                                 </div>
                             </div>
                         </div>

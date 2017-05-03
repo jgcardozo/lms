@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Resource;
 use DB;
 use Auth;
+use Carbon\Carbon;
 // use Facebook\Facebook;
 use Illuminate\Http\Request;
 use App\Models\Course;
@@ -58,6 +59,7 @@ class HomeController extends Controller
 
 	public function test()
 	{
+		z::
 		die();
 		// dd(Auth::user());
 		// Mail::to(Auth::user())->send(new \App\Mail\UserRegistered('test-pass'));

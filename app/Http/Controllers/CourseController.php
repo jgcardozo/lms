@@ -29,8 +29,7 @@ class CourseController extends Controller
 		];
 
 		// Popup before course start
-		$popupCheck = DB::table('surveys')->where('user_id', Auth::user()->id)->get()->toArray();
-        if($slug == 'ask-masterclass' && empty($popupCheck)) {
+        if(survey_check($course)) {
             $viewArgs['popupBefore'] = 'lms.survey';
         }
 

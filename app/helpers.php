@@ -151,3 +151,19 @@ if ( !function_exists('lms_get_setting') ) {
 		return $row;
 	}
 }
+
+/**
+ * Check ask-masterclass survey
+ */
+if ( !function_exists('survey_check') ) {
+	function survey_check(\App\Models\Course $course)
+	{
+		// Popup before course start
+		$popupCheck = DB::table('surveys')->where('user_id', \Auth::user()->id)->get()->toArray();
+		if($course->slug == 'ask-masterclass' && empty($popupCheck)) {
+			return true;
+		}
+
+		return false;
+	}
+}

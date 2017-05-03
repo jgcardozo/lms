@@ -33,6 +33,13 @@ class SessionController extends Controller
 		}
 
 		event(new WatchedSession($session));
+
+		if($session->lesson->is_completed && request()->ajax())
+		{
+			return response()->json([
+				'lesson_complete' => true
+			]);
+		}
     }
 
     /**

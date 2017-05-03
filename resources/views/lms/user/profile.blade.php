@@ -26,11 +26,11 @@
 
                         <div class="user-settings__manage">
                             @if(Session::has('message'))
-                                <div class="alert alert--success"> {{ Session::get('message') }} </div>
+                                <div class="ask-alert ask-alert--success">{{ Session::get('message') }}</div>
                             @endif
 
                             @if(Session::has('errors'))
-                                <div class="alert alert--error"> {{ Session::get('message') }} </div>
+                                <div class="ask-alert ask-alert--error">{{ Session::get('message') }}</div>
                             @endif
 
                             <form class="block" method="POST" action="{{ route('user.profile') }}">

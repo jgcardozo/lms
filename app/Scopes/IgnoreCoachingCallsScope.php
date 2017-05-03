@@ -17,6 +17,6 @@ class IgnoreCoachingCallsScope implements Scope
 	 */
 	public function apply(Builder $builder, Model $model)
 	{
-		$builder->whereNull('course_id');
+		$builder->where('type', \App\Models\Session::class)->orWhere('type', '');
 	}
 }

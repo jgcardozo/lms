@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Auth;
 use App\Models\Lesson;
+use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
@@ -87,5 +88,12 @@ class LessonController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function postToFb(Lesson $lesson)
+    {
+		$lesson->usersPosted()->attach(Auth::user()->id);
+
+		return redirect()->back();
     }
 }
