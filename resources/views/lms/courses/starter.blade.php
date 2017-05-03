@@ -46,7 +46,7 @@
                 <div class="course-starter__list">
                     @foreach($videos as $video)
                         <div id="session-{{ $video->id }}" class="course-starter__item grid--flex flex--space-between">
-                            <div class="course-starter__video grid--flex">
+                            <div class="course-starter__video grid--flex" @if($video->featured_image) style="background-image: url({{ $video->featured_image_url }});" @endif>
                                 <a href="#" data-href="{{ route('session.show', $video->id) }}" class="block__link js-open-session"></a>
                             </div>
 

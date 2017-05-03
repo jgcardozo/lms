@@ -11,7 +11,7 @@
 			    @foreach($courses as $course)
 			    <?php //dd($course); ?>
 			    	@if($course->is_locked)
-			        	<div class="courseblock courseblock--locked" @if($course->featured_image) style="background-image: url({{ $course->getFeaturedImageUrlAttribute() }});" @endif>
+			        	<div class="courseblock courseblock--locked" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
 
                         <div class="courseblock--locked-sign"
                             @if($course->is_date_locked)
@@ -21,7 +21,7 @@
 
                         <div class="courseblock__overlay courseblock__overlay--locked"></div>                               
 			        @else
-						<div class="courseblock" @if($course->featured_image) style="background-image: url({{ $course->getFeaturedImageUrlAttribute() }});" @endif>
+						<div class="courseblock" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
 			        	<div class="courseblock__overlay"></div>
 			        @endif
 

@@ -8,7 +8,7 @@
 
 @section('content')
     <main>
-        <div class="grid grid--full course-single" @if($lesson->featured_image) style="background-image: url({{ $lesson->getFeaturedImageUrlAttribute() }});" @endif>
+        <div class="grid grid--full course-single" @if($lesson->featured_image) style="background-image: url({{ $lesson->featured_image_url }});" @endif>
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">
@@ -47,7 +47,7 @@
                             @if($session->is_date_locked)
                                 <div class="lesson-sessions__item--locked-overlay"></div>
                             @endif
-                            <div class="lesson-sessions__video grid--flex">
+                            <div class="lesson-sessions__video grid--flex" @if($session->featured_image) style="background-image: url({{ $session->featured_image_url }});" @endif>
                                 @if($session->is_date_locked)
                                     <div class="course-progress grid--flex flex--align-center flex--just-center">
                                         <span class="course-progress__bar course-progress__bar--locked"></span>
@@ -82,7 +82,7 @@
 
                 @if($lesson->has_bonus)
                     @if(!$lesson->is_fb_posted)
-                        <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus" style="display: none">
+                        <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus" style="@if(!$lesson->is_completed) display: none @endif">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
                             <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->fb_link }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">

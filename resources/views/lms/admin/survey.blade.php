@@ -109,8 +109,9 @@
             $('#surveyTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'csv', 'pdf', 'print'
-                ]
+                    'csv', 'pdf', 'print', 'pageLength'
+                ],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             });
 
             $('body').on('click', '.js-delete-survey', function(e) {
