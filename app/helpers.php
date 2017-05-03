@@ -131,7 +131,7 @@ if ( !function_exists('human_filesize') ) {
 if ( !function_exists('is_role_admin') ) {
 	function is_role_admin()
 	{
-		return \Auth::user()->hasRole(['Administrator','Editor']);
+		return \Auth::user()->hasRole(['Administrator','Editor', 'Vip']);
 	}
 }
 

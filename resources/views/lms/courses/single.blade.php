@@ -8,7 +8,7 @@
 
 @section('content')
     <main>
-        <div class="grid grid--full course-single" @if($course->featured_image) style="background-image: url({{ $course->getFeaturedImageUrlAttribute() }});" @endif>
+        <div class="grid grid--full course-single" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">
@@ -104,7 +104,7 @@
                                     <i class="icon--lock"></i></div>
                                 @endif
 
-                                <div class="module__featured-image" @if($module->featured_image) style="background-image: url({{ $module->getFeaturedImageUrlAttribute() }});" @endif>
+                                <div class="module__featured-image" @if($module->featured_image) style="background-image: url({{ $module->featured_image_url }});" @endif>
                                     @if(! $module->is_locked)
                                         <div class="module__active" data-percentage="{!! $module->getProgressPercentage() / 100 !!}"></div>
                                     @endif
