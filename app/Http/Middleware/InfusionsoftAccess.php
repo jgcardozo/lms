@@ -26,7 +26,7 @@ class InfusionsoftAccess
 
 			// This is cuz of the Vip users, redirect for the course,
 			// but unlock all the content in Course
-			if($model->is_tag_locked())
+			if($model->is_tag_locked() && $request->user()->hasRole(['Vip']))
 			{
 				return redirect('/');
 			}
