@@ -59,6 +59,8 @@ class HomeController extends Controller
 
 	public function test()
 	{
+		// $s = Session::find(17);
+		// dd($s->resources);
 		die();
 		// dd(Auth::user());
 		// Mail::to(Auth::user())->send(new \App\Mail\UserRegistered('test-pass'));
