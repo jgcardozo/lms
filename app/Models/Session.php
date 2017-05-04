@@ -217,4 +217,17 @@ class Session extends Model
 		</a>
 		<?php
 	}
+
+	public function reorder_resources_button()
+	{
+		if(!$this->resources)
+			return;
+
+		?>
+		<a href="<?php echo route('crud.resource.reorder', ['session' => $this->id]); ?>" class="btn btn-xs btn-default">
+			<i class="fa fa-arrows" aria-hidden="true"></i>
+			Reorder resources
+		</a>
+		<?php
+	}
 }

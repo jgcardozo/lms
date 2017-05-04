@@ -191,6 +191,7 @@ class SessionCrudController extends CrudController
 		 * Add CRUD action button
 		 */
 		$this->crud->addButton('line', 'view_in_frontend', 'model_function', 'view_in_frontend_button', 'end');
+		$this->crud->addButton('line', 'reorder_resources', 'model_function', 'reorder_resources_button', 'end');
 
 		/**
 		 * Enable CRUD reorder
