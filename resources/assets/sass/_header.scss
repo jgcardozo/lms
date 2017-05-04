@@ -165,7 +165,8 @@
       padding: 1rem 1.5rem  0.5rem;
       border-bottom: 0.6rem solid transparent;
 
-      &:hover {
+      &:hover,
+      &.active {
         border-bottom: 0.6rem solid $brand-yellow;
       }
     }

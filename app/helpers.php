@@ -131,7 +131,19 @@ if ( !function_exists('human_filesize') ) {
 if ( !function_exists('is_role_admin') ) {
 	function is_role_admin()
 	{
-		return \Auth::user()->hasRole(['Administrator','Editor', 'Vip']);
+		return \Auth::user()->hasRole(['Administrator','Editor']);
+	}
+}
+
+/**
+ * Determinate if the current user is Vip
+ *
+ * @return boolean
+ */
+if ( !function_exists('is_role_vip') ) {
+	function is_role_vip()
+	{
+		return \Auth::user()->hasRole(['Vip']);
 	}
 }
 

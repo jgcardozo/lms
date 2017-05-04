@@ -31,84 +31,89 @@
                                 @endforeach
                             </ul>
                         </div>
-
                     </div>
 
                     <div class="masthead__main-links grid--flex">
                         <ul class="list--inline grid--flex">
                             <li class="grid--flex"><a href="{{ route('single.course.starter', $progress_items->slug) }}" class="grid--flex flex--align-center {{ survey_check($progress_items) ? 'js-open-surveyPopup' : '' }}">Welcome</a></li>
-                            {{-- <li class="grid--flex"><a class="grid--flex flex--align-center" href="#">Training</a></li> --}}
+
                             @if(isset($progress_items))
-                                <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Coaching Calls</a></li>
+                                @if($progress_items->training_fields)
+                                    {{-- <li class="grid--flex"><a class="grid--flex flex--align-center @if(Route::currentRouteName() == 'single.course.training') active @endif" href="{{ route('single.course.training', $progress_items->slug) }}">Training</a></li> --}}
+                                @endif
+
+                                @if($progress_items->featured_coachingcall)
+                                    <li class="grid--flex"><a class="grid--flex flex--align-center @if(Route::currentRouteName() == 'single.course.coaching-call') active @endif" href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Coaching Calls</a></li>
+                                @endif
 
                                 @if($progress_items->facebook_group_id)
                                     <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ $progress_items->facebook_group_id }}" target="_blank"><i class="icon--facebook"></i> Facebook Group</a></li>
                                 @endif
                             @endif
-                        </ul>
-                    </div>
-                @else
-                    <div class="masthead__logo grid--flex flex--align-center">
-                        <a class="masthead__logo-link" href="{{ url('/') }}">
-                            {{ config('app.name', 'Laravel') }}
-                        </a>
-                    </div>
-                @endif              
-            </div>
-
-            <div class="masthead__right grid--flex">
-                @if(changeHeader())
-                    <div class="masthead__progress grid--flex flex--align-center">
-                        <a class="js-header-progress" href="javascript:;">Course Progress</a>
-                    </div>
-                @endif
-
-                <div class="masthead__calendar grid--flex">
-                    <a class="grid--flex flex--align-center{!! set_active_link('calendar') !!}"" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
+                            </ul>
+                        </div>
+                    @else
+                        <div class="masthead__logo grid--flex flex--align-center">
+                            <a class="masthead__logo-link" href="{{ url('/') }}">
+                                {{ config('app.name', 'Laravel') }}
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
-                @role('Administrator')
-                    <div class="masthead__notifications grid--flex flex--align-center">
-                        <a class="js-header-notifications" href="javascript:;"><i class="icon--notification"></i></a>
+                <div class="masthead__right grid--flex">
+                    @if(changeHeader())
+                        <div class="masthead__progress grid--flex flex--align-center">
+                            <a class="js-header-progress" href="javascript:;">Course Progress</a>
+                        </div>
+                    @endif
 
-                        <div class="masthead__notifications-outer-wrap">
-                            <div class="masthead__notifications-wrap">
-                                <ul class="masthead__notifications-list list--unstyled">
-                                    @if(!empty($notifications['general']))
-                                        @foreach($notifications['general'] as $notification)
-                                            @include('lms.notifications.type.' . snake_case(class_basename($notification->type)))
-                                        @endforeach
-                                    @else
+                    <div class="masthead__calendar grid--flex">
+                        <a class="grid--flex flex--align-center{!! set_active_link('calendar') !!}"" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
+                    </div>
+
+                    @role('Administrator')
+                        <div class="masthead__notifications grid--flex flex--align-center">
+                            <a class="js-header-notifications" href="javascript:;"><i class="icon--notification"></i></a>
+
+                            <div class="masthead__notifications-outer-wrap">
+                                <div class="masthead__notifications-wrap">
+                                    <ul class="masthead__notifications-list list--unstyled">
+                                        @if(!empty($notifications['general']))
+                                            @foreach($notifications['general'] as $notification)
+                                                @include('lms.notifications.type.' . snake_case(class_basename($notification->type)))
+                                            @endforeach
+                                        @else
+                                            <li class="masthead__notifications-list__item">
+                                                <a href="#" style="text-align: center"><strong>You are up-to-date</strong></a>
+                                            </li>
+                                        @endif
+
                                         <li class="masthead__notifications-list__item">
-                                            <a href="#" style="text-align: center"><strong>You are up-to-date</strong></a>
+                                            <a href="{{ route('notifications') }}" style="text-align: center"><strong>See all notifications.</strong></a>
                                         </li>
-                                    @endif
-
-                                    <li class="masthead__notifications-list__item">
-                                        <a href="{{ route('notifications') }}" style="text-align: center"><strong>See all notifications.</strong></a>
-                                    </li>
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endrole
+                    @endrole
 
-                <div class="masthead__user grid--flex">
-                    <ul class="list--inline grid--flex flex--align-center">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li class="list__item"><a href="{{ route('login') }}">Login</a></li>
-                            <li class="list__item"><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="list__item dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <i class="masthead__user-avatar">{{ substr(Auth::user()->name,0,1) }}</i><span class="masthead__user-name">{{ Auth::user()->name }}</span>
-                                </a>
-                                
-                                <div class="dropdown-menu-wrap">
-                                    <ul class="dropdown-menu list--unstyled" role="menu">
-                                        <li class="list__item"><a href="{{ route('user.profile') }}">My Profile</a></li>
-                                        {{-- <li class="list__item"><a href="#">Progress</a></li> --}}
+                    <div class="masthead__user grid--flex">
+                        <ul class="list--inline grid--flex flex--align-center">
+                            <!-- Authentication Links -->
+                            @if (Auth::guest())
+                                <li class="list__item"><a href="{{ route('login') }}">Login</a></li>
+                                <li class="list__item"><a href="{{ route('register') }}">Register</a></li>
+                            @else
+                                <li class="list__item dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <i class="masthead__user-avatar">{{ substr(Auth::user()->name,0,1) }}</i><span class="masthead__user-name">{{ Auth::user()->name }}</span>
+                                    </a>
+
+                                    <div class="dropdown-menu-wrap">
+                                        <ul class="dropdown-menu list--unstyled" role="menu">
+                                            <li class="list__item"><a href="{{ route('user.profile') }}">My Profile</a></li>
+                                            {{-- <li class="list__item"><a href="#">Progress</a></li> --}}
                                         <li class="list__item"><a href="{{ route('user.settings') }}">Settings</a></li>
                                         @role('Administrator')
                                             <li class="list__item"><a href="{{ url('admin') }}">Admin</a></li>
