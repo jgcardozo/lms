@@ -176,20 +176,6 @@ class CourseCrudController extends CrudController
 		// 	'pivot' => true
 		// ]);
 
-		$this->crud->addField([
-			'name' => 'separator',
-			'type' => 'custom_html',
-			'value' => '<h4>Coaching calls fields</h4><hr>'
-		]);
-
-		$this->crud->addField([
-			'label' => 'Coaching call title:',
-			'type' => 'text',
-			'name' => 'coachingcall_details',
-			'attribute' => 'title',
-			'model' => 'App\Models\CoachingCallDetails'
-		]);
-
 		/**
 		 * Add CRUD action button
 		 */
