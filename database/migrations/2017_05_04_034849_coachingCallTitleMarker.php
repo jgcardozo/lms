@@ -16,6 +16,10 @@ class CoachingCallTitleMarker extends Migration
         Schema::table('sessions', function (Blueprint $table) {
             $table->boolean('featured_training_coachingcall')->nullable()->default(false)->after('type');
         });
+
+        Schema::table('sessions', function (Blueprint $table) {
+            $table->integer('course_id')->unsigned()->nullable()->change();
+        });
     }
 
     /**
