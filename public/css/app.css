@@ -1051,7 +1051,7 @@ p {
   border-bottom: 0.6rem solid transparent;
 }
 
-.masthead__main-links a:hover {
+.masthead__main-links a:hover, .masthead__main-links a.active {
   border-bottom: 0.6rem solid #ffb80d;
 }
 

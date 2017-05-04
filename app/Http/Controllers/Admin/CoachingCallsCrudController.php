@@ -46,18 +46,14 @@ class CoachingCallsCrudController extends CrudController
 				'label' => 'Video duration'
 			],
 			[
-				'name' => 'lock_date',
-				'label' => 'Lock date'
-			],
-			[
-				'label' => 'Lesson',
-				'type' => 'model_function',
-				'function_name' => 'admin_lesson_link'
-			],
-			[
-				'label' => 'Intro video for course',
+				'label' => 'Course',
 				'type' => 'model_function',
 				'function_name' => 'admin_course_link'
+			],
+			[
+				'label' => 'Used as main page',
+				'type' => 'model_function',
+				'function_name' => 'featured_marker'
 			]
 		]);
 
@@ -141,12 +137,9 @@ class CoachingCallsCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
-			'label' => 'Lock the session until this date:',
-			'name' => 'lock_date',
-			'type' => 'datetime_picker',
-			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy'
-			]
+			'name' => 'featured_training_coachingcall',
+			'label' => 'Use content from this coaching call for main coaching call page?',
+			'type' => 'checkbox'
 		]);
 
 		$this->crud->addField([

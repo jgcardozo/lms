@@ -19,7 +19,7 @@ class CoachingCall extends Model
 
     protected $table = 'sessions';
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'];
+	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'learn_more', 'featured_training_coachingcall'];
 
 	/**
 	 * The "booting" method of the model.
@@ -47,16 +47,6 @@ class CoachingCall extends Model
 	public function resources()
 	{
 		return $this->belongsToMany('App\Models\Resource', 'resource_session', 'session_id');
-	}
-
-	public function lesson()
-	{
-		return $this->belongsTo('App\Models\Lesson');
-	}
-
-	public function starter_course()
-	{
-		return $this->belongsTo('App\Models\Course', 'starter_course_id', 'id');
 	}
 
 	public function usersWatched()
@@ -99,16 +89,23 @@ class CoachingCall extends Model
 
 	public function admin_course_link()
 	{
-		if(!$this->starter_course) return;
+		if(!$this->course) return;
 
 		ob_start();
 		?>
-		<a href="<?php echo route('crud.course.edit', [$this->starter_course->id]); ?>">
-			<?php echo $this->starter_course->title ?>
+		<a href="<?php echo route('crud.course.edit', [$this->course->id]); ?>">
+			<?php echo $this->course->title ?>
 		</a>
 		<?php
 		$button = ob_get_clean();
 		return $button;
+	}
+	
+	public function featured_marker()
+	{
+		if(!$this->featured_training_coachingcall) return;
+
+		echo 'Yes';
 	}
 
 	public function view_in_frontend_button()

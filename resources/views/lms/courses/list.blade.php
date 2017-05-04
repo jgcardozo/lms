@@ -9,7 +9,6 @@
 
 			<section class="grid--flex flex--column">
 			    @foreach($courses as $course)
-			    <?php //dd($course); ?>
 			    	@if($course->is_locked)
 			        	<div class="courseblock courseblock--locked" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
 

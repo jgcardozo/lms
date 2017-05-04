@@ -237,19 +237,29 @@ class Course extends Model
 		return $this->hasMany('App\Models\Session', 'starter_course_id');
 	}
 
-	public function getRouteKeyName()
-    {
-		return 'slug';
-	}
-
 	public function coachingcall()
     {
-		return $this->hasMany('App\Models\CoachingCall');
+		return $this->hasMany('App\Models\CoachingCall')->where('featured_training_coachingcall', false)->orWhere('featured_training_coachingcall', null);
+	}
+
+	public function featured_coachingcall()
+	{
+		return $this->hasOne('App\Models\CoachingCall')->withoutGlobalScopes()->where('featured_training_coachingcall', true);
+	}
+
+	public function featured_training()
+	{
+		return $this->hasOne('App\Models\Training')->withoutGlobalScopes()->where('featured_training_coachingcall', true);
 	}
 
 	public function events()
     {
 		return $this->hasMany('App\Events');
+	}
+
+	public function is_course_products()
+	{
+		return $this->hasMany('App\Models\ISCourseProductId', 'course_id', 'id');
 	}
 
 	public function sluggable()
@@ -261,9 +271,9 @@ class Course extends Model
 		];
 	}
 
-	public function is_course_products()
+	public function getRouteKeyName()
 	{
-		return $this->hasMany('App\Models\ISCourseProductId', 'course_id', 'id');
+		return 'slug';
 	}
 
 	/**

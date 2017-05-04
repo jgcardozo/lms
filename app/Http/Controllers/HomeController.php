@@ -59,7 +59,6 @@ class HomeController extends Controller
 
 	public function test()
 	{
-		z::
 		die();
 		// dd(Auth::user());
 		// Mail::to(Auth::user())->send(new \App\Mail\UserRegistered('test-pass'));
