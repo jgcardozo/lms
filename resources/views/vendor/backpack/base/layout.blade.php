@@ -32,6 +32,12 @@
 
     @yield('after_styles')
 
+    @if(Route::currentRouteName() == 'crud.resource.index')
+        <style>
+            .btn-reorder { display: none !important; }
+        </style>
+    @endif
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -135,12 +141,6 @@
     @include('backpack::inc.alerts')
 
     @yield('after_scripts')
-
-    @if(Route::currentRouteName() == 'crud.resource.index')
-        <style>
-            .btn-reorder { display: none !important; }
-        </style>
-    @endif
 
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
