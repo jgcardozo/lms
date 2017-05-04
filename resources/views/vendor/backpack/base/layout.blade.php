@@ -136,6 +136,12 @@
 
     @yield('after_scripts')
 
+    @if(Route::currentRouteName() == 'crud.resource.index')
+        <style>
+            .btn-reorder { display: none !important; }
+        </style>
+    @endif
+
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
