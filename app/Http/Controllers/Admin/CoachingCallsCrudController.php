@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Module;
 use App\Traits\BackpackCrudTrait;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\Admin\CoachingCallRequest as StoreRequest;
 use App\Http\Requests\Admin\CoachingCallRequest as UpdateRequest;
-
 
 class CoachingCallsCrudController extends CrudController
 {
