@@ -41,6 +41,11 @@ class UserController extends Controller
 			return;
 		}
 
+		if(!User::where('contact_id', $request->get('contactId'))->get()->isEmpty())
+		{
+			return;
+		}
+
 		$password = str_random(8);
 
 		$newUser = new User();
