@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-class CoachingCallRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class TrainingCrudRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

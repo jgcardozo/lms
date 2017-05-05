@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Module;
 use App\Traits\BackpackCrudTrait;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use App\Http\Requests\Admin\CoachingCallRequest as StoreRequest;
-use App\Http\Requests\Admin\CoachingCallRequest as UpdateRequest;
-
+use App\Http\Requests\Admin\TrainingCrudRequest as StoreRequest;
+use App\Http\Requests\Admin\TrainingCrudRequest as UpdateRequest;
 
 class TrainingCrudController extends CrudController
 {
@@ -138,7 +136,7 @@ class TrainingCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'featured_training_coachingcall',
-			'label' => 'Use content from this coaching call for main coaching call page?',
+			'label' => 'Use content from this training for main training page?',
 			'type' => 'checkbox'
 		]);
 
