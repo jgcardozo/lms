@@ -151,7 +151,7 @@ class Course extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
 	}
 
 	/**
@@ -162,7 +162,7 @@ class Course extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->logo_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->logo_image : '';
+		return !empty($this->logo_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->logo_image) : '';
 	}
 
 	/**

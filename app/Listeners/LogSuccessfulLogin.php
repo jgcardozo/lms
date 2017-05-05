@@ -64,6 +64,7 @@ class LogSuccessfulLogin
 
         // Check for unlocked course/module/lesson/session
         // and notify the user
+        /*
         $items = $is->checkUnlockedCourses($newTags);
         if(!empty($is))
         {
@@ -72,6 +73,7 @@ class LogSuccessfulLogin
 				$event->user->notify(new UnlockedByTag($item));
 			}
         }
+        */
 
 		// Catch the login streak
 		Streak::log(new LoginStreak());

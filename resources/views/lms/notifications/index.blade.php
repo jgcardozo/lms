@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Calendar')
+@section('title', 'Notifications')
 
 @section('content')
     <main class="grid grid--w950 spacer__top--big">

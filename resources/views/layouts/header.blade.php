@@ -43,7 +43,7 @@
                                 @endif
 
                                 @if($progress_items->featured_coachingcall)
-                                    <li class="grid--flex"><a class="grid--flex flex--align-center @if(Route::currentRouteName() == 'single.course.coaching-call') active @endif" href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Coaching Calls</a></li>
+                                    <li class="grid--flex"><a class="grid--flex flex--align-center @if(Route::currentRouteName() == 'single.course.coaching-call') active @endif" href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Q&A Calls</a></li>
                                 @endif
 
                                 @if($progress_items->facebook_group_id)
@@ -74,18 +74,24 @@
 
                     @role('Administrator')
                         <div class="masthead__notifications grid--flex flex--align-center">
-                            <a class="js-header-notifications" href="javascript:;"><i class="icon--notification"></i></a>
+                            <a class="js-header-notifications" href="javascript:;">
+                                <i class="icon--notification"></i>
+
+                                @if(!empty($notifications['data']) && $notifications['count_unread'] > 0)
+                                    <span class="header-notification-count">{{ $notifications['count_unread'] }}</span>
+                                @endif
+                            </a>
 
                             <div class="masthead__notifications-outer-wrap">
                                 <div class="masthead__notifications-wrap">
                                     <ul class="masthead__notifications-list list--unstyled">
-                                        @if(!empty($notifications['general']))
-                                            @foreach($notifications['general'] as $notification)
+                                        @if(!empty($notifications['data']))
+                                            @foreach($notifications['data']->take(5) as $notification)
                                                 @include('lms.notifications.type.' . snake_case(class_basename($notification->type)))
                                             @endforeach
                                         @else
                                             <li class="masthead__notifications-list__item">
-                                                <a href="#" style="text-align: center"><strong>You are up-to-date</strong></a>
+                                                <a href="{{ route('notifications') }}" style="text-align: center"><strong>You are up-to-date</strong></a>
                                             </li>
                                         @endif
 

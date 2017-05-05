@@ -47,7 +47,7 @@
                             @if($coaching_call->is_date_locked)
                                 <div class="lesson-sessions__item--locked-overlay"></div>
                             @endif
-                            <div class="lesson-sessions__video grid--flex">
+                            <div class="lesson-sessions__video grid--flex" @if($coaching_call->featured_image) style="background-image: url({{ $coaching_call->featured_image_url }});" @endif>
                                 @if($coaching_call->is_date_locked)
                                     <div class="course-progress grid--flex flex--align-center flex--just-center">
                                         <span class="course-progress__bar course-progress__bar--locked"></span>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
@@ -32,6 +33,25 @@ class Training extends Model
 
 		static::addGlobalScope(new OrderScope);
 		static::addGlobalScope(new SessionTypeScope(self::class));
+	}
+
+	/**
+	 * Get image from S3
+	 */
+	public function getFeaturedImageUrlAttribute()
+	{
+		// TODO: Check why this is not working
+		// $s3image = \Storage::disk('s3')->url($this->featured_image);
+
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
+	}
+
+	public function getVideoProgressAttribute()
+	{
+		$user_id = Auth::user()->id;
+		$key = 'session_' . $this->id . '_' . $user_id;
+
+		return session($key, 0);
 	}
 
 	/*
@@ -66,6 +86,31 @@ class Training extends Model
 	public function getRouteKeyName()
 	{
 		return 'slug';
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Mutators
+	|--------------------------------------------------------------------------
+	*/
+	public function setFeaturedImageAttribute($value)
+	{
+		$attribute_name = 'featured_image';
+		$disk = 's3';
+		$destination_path = 'sessions/';
+
+		$request = \Request::instance();
+		$file = $request->file($attribute_name);
+		$filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+
+		// Make the image
+		$image = \Image::make($file);
+
+		// Store the image on disk
+		\Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString(), 'public');
+
+		// Save the path to the database
+		$this->attributes[$attribute_name] = $destination_path . $filename;
 	}
 
 	/*
