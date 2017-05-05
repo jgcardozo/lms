@@ -93,7 +93,7 @@ class LessonCrudController extends CrudController
 		$this->crud->addField([
 			'name' => 'bonus_video_text',
 			'label' => 'Bonus Wistia Video Text',
-			'type' => 'textarea'
+			'type' => 'wysiwyg'
 		]);
 
 		$this->crud->addField([

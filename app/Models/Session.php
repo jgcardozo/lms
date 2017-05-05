@@ -93,7 +93,7 @@ class Session extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
 	}
 
 	public function getVideoProgressAttribute()

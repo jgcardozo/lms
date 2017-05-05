@@ -680,13 +680,30 @@ a:hover {
  * Notifications page
  */
 .notifications-list__item {
-  margin-bottom: 1rem;
+  background: #fbfbfb;
   padding-bottom: 1rem;
   border-bottom: 0.1rem solid #e4e4e4;
+  padding: 1rem 2rem;
+  border: 0.1rem solid #DCDCDC;
+  border-top: 0;
+}
+
+.notifications-list__item:first-child {
+  border-top: 0.1rem solid #DCDCDC;
 }
 
 .notifications-list__item--unread {
   position: relative;
+  background: #eff1f4;
+}
+
+.notifications-list__item p {
+  margin-bottom: 0;
+  margin: 20px 0 0 0;
+}
+
+.notifications-list__item p:first-child {
+  margin-top: 0;
 }
 
 .notifications-list__item--unread:after {
@@ -695,12 +712,28 @@ a:hover {
   top: 0;
   bottom: 0;
   margin: auto;
-  right: 0;
+  right: 1rem;
   display: block;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 100%;
   background: #62D262;
+}
+
+.header-notification-count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background: #F4511E;
+  color: #FFF;
+  font-size: 9px;
+  line-height: 15px;
+  font-weight: bold;
+  text-align: center;
 }
 
 /**

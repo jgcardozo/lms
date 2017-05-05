@@ -19,8 +19,12 @@ class NotificationsComposer
 
 		if($user = Auth::user())
 		{
-			$notifications['general'] = $user->unreadNotifications->where('type', '!=', 'App\Notifications\UnlockedByTag');
-			$notifications['gamification'] = $user->unreadNotifications->where('type', 'App\Notifications\Gamification');
+			$data = $user->notifications->where('type', '!=', 'App\Notifications\UnlockedByTag'); // All notifications
+
+			$notifications = [
+				'data' => $data,
+				'count_unread' => $data->where('read_at', null)->count()
+			];
 		}
 
 		$view->with('notifications', $notifications);

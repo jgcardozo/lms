@@ -104,9 +104,7 @@
                                 </div>
 
                                 <div class="lesson-sessions__item--bonus-content">
-                                    <h3>Module 1 - Lesson 1 - Easter Egg Video</h3>
-                                    <h5>Duration {{ $lesson->bonus_video_duration }} min</h5>
-                                    <p>{!! $lesson->bonus_video_text !!}</p>
+                                    {!! $lesson->bonus_video_text !!}
                                 </div>
                             </div>
                         </div>
