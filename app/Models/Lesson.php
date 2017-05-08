@@ -8,6 +8,7 @@ use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
+use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -20,6 +21,7 @@ class Lesson extends Model
 	use Sluggable;
 	use LogsActivity;
 	use BackpackCrudTrait;
+	use UsearableTimezone;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 

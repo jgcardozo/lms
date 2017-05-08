@@ -7,6 +7,7 @@ use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
+use App\Traits\UsearableTimezone;
 use App\Traits\BackpackUpdateLFT;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\IgnoreCoachingCallsScope;
@@ -20,6 +21,7 @@ class Session extends Model
 	use CrudTrait;
 	use Sluggable;
 	use LogsActivity;
+	use UsearableTimezone;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;

@@ -46,13 +46,15 @@ class UserController extends Controller
 			return;
 		}
 
-		$password = str_random(8);
+		$password = str_random(16);
+		$uuid = uniqid();
 
 		$newUser = new User();
 		$newUser->contact_id = $request->get('contactId');
 		$newUser->name = $request->get('email');
 		$newUser->email = $request->get('email');
 		$newUser->password = bcrypt($password);
+		$newUser->activation_code = $uuid;
 		$newUser->save();
 
 		$profile = new Profile();
@@ -63,15 +65,55 @@ class UserController extends Controller
 
 		$newUser->assignRole('Customer');
 
-		Mail::to($newUser)->send(new \App\Mail\UserRegistered($password, $newUser->email));
+		Mail::to($newUser)->send(new \App\Mail\UserRegistered($uuid, $newUser->email));
 		activity('user-registered-success')->causedBy($newUser)->log('New user with email: <strong>:causer.email</strong> registered.');
+	}
+
+	public function activateShow($uuid)
+	{
+		$user = User::where('activation_code', $uuid)->get()->first();
+
+		if(is_null($user))
+		{
+			return redirect('/');
+		}
+
+		return view('auth.passwords.activate')->with('uuid', $uuid);
+	}
+
+	public function activateIt($uuid)
+	{
+		$user = User::where('activation_code', $uuid)->get()->first();
+
+		if(is_null($user))
+		{
+			return redirect('/');
+		}
+
+		$rules = [
+			'password' => 'required|confirmed'
+		];
+
+		$validator = Validator::make(request()->all(), $rules);
+		if($validator->fails())
+		{
+			return redirect()->back()->withInput()->withErrors($validator);
+		}
+
+		$user->password = bcrypt(request()->get('password'));
+		$user->activation_code = '';
+		$user->save();
+
+		return redirect('/');
 	}
 
 	public function profile()
 	{
 		$user = Auth::user();
 
-		return view('lms.user.profile')->with(['user' => $user]);
+		$timezones = \DateTimeZone::listIdentifiers();
+
+		return view('lms.user.profile')->with(['user' => $user])->with('timezones', $timezones);
 	}
 
 	public function settings()
@@ -144,6 +186,7 @@ class UserController extends Controller
 		$user = Auth::user();
 		$user->name = $request->get('first_name') . ' ' . $request->get('last_name');
 		$user->email = $request->get('email');
+		$user->timezone = $request->has('timezone') ? $request->get('timezone') : '';
 		$user->save();
 
 		$profile = $user->profile ?: new Profile();
