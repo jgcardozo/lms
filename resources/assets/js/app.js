@@ -81,7 +81,24 @@ $(document).ready( function() {
 		$(this).next('.masthead__notifications-outer-wrap').stop().slideToggle(200);
 	});
 
-	$('.masthead__notifications-wrap').perfectScrollbar();	
+	$('.masthead__notifications-list').perfectScrollbar();
+
+	$('body').on('click', '.js-notifications-mark-as-read', function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		var $this = $(this);
+
+		$.ajax({
+			type: 'POST',
+			url: $this.data('route'),
+			data: [],
+			success: function(res) {
+				$this.parent().next().find('.masthead__notifications-list__item--unread').removeClass('masthead__notifications-list__item--unread');
+				$('body').find('.masthead__notifications__count').remove();
+			}
+		});
+	});
 
 	/**
 	 * Close menus, dropdowns, etc. on body click 

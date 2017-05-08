@@ -679,61 +679,49 @@ a:hover {
 /**
  * Notifications page
  */
-.notifications-list__item {
-  background: #fbfbfb;
-  padding-bottom: 1rem;
-  border-bottom: 0.1rem solid #e4e4e4;
-  padding: 1rem 2rem;
-  border: 0.1rem solid #DCDCDC;
+.allnotifications {
+  border: 0.1rem solid #ececec;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.allnotifications__item {
+  background: #FFFFFF;
+  padding: 1.5rem 3rem;
+  border-top: 0.1rem solid #dcdcdc;
+}
+
+.allnotifications__item:first-child {
   border-top: 0;
 }
 
-.notifications-list__item:first-child {
-  border-top: 0.1rem solid #DCDCDC;
-}
-
-.notifications-list__item--unread {
-  position: relative;
+.allnotifications__item--unread {
   background: #eff1f4;
 }
 
-.notifications-list__item p {
-  margin-bottom: 0;
-  margin: 20px 0 0 0;
+.allnotifications__item--current {
+  -webkit-transition: all 1.2s ease-out;
+  transition: all 1.2s ease-out;
+  -webkit-animation-delay: 4s;
+  animation-delay: 4s;
+  background: #FFFFFF;
 }
 
-.notifications-list__item p:first-child {
+.allnotifications__item p {
+  margin-bottom: 0;
+  margin: 20px 0 0 0;
+  color: #000000;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+.allnotifications__item p:first-child {
   margin-top: 0;
 }
 
-.notifications-list__item--unread:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  right: 1rem;
-  display: block;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 100%;
-  background: #62D262;
-}
-
-.header-notification-count {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  display: block;
-  width: 15px;
-  height: 15px;
-  border-radius: 100%;
-  background: #F4511E;
-  color: #FFF;
-  font-size: 9px;
-  line-height: 15px;
-  font-weight: bold;
-  text-align: center;
+.allnotifications__item a {
+  color: #165c79;
+  text-decoration: underline;
 }
 
 /**
@@ -1140,6 +1128,46 @@ p {
   position: relative;
 }
 
+.masthead__notifications__count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background: #F4511E;
+  color: #FFF;
+  font-size: 9px;
+  line-height: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.masthead__notifications__header {
+  background: #FFF;
+  padding: 0.7rem 1.5rem;
+  overflow: hidden;
+  border-bottom: 0.1rem solid #dcdcdc;
+}
+
+.masthead__notifications__header p, .masthead__notifications__header a {
+  display: block;
+  margin: 0;
+  color: #686868;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+}
+
+.masthead__notifications__header p {
+  float: left;
+}
+
+.masthead__notifications__header a {
+  float: right;
+  font-weight: bold;
+}
+
 .masthead__notifications-outer-wrap {
   display: none;
   position: absolute;
@@ -1167,7 +1195,6 @@ p {
 .masthead__notifications-wrap {
   position: relative;
   width: 100%;
-  max-height: 24rem;
   overflow: hidden;
   border-radius: 0.3rem;
   box-shadow: 0 0 1rem #555;
@@ -1175,21 +1202,80 @@ p {
   border-radius: 0.3rem;
 }
 
+.masthead__notifications-list {
+  max-height: 25rem;
+  overflow: hidden;
+}
+
 .masthead__notifications-list__item {
   width: 100%;
+  position: relative;
+  background: #FFFFFF;
+  padding: 1rem 2rem 1rem 2.6rem;
+  border-bottom: 0.1rem solid #dcdcdc;
+}
+
+.masthead__notifications-list__item:after {
+  content: '';
+  position: absolute;
+  top: 1.5rem;
+  margin: auto;
+  left: 1rem;
+  display: block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 100%;
+  background: #dadada;
+}
+
+.masthead__notifications-list__item--unread:after {
+  background: #f4511e;
+}
+
+.masthead__notifications-list__item--unread {
+  background: #eff1f4;
 }
 
 .masthead__notifications-list__item a {
   display: block;
-  padding: 1rem 2rem;
-  border-bottom: 0.1rem solid #dadada;
-  color: #928780;
-  font-size: 1.4rem;
+  color: #000000;
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+  margin-bottom: 0.3rem;
 }
 
-.masthead__notifications-list__item a:hover {
-  background: #f6f6f6;
-  color: #928780;
+.masthead__notifications-list__item--read-all {
+  background: #FFFFFF;
+  padding: 0.5rem 1.5rem;
+  overflow: hidden;
+}
+
+.masthead__notifications-list__item--read-all:after {
+  content: none;
+}
+
+.masthead__notifications-list__item--read-all a {
+  color: #686868;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  text-align: center;
+  border: 0;
+  padding: 0;
+}
+
+.masthead__notifications-list__item--read-all a:hover {
+  background: transparent;
+}
+
+.masthead__notifications-list__item__time {
+  color: #000000;
+  font-size: 1.1rem;
+  line-height: 1.1rem;
+  padding-left: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-size: 1rem auto;
+  background-image: url("../images/icons/icon--time.svg");
 }
 
 .masthead__calendar {

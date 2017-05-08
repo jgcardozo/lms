@@ -81,6 +81,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 		'as' => 'notifications',
 		'uses' => 'UserController@notifications'
 	]);
+
+	Route::post('notifications/mark-as-read', [
+		'as' => 'notifications.markAsRead',
+		'uses' => 'UserController@notificationsMarkAsRead'
+	]);
 });
 
 Route::group(['middleware' => ['onlyajax', 'auth']], function() {

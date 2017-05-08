@@ -188,6 +188,11 @@ class UserController extends Controller
 		return view('lms.notifications.index')->with('user_notifications', $notifications);
 	}
 
+	public function notificationsMarkAsRead()
+	{
+		Auth::user()->notifications->markAsRead();
+	}
+
 	public function autologin(Request $request)
 	{
 		if(Auth::check())
