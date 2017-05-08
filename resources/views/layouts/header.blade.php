@@ -78,25 +78,29 @@
                                 <i class="icon--notification"></i>
 
                                 @if(!empty($notifications['data']) && $notifications['count_unread'] > 0)
-                                    <span class="header-notification-count">{{ $notifications['count_unread'] }}</span>
+                                    <span class="masthead__notifications__count">{{ $notifications['count_unread'] }}</span>
                                 @endif
                             </a>
 
                             <div class="masthead__notifications-outer-wrap">
                                 <div class="masthead__notifications-wrap">
+                                    <div class="masthead__notifications__header">
+                                        <p>Notifications</p>
+                                        <a href="#" class="js-notifications-mark-as-read" data-route="{{ route('notifications.markAsRead') }}">Mark as read</a>
+                                    </div>
                                     <ul class="masthead__notifications-list list--unstyled">
                                         @if(!empty($notifications['data']))
                                             @foreach($notifications['data']->take(5) as $notification)
                                                 @include('lms.notifications.type.' . snake_case(class_basename($notification->type)))
                                             @endforeach
                                         @else
-                                            <li class="masthead__notifications-list__item">
-                                                <a href="{{ route('notifications') }}" style="text-align: center"><strong>You are up-to-date</strong></a>
+                                            <li class="masthead__notifications-list__item masthead__notifications-list__item--read-all">
+                                                <a href="{{ route('notifications') }}"><strong>You are up-to-date</strong></a>
                                             </li>
                                         @endif
 
-                                        <li class="masthead__notifications-list__item">
-                                            <a href="{{ route('notifications') }}" style="text-align: center"><strong>See all notifications.</strong></a>
+                                        <li class="masthead__notifications-list__item masthead__notifications-list__item--read-all">
+                                            <a href="{{ route('notifications') }}"><strong>See all notifications.</strong></a>
                                         </li>
                                     </ul>
                                 </div>

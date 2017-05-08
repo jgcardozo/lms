@@ -8,7 +8,7 @@
 
         <section class="grid--flex flex--column">
             @if(!empty($user_notifications['general']))
-                <div class="notifications-list">
+                <div class="allnotifications">
                     @foreach($user_notifications['general'] as $notification)
                         @include('lms.notifications.type.' . snake_case(class_basename($notification->type)) . '-full')
                     @endforeach
