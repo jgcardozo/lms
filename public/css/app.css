@@ -469,6 +469,29 @@ th {
   padding: 1px;
 }
 
+.ui-datepicker td.has-event, .ui-datepicker td.had-event {
+  position: relative;
+}
+
+.ui-datepicker td.has-event:after, .ui-datepicker td.had-event:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: #ffb80d;
+  border-radius: 100%;
+  margin-top: -3px;
+}
+
+.ui-datepicker td.had-event:after {
+  background: #d0d0d0;
+}
+
 .ui-datepicker td span,
 .ui-datepicker td a {
   display: block;
