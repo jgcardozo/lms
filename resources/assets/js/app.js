@@ -351,8 +351,23 @@ $(document).ready( function() {
 	 * Events Calendar
 	 */
 	$( "#datepicker" ).datepicker({
-      numberOfMonths: 2,
-      dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"]
+        numberOfMonths: 2,
+        dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"],
+        beforeShowDay: function(date) {
+            var now = new Date();
+
+            if($.inArray($.datepicker.formatDate('yy-mm-dd', date), $.parseJSON(window.calendar_events)) > -1)
+            {
+                if(now < date)
+                {
+                    return [true, 'has-event'];
+                }else{
+                    return [true, 'had-event'];
+                }
+            }
+
+            return [true, ''];
+        }
     });
 
     /**

@@ -90,6 +90,34 @@
   td {
     border: 0;
     padding: 1px;
+
+    &.has-event,
+    &.had-event {
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        display: block;
+        width: 4px;
+        height: 4px;
+
+        background: #ffb80d;
+        border-radius: 100%;
+        margin-top: -3px;
+      }
+    }
+
+    &.had-event {
+      &:after {
+        background: #d0d0d0;
+      }
+    }
   }
 
   td span,

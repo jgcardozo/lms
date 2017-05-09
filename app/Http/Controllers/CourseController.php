@@ -28,6 +28,10 @@ class CourseController extends Controller
 			'starterSeen' => $course->areAllStarterSeen()
 		];
 
+        if(count($course->modules) == 1) {
+            return redirect()->route('single.module', $course->modules[0]->slug);
+        }
+
 		// Popup before course start
         if(survey_check($course)) {
             $viewArgs['popupBefore'] = 'lms.survey';

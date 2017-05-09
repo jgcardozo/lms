@@ -20,6 +20,10 @@ class ModuleController extends Controller
             abort(404);
         }
 
+        if(count($module->lessons) == 1) {
+            return redirect()->route('single.lesson', $module->lessons[0]->slug);
+        }
+
         return view('lms.modules.single')->with(['module' => $module]);
     }
 

@@ -7,7 +7,7 @@
         <div class="grid grid--w950">
             <div class="login__component grid--flex">
                 <div class="login__component-left">
-                    <h2 class="login__title">Activate account</h2>
+                    <h2 class="login__title">Set Your Password</h2>
 
                     @if (session('status'))
                         <div class="alert alert-success">
@@ -44,7 +44,7 @@
 
                         <div class="login__form-group">
                             <button type="submit" class="login__form-submit">
-                                Activate user
+                                Activate Your Account
                             </button>
                         </div>
                     </form>
@@ -52,7 +52,7 @@
 
                 <div class="login__component-right">
                     <h3>We're Here To Help</h3>
-                    <p>You can reset your password at any time. Simply enter the email address that you used to register and we'll send you an email with your username and a link to reset your password so you can keep #KickingASK!</p>
+                    <p>We’re Here To Help” with “Just set and confirm your password using the form on the left. Then click “Activate Your Account” to get access to the ASK Method Training portal and start #KickingASK!</p>
                 </div>
             </div>        
         </div>

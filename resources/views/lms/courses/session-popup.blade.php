@@ -33,7 +33,7 @@
 
             @if(!empty($session->bucket_url))
                 <div class="session-single__content-learn__links">
-                    <h3>Try in to BUCKET.IO</h3>
+                    <h3>Try it in BUCKET.IO</h3>
 
                     <a class="session-single__content-learn__bucket-link" href="{{ $session->bucket_url }}" target="_blank">Take Me There</a>
                 </div>
