@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'contact_id', 'email', 'password', 'activation_code'
+        'name', 'contact_id', 'email', 'password', 'activation_code', 'timezone'
     ];
 
     /**
@@ -48,6 +48,17 @@ class User extends Authenticatable
 
 		return (bool) $this->is_tags->contains('id', $tag);
 	}
+
+	public function getTZAttribute()
+	{
+		if(!$this->timezone)
+		{
+			return config('app.timezone');
+		}
+
+		return $this->timezone;
+	}
+
 
 	/*
 	|--------------------------------------------------------------------------

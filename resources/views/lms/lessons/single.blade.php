@@ -68,8 +68,8 @@
                                     @if($session->is_completed)
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>                                    
                                     @elseif($session->is_date_locked)
-                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($session->lock_date)) }}">
-                                            Unlocks {{ date('d-m-Y', strtotime($session->lock_date)) }} 
+                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
+                                            Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}
                                         </div>
                                     @else
                                         <div style="{{ $session->video_progress >= 80 ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $session->slug) }}">Mark as completed <span class="course-progress__bar"></span></div>

@@ -62,6 +62,7 @@
                                 <div class="form-control grid--flex flex--space-between flex--align-center">
                                     <label for="company">Timezone</label>
                                     <select name="timezone">
+                                        <option value="">Select your timezone</option>
                                         @foreach($timezones as $timezone)
                                             <option value="{{ $timezone }}" {{ $user->timezone == $timezone ? 'selected' : '' }}>{{ $timezone }}</option>
                                         @endforeach

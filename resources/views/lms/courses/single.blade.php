@@ -99,7 +99,7 @@
                                     <div class="module__locked">
 
                                     @if($module->is_date_locked)
-                                            {{-- <p>Unlocks {{ date('d-m-Y', strtotime($module->lock_date)) }}</p> --}}
+                                            {{-- <p>Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}</p> --}}
                                     @endif
                                     <i class="icon--lock"></i></div>
                                 @endif

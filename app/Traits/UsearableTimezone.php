@@ -16,7 +16,7 @@ trait UsearableTimezone
 		{
 			if(!($this->{$attribute} instanceof \Carbon\Carbon))
 			{
-				return $this->asDateTime($this->{$attribute})->timezone(\Auth::user()->timezone);
+				return $this->asDateTime($this->{$attribute})->timezone(\Auth::user()->tz);
 			}
 
 			return $this->{$attribute}->timezone(\Auth::user()->timezone);

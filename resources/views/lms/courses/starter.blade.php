@@ -61,7 +61,7 @@
                                     @if($video->is_completed)
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>                                    
                                     @elseif($video->is_date_locked)
-                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($video->lock_date)) }}">
+                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
                                             Unlocks {{ date('d-m-Y', strtotime($video->lock_date)) }} 
                                         </div>
                                     @else

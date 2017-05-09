@@ -10,8 +10,8 @@ use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
+use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
-use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -22,6 +22,7 @@ class Course extends Model
 	use Sluggable;
 	use CrudTrait;
 	use LogsActivity;
+	use UsearableTimezone;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
