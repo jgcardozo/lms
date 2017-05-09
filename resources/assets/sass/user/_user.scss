@@ -94,7 +94,8 @@
       max-width: 30%;
     }
 
-    input {
+    input,
+    select {
       -ms-flex-preferred-size: 70%;
       flex-basis: 70%;
       max-width: 70%;

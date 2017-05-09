@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'contact_id', 'email', 'password'
+        'name', 'contact_id', 'email', 'password', 'activation_code', 'timezone'
     ];
 
     /**
@@ -39,6 +39,32 @@ class User extends Authenticatable
 		$this->notify(new ResetPasswordNotification($token));
 	}
 
+	public function hasTag($tag)
+	{
+		if(empty($tag))
+		{
+			return false;
+		}
+
+		return (bool) $this->is_tags->contains('id', $tag);
+	}
+
+	public function getTZAttribute()
+	{
+		if(!$this->timezone)
+		{
+			return config('app.timezone');
+		}
+
+		return $this->timezone;
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| Relations
+	|--------------------------------------------------------------------------
+	*/
 	public function profile()
     {
 		return $this->hasOne('App\Models\Profile');
@@ -57,15 +83,5 @@ class User extends Authenticatable
 	public function fb_posted()
 	{
 		return $this->belongsToMany('App\Models\Lesson', 'fb_lesson', 'user_id', 'lesson_id');
-	}
-
-	public function hasTag($tag)
-	{
-		if(empty($tag))
-		{
-			return false;
-		}
-
-		return (bool) $this->is_tags->contains('id', $tag);
 	}
 }

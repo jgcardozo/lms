@@ -35,8 +35,8 @@
 
 					<div class="events__item-featured-box grid--flex flex--column">
 						<div class="events__item-featured-box--top">
-							<h3>{{ \Carbon\Carbon::parse($events->first()->start_date)->format('F j') }}</h3>
-							<h5>{{ \Carbon\Carbon::parse($events->first()->start_date)->format('g:ia') }} ET</h5>
+                            <h3>{{ $events->first()->getDate('start_date')->format('F j') }}</h3>
+							<h5>{{ $events->first()->getDate('start_date')->format('g:ia T') }}</h5>
 						</div>
 
                         <div class="events__item-featured-box--bottom">
@@ -53,8 +53,8 @@
                             </div>
 
                             <div class="events__item--date">
-                                <h3>{{ \Carbon\Carbon::parse($event->start_date)->format('F j') }}</h3>
-                                <h5>{{ \Carbon\Carbon::parse($event->start_date)->format('g:ia') }} ET</h5>
+                                <h3>{{ $event->getDate('start_date')->format('F j') }}</h3>
+                                <h5>{{ $event->getDate('start_date')->format('g:ia T') }}</h5>
                             </div>
 
                             <div class="events__item--content grid--flex">

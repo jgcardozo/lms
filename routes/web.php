@@ -184,6 +184,15 @@ Route::post('user/register', 'UserController@register');
 
 Route::post('user/sync', 'UserController@syncUserTags');
 
+Route::get('user/register/activate/{uuid}', [
+	'as' => 'user.activate.show',
+	'uses' => 'UserController@activateShow'
+]);
+
+Route::post('user/register/activate/{uuid}', [
+	'as' => 'user.activate.do',
+	'uses' => 'UserController@activateIt'
+]);
 
 /*
 |--------------------------------------------------------------------------

@@ -16,9 +16,8 @@
 <p>For now, here are your login details <br />
     (you can update your password once you log in).</p>
 
-<p><strong>Login URL:</strong> <a href="https://learn.askmethod.com/">https://learn.askmethod.com/</a> </p>
-<p><strong>Your username</strong> {{ $email }}<br />
-    <strong>Your password</strong> {{ $password }}</p>
+<p><strong>Login URL:</strong> <a href="{{ route('user.activate.show', $uuid) }}">{{ route('user.activate.show', $uuid) }}/</a> </p>
+<p><strong>Your username</strong> {{ $email }}</p>
 
 <p>It’s important you do not share these details<br />
     with anyone else (there are special one-time only<br />

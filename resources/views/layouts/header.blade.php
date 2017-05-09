@@ -86,7 +86,7 @@
                                 <div class="masthead__notifications-wrap">
                                     <div class="masthead__notifications__header">
                                         <p>Notifications</p>
-                                        <a href="#" class="js-notifications-mark-as-read" data-route="{{ route('notifications.markAsRead') }}">Mark as read</a>
+                                        <a href="#" class="js-notifications-mark-as-read" data-route="{{ route('notifications.markAsRead') }}">Mark all as read</a>
                                     </div>
                                     <ul class="masthead__notifications-list list--unstyled">
                                         @if(!empty($notifications['data']))

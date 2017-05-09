@@ -14,7 +14,7 @@
 
                         <div class="courseblock--locked-sign"
                             @if($course->is_date_locked)
-                                data-date=" until {{ date('d-m-Y', strtotime($course->lock_date)) }}"
+                                data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}"
                             @endif
                         ><i class="icon--lock"></i></div> 
 

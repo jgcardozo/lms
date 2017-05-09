@@ -11,7 +11,7 @@ class UserRegistered extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $password;
+    protected $uuid;
     protected $mail;
 
     /**
@@ -19,9 +19,9 @@ class UserRegistered extends Mailable
      *
      * @return void
      */
-    public function __construct($password, $email)
+    public function __construct($uuid, $email)
     {
-        $this->password = $password;
+        $this->uuid = $uuid;
 		$this->mail = $email;
     }
 
@@ -32,7 +32,7 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        return $this->view('lms.mail.newuser')->with('password', $this->password)->with('email', $this->mail)
+        return $this->view('lms.mail.newuser')->with('uuid', $this->uuid)->with('email', $this->mail)
             ->from('contact@askmethod.com', 'Ryan Levesque')
             ->subject('IMPORTANT: Login Details ASK Method Masterclass! (Save this Email)');
     }

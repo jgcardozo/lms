@@ -59,6 +59,16 @@
                                     <input type="text" id="company" name="company" value="{{ old('company', @$user->profile->company) }}" />
                                 </div>
 
+                                <div class="form-control grid--flex flex--space-between flex--align-center">
+                                    <label for="company">Timezone</label>
+                                    <select name="timezone">
+                                        <option value="">Select your timezone</option>
+                                        @foreach($timezones as $timezone)
+                                            <option value="{{ $timezone }}" {{ $user->timezone == $timezone ? 'selected' : '' }}>{{ $timezone }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 {{ csrf_field() }}
 
                                 <div class="form-control--submit grid--flex flex--end">

@@ -141,7 +141,7 @@ class CourseCrudController extends CrudController
 		$tags = [];
 		foreach($_tags as $tag)
 		{
-			$tags[$tag->id] = $tag->title;
+			$tags[$tag->id] = sprintf('%s - %s' ,$tag->id, $tag->title);
 		}
 
 		$this->crud->addField([

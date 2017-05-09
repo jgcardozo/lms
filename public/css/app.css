@@ -3091,7 +3091,8 @@ p {
   max-width: 30%;
 }
 
-.user-settings .form-control input {
+.user-settings .form-control input,
+.user-settings .form-control select {
   -ms-flex-preferred-size: 70%;
   flex-basis: 70%;
   max-width: 70%;
