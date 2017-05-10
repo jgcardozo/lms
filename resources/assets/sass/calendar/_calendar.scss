@@ -16,6 +16,17 @@
     background: $brand-white;
     padding: 2rem 0;
     margin: 0 0 0.3rem;
+    position: relative;
+
+    &--locked {
+      background: rgba(185, 180, 176, 0.8);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+    }
 
     h2 {
       font-family: $font-family-sans-serif;

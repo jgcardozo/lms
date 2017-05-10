@@ -16,6 +16,9 @@
 				</div>
 
 				<div class="events__item-featured grid--flex flex--space-between">
+                    @if($events->first()->is_locked)
+                        <div class="events__item--locked"></div>
+                    @endif
 					<div class="events__item-featured--overlay"></div>
 
 					<div class="events__item-featured-box grid--flex flex--column">
@@ -40,7 +43,7 @@
 						</div>
 
                         <div class="events__item-featured-box--bottom">
-                            <a class="events__item-featured-link js-open-event" href="{{ route('event.show', $events->first()->id) }}" target="_blank">View</a>
+                            <a class="events__item-featured-link {{ $events->first()->is_locked ? 'js-open-event' : '' }}" href="{{ route('event.show', $events->first()->id) }}" target="_blank">View</a>
                         </div>
 					</div>
 				</div>
@@ -48,6 +51,9 @@
                 @foreach($events as $event)
                     @if(!$loop->first)
                         <div class="events__item grid--flex flex--space-between">
+                            @if($event->is_locked)
+                                <div class="events__item--locked"></div>
+                            @endif
                             <div class="events__item--activity grid--flex flex--align-center flex--just-center">
                                 <div class="events__item--activity-active"></div>
                             </div>
@@ -74,7 +80,7 @@
                             </div>
                             
                             <div class="events__item--link grid--flex flex--align-center flex--end">
-                                <a class="events__item--link-view js-open-event" href="{{ route('event.show', $event->id) }}">View</a>
+                                <a class="events__item--link-view {{ !$event->is_locked ? 'js-open-event' : '' }}" href="{{ route('event.show', $event->id) }}">View</a>
                             </div>                           
                         </div>
                     @endif
