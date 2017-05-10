@@ -43,6 +43,8 @@ class UserController extends Controller
 
 		if(!User::where('contact_id', $request->get('contactId'))->get()->isEmpty())
 		{
+			$user = User::where('contact_id', $request->get('contactId'))->get()->first();
+			$user->syncIsTags();
 			return;
 		}
 
@@ -286,24 +288,6 @@ class UserController extends Controller
 		}
 
 		// Sync Infusionsoft user tags
-		$is = new InfusionsoftController($user);
-		$newTags = $is->sync();
-
-		// Log the new tags
-		if(!empty($newTags))
-		{
-			Log::info('User tags updated. | ID: ' . implode(', ', $newTags));
-		}
-
-		// Check for unlocked course/module/lesson/session
-		// and notify the user
-		$items = $is->checkUnlockedCourses($newTags);
-		if(!empty($is))
-		{
-			foreach($items as $item)
-			{
-				$user->notify(new UnlockedByTag($item));
-			}
-		}
+		$user->syncIsTags();
 	}
 }

@@ -30,31 +30,32 @@
                             @endif
 
                             @if(Session::has('errors'))
-                                <div class="ask-alert ask-alert--error">{{ Session::get('message') }}</div>
+                                <div class="ask-alert ask-alert--critical">Please fill the required fields</div>
                             @endif
 
                             <form class="block" method="POST" action="{{ route('user.profile') }}">
-                                <div class="form-control grid--flex flex--space-between flex--align-center">
+
+                                <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('first_name') ? ' has-error' : '' }}">
                                     <label for="first_name">First Name</label>
                                     <input type="text" id="first_name" name="first_name" value="{{ old('first_name', @$user->profile->first_name) }}" />
                                 </div>
 
-                                <div class="form-control grid--flex flex--space-between flex--align-center">
+                                <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('last_name') ? ' has-error' : '' }}">
                                     <label for="last_name">Last Name</label>
                                     <input type="text" id="last_name" name="last_name" value="{{ old('last_name', @$user->profile->last_name) }}" />
                                 </div>
 
-                                <div class="form-control grid--flex flex--space-between flex--align-center">
+                                <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="email">Email</label>
                                     <input type="text" id="email" name="email" value="{{ old('email', $user->email) }}" />
                                 </div>
 
-                                <div class="form-control grid--flex flex--space-between flex--align-center">
+                                <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('phone1') ? ' has-error' : '' }}">
                                     <label for="phone1">Phone</label>
                                     <input type="text" id="phone1" name="phone1" value="{{ old('phone1', @$user->profile->phone1) }}" />
                                 </div>
 
-                                <div class="form-control grid--flex flex--space-between flex--align-center">
+                                <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('company') ? ' has-error' : '' }}">
                                     <label for="company">Company</label>
                                     <input type="text" id="company" name="company" value="{{ old('company', @$user->profile->company) }}" />
                                 </div>

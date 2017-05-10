@@ -106,6 +106,11 @@
       font-size: 1.4rem;
       color: #4a494a;
     }
+    
+    &.has-error input,
+    &.has-error select {
+      border-color: #DB3333 !important;
+    }
   }
 
   .form-control--submit {

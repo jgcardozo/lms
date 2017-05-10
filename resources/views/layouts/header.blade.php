@@ -35,7 +35,9 @@
 
                     <div class="masthead__main-links grid--flex">
                         <ul class="list--inline grid--flex">
-                            <li class="grid--flex"><a href="{{ route('single.course.starter', $progress_items->slug) }}" class="grid--flex flex--align-center {{ survey_check($progress_items) ? 'js-open-surveyPopup' : '' }}">Welcome</a></li>
+                            @if(!$progress_items->starter_videos->isEmpty())
+                                <li class="grid--flex"><a href="{{ route('single.course.starter', $progress_items->slug) }}" class="grid--flex flex--align-center {{ survey_check($progress_items) ? 'js-open-surveyPopup' : '' }}">Welcome</a></li>
+                            @endif
 
                             @if(isset($progress_items))
                                 @if($progress_items->training_fields)

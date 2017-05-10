@@ -3128,6 +3128,11 @@ p {
   color: #4a494a;
 }
 
+.user-settings .form-control.has-error input,
+.user-settings .form-control.has-error select {
+  border-color: #DB3333 !important;
+}
+
 .user-settings .form-control--submit {
   margin-top: 4rem;
 }
