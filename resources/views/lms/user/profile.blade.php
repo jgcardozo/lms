@@ -36,22 +36,22 @@
                             <form class="block" method="POST" action="{{ route('user.profile') }}">
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                    <label for="first_name">First Name</label>
+                                    <label for="first_name">First Name<sup>*</sup></label>
                                     <input type="text" id="first_name" name="first_name" value="{{ old('first_name', @$user->profile->first_name) }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                    <label for="last_name">Last Name</label>
+                                    <label for="last_name">Last Name<sup>*</sup></label>
                                     <input type="text" id="last_name" name="last_name" value="{{ old('last_name', @$user->profile->last_name) }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label for="email">Email</label>
+                                    <label for="email">Email<sup>*</sup></label>
                                     <input type="text" id="email" name="email" value="{{ old('email', $user->email) }}" />
                                 </div>
 
                                 <div class="form-control grid--flex flex--space-between flex--align-center {{ $errors->has('phone1') ? ' has-error' : '' }}">
-                                    <label for="phone1">Phone</label>
+                                    <label for="phone1">Phone<sup>*</sup></label>
                                     <input type="text" id="phone1" name="phone1" value="{{ old('phone1', @$user->profile->phone1) }}" />
                                 </div>
 
@@ -69,6 +69,8 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <p style="text-align: right">*required</p>
 
                                 {{ csrf_field() }}
 
