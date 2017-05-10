@@ -15,9 +15,11 @@
                 <div class="course-single__content-wrap grid--flex flex--space-between">
                     <div class="single-header-block">
                         <div class="single-header-block__step-back">
-                            <a href="{{ route('single.course', $module->course->slug) }}">
-                                Back to <strong>{!! $module->course->title !!}</strong>
-                            </a>
+                            @if(count($module->course->modules) > 1)
+                                <a href="{{ route('single.course', $module->course->slug) }}">
+                                    Back to <strong>{!! $module->course->title !!}</strong>
+                                </a>
+                            @endif
                         </div>
 
                         <h2 class="single-header-block__title">{{ $module->title }}</h2>

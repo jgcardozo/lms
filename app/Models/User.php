@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Traits\ISLock;
 use Backpack\CRUD\CrudTrait;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use App\Http\Controllers\InfusionsoftController;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -57,6 +59,38 @@ class User extends Authenticatable
 		}
 
 		return $this->timezone;
+	}
+
+	/**
+	 * Syncs new IS tags
+	 *
+	 * @return (array) New tags attached
+	 */
+	public function syncIsTags()
+	{
+		// Sync Infusionsoft user tags
+		$is = new InfusionsoftController($this);
+		$newTags = $is->sync();
+
+		if(!empty($newTags))
+		{
+			Log::info('User tags updated. | ID: ' . implode(', ', $newTags));
+		}
+
+		// Check for unlocked course/module/lesson/session
+		// and notify the user
+		/*
+		$items = $is->checkUnlockedCourses($newTags);
+		if(!empty($is))
+		{
+			foreach($items as $item)
+			{
+				$event->user->notify(new UnlockedByTag($item));
+			}
+		}
+		*/
+
+		return $is->sync();
 	}
 
 
