@@ -19,6 +19,11 @@ class Event extends Model
 
 	protected $fillable = ['title', 'short_description', 'description', 'start_date', 'end_date', 'event_image', 'url', 'course_id'];
 
+	public function getIsLockedAttribute()
+	{
+		return $this->course->isLocked;
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
