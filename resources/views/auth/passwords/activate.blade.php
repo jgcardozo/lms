@@ -52,7 +52,7 @@
 
                 <div class="login__component-right">
                     <h3>We're Here To Help</h3>
-                    <p>We’re Here To Help” with “Just set and confirm your password using the form on the left. Then click “Activate Your Account” to get access to the ASK Method Training portal and start #KickingASK!</p>
+                    <p>Just set and confirm your password using the form on the left. Then click “Activate Your Account” to get access to the ASK Method Training portal and start #KickingASK!</p>
                 </div>
             </div>        
         </div>
