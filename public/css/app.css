@@ -2920,11 +2920,12 @@ p {
   color: #fff;
   border: 0;
   border-radius: 0.5rem;
-  width: 19rem;
+  min-width: 19rem;
   height: 5rem;
   text-transform: uppercase;
   font-size: 1.6rem;
   font-weight: 700;
+  padding: 0 3rem;
 }
 
 @media only screen and (max-width: 450px) {
