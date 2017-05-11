@@ -11970,19 +11970,54 @@ $(document).ready(function () {
 	$("#datepicker").datepicker({
 		numberOfMonths: 2,
 		dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"],
-		beforeShowDay: function beforeShowDay(date) {
-			var now = new Date();
+		beforeShowDay: calendarMarkDays
+	});
 
-			if ($.inArray($.datepicker.formatDate('yy-mm-dd', date), $.parseJSON(window.calendar_events)) > -1) {
-				if (now < date) {
-					return [true, 'has-event'];
-				} else {
-					return [true, 'had-event'];
-				}
+	function calendarMarkDays(date) {
+		var now = new Date();
+
+		if ($.inArray($.datepicker.formatDate('yy-mm-dd', date), $.parseJSON(window.calendar_events)) > -1) {
+			if (now < date) {
+				return [true, 'has-event'];
+			} else {
+				return [true, 'had-event'];
 			}
-
-			return [true, ''];
 		}
+
+		return [true, ''];
+	}
+
+	function updateCalendarMarkers(dates) {
+		$("#datepicker").find('.has-event').removeClass('has-event');
+		$("#datepicker").find('.had-event').removeClass('had-event');
+
+		window.calendar_events = dates;
+
+		$("#datepicker").datepicker('option', 'beforeShowDay', calendarMarkDays);
+	}
+
+	$('body').on('change', '.js-calendar-filter', function (e) {
+		e.preventDefault();
+
+		var $this = $(this),
+		    course = $this.find('option:selected').val();
+
+		var ajaxData = {
+			course: course
+		};
+
+		$('body').createLoading();
+
+		$.ajax({
+			type: 'GET',
+			url: $this.data('route'),
+			data: ajaxData,
+			success: function success(res) {
+				$('body').find('.events').replaceWith(res.view);
+				updateCalendarMarkers(res.events);
+				$('body').removeLoading();
+			}
+		});
 	});
 
 	/**

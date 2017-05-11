@@ -3544,6 +3544,31 @@ p {
 /**
  * Calendar
  */
+.calendar__filter {
+  text-align: right;
+  margin-bottom: 1.5rem;
+}
+
+.calendar__filter p,
+.calendar__filter select {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.calendar__filter p {
+  color: #928780;
+  font-size: 1.2rem;
+  margin: 0 1.5rem 0 0;
+}
+
+.calendar__filter select {
+  border: 0;
+  background: transparent;
+  color: #4d73a9;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
 .events__count {
   background: #fff;
   padding: 1.5rem 3rem;

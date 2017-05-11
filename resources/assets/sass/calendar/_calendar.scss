@@ -1,3 +1,31 @@
+.calendar {
+
+  &__filter {
+    text-align: right;
+    margin-bottom: 1.5rem;
+
+    p,
+    select {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    p {
+      color: #928780;
+      font-size: 1.2rem;
+      margin: 0 1.5rem 0 0;
+    }
+
+    select {
+      border: 0;
+      background: transparent;
+      color: #4d73a9;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+  }
+}
+
 .events {
 
   &__count {
