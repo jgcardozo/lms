@@ -113,7 +113,7 @@ class UserController extends Controller
 	{
 		$user = Auth::user();
 
-		$timezones = \DateTimeZone::listIdentifiers();
+		$timezones = \timezoneList();
 
 		return view('lms.user.profile')->with(['user' => $user])->with('timezones', $timezones);
 	}

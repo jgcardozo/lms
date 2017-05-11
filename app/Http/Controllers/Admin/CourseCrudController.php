@@ -114,7 +114,7 @@ class CourseCrudController extends CrudController
 
 		$this->crud->addField([
 			'label' => 'Lock tags:',
-			'type' => 'select2_multiple',
+			'type' => 'select2_multipleIsTags',
 			'name' => 'lock_tags',
 			'entity' => 'tags',
 			'attribute' => 'title',
