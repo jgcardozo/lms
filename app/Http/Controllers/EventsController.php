@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -15,8 +16,32 @@ class EventsController extends Controller
     public function index()
     {
         $events = Event::get();
+        $courses = Course::get();
 
-		return view('lms.calendar.index')->with('events', $events);
+		return view('lms.calendar.index')->with('events', $events)->with('courses', $courses);
+    }
+
+    public function filterCourse(Request $request)
+    {
+        if($request->has('course'))
+        {
+            $course_id = $request->get('course');
+            $course = Course::find($course_id);
+
+			if(is_null($course))
+			{
+				$events = Event::get();
+			}else{
+				$events = $course->events;
+			}
+
+            return [
+				'view' => (string) view('lms.calendar.inc.index')->with('events', $events),
+				'events' => $events->pluck('start_date')->map(function($item, $key) { return date('Y-m-d', strtotime($item)); })->toJson()
+			];
+        }
+
+        return false;
     }
 
     /**

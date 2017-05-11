@@ -119,6 +119,11 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 		'as' => 'alert.view',
 		'uses' => 'UserController@viewAlert'
 	]);
+
+	Route::get('calendar/course', [
+		'as' => 'calendar.filter.course',
+		'uses' => 'EventsController@filterCourse'
+	]);
 });
 
 Route::post('lesson/{lesson}/post-to-facebook', [
@@ -129,7 +134,8 @@ Route::post('lesson/{lesson}/post-to-facebook', [
 
 Route::get('calendar/{event}', [
 	'as' => 'event.show',
-	'uses' => 'EventsController@show'
+	'uses' => 'EventsController@show',
+	'middleware' => ['auth', 'onlyajax']
 ]);
 
 /**

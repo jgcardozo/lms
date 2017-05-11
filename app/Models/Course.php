@@ -255,7 +255,7 @@ class Course extends Model
 
 	public function events()
     {
-		return $this->hasMany('App\Events');
+		return $this->hasMany('App\Models\Event');
 	}
 
 	public function is_course_products()
