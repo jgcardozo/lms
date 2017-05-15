@@ -630,7 +630,23 @@ $(document).ready( function() {
             success: function(res) {
                 frm.removeClass('doing');
                 $('body').removeLoading();
-                console.log( res );
+
+				if(res.status)
+				{
+					$('body')
+						.find('.ask-alert')
+						.removeClass('ask-alert--critical')
+						.addClass('ask-alert--success')
+						.show()
+						.html(res.message);
+				}else{
+					$('body')
+						.find('.ask-alert')
+						.removeClass('ask-alert--success')
+						.addClass('ask-alert--critical')
+						.show()
+						.html(res.message);
+				}
             }
         });
 	});

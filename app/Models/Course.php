@@ -166,6 +166,24 @@ class Course extends Model
 		return !empty($this->logo_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->logo_image) : '';
 	}
 
+	public function getCreditCardAttribute()
+	{
+		$user = Auth::user();
+
+		$cc_id = \DB::table('payment_card_user')
+				->select('cc_id')
+				->where('user_id', $user->id)
+				->where('course_id', $this->id)
+				->first();
+
+		if(!empty($cc_id))
+		{
+			return $cc_id->cc_id;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Setup all billing details attached
 	 * to this course from Infusionsoft

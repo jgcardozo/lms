@@ -125,7 +125,7 @@ class UserController extends Controller
 	
 	public function billing()
 	{
-		return view('lms.user.billing');
+		// return view('lms.user.billing');
 
 		$userCards = InfusionsoftFlow::getCreditCards(Auth::user()->contact_id);
 		$courses = Course::get();
@@ -162,10 +162,11 @@ class UserController extends Controller
 		}
 
 		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
-		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 6, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 10, 1, 3, (double)0, $datetime, $datetime, 7, 1);
 
 		return response()->json([
-			'status' => true
+			'status' => true,
+			'message' => 'Your credit card has been successfully processed.'
 		]);
 	}
 
