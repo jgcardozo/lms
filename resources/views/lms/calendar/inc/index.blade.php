@@ -1,11 +1,11 @@
 <div class="events">
     <div class="events__count">
-        <p>Showing <strong>{{ count($events) }} {{ count($events) > 1 ? 'Activities' : 'Activity'}}</strong></p>
+        <p>Showing <strong>{{ count($futureEvents) }} {{ count($futureEvents) > 1 ? 'Activities' : 'Activity'}}</strong></p>
     </div>
 
-    @if(!$events->isEmpty())
+    @if(!$futureEvents->isEmpty())
         <div class="events__item-featured grid--flex flex--space-between">
-            @if($events->first()->is_locked)
+            @if($futureEvents->first()->is_locked)
                 <div class="events__item--locked"></div>
             @endif
             <div class="events__item-featured--overlay"></div>
@@ -14,30 +14,30 @@
                 <div class="events__item-featured-box--top grid--flex flex--align-center">
                     <img class="events__item-featured-logo" src="{{ asset('images/icons/logo-big.svg') }}" alt="Course Event Name">
                     <div class="events__item-featured-title">
-                        <h2>{!! bold_first_word($events->first()->course->title) !!}</h2>
+                        <h2>{!! bold_first_word($futureEvents->first()->course->title) !!}</h2>
                     </div>
                 </div>
 
                 <div class="events__item-featured-box--bottom">
-                    <h2>{{ $events->first()->title }}</h2>
-                    <p>{!! $events->first()->short_description !!}</p>
+                    <h2>{{ $futureEvents->first()->title }}</h2>
+                    <p>{!! $futureEvents->first()->short_description !!}</p>
                 </div>
 
             </div>
 
             <div class="events__item-featured-box grid--flex flex--column">
                 <div class="events__item-featured-box--top">
-                    <h3>{{ $events->first()->getDate('start_date')->format('F j') }}</h3>
-                    <h5>{{ $events->first()->getDate('start_date')->format('g:ia T') }}</h5>
+                    <h3>{{ $futureEvents->first()->getDate('start_date')->format('F j') }}</h3>
+                    <h5>{{ $futureEvents->first()->getDate('start_date')->format('g:ia T') }}</h5>
                 </div>
 
                 <div class="events__item-featured-box--bottom">
-                    <a class="events__item-featured-link {{ !$events->first()->is_locked ? 'js-open-event' : '' }}" href="{{ route('event.show', $events->first()->id) }}" target="_blank">View</a>
+                    <a class="events__item-featured-link {{ !$futureEvents->first()->is_locked ? 'js-open-event' : '' }}" href="{{ route('event.show', $futureEvents->first()->id) }}" target="_blank">View</a>
                 </div>
             </div>
         </div>
 
-        @foreach($events as $event)
+        @foreach($futureEvents as $event)
             @if(!$loop->first)
                 <div class="events__item grid--flex flex--space-between">
                     @if($event->is_locked)

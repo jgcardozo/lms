@@ -353,8 +353,35 @@ $(document).ready( function() {
 	$( "#datepicker" ).datepicker({
         numberOfMonths: 2,
         dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"],
-        beforeShowDay: calendarMarkDays
+        beforeShowDay: calendarMarkDays,
+        onSelect: changeDate
     });
+
+    function changeDate(_date)
+    {
+        var date = new Date(_date);
+
+        if($.inArray($.datepicker.formatDate('yy-mm-dd', date), $.parseJSON(window.calendar_events)) === -1)
+        {
+            return;
+        }
+
+        var ajaxData = {
+            date: _date
+        };
+
+        $('body').createLoading();
+
+        $.ajax({
+            type: 'GET',
+            url: 'calendar/date',
+            data: ajaxData,
+            success: function(res) {
+                $('body').find('.events').replaceWith(res);
+                $('body').removeLoading();
+            }
+        });
+    }
 
     function calendarMarkDays(date)
     {
