@@ -38,6 +38,6 @@
 
 @section('scripts_before')
     <script>
-        window.calendar_events = '{!! $events->pluck('start_date')->map(function($item, $key) { return date('Y-m-d', strtotime($item)); })->toJson() !!}';
+        window.calendar_events = '{!! $allEvents->pluck('start_date')->map(function($item, $key) { return date('Y-m-d', strtotime($item)); })->toJson() !!}';
     </script>
 @endsection

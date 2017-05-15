@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -18,7 +19,10 @@ class EventsController extends Controller
         $events = Event::get();
         $courses = Course::get();
 
-		return view('lms.calendar.index')->with('events', $events)->with('courses', $courses);
+		return view('lms.calendar.index')
+				->with('allEvents', $events)
+				->with('futureEvents', $events->where('start_date', '>', Carbon::now()->startOfDay()))
+				->with('courses', $courses);
     }
 
     public function filterCourse(Request $request)
@@ -30,19 +34,40 @@ class EventsController extends Controller
 
 			if(is_null($course))
 			{
-				$events = Event::get();
+				$allEvents = Event::get();
 			}else{
-				$events = $course->events;
+				$allEvents = $course->events;
 			}
 
+			$futureEvents = $allEvents->where('start_date', '>', Carbon::now()->startOfDay());
+
             return [
-				'view' => (string) view('lms.calendar.inc.index')->with('events', $events),
-				'events' => $events->pluck('start_date')->map(function($item, $key) { return date('Y-m-d', strtotime($item)); })->toJson()
+				'view' => (string) view('lms.calendar.inc.index')->with('futureEvents', $futureEvents),
+				'events' => $allEvents->pluck('start_date')->map(function($item, $key) { return date('Y-m-d', strtotime($item)); })->toJson()
 			];
         }
 
         return false;
     }
+
+	public function filterDate(Request $request)
+	{
+		if($request->has('date'))
+		{
+			$date = $request->get('date');
+
+			$events = Event::whereBetween(
+								'start_date',
+								[
+									Carbon::parse($date . ' 00:00:00')->toDateTimeString(),
+									Carbon::parse($date . ' 23:59:59')->toDateTimeString()
+								])->get();
+
+			return view('lms.calendar.inc.index')->with('futureEvents', $events);
+		}
+
+		return false;
+	}
 
     /**
      * Show the form for creating a new resource.

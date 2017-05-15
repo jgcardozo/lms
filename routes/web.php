@@ -124,6 +124,11 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 		'as' => 'calendar.filter.course',
 		'uses' => 'EventsController@filterCourse'
 	]);
+
+	Route::get('calendar/date', [
+		'as' => 'calendar.filter.date',
+		'uses' => 'EventsController@filterDate'
+	]);
 });
 
 Route::post('lesson/{lesson}/post-to-facebook', [
