@@ -276,12 +276,12 @@ class UserController extends Controller
 
 	public function syncUserTags(Request $request)
 	{
-		if(!request()->has('contact_id'))
+		if(!request()->has('contactId'))
 		{
 			return false;
 		}
 
-		$user = User::where('contact_id', request()->get('contact_id'))->get()->first();
+		$user = User::where('contact_id', request()->get('contactId'))->get()->first();
 		if(empty($user))
 		{
 			return false;
