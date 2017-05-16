@@ -604,7 +604,8 @@ $(document).ready( function() {
         var ccNum = frm.find('[name="cc_number"]'),
             ccName = frm.find('[name="nameoncard"]'),
             ccExpiry = frm.find('[name="cc_expiration"]'),
-            ccAddress = frm.find('[name="billing_address"]');
+            ccAddress = frm.find('[name="billing_address"]'),
+			course_id = frm.closest('.billing-course').attr('id').replace( /^\D+/g, '');
 
         var validCC = $.payment.validateCardNumber(ccNum.val());
         if (!validCC) {
@@ -614,10 +615,19 @@ $(document).ready( function() {
 
         var ccExpiryExtracted = ccExpiry.payment('cardExpiryVal');
 
+        if(ccName.val().length == 0)
+        {
+            alert('Enter your name on card');
+            return false;
+        }
+
         var ajaxData = {
+            cc_name: ccName.val(),
+            cc_address: ccAddress.val(),
             cc_number: ccNum.val(),
             cc_expiry_month: ccExpiryExtracted.month,
-            cc_expiry_year: ccExpiryExtracted.year
+            cc_expiry_year: ccExpiryExtracted.year,
+			course_id: course_id
         };
 
         frm.addClass('doing');

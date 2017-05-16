@@ -209,22 +209,26 @@ class Course extends Model
 			$this->billing_invoice_id = (int) $invoice['Id'];
 
 			// Try to find out the credit card used for this payment plan on this invoice
-			$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
-			if(!empty($payments))
+			$_cc_id = $this->credit_card;
+			if(!$_cc_id)
 			{
-				$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
-				if(!empty($charges))
+				$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
+				if(!empty($payments))
 				{
-					$this->billing_ccard = (int) $charges[0]['CCId'];
-
-					if(!empty($userCards))
+					$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
+					if(!empty($charges))
 					{
-						$ccardIndex = array_search($this->billing_ccard, array_column($userCards, 'Id'));
-						if($ccardIndex !== false)
-						{
-							$this->billing_ccard = $userCards[$ccardIndex];
-						}
+						$_cc_id = (int) $charges[0]['CCId'];
 					}
+				}
+			}
+
+			if(!empty($userCards))
+			{
+				$ccardIndex = array_search($_cc_id, array_column($userCards, 'Id'));
+				if($ccardIndex !== false)
+				{
+					$this->billing_ccard = $userCards[$ccardIndex];
 				}
 			}
 

@@ -144,6 +144,8 @@ class UserController extends Controller
 	public function changeCreditCard(Request $request, $invoice_id)
 	{
 		$creditCard = (object) [
+			'cc_name' => $request->get('cc_name'),
+			'cc_address' => $request->get('cc_address'),
 			'cc_number' => $request->get('cc_number'),
 			'cc_expiry_month' => $request->get('cc_expiry_month'),
 			'cc_expiry_year' => $request->get('cc_expiry_year'),
@@ -163,6 +165,8 @@ class UserController extends Controller
 
 		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
 		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 10, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+
+		addISCreditCard(Auth::user()->id, $request->get('course_id'), $newCC->id);
 
 		return response()->json([
 			'status' => true,

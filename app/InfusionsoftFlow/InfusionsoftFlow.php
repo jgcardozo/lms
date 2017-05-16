@@ -231,11 +231,11 @@ class InfusionsoftFlow
 		$creditCardValues = [
 			'ContactId' => $user->contact_id,
 			'CardNumber' => $creditCard->cc_number,
-			'ExpirationMonth' => $creditCard->cc_expiry_month,
+			'ExpirationMonth' => $creditCard->cc_expiry_month <= 9 ? '0' . $creditCard->cc_expiry_month : $creditCard->cc_expiry_month,
 			'ExpirationYear' => $creditCard->cc_expiry_year,
 			'CardType' => ucfirst($this->creditCardType($creditCard->cc_number)),
-			'NameOnCard' => $user->name,
-			'BillAddress1' => $user->profile->address,
+			'NameOnCard' => !empty($creditCard->cc_name) ? $creditCard->cc_name : $user->name,
+			'BillAddress1' => !empty($creditCard->cc_address) ? $creditCard->cc_address : $user->profile->address,
 			'BillCity' => $user->profile->city,
 			'BillCountry' => $user->profile->country
 		];
