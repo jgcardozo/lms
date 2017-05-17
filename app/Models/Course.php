@@ -27,7 +27,13 @@ class Course extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag'];
+	protected $fillable = [
+		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag'
+	];
+
+	protected $dates = [
+		'user_lock_date'
+	];
 
 	/**
 	 * Billing attributes

@@ -6,6 +6,7 @@ use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
 use App\Traits\UsearableTimezone;
@@ -20,12 +21,19 @@ class Module extends Model
 	use CrudTrait;
 	use Sluggable;
 	use LogsActivity;
+	use LockViaUserDate;
 	use UsearableTimezone;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
+	protected $fillable = [
+		'title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'
+	];
+
+	protected $dates = [
+		'user_lock_date'
+	];
 
 	/**
 	 * The "booting" method of the model.
@@ -117,24 +125,6 @@ class Module extends Model
 	}
 
 	/**
-	 * Check if the module is locked
-	 * with future date
-	 *
-	 * @return bool
-	 */
-	public function getIsDateLockedAttribute()
-	{
-		if(!empty($this->lock_date)) {
-			$expire = strtotime($this->lock_date);
-			$today = strtotime('today midnight');
-
-			return $today >= $expire ? false : true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Check if module is locked by any reason
 	 *
 	 * @return bool Returns true if is locked
@@ -177,6 +167,8 @@ class Module extends Model
 
 		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
 	}
+
+	
 
 	/*
 	|--------------------------------------------------------------------------

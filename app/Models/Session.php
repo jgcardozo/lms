@@ -6,6 +6,7 @@ use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
 use App\Traits\UsearableTimezone;
@@ -21,12 +22,19 @@ class Session extends Model
 	use CrudTrait;
 	use Sluggable;
 	use LogsActivity;
+	use LockViaUserDate;
 	use UsearableTimezone;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'];
+	protected $fillable = [
+		'title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'
+	];
+
+	protected $dates = [
+		'user_lock_date'
+	];
 
 	/**
 	 * The "booting" method of the model.
@@ -70,24 +78,6 @@ class Session extends Model
 	}
 
 	/**
-	 * Check if the module is locked
-	 * with future date
-	 *
-	 * @return bool
-	 */
-	public function getIsDateLockedAttribute()
-    {
-		if(!empty($this->lock_date)) {
-			$expire = strtotime($this->lock_date);
-			$today = strtotime('today midnight');
-
-			return $today >= $expire ? false : true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Get image from S3
 	 */
 	public function getFeaturedImageUrlAttribute()
@@ -104,6 +94,16 @@ class Session extends Model
 		$key = 'session_' . $this->id . '_' . $user_id;
 
 		return session($key, 0);
+	}
+
+	/**
+	 * Get user lock date via course model
+	 *
+	 * @return Carbon\Carbon
+	 */
+	public function getUserLockDateAttribute()
+	{
+		return $this->course->user_lock_date;
 	}
 
 	/*
