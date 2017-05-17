@@ -35,6 +35,14 @@
 
     <script src="https://use.typekit.net/izh8egw.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PQK7FV');</script>
+    <!-- End Google Tag Manager -->
 </head>
 
 @if(changeHeader())
@@ -44,31 +52,34 @@
 @else
     <body class="inner-page">
 @endif
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQK7FV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-    <div id="app">
-        @include('layouts.header')          
-        @include('layouts.mobile-menu')          
+        <div id="app">
+            @include('layouts.header')
+            @include('layouts.mobile-menu')
 
-        @yield('content')
+            @yield('content')
 
-        @include('layouts.footer')
-    </div>
+            @include('layouts.footer')
+        </div>
 
-    @yield('scripts_before')
+        @yield('scripts_before')
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}"></script>
 
-    <script>!function(e,o,n){window.HSCW=o,window.HS=n,n.beacon=n.beacon||{};var t=n.beacon;t.userConfig={},t.readyQueue=[],t.config=function(e){this.userConfig=e},t.ready=function(e){this.readyQueue.push(e)},o.config={docs:{enabled:!1,baseUrl:""},contact:{enabled:!0,formId:"0a256aba-28cc-11e7-9841-0ab63ef01522"}};var r=e.getElementsByTagName("script")[0],c=e.createElement("script");c.type="text/javascript",c.async=!0,c.src="https://djtflbt20bdde.cloudfront.net/",r.parentNode.insertBefore(c,r)}(document,window.HSCW||{},window.HS||{});</script>
-    <script>
-        HS.beacon.ready(function() {
-            HS.beacon.identify({
-                name: '{{ Auth::user()->name }}',
-                email: '{{ Auth::user()->email }}'
+        <script>!function(e,o,n){window.HSCW=o,window.HS=n,n.beacon=n.beacon||{};var t=n.beacon;t.userConfig={},t.readyQueue=[],t.config=function(e){this.userConfig=e},t.ready=function(e){this.readyQueue.push(e)},o.config={docs:{enabled:!1,baseUrl:""},contact:{enabled:!0,formId:"0a256aba-28cc-11e7-9841-0ab63ef01522"}};var r=e.getElementsByTagName("script")[0],c=e.createElement("script");c.type="text/javascript",c.async=!0,c.src="https://djtflbt20bdde.cloudfront.net/",r.parentNode.insertBefore(c,r)}(document,window.HSCW||{},window.HS||{});</script>
+        <script>
+            HS.beacon.ready(function() {
+                HS.beacon.identify({
+                    name: '{{ Auth::user()->name }}',
+                    email: '{{ Auth::user()->email }}'
+                });
             });
-        });
-    </script>
+        </script>
 
-    @yield('scripts_after')
-</body>
+        @yield('scripts_after')
+    </body>
 </html>
