@@ -32,10 +32,6 @@ class Session extends Model
 		'title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'
 	];
 
-	protected $dates = [
-		'user_lock_date'
-	];
-
 	/**
 	 * The "booting" method of the model.
 	 *

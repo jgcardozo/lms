@@ -31,10 +31,6 @@ class Module extends Model
 		'title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'
 	];
 
-	protected $dates = [
-		'user_lock_date'
-	];
-
 	/**
 	 * The "booting" method of the model.
 	 *

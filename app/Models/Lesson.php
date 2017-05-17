@@ -31,10 +31,6 @@ class Lesson extends Model
 		'title', 'slug', 'description', 'video_url', 'bonus_video_url', 'bonus_video_duration', 'bonus_video_text', 'fb_link', 'module_id', 'featured_image', 'lock_date'
 	];
 
-	protected $dates = [
-		'user_lock_date'
-	];
-
 	/**
 	 * The "booting" method of the model.
 	 *
