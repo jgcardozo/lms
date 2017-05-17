@@ -50,7 +50,7 @@ class CancelPaymentAlertsComposer
 		{
 			$_askAlert = $_askAlert['askAlert'];
 		}else{
-			$_askAlert[] = [];
+			$_askAlert = [];
 		}
 
 		if(!is_null($alert))
