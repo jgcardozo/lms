@@ -103,7 +103,7 @@ class Lesson extends Model
 	 */
 	public function getPreviousLessonAttribute()
 	{
-		$prevLesson = $this->module->lessons->where('lft', '<', $this->lft)->first();
+		$prevLesson = $this->module->lessons->where('lft', '<', $this->lft)->last();
 
 		return !$prevLesson ? false : $prevLesson;
 	}
