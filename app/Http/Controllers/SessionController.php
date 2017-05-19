@@ -24,9 +24,9 @@ class SessionController extends Controller
         //
     }
 
-    public function complete($slug)
+    public function complete($id)
     {
-		$session = Session::findBySlugOrFail($slug);
+		$session = Session::find($id);
 
 		if(!$session) {
 			abort(404);
