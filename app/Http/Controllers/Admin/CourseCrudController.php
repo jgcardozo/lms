@@ -109,6 +109,21 @@ class CourseCrudController extends CrudController
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
 				'format' => 'dd-mm-yyyy g:ia'
+			],
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'label' => 'Lock this course for users registered after this date:',
+			'name' => 'user_lock_date',
+			'type' => 'datetime_picker',
+			'date_picker_options' => [
+				'format' => 'dd-mm-yyyy'
+			],
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
 			]
 		]);
 

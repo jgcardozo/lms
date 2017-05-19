@@ -32,7 +32,6 @@ class PaymentAlertsComposer
 		}
 
 		$payf_session_key = 'payf_' . Auth::user()->id;
-		$cancel_session_key = 'cancel_' . Auth::user()->id;
 
 		$yesterday = Carbon::yesterday();
 		$yesterday->hour = 23;
@@ -45,9 +44,6 @@ class PaymentAlertsComposer
 		$today->second = 59;
 		
 		$payf_last_show = session($payf_session_key, $yesterday);
-		$cancel_last_show = session($cancel_session_key, $yesterday);
-
-		// $payf_last_show = $yesterday;
 
 		if(!is_null($course) && Auth::user()->hasTag($course->payf_tag) && $payf_last_show->isPast())
 		{
@@ -56,13 +52,19 @@ class PaymentAlertsComposer
 			$alert['key'] = $payf_session_key;
 		}
 
-		if(!is_null($course) && Auth::user()->hasTag($course->cancel_tag) && $cancel_last_show->isPast())
+		$_askAlert = $view->getData();
+		if(!empty($_askAlert['askAlert']))
 		{
-			$alert['status'] = 'critical';
-			$alert['message'] = '<strong>Your account is suspended :(</strong>. We\'ve tried charging your credit card multiple times without success. To continue your Ask education please update your payment information. Thank you';
-			$alert['key'] = $cancel_session_key;
+			$_askAlert = $_askAlert['askAlert'];
+		}else{
+			$_askAlert = [];
 		}
 
-		$view->with('askAlert', $alert);
+		if(!is_null($alert))
+		{
+			$_askAlert[] = $alert;
+		}
+
+		$view->with('askAlert', $_askAlert);
 	}
 }

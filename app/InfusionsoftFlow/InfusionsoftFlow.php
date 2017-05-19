@@ -4,6 +4,8 @@ namespace app\InfusionsoftFlow;
 
 use DB;
 use Infusionsoft;
+use Illuminate\Support\Facades\Mail;
+use Mockery\CountValidator\Exception;
 
 class InfusionsoftFlow
 {
@@ -115,8 +117,18 @@ class InfusionsoftFlow
 
 			if($token->endOfLife > time())
 			{
-				$this->is->setToken($token);
-				$this->refreshToken();
+				try {
+					$this->is->setToken($token);
+					$this->refreshToken();
+				}catch (\Exception $e) {
+					\Log::critical('Token error.');
+
+					Mail::send([], [], function ($message) {
+						$message->to('panovtomislav@hotmail.com')
+							->subject('[ASK LMS] Token error')
+							->setBody('Re-auth the infusionsoft token');
+					});
+				}
 			}
 		}
 	}

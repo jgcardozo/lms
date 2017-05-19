@@ -100,7 +100,7 @@ Class SettingsController extends BaseController
 
 	public function InfusionsoftCallback(Request $request)
 	{
-		if($request->has('code') and !InfusionsoftFlow::is()->getToken())
+		if($request->has('code'))
 		{
 			InfusionsoftFlow::is()->requestAccessToken($request->get('code'));
 		}
