@@ -12207,10 +12207,25 @@ $(document).ready(function () {
       return false;
     }
 
+    if (frm.find('[type="submit"]').is('.edit')) {
+      frm.find('[type="submit"]').val('Update credit card');
+      frm.find('[type="submit"]').removeClass('edit');
+
+      frm.find('.form-control__noteditable').removeClass('form-control__noteditable');
+      frm.find('.form-control').first().find('input').focus();
+
+      frm.find('[name="cc_number"], [name="cc_expiration"]').val('');
+      return false;
+    } else {
+      frm.find('[type="submit"]').val('Edit Billing Details');
+      frm.find('[type="submit"]').addClass('edit');
+    }
+
     var ccNum = frm.find('[name="cc_number"]'),
         ccName = frm.find('[name="nameoncard"]'),
         ccExpiry = frm.find('[name="cc_expiration"]'),
-        ccAddress = frm.find('[name="billing_address"]');
+        ccAddress = frm.find('[name="billing_address"]'),
+        course_id = frm.closest('.billing-course').attr('id').replace(/^\D+/g, '');
 
     var validCC = $.payment.validateCardNumber(ccNum.val());
     if (!validCC) {
@@ -12220,10 +12235,18 @@ $(document).ready(function () {
 
     var ccExpiryExtracted = ccExpiry.payment('cardExpiryVal');
 
+    if (ccName.val().length == 0) {
+      alert('Enter your name on card');
+      return false;
+    }
+
     var ajaxData = {
+      cc_name: ccName.val(),
+      cc_address: ccAddress.val(),
       cc_number: ccNum.val(),
       cc_expiry_month: ccExpiryExtracted.month,
-      cc_expiry_year: ccExpiryExtracted.year
+      cc_expiry_year: ccExpiryExtracted.year,
+      course_id: course_id
     };
 
     frm.addClass('doing');
@@ -12236,7 +12259,14 @@ $(document).ready(function () {
       success: function success(res) {
         frm.removeClass('doing');
         $('body').removeLoading();
-        console.log(res);
+
+        if (res.status) {
+          $('body').find('.ask-alert').removeClass('ask-alert--critical').addClass('ask-alert--success').show().html(res.message);
+
+          frm.find('.form-control').addClass('form-control__noteditable');
+        } else {
+          $('body').find('.ask-alert').removeClass('ask-alert--success').addClass('ask-alert--critical').show().html(res.message);
+        }
       }
     });
   });

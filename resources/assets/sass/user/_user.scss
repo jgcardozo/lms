@@ -106,6 +106,13 @@
       font-size: 1.4rem;
       color: #4a494a;
     }
+
+    &__noteditable {
+      input {
+        pointer-events: none;
+        border-color: transparent;
+      }
+    }
     
     &.has-error input,
     &.has-error select {

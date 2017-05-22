@@ -181,15 +181,11 @@ class CourseCrudController extends CrudController
 			]
 		]);
 
-		// $this->crud->addField([
-		// 	'label' => 'Infusionsoft Product ID attached to this course:',
-		// 	'type' => 'select2_multiple',
-		// 	'name' => 'is_course_products',
-		// 	'entity' => 'is_course_products',
-		// 	'attribute' => 'product_id',
-		// 	'model' => 'App\Models\ISCourseProductId',
-		// 	'pivot' => true
-		// ]);
+		$this->crud->addField([
+		 	'label' => 'Infusionsoft Product ID attached to this course:',
+		 	'type' => 'text',
+			'name' => 'billing_is_products'
+		 ]);
 
 		/**
 		 * Add CRUD action button

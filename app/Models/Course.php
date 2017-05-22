@@ -28,7 +28,7 @@ class Course extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag'
+		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products'
 	];
 
 	protected $dates = [
@@ -172,6 +172,33 @@ class Course extends Model
 		return !empty($this->logo_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->logo_image) : '';
 	}
 
+	public function getCreditCardAttribute()
+	{
+		$user = Auth::user();
+
+		$cc_id = \DB::table('payment_card_user')
+				->select('cc_id')
+				->where('user_id', $user->id)
+				->where('course_id', $this->id)
+				->first();
+
+		if(!empty($cc_id))
+		{
+			return $cc_id->cc_id;
+		}
+
+		return null;
+	}
+
+	public function getIsCourseProductsAttribute()
+	{
+		$items = collect(explode(',', $this->billing_is_products))->map(function($item, $key) {
+			return ['product_id' => (int) $item];
+		});
+
+		return $items;
+	}
+
 	/**
 	 * Setup all billing details attached
 	 * to this course from Infusionsoft
@@ -197,22 +224,26 @@ class Course extends Model
 			$this->billing_invoice_id = (int) $invoice['Id'];
 
 			// Try to find out the credit card used for this payment plan on this invoice
-			$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
-			if(!empty($payments))
+			$_cc_id = $this->credit_card;
+			if(!$_cc_id)
 			{
-				$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
-				if(!empty($charges))
+				$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
+				if(!empty($payments))
 				{
-					$this->billing_ccard = (int) $charges[0]['CCId'];
-
-					if(!empty($userCards))
+					$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
+					if(!empty($charges))
 					{
-						$ccardIndex = array_search($this->billing_ccard, array_column($userCards, 'Id'));
-						if($ccardIndex !== false)
-						{
-							$this->billing_ccard = $userCards[$ccardIndex];
-						}
+						$_cc_id = (int) $charges[0]['CCId'];
 					}
+				}
+			}
+
+			if(!empty($userCards))
+			{
+				$ccardIndex = array_search($_cc_id, array_column($userCards, 'Id'));
+				if($ccardIndex !== false)
+				{
+					$this->billing_ccard = $userCards[$ccardIndex];
 				}
 			}
 
@@ -260,13 +291,8 @@ class Course extends Model
 	}
 
 	public function events()
-    {
-		return $this->hasMany('App\Models\Event');
-	}
-
-	public function is_course_products()
 	{
-		return $this->hasMany('App\Models\ISCourseProductId', 'course_id', 'id');
+		return $this->hasMany('App\Models\Event');
 	}
 
 	public function sluggable()

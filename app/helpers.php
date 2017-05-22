@@ -222,3 +222,30 @@ if ( !function_exists('timezoneList') ) {
 		return $timezoneList;
 	}
 }
+
+/**
+ * Adds user credit card to course
+ *
+ * @param int $user_id    User ID
+ * @param int $course_id  Course ID
+ * @param int $cc_id      Infusionsoft CreditCard IS
+ */
+if ( !function_exists('addISCreditCard') ) {
+	function addISCreditCard($user_id, $course_id, $cc_id)
+	{
+		$qb = DB::table('payment_card_user')->where('course_id', $course_id)->where('user_id', $user_id);
+		$check = $qb->get();
+		if(!$qb->get()->isEmpty())
+		{
+			$qb->limit(1)->update(['cc_id' => $cc_id]);
+		}else{
+			DB::table('payment_card_user')->insert([
+				[
+					'user_id' => $user_id,
+					'course_id' => $course_id,
+					'cc_id' => $cc_id
+				]
+			]);
+		}
+	}
+}

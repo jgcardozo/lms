@@ -125,7 +125,7 @@ class UserController extends Controller
 	
 	public function billing()
 	{
-		return view('lms.user.billing');
+		// return view('lms.user.billing');
 
 		$userCards = InfusionsoftFlow::getCreditCards(Auth::user()->contact_id);
 		$courses = Course::get();
@@ -144,6 +144,8 @@ class UserController extends Controller
 	public function changeCreditCard(Request $request, $invoice_id)
 	{
 		$creditCard = (object) [
+			'cc_name' => $request->get('cc_name'),
+			'cc_address' => $request->get('cc_address'),
 			'cc_number' => $request->get('cc_number'),
 			'cc_expiry_month' => $request->get('cc_expiry_month'),
 			'cc_expiry_year' => $request->get('cc_expiry_year'),
@@ -162,10 +164,31 @@ class UserController extends Controller
 		}
 
 		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
-		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 6, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+
+		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 2, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+		$charge = InfusionsoftFlow::is()->invoices()->chargeInvoice($invoice_id, '', $newCC->id, 2, false);
+
+		addISCreditCard(Auth::user()->id, $request->get('course_id'), $newCC->id);
+
+		if(strtolower($charge['Code']) == 'declined')
+		{
+			return response()->json([
+				'status' => false,
+				'message' => 'Your credit card was declined.'
+			]);
+		}
+
+		if(strtolower($charge['Code']) == 'error')
+		{
+			return response()->json([
+				'status' => false,
+				'message' => 'There was an error with this credit card. Try again or contact support.'
+			]);
+		}
 
 		return response()->json([
-			'status' => true
+			'status' => true,
+			'message' => 'Your credit card has been successfully processed.'
 		]);
 	}
 
