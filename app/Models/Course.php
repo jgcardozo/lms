@@ -28,7 +28,7 @@ class Course extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag'
+		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products'
 	];
 
 	protected $dates = [
@@ -190,6 +190,15 @@ class Course extends Model
 		return null;
 	}
 
+	public function getIsCourseProductsAttribute()
+	{
+		$items = collect(explode(',', $this->billing_is_products))->map(function($item, $key) {
+			return ['product_id' => (int) $item];
+		});
+
+		return $items;
+	}
+
 	/**
 	 * Setup all billing details attached
 	 * to this course from Infusionsoft
@@ -282,13 +291,8 @@ class Course extends Model
 	}
 
 	public function events()
-    {
-		return $this->hasMany('App\Models\Event');
-	}
-
-	public function is_course_products()
 	{
-		return $this->hasMany('App\Models\ISCourseProductId', 'course_id', 'id');
+		return $this->hasMany('App\Models\Event');
 	}
 
 	public function sluggable()

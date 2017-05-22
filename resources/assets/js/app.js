@@ -601,6 +601,21 @@ $(document).ready( function() {
             return false;
         }
 
+        if(frm.find('[type="submit"]').is('.edit'))
+        {
+            frm.find('[type="submit"]').val('Update credit card');
+            frm.find('[type="submit"]').removeClass('edit');
+
+            frm.find('.form-control__noteditable').removeClass('form-control__noteditable');
+            frm.find('.form-control').first().find('input').focus();
+
+            frm.find('[name="cc_number"], [name="cc_expiration"]').val('');
+            return false;
+        }else{
+            frm.find('[type="submit"]').val('Edit Billing Details');
+            frm.find('[type="submit"]').addClass('edit');
+        }
+
         var ccNum = frm.find('[name="cc_number"]'),
             ccName = frm.find('[name="nameoncard"]'),
             ccExpiry = frm.find('[name="cc_expiration"]'),
@@ -649,6 +664,8 @@ $(document).ready( function() {
 						.addClass('ask-alert--success')
 						.show()
 						.html(res.message);
+
+                    frm.find('.form-control').addClass('form-control__noteditable');
 				}else{
 					$('body')
 						.find('.ask-alert')

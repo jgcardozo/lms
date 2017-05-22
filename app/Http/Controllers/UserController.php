@@ -164,9 +164,27 @@ class UserController extends Controller
 		}
 
 		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
-		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 10, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+
+		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 2, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+		$charge = InfusionsoftFlow::is()->invoices()->chargeInvoice($invoice_id, '', $newCC->id, 2, false);
 
 		addISCreditCard(Auth::user()->id, $request->get('course_id'), $newCC->id);
+
+		if(strtolower($charge['Code']) == 'declined')
+		{
+			return response()->json([
+				'status' => false,
+				'message' => 'Your credit card was declined.'
+			]);
+		}
+
+		if(strtolower($charge['Code']) == 'error')
+		{
+			return response()->json([
+				'status' => false,
+				'message' => 'There was an error with this credit card. Try again or contact support.'
+			]);
+		}
 
 		return response()->json([
 			'status' => true,

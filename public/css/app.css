@@ -3127,6 +3127,11 @@ p {
   color: #4a494a;
 }
 
+.user-settings .form-control__noteditable input {
+  pointer-events: none;
+  border-color: transparent;
+}
+
 .user-settings .form-control.has-error input,
 .user-settings .form-control.has-error select {
   border-color: #DB3333 !important;
