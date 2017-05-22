@@ -26,7 +26,7 @@ trait LockViaUserDate
 		if(!empty($this->lock_date))
 		{
 			$expire = strtotime($this->lock_date);
-			$today = strtotime('today midnight');
+			$today = time();
 
 			if($today >= $expire)
 			{

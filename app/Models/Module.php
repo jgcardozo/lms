@@ -143,6 +143,7 @@ class Module extends Model
 			return true;
 		}
 
+
 		// Get previous module
 		$prevModule = $this->previous_module;
 		if((!$prevModule || $prevModule->is_completed) && !$this->is_date_locked)
