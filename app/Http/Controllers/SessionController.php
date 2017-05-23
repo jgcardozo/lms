@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StarterVideosCompleted;
 use Auth;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use App\Events\WatchedSession;
+use App\Events\LessonComplete;
+use App\Events\ModuleComplete;
 
 class SessionController extends Controller
 {
@@ -34,12 +37,32 @@ class SessionController extends Controller
 
 		event(new WatchedSession($session));
 
-		if($session->lesson->is_completed && request()->ajax())
+		if($session->lesson && $session->lesson->is_completed)
 		{
+			$lesson = $session->lesson;
+
+			event(new LessonComplete($lesson));
+
+			if($lesson->module && $lesson->module->is_completed)
+			{
+				$module = $lesson->module;
+
+				event(new ModuleComplete($module));
+			}
+
 			return response()->json([
 				'lesson_complete' => true
 			]);
 		}
+
+		if($session->starter_course_id && $session->course->areAllStarterSeen())
+		{
+			event(new StarterVideosCompleted($session->course));
+		}
+
+		return response()->json([
+			'lesson_complete' => false
+		]);
     }
 
     /**

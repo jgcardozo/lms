@@ -94,6 +94,13 @@ class LessonController extends Controller
     {
 		$lesson->usersPosted()->attach(Auth::user()->id);
 
+        mixPanel()->track('Posted to Facebook', [
+            'lesson_id' => $lesson->id,
+            'lesson' => $lesson->title,
+            'course' => $lesson->course ? $lesson->course->title : '',
+            'module' => $lesson->module ? $lesson->module->title : ''
+        ]);
+
 		return redirect()->back();
     }
 }

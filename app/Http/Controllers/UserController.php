@@ -186,6 +186,8 @@ class UserController extends Controller
 			]);
 		}
 
+		mixPanel()->track('Updated billing details');
+
 		return response()->json([
 			'status' => true,
 			'message' => 'Your credit card has been successfully processed.'
@@ -221,6 +223,8 @@ class UserController extends Controller
 		$profile->company = $request->has('company') ? $request->get('company') : '';
 		$user->profile()->save($profile);
 
+		mixPanel()->track('Updated contact details');
+
 		InfusionsoftFlow::syncContactDetails($user);
 
 		return redirect()->back()->with('message', 'Profile successfully updated');
@@ -243,6 +247,8 @@ class UserController extends Controller
 		$user = Auth::user();
 		$user->password = bcrypt($request->get('password'));
 		$user->save();
+
+		mixPanel()->track('Changed password');
 
 		return redirect()->back()->with('message', 'Password successfully updated');
 	}
