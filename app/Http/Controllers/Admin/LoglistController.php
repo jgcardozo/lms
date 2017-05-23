@@ -15,7 +15,7 @@ class LoglistController extends Controller
 
 	public function index()
 	{
-		$logs = Activity::paginate(50);
+		$logs = Activity::orderBy('created_at', 'desc')->paginate(50);
 
 		return view('lms.admin.log')->with('logs', $logs);
 	}
