@@ -74,7 +74,7 @@
                                             Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}
                                         </div>
                                     @else
-                                        <div style="{{ $session->video_progress >= 80 ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $session->id) }}">Mark as completed <span class="course-progress__bar"></span></div>
+                                        <div style="{{ $session->video_progress || is_role_admin() >= 80 ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $session->id) }}">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            
