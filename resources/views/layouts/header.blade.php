@@ -49,7 +49,7 @@
                                 @endif
 
                                 @if($progress_items->facebook_group_id)
-                                    <li class="grid--flex"><a class="grid--flex flex--align-center" href="{{ $progress_items->facebook_group_id }}" target="_blank"><i class="icon--facebook"></i> Facebook Group</a></li>
+                                    <li class="grid--flex"><a class="grid--flex flex--align-center js-fb-group" href="{{ $progress_items->facebook_group_id }}" target="_blank"><i class="icon--facebook"></i> Facebook Group</a></li>
                                 @endif
                             @endif
                             </ul>

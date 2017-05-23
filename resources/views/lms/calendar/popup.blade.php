@@ -17,7 +17,7 @@
 		<div class="event-popup__description">{!! $event->description !!}</div>
 
 		@if(!empty($event->url))
-			<a class="event-popup__apply-link" href="{{ $event->url }}" target="_blank">Register Now</a>
+			<a class="event-popup__apply-link js-event-apply" href="{{ $event->url }}" target="_blank">Register Now</a>
 		@endif
 	</div>
 </div>

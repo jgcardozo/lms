@@ -6,6 +6,17 @@
     <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
 @endsection
 
+@section('scripts_after')
+    <script>
+        jQuery(document).ready(function($) {
+            $('body').on('session.watch.open', function(e) {
+                var session_id = $('body').find('.session-single .session-single__video-coaching').data('session');
+                mixpanel.track('Open coaching call video', {'session_id': session_id});
+            });
+        });
+    </script>
+@endsection
+
 @section('content')
     <main>
         <div class="grid grid--full course-single" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>

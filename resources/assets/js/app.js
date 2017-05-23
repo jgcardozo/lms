@@ -231,7 +231,9 @@ $(document).ready( function() {
         	}
 
             $('body').css('overflow', 'hidden');
-			$('.session-single').fadeIn();
+			$('.session-single').fadeIn(250, function() {
+                $('body').trigger('session.watch.open');
+            });
 		});
 	});
 
@@ -490,6 +492,10 @@ $(document).ready( function() {
             if(typeof sId != 'undefined')
             {
                 $('body').find('#session-' + sId).find('.course-progress').replaceWith(completeHtml);
+				mixpanel.track("Sessuib completed", {
+					"Video length": 213,
+					"id": "hY7gQr0"
+				});
             }
         });
     });
@@ -745,4 +751,33 @@ $(document).ready( function() {
             wrapper.fadeOut(250);
         });
 	});
+
+    /**
+     * Mixpanel tracks
+     */
+    $('body').on('click', '.js-fb-group', function(e) {
+        var tl = mixpanelTrackLinks($(this));
+        e.preventDefault();
+        mixpanel.track('Clicked on Facebook group', {'URL': $(this).attr('href')});
+        setTimeout(tl, 500);
+    });
+
+    $('body').on('click', '.js-event-apply', function(e) {
+        var tl = mixpanelTrackLinks($(this));
+        e.preventDefault();
+        mixpanel.track('Clicked on Apply Event');
+        setTimeout(tl, 500);
+    });
+
+    function mixpanelTrackLinks(a) {
+        return function() {
+            if(a.attr('target') == '_blank')
+            {
+                var win = window.open(a.attr('href'), '_blank');
+                win.focus();
+            }else{
+                window.location = a.attr('href');
+            }
+        }
+    }
 });

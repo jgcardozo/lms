@@ -249,3 +249,31 @@ if ( !function_exists('addISCreditCard') ) {
 		}
 	}
 }
+
+/**
+ * Get Mixpanel instance. Easy way.
+ */
+if ( !function_exists('mixPanel') ) {
+	function mixPanel()
+	{
+		$mp = Mixpanel::getInstance(env('MIXPANEL_TOKEN'));
+
+		/**
+		 * Assume that only logged in users can use the LMS
+		 */
+		if(\Auth::check())
+		{
+			$user = \Auth::user();
+
+			$mp->people->set($user->id, array(
+				'$first_name'       => $user->profile->first_name,
+				'$last_name'        => $user->profile->last_name,
+				'$email'            => $user->email,
+			));
+
+			$mp->identify($user->id);
+		}
+
+		return $mp;
+	}
+}
