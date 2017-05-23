@@ -62,6 +62,8 @@
                                     </tr>
                                 </tfoot>
                             </table>
+
+                            {{ $logs->links() }}
                         </div>
                     </div>
                 </div>
