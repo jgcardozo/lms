@@ -92,8 +92,8 @@
         <script>
             mixpanel.identify({{ \Auth::user()->id }});
             mixpanel.people.set({
-                "$first_name": "{{ \Auth::user()->profile->first_name }}",
-                "$last_name": "{{ \Auth::user()->profile->last_name }}",
+                "$first_name": "{{ \Auth::user()->profile->first_name ?: '' }}",
+                "$last_name": "{{ \Auth::user()->profile->last_name ?: '' }}",
                 "$email": "{{ \Auth::user()->email }}"
             });
         </script>
