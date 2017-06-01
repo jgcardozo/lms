@@ -111,7 +111,7 @@ class User extends Authenticatable
 
 	public function is_tags()
     {
-        return $this->belongsToMany('App\Models\ISTag', 'tag_user', 'user_id', 'tag_id');
+        return $this->belongsToMany('App\Models\ISTag', 'tag_user', 'user_id', 'tag_id')->withPivot('created_at');
     }
 
 	public function fb_posted()

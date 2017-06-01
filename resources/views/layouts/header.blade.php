@@ -44,11 +44,11 @@
                                     {{-- <li class="grid--flex"><a class="grid--flex flex--align-center @if(Route::currentRouteName() == 'single.course.training') active @endif" href="{{ route('single.course.training', $progress_items->slug) }}">Training</a></li> --}}
                                 @endif
 
-                                @if($progress_items->featured_coachingcall)
+                                @if($progress_items->featured_coachingcall && !Auth::user()->hasTag($progress_items->cancel_tag))
                                     <li class="grid--flex"><a class="grid--flex flex--align-center @if(Route::currentRouteName() == 'single.course.coaching-call') active @endif" href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Q&A Calls</a></li>
                                 @endif
 
-                                @if($progress_items->facebook_group_id)
+                                @if($progress_items->facebook_group_id && !Auth::user()->hasTag($progress_items->cancel_tag))
                                     <li class="grid--flex"><a class="grid--flex flex--align-center js-fb-group" href="{{ $progress_items->facebook_group_id }}" target="_blank"><i class="icon--facebook"></i> Facebook Group</a></li>
                                 @endif
                             @endif

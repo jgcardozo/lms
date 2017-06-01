@@ -47,8 +47,17 @@ class PaymentAlertsComposer
 
 		if(!is_null($course) && Auth::user()->hasTag($course->payf_tag) && $payf_last_show->isPast())
 		{
+			$tagApplied = Auth::user()->is_tags->where('id', $course->payf_tag)->first()->pivot->created_at;
+			$tagApplied = $tagApplied->diff($today)->days;
+
+			$tagApplied = 7 - $tagApplied;
+			if($tagApplied < 0)
+			{
+				$tagApplied = 0;
+			}
+
 			$alert['status'] = 'critical';
-			$alert['message'] = '<strong>We had a problem charging your credit card</strong>, please review & update your payment details. Your account will remain active for the next <strong>7 days.</strong>';
+			$alert['message'] = '<strong>There was an issue with your last payment</strong>. Please <a href="' . route('user.billing') . '">CLICK HERE</a> to review & update your payment details. <br/> Your account will remain active for the next <strong>' . $tagApplied . ' days</strong>. You may also <a href="#" class="js-contact-customer-service">contact customer service</a> and we will be happy to help.';
 			$alert['key'] = $payf_session_key;
 		}
 

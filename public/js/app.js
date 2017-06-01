@@ -12346,6 +12346,14 @@ $(document).ready(function () {
   });
 
   /**
+   * Customer support
+   */
+  $('body').on('click', '.js-contact-customer-service', function(e) {
+    e.preventDefault();
+    HS.beacon.open();
+  });
+
+  /**
    * Mixpanel tracks
    */
   $('body').on('click', '.js-fb-group', function (e) {

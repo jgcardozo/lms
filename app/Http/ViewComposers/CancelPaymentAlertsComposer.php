@@ -40,8 +40,9 @@ class CancelPaymentAlertsComposer
 			if(Auth::user()->hasTag($course->cancel_tag) && $cancel_last_show->isPast() && is_null($alert))
 			{
 				$alert['status'] = 'critical';
-				$alert['message'] = '<strong>Your account is suspended :(</strong>. We\'ve tried charging your credit card multiple times without success. To continue your <strong>' . $course->title . '</strong> education please update your payment information. Thank you';
+				$alert['message'] = '<strong>Your account is suspended :-(</strong> We\'ve tried charging your credit card multiple times without success. <br /> To continue your <strong>' . $course->title . '</strong> education please <a href="'. route('user.billing') .'">update your payment information</a>. <br /> You may also <a href="#" class="js-contact-customer-service">contact customer service</a> and we will be happy to help.';
 				$alert['key'] = $cancel_session_key;
+				$alert['close'] = false;
 			}
 		}
 

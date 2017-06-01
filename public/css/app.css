@@ -687,6 +687,12 @@ a:hover {
   color: #DB3333;
 }
 
+.ask-alert a {
+  color: #DB3333;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
 .js-close-ask-alert {
   width: 2rem;
   height: 2rem;
