@@ -15,7 +15,7 @@ class AutoLogin
 	{
 		if(empty($key))
 		{
-			$key = uniqid();
+			$key = uniqid('', true);
 		}
 
 		if(empty($this->getKey()))

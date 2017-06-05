@@ -211,7 +211,8 @@ Route::post('user/register/activate/{uuid}', [
 |--------------------------------------------------------------------------
 */
 Route::get('/auto-login', [
-	'uses' => 'UserController@autologin'
+	'uses' => 'UserController@autologin',
+	'as' => 'user.autologin'
 ]);
 
 /*
