@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Autologin;
 use Validator;
 use Carbon\Carbon;
 use App\Models\User;
@@ -278,14 +279,9 @@ class UserController extends Controller
 		$mail = $request->get('email');
 		$key = $request->get('key');
 
-		if($key != 'f0mmy4Qrcux')
+		if(Autologin::validate($id, $mail, $key))
 		{
-			return redirect('/');
-		}
-
-		$user = User::find($id);
-		if(!empty($user) && $user->email === $mail)
-		{
+			$user = User::find($id);
 			Auth::loginUsingId($user->id);
 		}
 

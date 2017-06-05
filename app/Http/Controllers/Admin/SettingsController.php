@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Session;
+use Autologin;
 use Infusionsoft;
 use InfusionsoftFlow;
 use Illuminate\Http\Request;
@@ -48,13 +49,7 @@ Class SettingsController extends BaseController
 		$auto_login_key = $request->get('auto_login_key');
 		if(!empty($auto_login_key))
 		{
-			$row = DB::table('settings')->where('key', 'auto_login_key')->first();
-			if(empty($row))
-			{
-				DB::insert("insert into settings (`key`, `value`) values ('auto_login_key', ?)", [$auto_login_key]);
-			}else{
-				DB::update("update settings set `value` = ? where `key`='auto_login_key'", [$auto_login_key]);
-			}
+			Autologin::refreshKey($auto_login_key);
 		}
 
 		$max_ip_logins = $request->get('max_ip_logins');
