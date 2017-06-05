@@ -179,6 +179,7 @@ return [
 		App\Providers\GamificationServiceProvider::class,
 		App\Providers\InfusionsoftFlow::class,
 		App\Providers\ComposerServiceProvider::class,
+		App\Providers\AutoLoginServiceProvider::class,
 
         /*
          * Backpack Service Providers...
@@ -252,7 +253,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		'Gamification' => App\Gamification\Contracts\Gamification::class,
         'Infusionsoft' => Infusionsoft\FrameworkSupport\Laravel\InfusionsoftFacade::class,
-		'InfusionsoftFlow' => App\InfusionsoftFlow\Facades\InfusionsoftFlow::class
+		'InfusionsoftFlow' => App\InfusionsoftFlow\Facades\InfusionsoftFlow::class,
+		'Autologin' => App\Autologin\Facades\AutoLogin::class
     ],
 
 ];
