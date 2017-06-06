@@ -266,8 +266,8 @@ if ( !function_exists('mixPanel') ) {
 			$user = \Auth::user();
 
 			$mp->people->set($user->id, array(
-				'$first_name'       => $user->profile->first_name ?: '',
-				'$last_name'        => $user->profile->last_name ?: '',
+				'$first_name'       => $user->profile && $user->profile->first_name ? $user->profile->first_name : '',
+				'$last_name'        => $user->profile && $user->profile->last_name ? $user->profile->last_name : '',
 				'$email'            => $user->email ?: ''
 			));
 
