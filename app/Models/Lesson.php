@@ -66,6 +66,11 @@ class Lesson extends Model
 			$user = Auth::user();
 		}
 
+		if(is_numeric($user))
+		{
+			$user = \App\Models\User::find($user);
+		}
+
 		$sessions = $this->sessions;
 		$watched = $user->sessionsWatched->where('lesson_id', $this->id);
 
@@ -114,9 +119,9 @@ class Lesson extends Model
 	 *
 	 * @return bool
 	 */
-	public function getIsCompletedAttribute()
+	public function getIsCompletedAttribute($user = null)
 	{
-		$progress = $this->getProgress();
+		$progress = $this->getProgress($user);
 
 		return count($progress['sessions']) == count($progress['watched']) && count($progress['sessions']) > 0;
 	}
