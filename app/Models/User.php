@@ -126,8 +126,6 @@ class User extends Authenticatable
 	*/
 	public function admin_user_login_url()
 	{
-		$user = \DB::table('users')->where('id', $this->id)->first();
 		return '<input type="text" readonly="readonly" onClick="this.select();" value="' . route('user.autologin', ['id' => $this->id, 'email' => $this->email, 'key' => \Autologin::getKey()]) . '" style="width: 100%" />';
-		// return '<p onclick="alert('asd')">' . route('user.autologin', [$this->id, $this->email, \Autologin::getKey()]) . '</p>';
 	}
 }

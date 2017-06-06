@@ -251,8 +251,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
 	]);
 
-	Route::get('dashboard', function() {
-		return view('backpack::dashboard', ['title' => trans('backpack::base.dashboard')]);
+	Route::get('dashboard', function()
+	{
+		$courses = \App\Models\Course::get();
+
+		$lessonsFinished = getBasicLessonsStats();
+
+		return view('backpack::dashboard', ['courses' => $courses, 'score' => $lessonsFinished]);
 	});
 
 	// Settings

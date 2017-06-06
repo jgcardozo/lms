@@ -277,3 +277,42 @@ if ( !function_exists('mixPanel') ) {
 		return $mp;
 	}
 }
+
+/**
+ * Get basic LMS stats.
+ */
+if ( !function_exists('getBasicLessonsStats') ) {
+	function getBasicLessonsStats()
+	{
+		$users = \App\Models\User::get();
+		$lessons = \App\Models\Lesson::get();
+
+		// 2880 Minutes - 2 days
+		$lessonsFinished = \Cache::remember('lms.stats', 2880, function () use ($users, $lessons) {
+			$_lessonsFinished = [];
+			foreach($lessons as $lesson)
+			{
+				$_lessonsFinished[$lesson->id]['finished'] = 0;
+				$_lessonsFinished[$lesson->id]['unfinished'] = 0;
+
+				foreach($users as $user)
+				{
+					if(!$lesson->getIsCompletedAttribute($user->id))
+					{
+						$_lessonsFinished[$lesson->id]['unfinished'] = $_lessonsFinished[$lesson->id]['unfinished'] + 1;
+						continue;
+					}
+
+					$_lessonsFinished[$lesson->id]['finished'] = $_lessonsFinished[$lesson->id]['finished'] + 1;
+				}
+
+				$_lessonsFinished[$lesson->id]['total'] = $_lessonsFinished[$lesson->id]['finished'] + $_lessonsFinished[$lesson->id]['unfinished'];
+				$_lessonsFinished[$lesson->id]['percent'] = round(($_lessonsFinished[$lesson->id]['finished'] / $_lessonsFinished[$lesson->id]['total']) * 100, 2);
+			}
+
+			return $_lessonsFinished;
+		});
+
+		return $lessonsFinished;
+	}
+}
