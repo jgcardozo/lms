@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
+use App\Models\User;
+use App\Models\Profile;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\PermissionManager\app\Http\Requests\UserStoreCrudRequest as StoreRequest;
 // VALIDATION
@@ -69,6 +71,38 @@ class UserCrudController extends CrudController
                 'type'  => 'text'
             ],
             [
+                'name' => 'first_name', // the db column for the foreign key
+                'label' => 'First name',
+                'type' => 'related_text',
+                'entity' => 'profile', // the method that defines the relationship in your Model
+                'attribute' => 'first_name', // foreign key attribute that is shown to user
+                'model' => 'App\Models\Profile' // foreign key model
+            ],
+            [
+                'name' => 'last_name', // the db column for the foreign key
+                'label' => 'Last name',
+                'type' => 'related_text',
+                'entity' => 'profile', // the method that defines the relationship in your Model
+                'attribute' => 'last_name', // foreign key attribute that is shown to user
+                'model' => 'App\Models\Profile' // foreign key model
+            ],
+			[
+				'name' => 'phone1', // the db column for the foreign key
+				'label' => 'Phone',
+				'type' => 'related_text',
+				'entity' => 'profile', // the method that defines the relationship in your Model
+				'attribute' => 'phone1', // foreign key attribute that is shown to user
+				'model' => 'App\Models\Profile' // foreign key model
+			],
+			[
+				'name' => 'company', // the db column for the foreign key
+				'label' => 'Company',
+				'type' => 'related_text',
+				'entity' => 'profile', // the method that defines the relationship in your Model
+				'attribute' => 'company', // foreign key attribute that is shown to user
+				'model' => 'App\Models\Profile' // foreign key model
+			],
+            [
                 'name'  => 'email',
                 'label' => trans('backpack::permissionmanager.email'),
                 'type'  => 'email',
@@ -83,34 +117,43 @@ class UserCrudController extends CrudController
                 'label' => trans('backpack::permissionmanager.password_confirmation'),
                 'type'  => 'password',
             ],
+			[
+				'label' => 'Sessions watched:',
+				'type' => 'select2_multipleSessionsWatched',
+				'name' => 'sessionsWatched',
+				'entity' => 'sessions',
+				'attribute' => 'title',
+				'model' => 'App\Models\Session',
+				'pivot' => true
+			],
             [
-            // two interconnected entities
-            'label'             => trans('backpack::permissionmanager.user_role_permission'),
-            'field_unique_name' => 'user_role_permission',
-            'type'              => 'checklist_dependency',
-            'name'              => 'roles_and_permissions', // the methods that defines the relationship in your Model
-            'subfields'         => [
-                    'primary' => [
-                        'label'            => trans('backpack::permissionmanager.roles'),
-                        'name'             => 'roles', // the method that defines the relationship in your Model
-                        'entity'           => 'roles', // the method that defines the relationship in your Model
-                        'entity_secondary' => 'permissions', // the method that defines the relationship in your Model
-                        'attribute'        => 'name', // foreign key attribute that is shown to user
-                        'model'            => "Backpack\PermissionManager\app\Models\Role", // foreign key model
-                        'pivot'            => true, // on create&update, do you need to add/delete pivot table entries?]
-                        'number_columns'   => 3, //can be 1,2,3,4,6
+                // two interconnected entities
+                'label'             => trans('backpack::permissionmanager.user_role_permission'),
+                'field_unique_name' => 'user_role_permission',
+                'type'              => 'checklist_dependency',
+                'name'              => 'roles_and_permissions', // the methods that defines the relationship in your Model
+                'subfields'         => [
+                        'primary' => [
+                            'label'            => trans('backpack::permissionmanager.roles'),
+                            'name'             => 'roles', // the method that defines the relationship in your Model
+                            'entity'           => 'roles', // the method that defines the relationship in your Model
+                            'entity_secondary' => 'permissions', // the method that defines the relationship in your Model
+                            'attribute'        => 'name', // foreign key attribute that is shown to user
+                            'model'            => "Backpack\PermissionManager\app\Models\Role", // foreign key model
+                            'pivot'            => true, // on create&update, do you need to add/delete pivot table entries?]
+                            'number_columns'   => 3, //can be 1,2,3,4,6
+                        ],
+                        'secondary' => [
+                            'label'          => ucfirst(trans('backpack::permissionmanager.permission_singular')),
+                            'name'           => 'permissions', // the method that defines the relationship in your Model
+                            'entity'         => 'permissions', // the method that defines the relationship in your Model
+                            'entity_primary' => 'roles', // the method that defines the relationship in your Model
+                            'attribute'      => 'name', // foreign key attribute that is shown to user
+                            'model'          => "Backpack\PermissionManager\app\Models\Permission", // foreign key model
+                            'pivot'          => true, // on create&update, do you need to add/delete pivot table entries?]
+                            'number_columns' => 3, //can be 1,2,3,4,6
+                        ],
                     ],
-                    'secondary' => [
-                        'label'          => ucfirst(trans('backpack::permissionmanager.permission_singular')),
-                        'name'           => 'permissions', // the method that defines the relationship in your Model
-                        'entity'         => 'permissions', // the method that defines the relationship in your Model
-                        'entity_primary' => 'roles', // the method that defines the relationship in your Model
-                        'attribute'      => 'name', // foreign key attribute that is shown to user
-                        'model'          => "Backpack\PermissionManager\app\Models\Permission", // foreign key model
-                        'pivot'          => true, // on create&update, do you need to add/delete pivot table entries?]
-                        'number_columns' => 3, //can be 1,2,3,4,6
-                    ],
-                ],
             ],
         ]);
     }
@@ -137,6 +180,8 @@ class UserCrudController extends CrudController
             $item = $this->crud->create(\Request::except(['redirect_after_save', 'password']));
         }
 
+		$this->updateProfile($item->id);
+
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
 
@@ -158,6 +203,8 @@ class UserCrudController extends CrudController
             $dataToUpdate['password'] = bcrypt($request->input('password'));
         }
 
+		$this->updateProfile($dataToUpdate['id']);
+
         // update the row in the db
         $this->crud->update(\Request::get($this->crud->model->getKeyName()), $dataToUpdate);
 
@@ -169,4 +216,22 @@ class UserCrudController extends CrudController
 
         return $this->performSaveAction();
     }
+
+	private function updateProfile($user_id)
+	{
+		if(empty($user_id))
+		{
+			return;
+		}
+
+		if($user = User::find($user_id))
+		{
+			$profile = $user->profile ?: new Profile();
+			$profile->first_name = request()->has('first_name') ? request()->get('first_name') : '';
+			$profile->last_name = request()->has('last_name') ? request()->get('last_name') : '';
+			$profile->phone1 = request()->has('phone1') ? request()->get('phone1') : '';
+			$profile->company = request()->has('company') ? request()->get('company') : '';
+			$user->profile()->save($profile);
+		}
+	}
 }
