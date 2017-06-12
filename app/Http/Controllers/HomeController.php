@@ -60,6 +60,24 @@ class HomeController extends Controller
 	public function test()
 	{
 		die();
+		// dump(InfusionsoftFlow::is()->data()->query('Affiliate', 10, 0, ['Id' => '%'], ['Id', 'AffCode', 'AffName', 'ContactId'], '', false));
+		// dump(InfusionsoftFlow::is()->data()->query('Referral', 10, 0, ['Id' => '%'], ['Id', 'AffiliateId', 'ContactId', 'DateExpires', 'DateSet', 'IPAddress', 'Info', 'Source', 'Type'], '', false));
+
+		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
+
+		$args = [
+			"Type" => 0,
+			"AffiliateId" => 94,
+			"ContactId" => 294378,
+			"DateSet" => $datetime,
+			"IPAddress" => "81.17.233.90"
+		];
+
+		InfusionsoftFlow::is()->data()->add('Referral', $args);
+
+		dump(InfusionsoftFlow::is()->data()->query('Affiliate', 10, 0, ['Id' => 94], ['Id', 'AffCode', 'AffName', 'ContactId'], '', false));
+		dump(InfusionsoftFlow::is()->data()->query('Referral', 10, 0, ['AffiliateId' => 94], ['Id', 'AffiliateId', 'ContactId', 'DateExpires', 'DateSet', 'IPAddress', 'Info', 'Source', 'Type'], 'DateSet', false));
+		die();
 		// dd(Auth::user());
 		// Mail::to(Auth::user())->send(new \App\Mail\UserRegistered('test-pass'));
 		/*Mail::raw('Hello there', function($message) {

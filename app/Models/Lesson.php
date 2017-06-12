@@ -206,6 +206,13 @@ class Lesson extends Model
 		return $this->usersPosted()->where('user_id', $user->id)->exists();
 	}
 
+	public function getIsQAnsweredAttribute()
+	{
+		$user = Auth::user();
+
+		return $this->userAnswered()->where('user_id', $user->id)->exists();
+	}
+
 	/**
 	 * Get user lock date via course model
 	 *
@@ -239,6 +246,16 @@ class Lesson extends Model
 	public function usersPosted()
 	{
 		return $this->belongsToMany('App\Models\User', 'fb_lesson');
+	}
+
+	public function questions()
+	{
+		return $this->hasMany('App\Models\LessonQuestion');
+	}
+	
+	public function userAnswered()
+	{
+		return $this->belongsToMany('App\Models\User', 'question_user');
 	}
 
 	public function sluggable()

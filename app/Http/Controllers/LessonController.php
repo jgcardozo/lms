@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\Lesson;
+use App\Models\LessonQuestion;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
@@ -102,5 +103,18 @@ class LessonController extends Controller
         ]);
 
 		return redirect()->back();
+    }
+    
+    public function answerQuestion(Lesson $lesson)
+    {
+		$qID = request()->get('question');
+
+        //$lesson->userAnswered()->attach([Auth::user()->id => ['question_id' => $qID]]);
+		$video = LessonQuestion::find($qID);
+
+		return response()->json([
+			'status' => true,
+			'popup' => view('lms.lessons.popup')->with(['video' => $video])->render()
+		]);
     }
 }

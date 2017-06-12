@@ -137,11 +137,21 @@ Route::post('lesson/{lesson}/post-to-facebook', [
 	'middleware' => 'auth'
 ]);
 
+Route::post('lesson/{lesson}/answer-question', [
+	'as' => 'lesson.answerQuestion',
+	'uses' => 'LessonController@answerQuestion',
+	'middleware' => 'auth'
+]);
+
 Route::get('calendar/{event}', [
 	'as' => 'event.show',
 	'uses' => 'EventsController@show',
 	'middleware' => ['auth', 'onlyajax']
 ]);
+
+Route::post('testclass', function() {
+	Storage::disk('local')->put('file.txt', print_r($_POST, true));
+});
 
 /**
  * Survey forms
@@ -246,6 +256,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('training', 'Admin\TrainingCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 	CRUD::resource('user', 'Admin\UserCrudController');
+	CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
 
 	Route::get('/', [
 		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'

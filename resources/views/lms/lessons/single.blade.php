@@ -82,7 +82,7 @@
                     @endforeach
                 </div>
 
-                @if($lesson->has_bonus)
+                @if($lesson->has_bonus && $lesson->questions->isEmpty())
                     @if(!$lesson->is_fb_posted)
                         <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus" style="@if(!$lesson->is_completed) display: none @endif">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
@@ -111,6 +111,21 @@
                             </div>
                         </div>
                     @endif
+                @elseif(!$lesson->questions->isEmpty())
+                    <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus">
+                        <p><strong>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: What was your biggest takeaway from this module?</strong></p>
+
+                        <form method="post" class="js-lesson-answer-question" action="{{ route('lesson.answerQuestion', $lesson->id) }}">
+                            {{ csrf_field() }}
+                            @foreach($lesson->questions as $question)
+                                <div class="lesson__question-radio">
+                                    <input type="radio" id="question-{{ $question->id }}" name="question" value="{{ $question->id }}" />
+                                    <label for="question-{{ $question->id }}">{{ $question->question }}</label>
+                                </div>
+                            @endforeach
+                            <input type="submit" value="Next">
+                        </form>
+                    </div>
                 @endif
             </div>
         </div>

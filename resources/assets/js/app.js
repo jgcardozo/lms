@@ -107,6 +107,78 @@ $(document).ready( function() {
 		$('.dropdown-menu-wrap, .masthead__notifications-outer-wrap, .masthead__classes-wrap, .course-progress-box').stop().slideUp(200);
 	});
 
+    /**
+     * Submit bonus questions on lesson
+     */
+    $('body').find('form.js-lesson-answer-question').on('submit', function(e) {
+        e.preventDefault();
+
+        var frm = $(this),
+            ajaxData = frm.serialize();
+
+        if(frm.is('.doing'))
+            return false;
+
+        frm.addClass('doing');
+        $('body').createLoading();
+
+        $.ajax({
+            url: frm.attr('action'),
+            data: ajaxData,
+            type: 'POST',
+        }).always(function(res) {
+            if(res.status)
+            {
+                $('.session-single__content-ajax').html(res.popup);
+                $('body').find('.session-single__close').addClass('question-close');
+                $('body').css('overflow', 'hidden');
+                $('.session-single').fadeIn(250);
+            }
+
+            console.log( res );
+            frm.removeClass('doing');
+            $('body').removeLoading();
+        });
+    });
+
+    $('body').on('click', '.question-close', function(e) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        e.preventDefault();
+
+        var el = $(this),
+            popupWrap = el.parent().find('.session-single__content-ajax'),
+            student = popupWrap.find('.session-single__student'),
+            quiz = popupWrap.find('.js-assessment');
+
+        if(quiz.is(':visible'))
+        {
+            $('body').css('overflow', 'initial');
+            $('.session-single').fadeOut();
+            return false;
+        }
+
+        if(!student.is(':visible'))
+        {
+            student.show();
+            popupWrap.find('.js-end-course-outer-url').hide();
+            popupWrap.find('.js-assessment-link').show();
+        }
+
+        return false;
+    });
+
+    $('body').on('click', '.js-assessment-link', function(e) {
+        e.preventDefault();
+
+        var el = $(this),
+            wrap = el.closest('.session-single__content-ajax');
+
+        wrap.find('> *').not('.js-assessment').fadeOut(250, function() {
+            wrap.find('.js-assessment').fadeIn(250);
+        });
+    });
+
 	/**
 	 * Session Popup handlers
 	 */
@@ -230,6 +302,7 @@ $(document).ready( function() {
 	            }});
         	}
 
+            $('body').find('.session-single__close').removeClass('question-close');
             $('body').css('overflow', 'hidden');
 			$('.session-single').fadeIn(250, function() {
                 $('body').trigger('session.watch.open');

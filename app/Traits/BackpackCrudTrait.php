@@ -22,6 +22,11 @@ trait BackpackCrudTrait {
 			$title = '[' . $this->module->title . '] - ' . $this->title;
 		}
 
+		if($modelname == 'lessonquestion')
+		{
+			$title = $this->question;
+		}
+
 		?>
 		<a href="<?php echo route('crud.' . $modelname . '.edit', $this->id); ?>" title="Edit <?php echo $modelname; ?>"><?php echo $title; ?></a>
 		<?php
