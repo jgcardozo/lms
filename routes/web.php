@@ -137,6 +137,8 @@ Route::post('lesson/{lesson}/post-to-facebook', [
 	'middleware' => 'auth'
 ]);
 
+Route::post('class-marker/webhook/result', 'LessonController@classMarkerResults');
+
 Route::get('calendar/{event}', [
 	'as' => 'event.show',
 	'uses' => 'EventsController@show',
