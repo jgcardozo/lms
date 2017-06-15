@@ -106,16 +106,25 @@ class UserCrudController extends CrudController
                 'name'  => 'email',
                 'label' => trans('backpack::permissionmanager.email'),
                 'type'  => 'email',
+				'attributes' => [
+					'autocomplete' => 'off'
+				]
             ],
             [
                 'name'  => 'password',
                 'label' => trans('backpack::permissionmanager.password'),
                 'type'  => 'password',
+				'attributes' => [
+					'autocomplete' => 'off'
+				]
             ],
             [
                 'name'  => 'password_confirmation',
                 'label' => trans('backpack::permissionmanager.password_confirmation'),
                 'type'  => 'password',
+				'attributes' => [
+					'autocomplete' => 'off'
+				]
             ],
 			[
 				'label' => 'Sessions watched:',
