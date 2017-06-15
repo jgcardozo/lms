@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use DB;
 use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Models\LessonQuestion;
 use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
@@ -211,6 +213,20 @@ class Lesson extends Model
 		$user = Auth::user();
 
 		return $this->userAnswered()->where('user_id', $user->id)->exists();
+	}
+
+	public function getQAnsweredAttribute()
+	{
+		$user = Auth::user();
+
+		$answer = DB::table('question_user')->where('lesson_id', $this->id)->where('user_id', $user->id)->value('question_id');
+
+		if(empty($answer))
+			return false;
+
+		$ql = LessonQuestion::find($answer);
+
+		return $ql;
 	}
 
 	/**

@@ -13,7 +13,7 @@ class LessonQuestion extends Model
 	use BackpackCrudTrait;
 
 	protected $fillable = [
-		'question', 'video_url', 'video_title', 'description', 'featured_image', 'outer_url', 'featured_image', 'assessment_id', 'lesson_id'
+		'question', 'video_url', 'video_title', 'description', 'featured_image', 'outer_url', 'featured_image', 'assessment_embed_id', 'assessment_id', 'lesson_id'
 	];
 
 	/**

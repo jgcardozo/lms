@@ -85,8 +85,19 @@ class LessonQuestionCrudController extends CrudController
 		]);
 
 		$this->crud->addField([
+			'name' => 'assessment_embed_id',
+			'label' => 'Assessment ID',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
 			'name' => 'assessment_id',
-			'label' => 'Assessment ID'
+			'label' => 'Assessment ID',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		$this->crud->addField([

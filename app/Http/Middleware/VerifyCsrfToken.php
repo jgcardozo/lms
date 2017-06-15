@@ -14,6 +14,6 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'user/register',
         'user/sync',
-        'testclass'
+        'class-marker/webhook/result'
     ];
 }

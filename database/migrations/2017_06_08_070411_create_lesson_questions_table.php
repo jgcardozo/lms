@@ -25,6 +25,7 @@ class CreateLessonQuestionsTable extends Migration
             $table->integer('lft')->default(0);
 
             $table->string('outer_url')->nullable();
+            $table->string('assessment_embed_id')->nullable();
             $table->string('assessment_id')->nullable();
 
             $table->integer('lesson_id')->unsigned()->nullable();

@@ -36,7 +36,7 @@
 
 <div class="session-single__content__quiz js-assessment" style="display: none">
     <iframe
-            src="https://www.classmarker.com/online-test/start?quiz={{ $video->assessment_id }}
+            src="https://www.classmarker.com/online-test/start?quiz={{ $video->assessment_embed_id }}
                     &cm_fn={{ \Auth::user()->profile && \Auth::user()->profile->first_name ? \Auth::user()->profile->first_name : '' }}
                     &cm_ln={{ \Auth::user()->profile && \Auth::user()->profile->last_name ? \Auth::user()->profile->last_name : '' }}
                     &cm_e={{ \Auth::user()->email }}

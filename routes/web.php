@@ -70,6 +70,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 			'as' => 'single.lesson',
 			'uses' => 'LessonController@index'
 		]);
+
+		Route::get('lesson/{lesson}/result', [
+			'as' => 'single.lesson.assessment.results',
+			'uses' => 'LessonController@assessmentResult'
+		]);
 	});
 
 	Route::get('calendar', [
@@ -142,6 +147,8 @@ Route::post('lesson/{lesson}/answer-question', [
 	'uses' => 'LessonController@answerQuestion',
 	'middleware' => 'auth'
 ]);
+
+Route::post('class-marker/webhook/result', 'LessonController@classMarkerResults');
 
 Route::get('calendar/{event}', [
 	'as' => 'event.show',
