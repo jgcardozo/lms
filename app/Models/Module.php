@@ -58,7 +58,7 @@ class Module extends Model
 			'watched' => []
 		];
 
-		foreach($this->lessons as $lesson)
+		foreach($this->lmsLessons as $lesson)
 		{
 			$_progress = $lesson->getProgress($user);
 			$progress['sessions'] = array_merge($progress['sessions'], $_progress['sessions']);
@@ -109,7 +109,7 @@ class Module extends Model
 	 */
 	public function getIsCompletedAttribute()
 	{
-		foreach($this->lessons as $lesson)
+		foreach($this->lmsLessons as $lesson)
 		{
 			if(!$lesson->is_completed)
 			{
@@ -180,6 +180,11 @@ class Module extends Model
 	public function lessons()
 	{
 		return $this->hasMany('App\Models\Lesson');
+	}
+
+	public function lmsLessons()
+	{
+		return $this->hasMany('App\Models\Lesson')->where('exclude_from_rule', '!=', true);
 	}
 	
 	public function sluggable()

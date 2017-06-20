@@ -30,7 +30,11 @@ class Lesson extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'description', 'video_url', 'bonus_video_url', 'bonus_video_duration', 'bonus_video_text', 'fb_link', 'module_id', 'featured_image', 'lock_date'
+		'title', 'slug', 'description', 'video_url', 'bonus_video_url', 'bonus_video_duration', 'bonus_video_text', 'fb_link', 'module_id', 'featured_image', 'lock_date', 'exclude_from_rule'
+	];
+
+	protected $casts = [
+		'exclude_from_rule' => 'boolean'
 	];
 
 	/**
@@ -110,7 +114,7 @@ class Lesson extends Model
 	 */
 	public function getPreviousLessonAttribute()
 	{
-		$prevLesson = $this->module->lessons->where('lft', '<', $this->lft)->last();
+		$prevLesson = $this->module->lmsLessons->where('lft', '<', $this->lft)->last();
 
 		return !$prevLesson ? false : $prevLesson;
 	}
