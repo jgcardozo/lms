@@ -126,6 +126,12 @@ class LessonCrudController extends CrudController
 			]
 		]);
 
+		$this->crud->addField([
+			'name' => 'exclude_from_rule',
+			'label' => 'Exclude from LMS rule',
+			'type' => 'checkbox'
+		]);
+
 
 		/**
 		 * Setup CRUD filters
