@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use App\Models\User;
 use InfusionsoftFlow;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
