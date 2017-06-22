@@ -11760,7 +11760,6 @@ $(document).ready(function () {
                 $('.session-single').fadeIn(250);
             }
 
-            console.log(res);
             frm.removeClass('doing');
             $('body').removeLoading();
         });
@@ -11777,8 +11776,9 @@ $(document).ready(function () {
             quiz = popupWrap.find('.js-assessment');
 
         if (quiz.is(':visible')) {
-            $('body').css('overflow', 'initial');
-            $('.session-single').fadeOut();
+            // $('body').css('overflow', 'initial');
+            // $('.session-single').fadeOut();
+            location = location.href;
             return false;
         }
 
@@ -11786,6 +11786,12 @@ $(document).ready(function () {
             student.show();
             popupWrap.find('.js-end-course-outer-url').hide();
             popupWrap.find('.js-assessment-link').show();
+            return false;
+        }
+
+        if (!quiz.is(':visible') && student.is(':visible')) {
+            location = location.href;
+            return false;
         }
 
         return false;
@@ -11800,7 +11806,76 @@ $(document).ready(function () {
         wrap.find('> *').not('.js-assessment').fadeOut(250, function () {
             wrap.find('.js-assessment').fadeIn(250);
         });
+
+        checkForQuiz(el.find('a'));
     });
+
+    $('body').on('click', '.js-retake-assessment', function (e) {
+        e.preventDefault();
+
+        var el = $(this);
+
+        $('body').createLoading();
+
+        $.ajax({
+            url: el.data('popup'),
+            type: 'POST'
+        }).always(function (res) {
+            if (res.status) {
+                var wrap = $('.session-single__content-ajax');
+                wrap.html(res.popup);
+                wrap.find('> *').not('.js-assessment').hide();
+                wrap.find('.js-assessment').show();
+                checkForQuiz(el);
+                $('body').css('overflow', 'hidden');
+                $('.session-single').fadeIn(250);
+            }
+
+            $('body').removeLoading();
+        });
+    });
+
+    function checkForQuiz(el) {
+        var url = el.data('url'),
+            user = el.data('user'),
+            test = el.data('test'),
+            href = el.attr('href'),
+            count = 1;
+
+        var ajaxData = {
+            user_id: user,
+            test_id: test
+        };
+
+        var x = setInterval(function () {
+            /*
+            if(count >= 5)
+            {
+                clearInterval(x);
+            }
+            */
+
+            count++;
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: ajaxData,
+                success: function success(res) {
+                    console.log(res);
+                    if (res.status) {
+                        clearInterval(x);
+                        window.location = href;
+                    }
+                }
+            });
+        }, 5000);
+
+        $('body').find('.session-single__close').on('click', function (e) {
+            e.preventDefault();
+            clearInterval(x);
+        });
+    }
 
     /**
      * Session Popup handlers

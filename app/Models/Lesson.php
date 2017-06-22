@@ -233,6 +233,25 @@ class Lesson extends Model
 		return $ql;
 	}
 
+	public function getTestFinishedAttribute()
+	{
+		$user = Auth::user()->id;
+		$assessment = !empty($this->q_answered) ? $this->q_answered->assessment_id : null;
+
+		if(!$assessment)
+		{
+			return false;
+		}
+
+		$row = DB::table('class_marker_results')->where('user_id', $user)->where('assessment_id', $assessment)->first();
+		if($row)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Get user lock date via course model
 	 *

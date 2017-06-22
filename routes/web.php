@@ -148,6 +148,16 @@ Route::post('lesson/{lesson}/answer-question', [
 	'middleware' => 'auth'
 ]);
 
+Route::post('lesson/assessment-check', [
+	'as' => 'single.lesson.assessment.check',
+	'uses' => 'LessonController@assessmentCheck'
+]);
+
+Route::post('lesson/{lesson}/testPopUpHtml', [
+	'as' => 'lesson.testPopup',
+	'uses' => 'LessonController@testPopup'
+]);
+
 Route::post('class-marker/webhook/result', 'LessonController@classMarkerResults');
 
 Route::get('calendar/{event}', [

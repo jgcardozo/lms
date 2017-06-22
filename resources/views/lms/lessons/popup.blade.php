@@ -29,7 +29,7 @@
 
     <div class="session-single__content-learn js-assessment-link" style="display: none">
         <div class="session-single__content-learn__links session-single__content-learn__links--full">
-            <a target="_blank" href="{{ $video->outer_url }}" class="session-single__content-learn__default-btn-link" style="width: 100%">Take the assessment to see how much you've learned</a>
+            <a target="_blank" href="{{ route('single.lesson.assessment.results', $video->lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $video->assessment_id }}" class="session-single__content-learn__default-btn-link" style="width: 100%">Take the assessment to see how much you've learned</a>
         </div>
     </div>
 </div>

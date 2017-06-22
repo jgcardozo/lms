@@ -2883,6 +2883,79 @@ p {
 }
 
 /**
+ * Lesson bonus result
+ */
+.lesson-congratulation-box {
+  display: block;
+  padding: 30px 70px;
+  background: #242C41;
+}
+
+.lesson-congratulation-box p {
+  color: #FFFFFF;
+  font-size: 1.5rem;
+}
+
+.lesson-congratulation-box a {
+  display: inline-block;
+  padding: 1.5rem 2rem;
+  border: 0.1rem solid #FFFFFF;
+  border-radius: 0.3rem;
+  color: #FFFFFF;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.lesson-congratulation-box a:hover {
+  background: #FFFFFF;
+  color: #242C41;
+}
+
+.lesson-result__score__num {
+  text-align: center;
+}
+
+.lesson-result__score__num p {
+  font-size: 3rem;
+  line-height: 3rem;
+  margin: 0;
+}
+
+.lesson-result__score__num h4 {
+  font-size: 6rem;
+  line-height: 6rem;
+  margin: 0;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.lesson-result__videos {
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+}
+
+.lesson-result__video {
+  display: inline-block;
+  width: 32%;
+  margin: 0;
+  margin-left: 2%;
+  vertical-align: top;
+}
+
+.lesson-result__video img {
+  max-width: 100%;
+}
+
+.lesson-result__video:first-child {
+  margin-left: 0;
+}
+
+.lesson-result__video p {
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+}
+
+/**
  * Single Module Lessons 
  */
 .login {

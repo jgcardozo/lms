@@ -11,6 +11,13 @@
         <div class="grid grid--w950 course-single__content" style="padding-bottom: 0">
             <div class="lesson-result__score" style="text-align: center">
                 <img src="{{ URL::to('/') }}/images/student.png" />
+
+                @if($score)
+                    <div class="lesson-result__score__num">
+                        <p>Your score:</p>
+                        <h4>{{ number_format(($score / 10), 1, '.', ',') }}</h4>
+                    </div>
+                @endif
             </div>
 
             <br />
@@ -18,22 +25,22 @@
             <div class="lesson-result__main-video">
                 <div class="wistia_responsive_padding">
                     <div class="wistia_responsive_wrapper">
-                        <div class="wistia_embed wistia_async_{{ $lesson->q_answered->video_url }}"></div>
+                        <div class="wistia_embed wistia_async_{{ !empty($lesson->q_answered) ? $lesson->q_answered->video_url : '' }}"></div>
                     </div>
                 </div>
 
-                <h4>{!! $lesson->q_answered->video_title !!}</h4>
-                {!! $lesson->q_answered->description !!}
+                <h4>{!! !empty($lesson->q_answered) ? $lesson->q_answered->video_title : '' !!}</h4>
+                {!! !empty($lesson->q_answered) ? $lesson->q_answered->description : '' !!}
             </div>
 
             <div class="lesson-result__videos">
                 @foreach($lesson->questions as $question)
-                    @if($question->id != $lesson->q_answered->id)
+                    @if(!empty($lesson->q_answered) && ($question->id != $lesson->q_answered->id))
                         <div class="lesson-result__video">
                             <img src="{{ $question->featured_image_url }}" />
 
                             <h5>{{ $question->video_title }}</h5>
-                            {!! $question->description !!}
+                            <p>{!! truncate_string($question->description, 10) !!}</p>
                         </div>
                     @endif
                 @endforeach

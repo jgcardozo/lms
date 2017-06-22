@@ -81,12 +81,23 @@ class LessonQuestionCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'outer_url',
-			'label' => 'Button URL'
+			'label' => 'Button URL',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'is_tags',
+			'label' => 'Infusionsoft tags (separate multiple tags with comma)',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
 		]);
 
 		$this->crud->addField([
 			'name' => 'assessment_embed_id',
-			'label' => 'Assessment ID',
+			'label' => 'Assessment embed ID',
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
 			]
@@ -95,6 +106,22 @@ class LessonQuestionCrudController extends CrudController
 		$this->crud->addField([
 			'name' => 'assessment_id',
 			'label' => 'Assessment ID',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'assessment_pass_tags',
+			'label' => 'Assessment pass Infusionsoft tags (separate multiple tags with comma)',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'assessment_fail_tags',
+			'label' => 'Assessment fail Infusionsoft tags (separate multiple tags with comma)',
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
 			]

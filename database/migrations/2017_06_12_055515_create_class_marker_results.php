@@ -19,6 +19,7 @@ class CreateClassMarkerResults extends Migration
 
             $table->string('assessment_id');
             $table->integer('score');
+            $table->boolean('passed')->nullable()->default(false);
 
             $table->timestamp('created_at');
 

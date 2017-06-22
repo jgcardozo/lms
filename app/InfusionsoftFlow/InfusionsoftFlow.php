@@ -294,4 +294,24 @@ class InfusionsoftFlow
 
 		$this->is->contacts()->update((int) $user->contact_id, $fields);
 	}
+
+	public function addTag($contactID = 0, $tags)
+	{
+		if(empty($contactID) || empty($tags))
+		{
+			return false;
+		}
+
+		if(!is_array($tags))
+		{
+			$tags = [(int) $tags];
+		}
+
+		foreach($tags as $tag)
+		{
+			$this->is->contacts()->addToGroup($contactID, (int) $tag);
+		}
+
+		return true;
+	}
 }

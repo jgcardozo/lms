@@ -31,6 +31,11 @@ class CreateLessonQuestionsTable extends Migration
             $table->integer('lesson_id')->unsigned()->nullable();
             $table->foreign('lesson_id')->references('id')->on('lessons');
 
+            $table->string('is_tags')->nullable();
+
+            $table->string('assessment_pass_tags')->nullable();
+            $table->string('assessment_fail_tags')->nullable();
+
             $table->timestamps();
         });
     }
