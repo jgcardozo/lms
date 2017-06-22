@@ -70,6 +70,11 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 			'as' => 'single.lesson',
 			'uses' => 'LessonController@index'
 		]);
+
+		Route::get('lesson/{lesson}/result', [
+			'as' => 'single.lesson.assessment.results',
+			'uses' => 'LessonController@assessmentResult'
+		]);
 	});
 
 	Route::get('calendar', [
@@ -137,6 +142,22 @@ Route::post('lesson/{lesson}/post-to-facebook', [
 	'middleware' => 'auth'
 ]);
 
+Route::post('lesson/{lesson}/answer-question', [
+	'as' => 'lesson.answerQuestion',
+	'uses' => 'LessonController@answerQuestion',
+	'middleware' => 'auth'
+]);
+
+Route::post('lesson/assessment-check', [
+	'as' => 'single.lesson.assessment.check',
+	'uses' => 'LessonController@assessmentCheck'
+]);
+
+Route::post('lesson/{lesson}/testPopUpHtml', [
+	'as' => 'lesson.testPopup',
+	'uses' => 'LessonController@testPopup'
+]);
+
 Route::post('class-marker/webhook/result', 'LessonController@classMarkerResults');
 
 Route::get('calendar/{event}', [
@@ -144,6 +165,10 @@ Route::get('calendar/{event}', [
 	'uses' => 'EventsController@show',
 	'middleware' => ['auth', 'onlyajax']
 ]);
+
+Route::post('testclass', function() {
+	Storage::disk('local')->put('file.txt', print_r($_POST, true));
+});
 
 /**
  * Survey forms
@@ -248,6 +273,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('training', 'Admin\TrainingCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 	CRUD::resource('user', 'Admin\UserCrudController');
+	CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
 
 	Route::get('/', [
 		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use DB;
 use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Models\LessonQuestion;
 use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
@@ -210,6 +212,46 @@ class Lesson extends Model
 		return $this->usersPosted()->where('user_id', $user->id)->exists();
 	}
 
+	public function getIsQAnsweredAttribute()
+	{
+		$user = Auth::user();
+
+		return $this->userAnswered()->where('user_id', $user->id)->exists();
+	}
+
+	public function getQAnsweredAttribute()
+	{
+		$user = Auth::user();
+
+		$answer = DB::table('question_user')->where('lesson_id', $this->id)->where('user_id', $user->id)->value('question_id');
+
+		if(empty($answer))
+			return false;
+
+		$ql = LessonQuestion::find($answer);
+
+		return $ql;
+	}
+
+	public function getTestFinishedAttribute()
+	{
+		$user = Auth::user()->id;
+		$assessment = !empty($this->q_answered) ? $this->q_answered->assessment_id : null;
+
+		if(!$assessment)
+		{
+			return false;
+		}
+
+		$row = DB::table('class_marker_results')->where('user_id', $user)->where('assessment_id', $assessment)->first();
+		if($row)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Get user lock date via course model
 	 *
@@ -243,6 +285,16 @@ class Lesson extends Model
 	public function usersPosted()
 	{
 		return $this->belongsToMany('App\Models\User', 'fb_lesson');
+	}
+
+	public function questions()
+	{
+		return $this->hasMany('App\Models\LessonQuestion');
+	}
+	
+	public function userAnswered()
+	{
+		return $this->belongsToMany('App\Models\User', 'question_user');
 	}
 
 	public function sluggable()

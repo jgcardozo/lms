@@ -246,8 +246,6 @@
 
                         echo "</li>";
                     }
-
-                    //dd($progress_items, $progress_items->modules, $progress_items->getNextSession()->lesson->id); 
                 }
             ?>  
                 <li class="course-progress-box__item course-progress-box__item--end @if($all_watched) course-progress-box__item course-progress-box__item--end__completed @endif"></li>
@@ -260,4 +258,11 @@
 
 @if(!empty($askAlert))
     @include('lms.alerts.alert')
+@endif
+
+@if(!empty($lessonCongratulation))
+    <div class="lesson-congratulation-box">
+        <p><strong>Congratulation!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque sed, laudantium deleniti rem quasi? Dolores, aperiam consequatur praesentium a ut magni minima quae minus amet ea obcaecati dignissimos, alias cumque.</p>
+        <a href="#" class="js-retake-assessment">Take the assessment to see how much you've learned</a>
+    </div>
 @endif
