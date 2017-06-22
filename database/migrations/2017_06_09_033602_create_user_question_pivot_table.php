@@ -21,7 +21,7 @@ class CreateUserQuestionPivotTable extends Migration
             $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
 
             $table->integer('question_id')->unsigned()->index();
-            $table->foreign('question_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('lesson_questions')->onDelete('cascade');
 
             $table->timestamp('created_at');
 
