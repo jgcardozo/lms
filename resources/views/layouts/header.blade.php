@@ -263,6 +263,6 @@
 @if(!empty($lessonCongratulation))
     <div class="lesson-congratulation-box">
         <p><strong>Congratulation!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque sed, laudantium deleniti rem quasi? Dolores, aperiam consequatur praesentium a ut magni minima quae minus amet ea obcaecati dignissimos, alias cumque.</p>
-        <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Take the assessment to see how much you've learned</a>
+        {{--<a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Take the assessment to see how much you've learned</a>--}}
     </div>
 @endif
