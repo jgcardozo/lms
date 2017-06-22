@@ -22,7 +22,7 @@
             <div class="session-single__content-learn__links">
                 <h3>The End of the Course</h3>
 
-                <a href="{{ $video->outer_url }}" class="session-single__content-learn__default-btn-link" target="_blank">Continue</a>
+                <a href="{{ $video->outer_url }}" class="session-single__content-learn__default-btn-link" target="_blank">Yes, I Want To Know More!</a>
             </div>
         </div>
     @endif

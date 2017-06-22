@@ -166,10 +166,6 @@ Route::get('calendar/{event}', [
 	'middleware' => ['auth', 'onlyajax']
 ]);
 
-Route::post('testclass', function() {
-	Storage::disk('local')->put('file.txt', print_r($_POST, true));
-});
-
 /**
  * Survey forms
  */

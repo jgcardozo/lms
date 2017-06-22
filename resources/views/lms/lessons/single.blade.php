@@ -130,14 +130,20 @@
                         @endif
                     @else
                         <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus">
-                            <p><strong>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: What was your biggest takeaway from this module?</strong></p>
+                            <p><strong>CONGRATULATIONS!</strong> You’ve just completed the FINAL Core Lesson in the ASK Method Masterclass!! Well done!</p>
+
+                            <p>Now the important question is... What do you need next?  We’d love to support you as you grow your business using the ASK Method. </p>
+
+                            <p>Tell us which one of the 5 ways to scale your income you are MOST excited about implementing in YOUR business and you will unlock your special, custom Easter Egg content.</p>
+
+                            <p>I am most interested in learning how to scale my ASK Method Segmentation Funnel using:</p>
 
                             <form method="post" class="js-lesson-answer-question" action="{{ route('lesson.answerQuestion', $lesson->id) }}">
                                 {{ csrf_field() }}
                                 @foreach($lesson->questions as $question)
                                     <div class="lesson__question-radio">
                                         <input type="radio" id="question-{{ $question->id }}" name="question" value="{{ $question->id }}" />
-                                        <label for="question-{{ $question->id }}">{{ $question->question }}</label>
+                                        <label for="question-{{ $question->id }}"><strong>{{ $question->video_title }}</strong> - {{ $question->question }}</label>
                                     </div>
                                 @endforeach
                                 <input type="submit" value="Next">
