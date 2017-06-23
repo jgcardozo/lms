@@ -114,18 +114,30 @@
                 @elseif(!$lesson->questions->isEmpty())
                     @if(!empty($lesson->q_answered))
                         @if(!$lesson->test_finished)
-                            <div class="lesson-sessions__item lesson-sessions__item--bonus">
-                                <p><strong>Congratulation!</strong></p>
+                            <div class="lesson-sessions__item lesson-sessions__item--bonus grid--flex flex--align-center">
+                                <div class="lesson-sessions__item__student-image">
+                                    <img src="{{ URL::to('/') }}/images/icons/student_happy.svg" />
+                                </div>
 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit illum ipsa neque odit, quis repudiandae. Ab, dolores, hic? A aliquam architecto deleniti incidunt nam numquam quam sed sequi veritatis.</p>
-                                <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Take the assessment to see how much you've learned</a>
+                                <div class="lesson-sessions__item__content">
+                                    <p><strong>Congratulations!</strong> You’ve made it to the end of the Masterclass!</p>
+                                    <p>Just like any great course, you have your final exam (it’s not hard - it’s actually pretty fun!).</p>
+                                    <p class="margin">Take the course assessment now to see how much you’ve learned and unlock even more surprises!</p>
+                                    <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Take the assessment to see how much you've learned</a>
+                                </div>
                             </div>
                         @else
-                            <div class="lesson-sessions__item lesson-sessions__item--bonus">
-                                <p><strong>Congratulation!</strong></p>
+                            <div class="lesson-sessions__item lesson-sessions__item--bonus grid--flex flex--align-center">
+                                <div class="lesson-sessions__item__student-image">
+                                    <img src="{{ URL::to('/') }}/images/icons/student_happy.svg" />
+                                </div>
 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit illum ipsa neque odit, quis repudiandae. Ab, dolores, hic? A aliquam architecto deleniti incidunt nam numquam quam sed sequi veritatis.</p>
-                                <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Re-take the assessment</a>
+                                <div class="lesson-sessions__item__content">
+                                    <p><strong>Congratulations!</strong> You’ve made it to the end of the Masterclass!</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur dicta eligendi eos iste quam quisquam.</p>
+                                    <p class="margin">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                    <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Re-take the assessment</a>
+                                </div>
                             </div>
                         @endif
                     @else

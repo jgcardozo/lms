@@ -11775,26 +11775,12 @@ $(document).ready(function () {
             student = popupWrap.find('.session-single__student'),
             quiz = popupWrap.find('.js-assessment');
 
-        if (quiz.is(':visible')) {
-            // $('body').css('overflow', 'initial');
-            // $('.session-single').fadeOut();
+        if ($('body').find('.easteregg-step-2').is(':visible') || $('body').find('.easteregg-step-3').is(':visible')) {
             location = location.href;
-            return false;
         }
 
-        if (!student.is(':visible')) {
-            student.show();
-            popupWrap.find('.js-end-course-outer-url').hide();
-            popupWrap.find('.js-assessment-link').show();
-            return false;
-        }
-
-        if (!quiz.is(':visible') && student.is(':visible')) {
-            location = location.href;
-            return false;
-        }
-
-        return false;
+        $('body').find('.easteregg-step-1').hide(50);
+        $('body').find('.easteregg-step-2').fadeIn(150);
     });
 
     $('body').on('click', '.js-assessment-link', function (e) {
@@ -11803,11 +11789,27 @@ $(document).ready(function () {
         var el = $(this),
             wrap = el.closest('.session-single__content-ajax');
 
-        wrap.find('> *').not('.js-assessment').fadeOut(250, function () {
-            wrap.find('.js-assessment').fadeIn(250);
-        });
+        el.parents('.easteregg-step-2').hide(50);
+        $('body').find('.easteregg-step-3').fadeIn(150);
 
-        checkForQuiz(el.find('a'));
+        checkForQuiz(el);
+    });
+
+    $('body').on('click', '.js-play-question-video', function (e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            url = $(this).attr('href');
+
+        $.ajax({
+            url: url
+        }).always(function (res) {
+            $('.session-single__content-ajax').html(res);
+
+            $('body').find('.session-single__close');
+            $('body').css('overflow', 'hidden');
+            $('.session-single').fadeIn(250);
+        });
     });
 
     $('body').on('click', '.js-retake-assessment', function (e) {

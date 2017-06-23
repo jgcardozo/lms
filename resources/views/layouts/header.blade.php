@@ -262,7 +262,9 @@
 
 @if(!empty($lessonCongratulation))
     <div class="lesson-congratulation-box">
-        <p><strong>Congratulation!</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque sed, laudantium deleniti rem quasi? Dolores, aperiam consequatur praesentium a ut magni minima quae minus amet ea obcaecati dignissimos, alias cumque.</p>
-        {{--<a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Take the assessment to see how much you've learned</a>--}}
+        <p><strong>Congratulations!</strong> You’ve made it to the end of the Masterclass!</p>
+        <p>Just like any great course, you have your final exam (it’s not hard - it’s actually pretty fun!).</p>
+        <p class="margin">Take the course assessment now to see how much you’ve learned and unlock even more surprises!</p>
+        <a target="_blank" href="{{ route('single.lesson.assessment.results', $lessonCongratulation->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lessonCongratulation->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lessonCongratulation->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Take the Assessment to See How Much You’ve Learned!</a>
     </div>
 @endif
