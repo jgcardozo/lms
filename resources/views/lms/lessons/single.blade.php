@@ -111,7 +111,7 @@
                             </div>
                         </div>
                     @endif
-                @elseif(!$lesson->questions->isEmpty())
+                @elseif(!$lesson->questions->isEmpty() && $lesson->is_completed)
                     @if(!empty($lesson->q_answered))
                         @if(!$lesson->test_finished)
                             <div class="lesson-sessions__item lesson-sessions__item--bonus grid--flex flex--align-center">
