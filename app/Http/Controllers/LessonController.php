@@ -53,6 +53,7 @@ class LessonController extends Controller
 
 		$user = Auth::user()->id;
 		$score = null;
+		$pass = null;
 
 		if($lesson->q_answered)
 		{
@@ -71,11 +72,14 @@ class LessonController extends Controller
 		$lesson->userAnswered()->attach([$user->id => ['question_id' => $qID]]);
 		$video = LessonQuestion::find($qID);
 
-		InfusionsoftFlow::addTag($user->contact_id, explode(',', $video->is_tags));
+		if(!empty($video->is_tags))
+		{
+			InfusionsoftFlow::addTag($user->contact_id, explode(',', $video->is_tags));
+		}
 
 		return response()->json([
 			'status' => true,
-			'popup' => view('lms.lessons.popup')->with(['video' => $video])->render()
+			'popup' => view('lms.lessons.popup')->with(['video' => $video, 'lesson' => $lesson])->render()
 		]);
 	}
 
@@ -105,6 +109,13 @@ class LessonController extends Controller
 			'status' => !empty($row)
 		]);
 	}
+	
+	public function viewResultsVideoPopup($lessonQuestion)
+	{
+		$lessonQuestion = LessonQuestion::findOrFail($lessonQuestion);
+
+		return view('lms.lessons.resultVideoPopup')->with('video', $lessonQuestion->video_url);
+	}
 
     public function classMarkerResults(Request $request)
     {
@@ -124,11 +135,14 @@ class LessonController extends Controller
 		$q = LessonQuestion::where('assessment_id', $test_id)->take(1)->get();
 		if($q)
 		{
-			if($passed)
+			if($passed && !empty($q->assessment_pass_tags))
 			{
-				// InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_pass_tags));
-			}else{
-				// InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_fail_tags));
+				InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_pass_tags));
+			}
+
+			if(!$passed && !empty($q->assessment_fail_tags))
+			{
+				InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_fail_tags));
 			}
 		}
 
@@ -136,6 +150,7 @@ class LessonController extends Controller
 		{
 			DB::table('class_marker_results')->insert([
 				'user_id' => $user_id,
+				'course_id' => $q->lesson->course->id,
 				'assessment_id' => $test_id,
 				'score' => $score,
 				'passed' => $passed

@@ -71,6 +71,8 @@
 
             @yield('content')
 
+            @include('lms.quiz.index')
+
             @include('layouts.footer')
         </div>
 

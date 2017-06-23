@@ -22,7 +22,7 @@ class LessonCongratulation
 
 			if(!empty($lesson->q_answered) && !$lesson->test_finished)
 			{
-				$view->with('lessonCongratulation', true);
+				$view->with('lessonCongratulation', $lesson);
 			}
 		}
 	}

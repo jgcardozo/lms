@@ -2887,13 +2887,21 @@ p {
  */
 .lesson-congratulation-box {
   display: block;
-  padding: 30px 70px;
-  background: #242C41;
+  padding: 3rem 7rem;
+  background-color: #242C41;
+  background-image: url(../images/conffeti-left.png), url(../images/confetti-right.png);
+  background-repeat: no-repeat;
+  background-position: left center, right center;
 }
 
 .lesson-congratulation-box p {
   color: #FFFFFF;
   font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-congratulation-box p.margin {
+  margin-bottom: 3rem;
 }
 
 .lesson-congratulation-box a {
@@ -2904,6 +2912,7 @@ p {
   color: #FFFFFF;
   font-size: 1.4rem;
   font-weight: 600;
+  margin: 0;
 }
 
 .lesson-congratulation-box a:hover {
@@ -2911,48 +2920,135 @@ p {
   color: #242C41;
 }
 
+.lesson-result__score {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.lesson-result__score img {
+  width: 100%;
+  max-width: 300px;
+}
+
+.lesson-result__score h1 {
+  font-size: 5rem;
+  margin: 1rem 0;
+}
+
 .lesson-result__score__num {
   text-align: center;
 }
 
 .lesson-result__score__num p {
+  color: #232c40;
   font-size: 3rem;
   line-height: 3rem;
   margin: 0;
 }
 
 .lesson-result__score__num h4 {
-  font-size: 6rem;
-  line-height: 6rem;
+  font-size: 10rem;
+  line-height: 1.2;
   margin: 0;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.lesson-result__main-video h4 {
+  font-size: 2.2rem;
+}
+
+.lesson-result__main-video p {
+  color: #928780;
+  font-size: 1.6rem;
+  line-height: 2rem;
 }
 
 .lesson-result__videos {
-  overflow: hidden;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  margin-top: 7rem;
+}
+
+.lesson-result__video {
+  width: 20%;
+  padding: 0 5px;
+}
+
+.lesson-result__video__image {
+  position: relative;
   font-size: 0;
   line-height: 0;
 }
 
-.lesson-result__video {
-  display: inline-block;
-  width: 32%;
-  margin: 0;
-  margin-left: 2%;
-  vertical-align: top;
-}
-
-.lesson-result__video img {
+.lesson-result__video__image img {
+  width: 100%;
   max-width: 100%;
 }
 
-.lesson-result__video:first-child {
-  margin-left: 0;
+.lesson-result__video__image__play {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../images/icons/icon-video--play.svg) no-repeat center;
+  z-index: 9;
+}
+
+.lesson-result__video h5 {
+  margin: 1rem 0;
 }
 
 .lesson-result__video p {
-  font-size: 1.4rem;
+  color: #928780;
+  font-size: 1.2rem;
   line-height: 1.8rem;
+}
+
+.lesson-result__cta-wrap {
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+}
+
+.lesson-result__cta {
+  width: 48%;
+  background: #f6f6f6;
+  padding: 3rem;
+  margin-top: 4rem;
+}
+
+.lesson-result__cta h2, .lesson-result__cta .login h3, .login .lesson-result__cta h3 {
+  font-size: 3rem;
+  line-height: 1.2;
+}
+
+.lesson-result__cta p {
+  color: #928780;
+  font-size: 1.3rem;
+  line-height: 2rem;
+}
+
+.lesson-result__cta .btn {
+  display: inline-block;
+  font-size: 1.4rem;
+  color: #252525;
+  border: 0.2rem solid #252525;
+  padding: 1.5rem 3rem;
+  border-radius: 0.3rem;
+  margin: 0;
+}
+
+.lesson-result__cta .btn:hover {
+  background: #252525;
+  color: #FFFFFF;
+}
+
+.easteregg-step {
+  display: none;
+}
+
+.easteregg-step-1 {
+  display: block;
 }
 
 /**

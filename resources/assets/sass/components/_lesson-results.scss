@@ -1,11 +1,20 @@
+
 .lesson-congratulation-box {
   display: block;
-  padding: 30px 70px;
-  background: #242C41;
+  padding: 3rem 7rem;
+  background-color: #242C41;
+  background-image: url(../images/conffeti-left.png), url(../images/confetti-right.png);
+  background-repeat: no-repeat;
+  background-position: left center, right center;
 
   p {
     color: #FFFFFF;
     font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p.margin {
+    margin-bottom: 3rem;
   }
 
   a {
@@ -17,6 +26,7 @@
     color: #FFFFFF;
     font-size: 1.4rem;
     font-weight: 600;
+    margin: 0;
   }
 
   a:hover {
@@ -26,51 +36,136 @@
 }
 
 .lesson-result {
+  &__score {
+    text-align: center;
+    margin-bottom: 4rem;
+
+    img {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    h1 {
+      font-size: 5rem;
+      margin: 1rem 0;
+    }
+  }
+
   &__score__num {
     text-align: center;
 
     p {
+      color: #232c40;
       font-size: 3rem;
       line-height: 3rem;
       margin: 0;
     }
 
     h4 {
-      font-size: 6rem;
-      line-height: 6rem;
+      font-size: 10rem;
+      line-height: 1.2;
       margin: 0;
-      text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     }
   }
 
   &__main-video {
-
-  }
-
-  &__videos {
-    overflow: hidden;
-    font-size: 0;
-    line-height: 0;
-  }
-
-  &__video {
-    display: inline-block;
-    width: 32%;
-    margin: 0;
-    margin-left: 2%;
-    vertical-align: top;
-
-    img {
-      max-width: 100%;
-    }
-
-    &:first-child {
-      margin-left: 0;
+    h4 {
+      font-size: 2.2rem;
     }
 
     p {
-      font-size: 1.4rem;
+      color: #928780;
+      font-size: 1.6rem;
+      line-height: 2rem;
+    }
+  }
+
+  &__videos {
+    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    margin-top: 7rem;
+  }
+
+  &__video {
+    width: 20%;
+    padding: 0 5px;
+
+    &__image {
+      position: relative;
+      font-size: 0;
+      line-height: 0;
+
+      img {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      &__play {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url(../images/icons/icon-video--play.svg) no-repeat center;
+        z-index: 9;
+      }
+    }
+
+    h5 {
+      margin: 1rem 0;
+    }
+
+    p {
+      color: $brand-grey-light;
+      font-size: 1.2rem;
       line-height: 1.8rem;
     }
+  }
+
+  &__cta-wrap {
+    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+  }
+
+  &__cta {
+    width: 48%;
+    background: #f6f6f6;
+    padding: 3rem;
+    margin-top: 4rem;
+
+    h2 {
+      font-size: 3rem;
+      line-height: 1.2;
+    }
+
+    p {
+      color: #928780;
+      font-size: 1.3rem;
+      line-height: 2rem
+    }
+
+    .btn {
+      display: inline-block;
+      font-size: 1.4rem;
+      color: #252525;
+      border: 0.2rem solid #252525;
+      padding: 1.5rem 3rem;
+      border-radius: 0.3rem;
+      margin: 0;
+
+      &:hover {
+        background: #252525;
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+
+.easteregg-step {
+  display: none;
+
+  &-1 {
+    display: block;
   }
 }

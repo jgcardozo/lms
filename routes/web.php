@@ -166,6 +166,11 @@ Route::get('calendar/{event}', [
 	'middleware' => ['auth', 'onlyajax']
 ]);
 
+Route::get('lesson-question/{question}/viewResultsVideoPopup', [
+	'as' => 'single.lesson.viewResultsVideoPopup',
+	'uses' => 'LessonController@viewResultsVideoPopup'
+]);
+
 /**
  * Survey forms
  */
