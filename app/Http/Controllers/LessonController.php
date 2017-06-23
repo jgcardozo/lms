@@ -108,7 +108,7 @@ class LessonController extends Controller
 
     public function classMarkerResults(Request $request)
     {
-        http_response_code(200);
+		http_response_code(200);
 
 		$result = request()->get('result');
 		$test = request()->get('test');
@@ -126,9 +126,9 @@ class LessonController extends Controller
 		{
 			if($passed)
 			{
-				InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_pass_tags));
+				// InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_pass_tags));
 			}else{
-				InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_fail_tags));
+				// InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_fail_tags));
 			}
 		}
 
