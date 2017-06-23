@@ -246,7 +246,7 @@ class Lesson extends Model
 		$row = DB::table('class_marker_results')->where('user_id', $user)->where('assessment_id', $assessment)->first();
 		if($row)
 		{
-			return true;
+			return $row;
 		}
 
 		return false;

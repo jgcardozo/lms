@@ -129,7 +129,12 @@
                         @else
                             <div class="lesson-sessions__item lesson-sessions__item--bonus grid--flex flex--align-center">
                                 <div class="lesson-sessions__item__student-image">
-                                    <img src="{{ URL::to('/') }}/images/icons/student_happy.svg" />
+                                    @if($lesson->test_finished->passed)
+                                        <img src="{{ URL::to('/') }}/images/icons/student_happy.svg" />
+                                        <h3 style="text-align: center; margin: 0; font-size: 4rem; margin-top: -40px; text-shadow: 0 0 10px #b1b1b1;">{{ number_format(($lesson->test_finished->score / 10), 1, '.', ',') }}</h3>
+                                    @else
+                                        <img src="{{ URL::to('/') }}/images/icons/student_sad.svg" />
+                                    @endif
                                 </div>
 
                                 <div class="lesson-sessions__item__content">
