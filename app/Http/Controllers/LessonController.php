@@ -132,7 +132,7 @@ class LessonController extends Controller
 
 		$row = DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->first();
 
-		$q = LessonQuestion::where('assessment_id', $test_id)->take(1)->get();
+		$q = LessonQuestion::where('assessment_id', $test_id)->first();
 		if($q)
 		{
 			if($passed && !empty($q->assessment_pass_tags))
