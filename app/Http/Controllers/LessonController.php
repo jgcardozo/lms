@@ -127,6 +127,7 @@ class LessonController extends Controller
 		$user_id = (int) $result['cm_user_id'];
 		$test_id = (int) $test['test_id'];
 		$score = (int) $result['percentage'];
+		
 		$passed = $result['passed'];
 		$user = User::find($user_id);
 
