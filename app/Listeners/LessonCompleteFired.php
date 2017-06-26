@@ -27,6 +27,12 @@ class LessonCompleteFired
     public function handle(LessonComplete $event)
     {
         $lesson = $event->lesson;
+        $user = \Auth::user();
+
+        if(!$lesson->questions->isEmpty())
+        {
+            InfusionsoftFlow::addTag($user->contact_id, 7244);
+        }
 
         mixPanel()->track('Lesson completed', [
             'lesson_id' => $lesson->id,
