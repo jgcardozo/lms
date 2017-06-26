@@ -72,7 +72,7 @@
             src="https://www.classmarker.com/online-test/start?quiz={{ $video->assessment_embed_id }}
                     &cm_fn={{ \Auth::user()->profile && \Auth::user()->profile->first_name ? \Auth::user()->profile->first_name : '' }}
                     &cm_ln={{ \Auth::user()->profile && \Auth::user()->profile->last_name ? \Auth::user()->profile->last_name : '' }}
-                    &cm_e={{ \Auth::user()->email }}
+                    &cm_e={{ rawurlencode(\Auth::user()->email) }}
                     &cm_user_id={{ \Auth::user()->id }}"
             frameborder="0" style="width:100%;display: block; margin: 0 auto;" height="800">
     </iframe>

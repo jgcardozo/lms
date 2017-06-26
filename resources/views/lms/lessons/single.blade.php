@@ -138,10 +138,16 @@
                                 </div>
 
                                 <div class="lesson-sessions__item__content">
-                                    <p><strong>Congratulations!</strong> You’ve made it to the end of the Masterclass!</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur dicta eligendi eos iste quam quisquam.</p>
-                                    <p class="margin">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                    <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Re-take the assessment</a>
+                                    @if($lesson->test_finished->passed)
+                                        <p><strong>Congratulations!</strong> You've made it to the end of the Masterclass!</p>
+                                        <p>Well done!</p>
+                                        <p class="margin">You can re-take the assessment at any time you like to "brush up" or improve your score.</p>
+                                        <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Go Here To Take The Assessment Again</a>
+                                    @else
+                                        <p><strong>Whoops!</strong></p>
+                                        <p class="margin">Looks like you might need to do a little "refresher" :)</p>
+                                        <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" class="session-single__content-learn__default-btn-link js-retake-assessment">Go Here To Take The Assessment Again</a>
+                                    @endif
                                 </div>
                             </div>
                         @endif
