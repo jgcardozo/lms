@@ -11852,7 +11852,8 @@ $(document).ready(function () {
 
         var ajaxData = {
             user_id: user,
-            test_id: test
+            test_id: test,
+            taken: taken
         };
 
         var x = setInterval(function () {
