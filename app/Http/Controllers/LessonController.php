@@ -111,7 +111,7 @@ class LessonController extends Controller
 			if($date == $taken)
 			{
 				return response()->json([
-					'status' => false;
+					'status' => false
 				]);
 			}
 		}
