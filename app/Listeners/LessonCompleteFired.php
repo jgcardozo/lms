@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use InfusionsoftFlow;
 use App\Events\LessonComplete;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
