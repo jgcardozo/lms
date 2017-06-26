@@ -102,8 +102,19 @@ class LessonController extends Controller
 	{
 		$user_id = request()->get('user_id');
 		$test_id = request()->get('test_id');
+		$taken = request()->get('taken');
 
 		$row = DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->first();
+		if(!empty($row) && !empty($taken))
+		{
+			$date = $row->created_at;
+			if($date == $taken)
+			{
+				return response()->json([
+					'status' => false;
+				]);
+			}
+		}
 
 		return response()->json([
 			'status' => !empty($row)

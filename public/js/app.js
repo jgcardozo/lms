@@ -11842,7 +11842,13 @@ $(document).ready(function () {
             user = el.data('user'),
             test = el.data('test'),
             href = el.attr('href'),
+            taken = el.data('taken'),
             count = 1;
+
+        if(typeof taken === 'undefined')
+        {
+            taken = '';
+        }
 
         var ajaxData = {
             user_id: user,
