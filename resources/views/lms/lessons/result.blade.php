@@ -39,7 +39,10 @@
                     <p>Congratulations, you are our newest fully fledged graduate of the ASK Method Masterclass!</p>
                     <p>Thank you for being a part of this very special community.</p>
                     <p>And as a special bonus right now - you have just unlocked ALL the final Easter Eggs for Module 3 (see below)!</p>
-                    <p>Let us know how we can support you moving forward and remember, you don’t have to get it perfect… you just have to get it going!</p>
+                    <p>
+                        Let us know how we can support you moving forward and remember:
+                        <br>
+                        You don’t have to get it perfect… you just have to get it going!
                     </p>
                 </div>
 
