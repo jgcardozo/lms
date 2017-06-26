@@ -111,7 +111,7 @@
                             </div>
                         </div>
                     @endif
-                @elseif(!$lesson->questions->isEmpty() && $lesson->is_completed)
+                @elseif(!$lesson->questions->isEmpty())
                     @if(!empty($lesson->q_answered))
                         @if(!$lesson->test_finished)
                             <div class="lesson-sessions__item lesson-sessions__item--bonus grid--flex flex--align-center">
@@ -131,7 +131,7 @@
                                 <div class="lesson-sessions__item__student-image">
                                     @if($lesson->test_finished->passed)
                                         <img src="{{ URL::to('/') }}/images/icons/student_happy.svg" />
-                                        <h3 style="text-align: center; margin: 0; font-size: 4rem; margin-top: -40px; text-shadow: 0 0 10px #b1b1b1;">{{ number_format(($lesson->test_finished->score / 10), 1, '.', ',') }}</h3>
+                                        <h3 style="text-align: center; margin: 0; font-size: 4rem; margin-top: -40px; text-shadow: 0 0 10px #b1b1b1;">{{ $lesson->test_finished->score }}%</h3>
                                     @else
                                         <img src="{{ URL::to('/') }}/images/icons/student_sad.svg" />
                                     @endif
@@ -146,7 +146,7 @@
                             </div>
                         @endif
                     @else
-                        <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus">
+                        <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus" style="@if(!$lesson->is_completed) display: none @endif">
                             <p><strong>CONGRATULATIONS!</strong> You’ve just completed the FINAL Core Lesson in the ASK Method Masterclass!! Well done!</p>
 
                             <p>Now the important question is... What do you need next?  We’d love to support you as you grow your business using the ASK Method. </p>

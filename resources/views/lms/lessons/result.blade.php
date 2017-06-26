@@ -18,7 +18,7 @@
 
                         <div class="lesson-result__score__num">
                             <p>Your score is:</p>
-                            <h4>{{ number_format(($score / 10), 1, '.', ',') }}</h4>
+                            <h4>{{ $score }}%</h4>
                         </div>
                 </div>
 
@@ -62,13 +62,13 @@
                         <h2>Want help growing your business and scaling your income?</h2>
 
                         <p>Apply Now for the ASK Method Coaching & Mentorship program!</p>
-                        <a href="https://get.askmethod.com/ask-coaching-application/" target="_blank" class="btn">Yes, I Want To Know More!</a>
+                        <a href="https://get.askmethod.com/ask-coaching-application-ns93merq/" target="_blank" class="btn">Yes, I Want To Know More!</a>
                     </div>
                     <div class="lesson-result__cta">
                         <h2>Want to implement the ASK Method for other businesses?</h2>
 
                         <p>Apply Now for the ASK Method Certification Program!</p>
-                        <a href="https://get.askmethod.com/ask-certification-application/" target="_blank" class="btn">Yes, I Want To Know More!</a>
+                        <a href="https://get.askmethod.com/ask-certification-application-u8shba3a/" target="_blank" class="btn">Yes, I Want To Know More!</a>
                     </div>
                 </div>
             @else
