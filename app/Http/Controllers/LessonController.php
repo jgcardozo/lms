@@ -170,10 +170,17 @@ class LessonController extends Controller
                 'cert_url' => $cert_url
 			]);
 		}else{
-			DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->update([
-				'score' => $score,
-				'passed' => $passed
-			]);
+		    $update = [
+                'score' => $score,
+                'passed' => $passed
+            ];
+
+		    if(!empty($cert_url))
+            {
+                $update['cert_url'] = $cert_url;
+            }
+
+			DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->update($update);
 		}
     }
 }
