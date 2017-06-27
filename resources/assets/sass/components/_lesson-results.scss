@@ -7,6 +7,10 @@
   background-repeat: no-repeat;
   background-position: left center, right center;
 
+   @media only screen and (max-width: $mobile) {
+    padding: 3rem;
+   }
+
   p {
     color: #FFFFFF;
     font-size: 1.5rem;
@@ -27,6 +31,10 @@
     font-size: 1.4rem;
     font-weight: 600;
     margin: 0;
+
+    @media only screen and (max-width: $mobile) {
+      text-align: center;
+    }
   }
 
   a:hover {
@@ -48,6 +56,10 @@
     h1 {
       font-size: 5rem;
       margin: 1rem 0;
+
+      @media only screen and (max-width: $mobile) {
+        font-size: 3.5rem;
+      }
     }
   }
 
@@ -84,11 +96,23 @@
     flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     margin-top: 7rem;
+
+    @media only screen and (max-width: $mobile) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+    }
   }
 
   &__video {
     width: 20%;
     padding: 0 5px;
+
+    @media only screen and (max-width: $mobile) {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
 
     &__image {
       position: relative;
@@ -126,6 +150,13 @@
   &__cta-wrap {
     flex-wrap: wrap;
     -ms-flex-wrap: wrap;
+
+    @media only screen and (max-width: $mobile) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+    }
   }
 
   &__cta {
@@ -133,6 +164,10 @@
     background: #f6f6f6;
     padding: 3rem;
     margin-top: 4rem;
+
+    @media only screen and (max-width: $mobile) {
+      width: 100%;
+    }
 
     h2 {
       font-size: 3rem;
