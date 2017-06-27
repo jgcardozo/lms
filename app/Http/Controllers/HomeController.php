@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Resource;
 use DB;
 use Auth;
+use Carbon\Carbon;
 // use Facebook\Facebook;
 use Illuminate\Http\Request;
 use App\Models\Course;
@@ -59,164 +60,24 @@ class HomeController extends Controller
 	public function test()
 	{
 		die();
-		// dd(Auth::user());
-		// Mail::to(Auth::user())->send(new \App\Mail\UserRegistered('test-pass'));
-		/*Mail::raw('Hello there', function($message) {
-			$message->to('argirco.popov@gmail.com');
-		});*/
+		// dump(InfusionsoftFlow::is()->data()->query('Affiliate', 10, 0, ['Id' => '%'], ['Id', 'AffCode', 'AffName', 'ContactId'], '', false));
+		// dump(InfusionsoftFlow::is()->data()->query('Referral', 10, 0, ['Id' => '%'], ['Id', 'AffiliateId', 'ContactId', 'DateExpires', 'DateSet', 'IPAddress', 'Info', 'Source', 'Type'], '', false));
 
-		die();
+		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
 
-		$creditCard = (object) [
-			'cc_type' => '',
-			'cc_number' => '4242424242424242',
-			'cc_expiry_month' => '03',
-			'cc_expiry_year' => '2019',
-			'cc_cvv' => ''
+		$args = [
+			"Type" => 0,
+			"AffiliateId" => 94,
+			"ContactId" => 322372,
+			"DateSet" => $datetime,
+			"IPAddress" => "81.17.233.90"
 		];
 
-		// Add new credit card for this invoice Id
-		$newCC = InfusionsoftFlow::createCreditCard(Auth::user(), $creditCard);
-		dd($newCC);
+		InfusionsoftFlow::is()->data()->add('Referral', $args);
 
-
+		dump(InfusionsoftFlow::is()->data()->query('Affiliate', 10, 0, ['Id' => 94], ['Id', 'AffCode', 'AffName', 'ContactId'], '', false));
+		dump(InfusionsoftFlow::is()->data()->query('Referral', 10, 0, ['AffiliateId' => 94], ['Id', 'AffiliateId', 'ContactId', 'DateExpires', 'DateSet', 'IPAddress', 'Info', 'Source', 'Type'], 'DateSet', false));
 		die();
-
-		/*
-		$contactId = 294378;
-		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
-		$product_id = 130;
-		$amount = 25;
-		$ccId = 28848;
-
-		$invoice_id = InfusionsoftFlow::is()->invoices()->createBlankOrder($contactId, '', $datetime, 0, 0);
-		InfusionsoftFlow::is()->invoices()->addOrderItem($invoice_id, $product_id, 4, (double)$amount, 1, '', '');
-		$a = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $ccId, 10, 1, 3, (double)0, $datetime, $datetime, 7, 1);
-		$result = InfusionsoftFlow::is()->invoices()->chargeInvoice($invoice_id, 'asdasda', $ccId, 10, false);
-		dd($result);
-		*/
-
-		$payplan = InfusionsoftFlow::is()->data()->query('PayPlan', 1000, 0, ['InvoiceId' => 58144], ['Id'], '', false);
-		$payplan_items = InfusionsoftFlow::is()->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $payplan[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
-		dd($payplan_items);
-
-		$payments = InfusionsoftFlow::is()->invoices()->getPayments(58148);
-		var_dump(empty($payments));
-		die();
-
-		$courses = Course::get();
-		$course_invoice = [];
-		foreach($courses as $course)
-		{
-			$course_products = $course->is_course_products->pluck('product_id')->toArray();
-			if(!$course_products)
-				continue;
-
-			// Get user invoices
-			$invoices = InfusionsoftFlow::is()->data()->query('Invoice', 1000, 0, ['ContactId' => Auth::user()->contact_id], ['Id'], '', false);
-			foreach($invoices as $invoice)
-			{
-				$invoiceItems = InfusionsoftFlow::is()->data()->query('OrderItem', 1000, 0, ['OrderId' => $invoice['Id']], ['ProductId'], '', false);
-				$invoiceItems = array_pluck($invoiceItems, 'ProductId');
-				if(!count(array_intersect($course_products, $invoiceItems)))
-					continue;
-
-				$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
-				$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
-				$course_invoice[$course->id] = [
-					'invoice' => $invoice['Id'],
-					'cc' => $charges[0]['CCId']
-				];
-				break;
-			}
-		}
-
-		dd($course_invoice);
-
-		die();
-
-		$kur = InfusionsoftFlow::is()->data()->query('PayPlan', 1000, 0, ['InvoiceId' => 58112], ['Id'], '', false);
-		$plans = InfusionsoftFlow::is()->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $kur[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
-
-		dump($invoiceItems);
-
-		dump($kur);
-		dump($plans);
-		die();
-
-		$contactId = 294378;
-		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
-		$product_id = 130;
-		$amount = 25;
-		$ccId = 28822;
-
-		/*$invoice_id = InfusionsoftFlow::is()->invoices()->createBlankOrder($contactId, '', $datetime, 0, 0);
-		InfusionsoftFlow::is()->invoices()->addOrderItem($invoice_id, $product_id, 4, (double)$amount, 1, '', '');
-		$a = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $ccId, 6, 1, 3, (double)0, $datetime, $datetime, 7, 1);
-		dd($a);
-		*/
-		//$result = $this->infusionsoft->invoices()->chargeInvoice(57742, 'asdasda', 28610, 6, false);
-		// var_dump($result);
-
-// $payPlan = Infusionsoft_DataService::query(new Infusionsoft_PayPlan(), array('InvoiceId' => $invoiceId));
-// $kur = $this->infusionsoft->data()->query('PayPlan', 1000, 0, ['InvoiceId' => 57734], ['Id'], '', false);
-// $plans = $this->infusionsoft->data()->query('PayPlanItem', 1000, 0, ['PayPlanId' => $kur[0]['Id']], ['AmtDue', 'AmtPaid', 'DateDue', 'Id', 'PayPlanId', 'Status'], '', false);
-		var_dump($a);
-		dump($invoices);
-		dump($invoiceItems);
-		die();
-		// Log::info('Test log | Data here');
-		/*Mail::raw('Hello there', function($message) {
-			$message->from('test@codeart.mk', 'Codeart');
-			$message->to('argirco.popov@gmail.com');
-		});
-		*/
-		/*$key = 'session_4_1';
-		session([$key => 79]);
-		session()->save();*/
-		// session(['session_1' => '330']);
-		// session()->save();
-		$val = session()->all();
-		dd($val);
-		die();
-		// $item = Course::find(1);
-		// activity()->causedBy(Auth::user())->performedOn($item)->log('edited');
-		// dd($item->getNextSession());
-		$item = Resource::find(1);
-		dd($item->file_size_mb);
-
-		$user = User::find(1);
-		dd($user->fb_posted);
-
-		// dump($a);
-		// $a = InfusionsoftFlow;
-		// var_dump($a);
-		// die();
-
-		// $userTags = CA_Infusionsoft::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => $this->user->contact_id], ['GroupId', 'ContactGroup'], '', false);
-		// $a = CA_Infusionsoft::get()::data()->query('ContactGroupAssign', 1000, 0, ['ContactId' => 294378], ['GroupId', 'ContactGroup'], '', false);
-		// dd($a);
-
-		die();
-		// Streak::log(new LoginStreak());
-		// $a = new LoginStreak();
-		// dd($a->log());
-		// dump($a->started());
-		// dd($a->last_date());
-
-		//dd(Gamification::getScore());
-		// event(new \App\Events\WatchedSession($session));
-		return;
-
-		/***********************/
-
-		var_dump(session_status()); // session_start() in bootstrap/app.php
-		var_dump(PHP_SESSION_NONE);
-		exit();
-		$permissions = ['email', 'publish_actions', 'user_managed_groups', 'public_profile', 'user_friends'];
-		$loginUrl = $this->helper->getLoginUrl(url('test/fb/callback'), $permissions);
-
-		return redirect($loginUrl);
 	}
 
 	public function callback() {

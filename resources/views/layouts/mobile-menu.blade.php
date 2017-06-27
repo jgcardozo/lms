@@ -11,7 +11,19 @@
                     <a href="#">
                         <i class="masthead__user-avatar">{{ substr(Auth::user()->name,0,1) }}</i><span class="masthead__user-name">{{ Auth::user()->name }}</span>
                     </a>
-                </li>                        
+                </li>
+
+				@if(changeHeader())
+					<li class="grid--flex"><a href="{{ route('single.course.starter', $progress_items->slug) }}" class="grid--flex flex--align-center {{ survey_check($progress_items) ? 'js-open-surveyPopup' : '' }}">Welcome</a></li>
+
+					@if($progress_items->featured_coachingcall)
+						<li class="list__item"><a href="{{ route('single.course.coaching-call', $progress_items->slug) }}">Q&A Calls</a></li>
+					@endif
+
+					@if($progress_items->facebook_group_id)
+						<li class="list__item"><a href="{{ $progress_items->facebook_group_id }}">Facebook Group</a></li>
+					@endif
+				@endif
 	            <li class="list__item"><a href="{{ route('user.profile') }}">My Profile</a></li>
 	            {{-- <li class="list__item"><a href="#">Progress</a></li> --}}
 	            <li class="list__item"><a href="{{ route('user.settings') }}">Settings</a></li>

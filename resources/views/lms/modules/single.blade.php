@@ -8,16 +8,18 @@
 
 @section('content')
     <main>
-        <div class="grid grid--full course-single" @if($module->featured_image) style="background-image: url({{ $module->getFeaturedImageUrlAttribute() }});" @endif>
+        <div class="grid grid--full course-single" @if($module->featured_image) style="background-image: url({{ $module->featured_image_url }});" @endif>
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">
                 <div class="course-single__content-wrap grid--flex flex--space-between">
                     <div class="single-header-block">
                         <div class="single-header-block__step-back">
-                            <a href="{{ route('single.course', $module->course->slug) }}">
-                                Back to <strong>{!! $module->course->title !!}</strong>
-                            </a>
+                            @if(count($module->course->modules) > 1)
+                                <a href="{{ route('single.course', $module->course->slug) }}">
+                                    Back to <strong>{!! $module->course->title !!}</strong>
+                                </a>
+                            @endif
                         </div>
 
                         <h2 class="single-header-block__title">{{ $module->title }}</h2>
@@ -61,7 +63,7 @@
                                 <div class="lessons-list__content--center grid--flex flex--space-between">
                                     <div class="lessons-list__lesson-info">
                                         <p>Sessions</p>
-                                        <h4>12</h4>
+                                        <h4>{{ count($lesson->sessions) }}</h4>
                                     </div>
 
                                     <div class="lessons-list__lesson-info">
@@ -76,7 +78,7 @@
                                     @elseif($lesson->is_locked)
                                         @if($lesson->is_date_locked)
                                             <div class="course-progress course-progress__lesson" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}">
-                                                Unlocks {{ date('d-m-Y', strtotime($lesson->lock_date)) }} <span class="course-progress__bar course-progress__bar--locked"></span>
+                                                Unlocks {{ date('m/d/Y', strtotime($lesson->getDate('lock_date'))) }} <span class="course-progress__bar course-progress__bar--locked"></span>
                                             </div>
                                         @else
                                             <div class="course-progress course-progress__lesson">

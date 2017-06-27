@@ -136,6 +136,18 @@ if ( !function_exists('is_role_admin') ) {
 }
 
 /**
+ * Determinate if the current user is Vip
+ *
+ * @return boolean
+ */
+if ( !function_exists('is_role_vip') ) {
+	function is_role_vip()
+	{
+		return \Auth::user()->hasRole(['Vip']);
+	}
+}
+
+/**
  * Get setting via key
  */
 if ( !function_exists('lms_get_setting') ) {
@@ -149,5 +161,158 @@ if ( !function_exists('lms_get_setting') ) {
 		}
 
 		return $row;
+	}
+}
+
+/**
+ * Check ask-masterclass survey
+ */
+if ( !function_exists('survey_check') ) {
+	function survey_check(\App\Models\Course $course)
+	{
+		// Popup before course start
+		$popupCheck = DB::table('surveys')->where('user_id', \Auth::user()->id)->get()->toArray();
+		if($course->slug == 'ask-masterclass' && empty($popupCheck)) {
+			return true;
+		}
+
+		return false;
+	}
+}
+
+/**
+ * Return array of timezones
+ *
+ * @return array
+ */
+if ( !function_exists('timezoneList') ) {
+	function timezoneList()
+	{
+		$timezoneIdentifiers = DateTimeZone::listIdentifiers();
+		$utcTime = new DateTime('now', new DateTimeZone('UTC'));
+
+		$tempTimezones = array();
+		foreach ($timezoneIdentifiers as $timezoneIdentifier) {
+			$currentTimezone = new DateTimeZone($timezoneIdentifier);
+
+			$_timezoneIdentifier = explode('/', $timezoneIdentifier);
+
+			$tempTimezones[] = array(
+				'offset' => (int)$currentTimezone->getOffset($utcTime),
+				'key' => $timezoneIdentifier,
+				'identifier' => isset($_timezoneIdentifier[1]) ? $_timezoneIdentifier[1] : $_timezoneIdentifier[0]
+			);
+		}
+
+		// Sort the array by offset,identifier ascending
+		usort($tempTimezones, function($a, $b) {
+			return ($a['offset'] == $b['offset'])
+				? strcmp($a['identifier'], $b['identifier'])
+				: $a['offset'] - $b['offset'];
+		});
+
+		$timezoneList = array();
+		foreach ($tempTimezones as $tz) {
+			$sign = ($tz['offset'] > 0) ? '+' : '-';
+			$offset = gmdate('H:i', abs($tz['offset']));
+			$timezoneList[$tz['key']] = '(UTC ' . $sign . $offset . ') ' .
+				$tz['identifier'];
+		}
+
+		return $timezoneList;
+	}
+}
+
+/**
+ * Adds user credit card to course
+ *
+ * @param int $user_id    User ID
+ * @param int $course_id  Course ID
+ * @param int $cc_id      Infusionsoft CreditCard IS
+ */
+if ( !function_exists('addISCreditCard') ) {
+	function addISCreditCard($user_id, $course_id, $cc_id)
+	{
+		$qb = DB::table('payment_card_user')->where('course_id', $course_id)->where('user_id', $user_id);
+		$check = $qb->get();
+		if(!$qb->get()->isEmpty())
+		{
+			$qb->limit(1)->update(['cc_id' => $cc_id]);
+		}else{
+			DB::table('payment_card_user')->insert([
+				[
+					'user_id' => $user_id,
+					'course_id' => $course_id,
+					'cc_id' => $cc_id
+				]
+			]);
+		}
+	}
+}
+
+/**
+ * Get Mixpanel instance. Easy way.
+ */
+if ( !function_exists('mixPanel') ) {
+	function mixPanel()
+	{
+		$mp = Mixpanel::getInstance(env('MIXPANEL_TOKEN'));
+
+		/**
+		 * Assume that only logged in users can use the LMS
+		 */
+		if(\Auth::check())
+		{
+			$user = \Auth::user();
+
+			$mp->people->set($user->id, array(
+				'$first_name'       => $user->profile && $user->profile->first_name ? $user->profile->first_name : '',
+				'$last_name'        => $user->profile && $user->profile->last_name ? $user->profile->last_name : '',
+				'$email'            => $user->email ?: ''
+			));
+
+			$mp->identify($user->id);
+		}
+
+		return $mp;
+	}
+}
+
+/**
+ * Get basic LMS stats.
+ */
+if ( !function_exists('getBasicLessonsStats') ) {
+	function getBasicLessonsStats()
+	{
+		$users = \App\Models\User::get();
+		$lessons = \App\Models\Lesson::get();
+
+		// 2880 Minutes - 2 days
+		$lessonsFinished = \Cache::remember('lms.stats', 2880, function () use ($users, $lessons) {
+			$_lessonsFinished = [];
+			foreach($lessons as $lesson)
+			{
+				$_lessonsFinished[$lesson->id]['finished'] = 0;
+				$_lessonsFinished[$lesson->id]['unfinished'] = 0;
+
+				foreach($users as $user)
+				{
+					if(!$lesson->getIsCompletedAttribute($user->id))
+					{
+						$_lessonsFinished[$lesson->id]['unfinished'] = $_lessonsFinished[$lesson->id]['unfinished'] + 1;
+						continue;
+					}
+
+					$_lessonsFinished[$lesson->id]['finished'] = $_lessonsFinished[$lesson->id]['finished'] + 1;
+				}
+
+				$_lessonsFinished[$lesson->id]['total'] = $_lessonsFinished[$lesson->id]['finished'] + $_lessonsFinished[$lesson->id]['unfinished'];
+				$_lessonsFinished[$lesson->id]['percent'] = round(($_lessonsFinished[$lesson->id]['finished'] / $_lessonsFinished[$lesson->id]['total']) * 100, 2);
+			}
+
+			return $_lessonsFinished;
+		});
+
+		return $lessonsFinished;
 	}
 }

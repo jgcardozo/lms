@@ -27,7 +27,7 @@
 
                         <div class="user-settings__manage">
                             @if(Session::has('message'))
-                                <div class="alert alert--success"> {{ Session::get('message') }} </div>
+                                <div class="ask-alert ask-alert--success">{{ Session::get('message') }}</div>
                             @endif
                             <form class="block" method="POST" action="{{ route('user.settings') }}">
                                 <div class="form-control grid--flex flex--space-between flex--align-center">

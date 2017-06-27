@@ -28,8 +28,10 @@
           <li><a href="{{ url('admin/module') }}"><i class="fa fa-files-o"></i> <span>Modules</span></a></li>
           <li><a href="{{ url('admin/lesson') }}"><i class="fa fa-files-o"></i> <span>Lessons</span></a></li>
           <li><a href="{{ url('admin/session') }}"><i class="fa fa-video-camera"></i> <span>Sessions</span></a></li>
-          <li><a href="{{ url('admin/resource') }}"><i class="fa fa-file-image-o"></i> <span>Resourcess</span></a></li>
+          <li><a href="{{ url('admin/resource') }}"><i class="fa fa-file-image-o"></i> <span>Resources</span></a></li>
           <li><a href="{{ url('admin/coachingcall') }}"><i class="fa fa-university"></i> <span>Coaching Calls</span></a></li>
+          <li><a href="{{ url('admin/training') }}"><i class="fa fa-university"></i> <span>Training</span></a></li>
+          <li><a href="{{ url('admin/lessonquestion') }}"><i class="fa fa-question"></i> <span>Lesson questions</span></a></li>
 
           <li class="header">Events</li>
           <li><a href="{{ url('admin/event') }}"><i class="fa fa-calendar"></i> <span>Events</span></a></li>

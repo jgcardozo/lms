@@ -2,16 +2,43 @@
 
 namespace App\Models;
 
+use App\Models\Session;
 use Illuminate\Http\File;
+use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Resource extends Model
 {
 	use CrudTrait, BackpackCrudTrait;
 
 	protected $fillable = ['title', 'file_url'];
+
+	/**
+	 * The "booting" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+
+		if(\Route::currentRouteName() == 'crud.resource.reorder')
+		{
+			if(request()->has('session'))
+			{
+				$session = Session::find(request()->get('session'));
+				$resources = $session->resources->pluck('id')->toArray();
+				static::addGlobalScope('bySession', function (Builder $builder) use ($resources) {
+					$builder->whereIn('id', $resources);
+				});
+			}
+		}
+
+		static::addGlobalScope(new OrderScope);
+	}
 
 	public function getFileAttribute()
 	{

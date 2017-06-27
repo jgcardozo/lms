@@ -53,28 +53,13 @@ class LogSuccessfulLogin
         }
 
 		// Sync Infusionsoft user tags
-        $is = new InfusionsoftController($event->user);
-        $newTags = $is->sync();
-
-        // Log the new tags
-        if(!empty($newTags))
-        {
-            Log::info('User tags updated. | ID: ' . implode(', ', $newTags));
-        }
-
-        // Check for unlocked course/module/lesson/session
-        // and notify the user
-        $items = $is->checkUnlockedCourses($newTags);
-        if(!empty($is))
-        {
-			foreach($items as $item)
-			{
-				$event->user->notify(new UnlockedByTag($item));
-			}
-        }
+        $event->user->syncIsTags();
 
 		// Catch the login streak
 		Streak::log(new LoginStreak());
+
+        // Log in MixPanel
+        mixPanel()->track('Logged in');
 
 		// Log the activity
 		activity('user-logged')->causedBy($event->user)->withProperties(['ip' => request()->ip()])->log('User :causer.email has logged in.');

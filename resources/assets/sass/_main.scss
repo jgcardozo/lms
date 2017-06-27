@@ -2,8 +2,6 @@ html {
   box-sizing: border-box;
   line-height: 1;
   font-size: 62.5%;
-  -ms-text-size-adjust: 62.5%;
-  -webkit-text-size-adjust: 62.5%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -97,11 +95,11 @@ a:hover {
   left: 0;
   z-index: 9998;
   margin: auto;
-  background-color: rgba(146, 135, 128, 0.8);
+  background-color: rgba(146, 135, 128, 0.65);
 
   &__spinner {
-    width: 40px;
-    height: 40px;
+    width: 4rem;
+    height: 4rem;
     margin: auto;
     background-color: #fff;
     border-radius: 100%;
@@ -138,14 +136,104 @@ a:hover {
 /**
  * Alert boxes
  */
-.alert {
+.ask-alert {
   color: #383838;
   border-radius: 0.3rem;
   padding: 1rem 2rem;
   margin: 2rem 0;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
+
+  &--success {
+    background: #e9ffd9;
+    border-color: #a6ca8a;
+  }
+  
+  &--critical {
+    background: #f1d3d3;
+    border-color: #db3333;
+  }
+  
+  &--full {
+    background: #F5F5F5;
+    border-radius: 0;
+
+    margin: 0;
+    padding: 3rem 6rem;
+    border: 0;
+    border-bottom-width: 0.3rem;
+    border-bottom-style: solid;
+    
+    &--critical {
+      color: #DB3333;
+    }
+  }
+
+  a {
+    color: #DB3333;
+    text-decoration: underline;
+    font-weight: bold;
+  }
 }
 
-.alert--success {
-  background: #e9ffd9;
-  border: 1px solid #a6ca8a;
+.js-close-ask-alert {
+  width: 2rem;
+  height: 2rem;
+  background: url('../images/icons/icon--close.svg') no-repeat center / cover;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  cursor: pointer;
+}
+
+/**
+ * Notifications page
+ */
+.allnotifications {
+  border: 0.1rem solid #ececec;
+  border-radius: 0.3rem;
+  overflow: hidden;
+
+  &__item {
+    background: #FFFFFF;
+    padding: 1.5rem 3rem;
+    border-top: 0.1rem solid #dcdcdc;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &--unread {
+      background: #eff1f4;
+    }
+
+    &--current {
+      -webkit-transition: all 1.2s ease-out;
+      transition: all 1.2s ease-out;
+
+      -webkit-animation-delay: 4s;
+      animation-delay: 4s;
+
+      background: #FFFFFF;
+    }
+
+    p {
+      margin-bottom: 0;
+      margin: 20px 0 0 0;
+
+      color: #000000;
+      font-size: 1.4rem;
+      line-height: 2rem;
+    }
+
+    p:first-child {
+      margin-top: 0;
+    }
+    
+    a {
+      color: #165c79;
+      text-decoration: underline;
+    }
+  }
 }

@@ -103,14 +103,16 @@
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js"></script>
 
     <script>
         jQuery(document).ready(function($) {
             $('#surveyTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'csv', 'pdf', 'print'
-                ]
+                    'csv', 'pdf', 'print', 'pageLength', 'colvis'
+                ],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             });
 
             $('body').on('click', '.js-delete-survey', function(e) {

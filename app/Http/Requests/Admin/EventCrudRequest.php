@@ -28,7 +28,7 @@ class EventCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
             'short_description' => 'required|max:255',
             'description' => 'required',
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            // 'end_date' => 'date_format',
             'event_image' => 'mimes:jpeg,bmp,png',
             'course_id' => 'numeric'
         ];

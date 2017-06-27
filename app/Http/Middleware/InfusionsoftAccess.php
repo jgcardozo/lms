@@ -23,6 +23,13 @@ class InfusionsoftAccess
 		{
 			$slug = $parameters['course'];
 			$model = \App\Models\Course::findBySlugOrFail($slug);
+
+			// This is cuz of the Vip users, redirect for the course,
+			// but unlock all the content in Course
+			if($model->is_tag_locked() && is_role_vip())
+			{
+				return redirect('/');
+			}
 		}elseif(array_key_exists('module', $parameters))
 		{
 			$slug = $parameters['module'];
@@ -46,7 +53,6 @@ class InfusionsoftAccess
 
 		if($model->is_locked)
 		{
-			// abort(403, 'This item is locked for this user. Return to <a href="/">homepage</a>');
 			return redirect('/');
 		}
 

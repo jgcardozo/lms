@@ -17,6 +17,19 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\WatchedSessionFired',
         ],
 
+        // This applies when all the starter videos are finished within a course
+        'App\Events\StarterVideosCompleted' => [
+            'App\Listeners\StarterVideosCompletedFired'
+        ],
+
+        'App\Events\LessonComplete' => [
+            'App\Listeners\LessonCompleteFired'
+        ],
+
+        'App\Events\ModuleComplete' => [
+            'App\Listeners\ModuleCompleteFired'
+        ],
+
         'Illuminate\Auth\Events\Login' => [
             'App\Listeners\LogSuccessfulLogin'
         ]

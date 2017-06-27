@@ -4,6 +4,8 @@ namespace app\InfusionsoftFlow;
 
 use DB;
 use Infusionsoft;
+use Illuminate\Support\Facades\Mail;
+use Mockery\CountValidator\Exception;
 
 class InfusionsoftFlow
 {
@@ -115,8 +117,18 @@ class InfusionsoftFlow
 
 			if($token->endOfLife > time())
 			{
-				$this->is->setToken($token);
-				$this->refreshToken();
+				try {
+					$this->is->setToken($token);
+					$this->refreshToken();
+				}catch (\Exception $e) {
+					\Log::critical('Token error.');
+
+					Mail::send([], [], function ($message) {
+						$message->to('panovtomislav@hotmail.com')
+							->subject('[ASK LMS] Token error')
+							->setBody('Re-auth the infusionsoft token');
+					});
+				}
 			}
 		}
 	}
@@ -231,11 +243,11 @@ class InfusionsoftFlow
 		$creditCardValues = [
 			'ContactId' => $user->contact_id,
 			'CardNumber' => $creditCard->cc_number,
-			'ExpirationMonth' => $creditCard->cc_expiry_month,
+			'ExpirationMonth' => $creditCard->cc_expiry_month <= 9 ? '0' . $creditCard->cc_expiry_month : $creditCard->cc_expiry_month,
 			'ExpirationYear' => $creditCard->cc_expiry_year,
 			'CardType' => ucfirst($this->creditCardType($creditCard->cc_number)),
-			'NameOnCard' => $user->name,
-			'BillAddress1' => $user->profile->address,
+			'NameOnCard' => !empty($creditCard->cc_name) ? $creditCard->cc_name : $user->name,
+			'BillAddress1' => !empty($creditCard->cc_address) ? $creditCard->cc_address : $user->profile->address,
 			'BillCity' => $user->profile->city,
 			'BillCountry' => $user->profile->country
 		];
@@ -281,5 +293,25 @@ class InfusionsoftFlow
 		$fields = array_filter($fields);
 
 		$this->is->contacts()->update((int) $user->contact_id, $fields);
+	}
+
+	public function addTag($contactID = 0, $tags)
+	{
+		if(empty($contactID) || empty($tags))
+		{
+			return false;
+		}
+
+		if(!is_array($tags))
+		{
+			$tags = [(int) $tags];
+		}
+
+		foreach($tags as $tag)
+		{
+			$this->is->contacts()->addToGroup($contactID, (int) $tag);
+		}
+
+		return true;
 	}
 }

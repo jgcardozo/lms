@@ -10,8 +10,8 @@ use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
+use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
-use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -22,16 +22,22 @@ class Course extends Model
 	use Sluggable;
 	use CrudTrait;
 	use LogsActivity;
+	use UsearableTimezone;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'facebook_group_id'];
+	protected $fillable = [
+		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products'
+	];
+
+	protected $dates = [
+		'user_lock_date'
+	];
 
 	/**
 	 * Billing attributes
 	 */
-
 	public $billing_invoice_id = null;
 	public $billing_ccard = null;
 	public $billing_plans = [];
@@ -46,7 +52,6 @@ class Course extends Model
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
-		static::addGlobalScope(new IgnoreCoachingCallsScope);
 	}
 
 	/**
@@ -137,6 +142,14 @@ class Course extends Model
 		return $this->is_tag_locked() && !is_role_admin();
 	}
 
+	public function getCourseCanceledAttribute()
+	{
+		if(Auth::user()->hasTag($this->cancel_tag))
+			return true;
+
+		return false;
+	}
+
 	/**
 	 * Get image from S3
 	 */
@@ -145,7 +158,7 @@ class Course extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
 	}
 
 	/**
@@ -156,7 +169,34 @@ class Course extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->logo_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->logo_image : '';
+		return !empty($this->logo_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->logo_image) : '';
+	}
+
+	public function getCreditCardAttribute()
+	{
+		$user = Auth::user();
+
+		$cc_id = \DB::table('payment_card_user')
+				->select('cc_id')
+				->where('user_id', $user->id)
+				->where('course_id', $this->id)
+				->first();
+
+		if(!empty($cc_id))
+		{
+			return $cc_id->cc_id;
+		}
+
+		return null;
+	}
+
+	public function getIsCourseProductsAttribute()
+	{
+		$items = collect(explode(',', $this->billing_is_products))->map(function($item, $key) {
+			return ['product_id' => (int) $item];
+		});
+
+		return $items;
 	}
 
 	/**
@@ -184,22 +224,26 @@ class Course extends Model
 			$this->billing_invoice_id = (int) $invoice['Id'];
 
 			// Try to find out the credit card used for this payment plan on this invoice
-			$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
-			if(!empty($payments))
+			$_cc_id = $this->credit_card;
+			if(!$_cc_id)
 			{
-				$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
-				if(!empty($charges))
+				$payments = InfusionsoftFlow::is()->invoices()->getPayments($invoice['Id']);
+				if(!empty($payments))
 				{
-					$this->billing_ccard = (int) $charges[0]['CCId'];
-
-					if(!empty($userCards))
+					$charges = InfusionsoftFlow::is()->data()->query('CCharge', 1000, 0, ['Id' => $payments[0]['ChargeId']], ['CCId', 'PaymentId', 'Amt'], '', false);
+					if(!empty($charges))
 					{
-						$ccardIndex = array_search($this->billing_ccard, array_column($userCards, 'Id'));
-						if($ccardIndex !== false)
-						{
-							$this->billing_ccard = $userCards[$ccardIndex];
-						}
+						$_cc_id = (int) $charges[0]['CCId'];
 					}
+				}
+			}
+
+			if(!empty($userCards))
+			{
+				$ccardIndex = array_search($_cc_id, array_column($userCards, 'Id'));
+				if($ccardIndex !== false)
+				{
+					$this->billing_ccard = $userCards[$ccardIndex];
 				}
 			}
 
@@ -231,19 +275,24 @@ class Course extends Model
 		return $this->hasMany('App\Models\Session', 'starter_course_id');
 	}
 
-	public function getRouteKeyName()
-    {
-		return 'slug';
-	}
-
 	public function coachingcall()
     {
-		return $this->hasMany('App\Models\CoachingCall');
+		return $this->hasMany('App\Models\CoachingCall')->where('featured_training_coachingcall', false)->orWhere('featured_training_coachingcall', null);
+	}
+
+	public function featured_coachingcall()
+	{
+		return $this->hasOne('App\Models\CoachingCall')->withoutGlobalScopes()->where('featured_training_coachingcall', true);
+	}
+
+	public function featured_training()
+	{
+		return $this->hasOne('App\Models\Training')->withoutGlobalScopes()->where('featured_training_coachingcall', true);
 	}
 
 	public function events()
-    {
-		return $this->hasMany('App\Events');
+	{
+		return $this->hasMany('App\Models\Event');
 	}
 
 	public function sluggable()
@@ -255,9 +304,9 @@ class Course extends Model
 		];
 	}
 
-	public function is_course_products()
+	public function getRouteKeyName()
 	{
-		return $this->hasMany('App\Models\ISCourseProductId', 'course_id', 'id');
+		return 'slug';
 	}
 
 	/**

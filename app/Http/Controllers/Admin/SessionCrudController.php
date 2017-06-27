@@ -151,8 +151,14 @@ class SessionCrudController extends CrudController
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy'
+				'format' => 'dd-mm-yyyy g:ia'
 			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'type',
+			'type' => 'hidden',
+			'value' => \App\Models\Session::class
 		]);
 
 		
@@ -185,6 +191,7 @@ class SessionCrudController extends CrudController
 		 * Add CRUD action button
 		 */
 		$this->crud->addButton('line', 'view_in_frontend', 'model_function', 'view_in_frontend_button', 'end');
+		$this->crud->addButton('line', 'reorder_resources', 'model_function', 'reorder_resources_button', 'end');
 
 		/**
 		 * Enable CRUD reorder

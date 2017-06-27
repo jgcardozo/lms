@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use DB;
 use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Models\LessonQuestion;
+use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
+use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -19,11 +23,19 @@ class Lesson extends Model
 	use CrudTrait;
 	use Sluggable;
 	use LogsActivity;
+	use LockViaUserDate;
 	use BackpackCrudTrait;
+	use UsearableTimezone;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'bonus_video_url', 'module_id', 'featured_image', 'lock_date'];
+	protected $fillable = [
+		'title', 'slug', 'description', 'video_url', 'bonus_video_url', 'bonus_video_duration', 'bonus_video_text', 'fb_link', 'module_id', 'featured_image', 'lock_date', 'exclude_from_rule'
+	];
+
+	protected $casts = [
+		'exclude_from_rule' => 'boolean'
+	];
 
 	/**
 	 * The "booting" method of the model.
@@ -58,6 +70,11 @@ class Lesson extends Model
 	{
 		if(!$user) {
 			$user = Auth::user();
+		}
+
+		if(is_numeric($user))
+		{
+			$user = \App\Models\User::find($user);
 		}
 
 		$sessions = $this->sessions;
@@ -97,7 +114,7 @@ class Lesson extends Model
 	 */
 	public function getPreviousLessonAttribute()
 	{
-		$prevLesson = $this->module->lessons->where('lft', '<', $this->lft)->first();
+		$prevLesson = $this->module->lmsLessons->where('lft', '<', $this->lft)->last();
 
 		return !$prevLesson ? false : $prevLesson;
 	}
@@ -108,30 +125,11 @@ class Lesson extends Model
 	 *
 	 * @return bool
 	 */
-	public function getIsCompletedAttribute()
+	public function getIsCompletedAttribute($user = null)
 	{
-		$progress = $this->getProgress();
+		$progress = $this->getProgress($user);
 
 		return count($progress['sessions']) == count($progress['watched']) && count($progress['sessions']) > 0;
-	}
-
-	/**
-	 * Check if the module is locked
-	 * with future date
-	 *
-	 * @return bool
-	 */
-	public function getIsDateLockedAttribute()
-	{
-		if(!empty($this->lock_date))
-		{
-			$expire = strtotime($this->lock_date);
-			$today = strtotime('today midnight');
-
-			return $today >= $expire ? false : true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -142,6 +140,9 @@ class Lesson extends Model
 	public function getIsLockedAttribute()
 	{
 		if(is_role_admin())
+			return false;
+
+		if(!$this->course->is_locked && is_role_vip())
 			return false;
 
 		if($this->module->is_locked) {
@@ -191,7 +192,7 @@ class Lesson extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
 	}
 
 	/**
@@ -209,6 +210,56 @@ class Lesson extends Model
 		$user = Auth::user();
 
 		return $this->usersPosted()->where('user_id', $user->id)->exists();
+	}
+
+	public function getIsQAnsweredAttribute()
+	{
+		$user = Auth::user();
+
+		return $this->userAnswered()->where('user_id', $user->id)->exists();
+	}
+
+	public function getQAnsweredAttribute()
+	{
+		$user = Auth::user();
+
+		$answer = DB::table('question_user')->where('lesson_id', $this->id)->where('user_id', $user->id)->value('question_id');
+
+		if(empty($answer))
+			return false;
+
+		$ql = LessonQuestion::find($answer);
+
+		return $ql;
+	}
+
+	public function getTestFinishedAttribute()
+	{
+		$user = Auth::user()->id;
+		$assessment = !empty($this->q_answered) ? $this->q_answered->assessment_id : null;
+
+		if(!$assessment)
+		{
+			return false;
+		}
+
+		$row = DB::table('class_marker_results')->where('user_id', $user)->where('assessment_id', $assessment)->first();
+		if($row)
+		{
+			return $row;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get user lock date via course model
+	 *
+	 * @return Carbon\Carbon
+	 */
+	public function getUserLockDateAttribute()
+	{
+		return $this->course->user_lock_date;
 	}
 
 	/*
@@ -234,6 +285,16 @@ class Lesson extends Model
 	public function usersPosted()
 	{
 		return $this->belongsToMany('App\Models\User', 'fb_lesson');
+	}
+
+	public function questions()
+	{
+		return $this->hasMany('App\Models\LessonQuestion');
+	}
+	
+	public function userAnswered()
+	{
+		return $this->belongsToMany('App\Models\User', 'question_user');
 	}
 
 	public function sluggable()

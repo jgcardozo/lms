@@ -6,9 +6,12 @@ use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
+use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -19,11 +22,15 @@ class Session extends Model
 	use CrudTrait;
 	use Sluggable;
 	use LogsActivity;
+	use LockViaUserDate;
+	use UsearableTimezone;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'];
+	protected $fillable = [
+		'title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'
+	];
 
 	/**
 	 * The "booting" method of the model.
@@ -35,6 +42,7 @@ class Session extends Model
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
+		static::addGlobalScope(new IgnoreCoachingCallsScope);
 	}
 
 	/**
@@ -66,24 +74,6 @@ class Session extends Model
 	}
 
 	/**
-	 * Check if the module is locked
-	 * with future date
-	 *
-	 * @return bool
-	 */
-	public function getIsDateLockedAttribute()
-    {
-		if(!empty($this->lock_date)) {
-			$expire = strtotime($this->lock_date);
-			$today = strtotime('today midnight');
-
-			return $today >= $expire ? false : true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Get image from S3
 	 */
 	public function getFeaturedImageUrlAttribute()
@@ -91,7 +81,7 @@ class Session extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
 	}
 
 	public function getVideoProgressAttribute()
@@ -100,6 +90,16 @@ class Session extends Model
 		$key = 'session_' . $this->id . '_' . $user_id;
 
 		return session($key, 0);
+	}
+
+	/**
+	 * Get user lock date via course model
+	 *
+	 * @return Carbon\Carbon
+	 */
+	public function getUserLockDateAttribute()
+	{
+		return $this->course->user_lock_date;
 	}
 
 	/*
@@ -212,6 +212,19 @@ class Session extends Model
 		<a target="_blank" href="<?php echo route('single.lesson', [$this->lesson->slug, 'session' => $this->id]); ?>" class="btn btn-xs btn-default">
 			<i class="fa fa-eye"></i>
 			View session
+		</a>
+		<?php
+	}
+
+	public function reorder_resources_button()
+	{
+		if(!$this->resources)
+			return;
+
+		?>
+		<a href="<?php echo route('crud.resource.reorder', ['session' => $this->id]); ?>" class="btn btn-xs btn-default">
+			<i class="fa fa-arrows" aria-hidden="true"></i>
+			Reorder resources
 		</a>
 		<?php
 	}

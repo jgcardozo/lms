@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use Auth;
+use Autologin;
 use Validator;
+use Carbon\Carbon;
 use App\Models\User;
 use InfusionsoftFlow;
+use App\Models\Course;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Notifications\UnlockedByTag;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
 
@@ -38,13 +42,22 @@ class UserController extends Controller
 			return;
 		}
 
-		$password = str_random(8);
+		if(!User::where('contact_id', $request->get('contactId'))->get()->isEmpty())
+		{
+			$user = User::where('contact_id', $request->get('contactId'))->get()->first();
+			$user->syncIsTags();
+			return;
+		}
+
+		$password = str_random(16);
+		$uuid = uniqid();
 
 		$newUser = new User();
 		$newUser->contact_id = $request->get('contactId');
 		$newUser->name = $request->get('email');
 		$newUser->email = $request->get('email');
 		$newUser->password = bcrypt($password);
+		$newUser->activation_code = $uuid;
 		$newUser->save();
 
 		$profile = new Profile();
@@ -55,15 +68,55 @@ class UserController extends Controller
 
 		$newUser->assignRole('Customer');
 
-		Mail::to($newUser)->send(new \App\Mail\UserRegistered($password, $newUser->email));
+		Mail::to($newUser)->send(new \App\Mail\UserRegistered($uuid, $newUser->email));
 		activity('user-registered-success')->causedBy($newUser)->log('New user with email: <strong>:causer.email</strong> registered.');
+	}
+
+	public function activateShow($uuid)
+	{
+		$user = User::where('activation_code', $uuid)->get()->first();
+
+		if(is_null($user))
+		{
+			return redirect('/');
+		}
+
+		return view('auth.passwords.activate')->with('uuid', $uuid);
+	}
+
+	public function activateIt($uuid)
+	{
+		$user = User::where('activation_code', $uuid)->get()->first();
+
+		if(is_null($user))
+		{
+			return redirect('/');
+		}
+
+		$rules = [
+			'password' => 'required|confirmed'
+		];
+
+		$validator = Validator::make(request()->all(), $rules);
+		if($validator->fails())
+		{
+			return redirect()->back()->withInput()->withErrors($validator);
+		}
+
+		$user->password = bcrypt(request()->get('password'));
+		$user->activation_code = '';
+		$user->save();
+
+		return redirect('/');
 	}
 
 	public function profile()
 	{
 		$user = Auth::user();
 
-		return view('lms.user.profile')->with(['user' => $user]);
+		$timezones = \timezoneList();
+
+		return view('lms.user.profile')->with(['user' => $user])->with('timezones', $timezones);
 	}
 
 	public function settings()
@@ -73,7 +126,7 @@ class UserController extends Controller
 	
 	public function billing()
 	{
-		return view('lms.user.billing');
+		// return view('lms.user.billing');
 
 		$userCards = InfusionsoftFlow::getCreditCards(Auth::user()->contact_id);
 		$courses = Course::get();
@@ -92,6 +145,8 @@ class UserController extends Controller
 	public function changeCreditCard(Request $request, $invoice_id)
 	{
 		$creditCard = (object) [
+			'cc_name' => $request->get('cc_name'),
+			'cc_address' => $request->get('cc_address'),
 			'cc_number' => $request->get('cc_number'),
 			'cc_expiry_month' => $request->get('cc_expiry_month'),
 			'cc_expiry_year' => $request->get('cc_expiry_year'),
@@ -110,10 +165,33 @@ class UserController extends Controller
 		}
 
 		$datetime = new \DateTime('now', new \DateTimeZone('America/New_York'));
-		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 6, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+
+		$updateCC = InfusionsoftFlow::is()->invoices()->addPaymentPlan($invoice_id, true, $newCC->id, 2, 1, 3, (double)0, $datetime, $datetime, 7, 1);
+		$charge = InfusionsoftFlow::is()->invoices()->chargeInvoice($invoice_id, '', $newCC->id, 2, false);
+
+		addISCreditCard(Auth::user()->id, $request->get('course_id'), $newCC->id);
+
+		if(strtolower($charge['Code']) == 'declined')
+		{
+			return response()->json([
+				'status' => false,
+				'message' => 'Your credit card was declined.'
+			]);
+		}
+
+		if(strtolower($charge['Code']) == 'error')
+		{
+			return response()->json([
+				'status' => false,
+				'message' => 'There was an error with this credit card. Try again or contact support.'
+			]);
+		}
+
+		mixPanel()->track('Updated billing details');
 
 		return response()->json([
-			'status' => true
+			'status' => true,
+			'message' => 'Your credit card has been successfully processed.'
 		]);
 	}
 
@@ -136,6 +214,7 @@ class UserController extends Controller
 		$user = Auth::user();
 		$user->name = $request->get('first_name') . ' ' . $request->get('last_name');
 		$user->email = $request->get('email');
+		$user->timezone = $request->has('timezone') ? $request->get('timezone') : '';
 		$user->save();
 
 		$profile = $user->profile ?: new Profile();
@@ -144,6 +223,8 @@ class UserController extends Controller
         $profile->phone1 = $request->has('phone1') ? $request->get('phone1') : '';
 		$profile->company = $request->has('company') ? $request->get('company') : '';
 		$user->profile()->save($profile);
+
+		mixPanel()->track('Updated contact details');
 
 		InfusionsoftFlow::syncContactDetails($user);
 
@@ -168,7 +249,23 @@ class UserController extends Controller
 		$user->password = bcrypt($request->get('password'));
 		$user->save();
 
-		return redirect()->back()->with('message', 'Passwrod successfully updated');
+		mixPanel()->track('Changed password');
+
+		return redirect()->back()->with('message', 'Password successfully updated');
+	}
+
+	public function notifications()
+	{
+		$notifications = [];
+		$notifications['general'] = Auth::user()->notifications ->where('type', '!=', 'App\Notifications\UnlockedByTag');
+		$notifications['gamification'] = Auth::user()->notifications ->where('type', 'App\Notifications\Gamification');
+
+		return view('lms.notifications.index')->with('user_notifications', $notifications);
+	}
+
+	public function notificationsMarkAsRead()
+	{
+		Auth::user()->notifications->markAsRead();
 	}
 
 	public function autologin(Request $request)
@@ -182,17 +279,40 @@ class UserController extends Controller
 		$mail = $request->get('email');
 		$key = $request->get('key');
 
-		if($key != 'f0mmy4Qrcux')
+		if(Autologin::validate($id, $mail, $key))
 		{
-			return redirect('/');
-		}
-
-		$user = User::find($id);
-		if(!empty($user) && $user->email === $mail)
-		{
+			$user = User::find($id);
 			Auth::loginUsingId($user->id);
 		}
 
 		return redirect('/');
+	}
+	
+	public function viewAlert($key)
+	{
+		$today = Carbon::today();
+		$today->hour = 23;
+		$today->minute = 59;
+		$today->second = 59;
+
+		session([$key => $today]);
+		session()->save();
+	}
+
+	public function syncUserTags(Request $request)
+	{
+		if(!request()->has('contactId'))
+		{
+			return false;
+		}
+
+		$user = User::where('contact_id', request()->get('contactId'))->get()->first();
+		if(empty($user))
+		{
+			return false;
+		}
+
+		// Sync Infusionsoft user tags
+		$user->syncIsTags();
 	}
 }

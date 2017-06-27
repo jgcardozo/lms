@@ -81,7 +81,24 @@ $(document).ready( function() {
 		$(this).next('.masthead__notifications-outer-wrap').stop().slideToggle(200);
 	});
 
-	$('.masthead__notifications-wrap').perfectScrollbar();	
+	$('.masthead__notifications-list').perfectScrollbar();
+
+	$('body').on('click', '.js-notifications-mark-as-read', function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		var $this = $(this);
+
+		$.ajax({
+			type: 'POST',
+			url: $this.data('route'),
+			data: [],
+			success: function(res) {
+				$this.parent().next().find('.masthead__notifications-list__item--unread').removeClass('masthead__notifications-list__item--unread');
+				$('body').find('.masthead__notifications__count').remove();
+			}
+		});
+	});
 
 	/**
 	 * Close menus, dropdowns, etc. on body click 
@@ -89,6 +106,165 @@ $(document).ready( function() {
 	$('body').on('click', function() {
 		$('.dropdown-menu-wrap, .masthead__notifications-outer-wrap, .masthead__classes-wrap, .course-progress-box').stop().slideUp(200);
 	});
+
+    /**
+     * Submit bonus questions on lesson
+     */
+    $('body').find('form.js-lesson-answer-question').on('submit', function(e) {
+        e.preventDefault();
+
+        var frm = $(this),
+            ajaxData = frm.serialize();
+
+        if(frm.is('.doing'))
+            return false;
+
+        frm.addClass('doing');
+        $('body').createLoading();
+
+        $.ajax({
+            url: frm.attr('action'),
+            data: ajaxData,
+            type: 'POST',
+        }).always(function(res) {
+            if(res.status)
+            {
+                $('.session-single__content-ajax').html(res.popup);
+                $('body').find('.session-single__close').addClass('question-close');
+                $('body').css('overflow', 'hidden');
+                $('.session-single').fadeIn(250);
+            }
+
+            frm.removeClass('doing');
+            $('body').removeLoading();
+        });
+    });
+
+    $('body').on('click', '.question-close', function(e) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        e.preventDefault();
+
+        var el = $(this),
+            popupWrap = el.parent().find('.session-single__content-ajax'),
+            student = popupWrap.find('.session-single__student'),
+            quiz = popupWrap.find('.js-assessment');
+
+        if($('body').find('.easteregg-step-2').is(':visible') || $('body').find('.easteregg-step-3').is(':visible'))
+        {
+            location = location.href;
+        }
+
+        $('body').find('.easteregg-step-1').hide(50);
+        $('body').find('.easteregg-step-2').fadeIn(150);
+    });
+
+    $('body').on('click', '.js-assessment-link', function(e) {
+        e.preventDefault();
+
+        var el = $(this),
+            wrap = el.closest('.session-single__content-ajax');
+
+        el.parents('.easteregg-step-2').hide(50);
+        $('body').find('.easteregg-step-3').fadeIn(150);
+
+        checkForQuiz(el);
+    });
+
+    $('body').on('click', '.js-play-question-video', function(e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            url = $(this).attr('href');
+
+        $.ajax({
+            url: url
+        }).always(function(res) {
+            $('.session-single__content-ajax').html(res);
+
+            $('body').find('.session-single__close');
+            $('body').css('overflow', 'hidden');
+            $('.session-single').fadeIn(250);
+        });
+    });
+
+    $('body').on('click', '.js-retake-assessment', function(e) {
+        e.preventDefault();
+
+        var el = $(this);
+
+        $('body').createLoading();
+
+        $.ajax({
+            url: el.data('popup'),
+            type: 'POST',
+        }).always(function(res) {
+            if(res.status)
+            {
+                var wrap = $('.session-single__content-ajax');
+                wrap.html(res.popup);
+                wrap.find('> *').not('.js-assessment').hide();
+                wrap.find('.js-assessment').show();
+                checkForQuiz(el);
+                $('body').css('overflow', 'hidden');
+                $('.session-single').fadeIn(250);
+            }
+
+            $('body').removeLoading();
+        });
+    });
+
+	function checkForQuiz(el)
+	{
+        var url = el.data('url'),
+            user = el.data('user'),
+            test = el.data('test'),
+            href = el.attr('href'),
+            taken = el.data('taken'),
+            count = 1;
+
+        if(typeof taken === 'undefined')
+        {
+            taken = '';
+        }
+
+        var ajaxData = {
+            user_id: user,
+            test_id: test,
+            taken: taken
+        };
+
+        var x = setInterval( function() {
+            /*
+            if(count >= 5)
+            {
+                clearInterval(x);
+            }
+            */
+
+            count++;
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: ajaxData,
+                success: function(res)
+                {
+                    console.log( res );
+                    if(res.status)
+                    {
+                        clearInterval(x);
+                        window.location = href;
+                    }
+                }
+            });
+        }, 5000);
+
+        $('body').find('.session-single__close').on('click', function(e) {
+            e.preventDefault();
+            clearInterval(x);
+        });
+	}
 
 	/**
 	 * Session Popup handlers
@@ -128,7 +304,6 @@ $(document).ready( function() {
 			return false;
 
 		var complete_btn = activeVideo.popupWrap.find('.js-complete-session');
-
 
         // Show mark as complete buttons
         var totalProgress = activeVideo.progress + activeVideo.initProgress;
@@ -214,8 +389,11 @@ $(document).ready( function() {
 	            }});
         	}
 
+            $('body').find('.session-single__close').removeClass('question-close');
             $('body').css('overflow', 'hidden');
-			$('.session-single').fadeIn();
+			$('.session-single').fadeIn(250, function() {
+                $('body').trigger('session.watch.open');
+            });
 		});
 	});
 
@@ -335,14 +513,90 @@ $(document).ready( function() {
 	 * Events Calendar
 	 */
 	$( "#datepicker" ).datepicker({
-      numberOfMonths: 2,
-      dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"]
+        numberOfMonths: 2,
+        dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"],
+        beforeShowDay: calendarMarkDays,
+        onSelect: changeDate
+    });
+
+    function changeDate(_date)
+    {
+        var date = new Date(_date);
+
+        if($.inArray($.datepicker.formatDate('yy-mm-dd', date), $.parseJSON(window.calendar_events)) === -1)
+        {
+            return;
+        }
+
+        var ajaxData = {
+            date: _date
+        };
+
+        $('body').createLoading();
+
+        $.ajax({
+            type: 'GET',
+            url: 'calendar/date',
+            data: ajaxData,
+            success: function(res) {
+                $('body').find('.events').replaceWith(res);
+                $('body').removeLoading();
+            }
+        });
+    }
+
+    function calendarMarkDays(date)
+    {
+        var now = new Date();
+
+        if ($.inArray($.datepicker.formatDate('yy-mm-dd', date), $.parseJSON(window.calendar_events)) > -1) {
+            if (now < date) {
+                return [true, 'has-event'];
+            } else {
+                return [true, 'had-event'];
+            }
+        }
+
+        return [true, ''];
+    }
+
+    function updateCalendarMarkers(dates)
+    {
+        $("#datepicker").find('.has-event').removeClass('has-event');
+        $("#datepicker").find('.had-event').removeClass('had-event');
+
+        window.calendar_events = dates;
+
+        $("#datepicker").datepicker('option', 'beforeShowDay', calendarMarkDays);
+    }
+
+    $('body').on('change', '.js-calendar-filter', function (e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            course = $this.find('option:selected').val();
+
+        var ajaxData = {
+            course: course
+        };
+
+        $('body').createLoading();
+
+        $.ajax({
+            type: 'GET',
+            url: $this.data('route'),
+            data: ajaxData,
+            success: function(res) {
+                $('body').find('.events').replaceWith(res.view);
+                updateCalendarMarkers(res.events);
+                $('body').removeLoading();
+            }
+        });
     });
 
     /**
      * Circular Progress
      */
-    
     $(window).on('load', function() {
 	    $('.course-progress__bar--active').each(function() {
 	    	var percent = $(this).data("percentage");
@@ -387,9 +641,50 @@ $(document).ready( function() {
         $.ajax({
             url: $this.data('complete')
         }).always(function(res) {
+			if(typeof res == 'object' && res.lesson_complete == true)
+            {
+                $('body').find('.js-bonus').show();
+            }
+
+            var sId = $this.closest('.session-single__content-ajax').find('.session-single__video').data('session'); // Get session id
             $this.replaceWith(completeHtml);
+
+            if(typeof sId != 'undefined')
+            {
+                $('body').find('#session-' + sId).find('.course-progress').replaceWith(completeHtml);
+				mixpanel.track("Sessuib completed", {
+					"Video length": 213,
+					"id": "hY7gQr0"
+				});
+            }
         });
     });
+
+	/**
+	 * Post to facebook on lesson view.
+	 * Delay the submit
+	 */
+	$('body').find('form.js-lesson-post-to-facebook').on('submit', function(e) {
+		e.preventDefault();
+
+		var frm = $(this),
+            fburl = frm.data('fburl');
+
+		if(frm.is('.doing'))
+			return false;
+
+		frm.addClass('doing');
+
+        var win = window.open(fburl, '_blank');
+        win.focus();
+
+		setTimeout( function () {
+            frm.off('submit');
+			frm.submit();
+		}, 3000);
+
+        return false;
+	});
 
 	/**
 	 * Survey popup
@@ -472,10 +767,26 @@ $(document).ready( function() {
             return false;
         }
 
+        if(frm.find('[type="submit"]').is('.edit'))
+        {
+            frm.find('[type="submit"]').val('Update credit card');
+            frm.find('[type="submit"]').removeClass('edit');
+
+            frm.find('.form-control__noteditable').removeClass('form-control__noteditable');
+            frm.find('.form-control').first().find('input').focus();
+
+            frm.find('[name="cc_number"], [name="cc_expiration"]').val('');
+            return false;
+        }else{
+            frm.find('[type="submit"]').val('Edit Billing Details');
+            frm.find('[type="submit"]').addClass('edit');
+        }
+
         var ccNum = frm.find('[name="cc_number"]'),
             ccName = frm.find('[name="nameoncard"]'),
             ccExpiry = frm.find('[name="cc_expiration"]'),
-            ccAddress = frm.find('[name="billing_address"]');
+            ccAddress = frm.find('[name="billing_address"]'),
+			course_id = frm.closest('.billing-course').attr('id').replace( /^\D+/g, '');
 
         var validCC = $.payment.validateCardNumber(ccNum.val());
         if (!validCC) {
@@ -485,10 +796,19 @@ $(document).ready( function() {
 
         var ccExpiryExtracted = ccExpiry.payment('cardExpiryVal');
 
+        if(ccName.val().length == 0)
+        {
+            alert('Enter your name on card');
+            return false;
+        }
+
         var ajaxData = {
+            cc_name: ccName.val(),
+            cc_address: ccAddress.val(),
             cc_number: ccNum.val(),
             cc_expiry_month: ccExpiryExtracted.month,
-            cc_expiry_year: ccExpiryExtracted.year
+            cc_expiry_year: ccExpiryExtracted.year,
+			course_id: course_id
         };
 
         frm.addClass('doing');
@@ -501,7 +821,25 @@ $(document).ready( function() {
             success: function(res) {
                 frm.removeClass('doing');
                 $('body').removeLoading();
-                console.log( res );
+
+				if(res.status)
+				{
+					$('body')
+						.find('.ask-alert')
+						.removeClass('ask-alert--critical')
+						.addClass('ask-alert--success')
+						.show()
+						.html(res.message);
+
+                    frm.find('.form-control').addClass('form-control__noteditable');
+				}else{
+					$('body')
+						.find('.ask-alert')
+						.removeClass('ask-alert--success')
+						.addClass('ask-alert--critical')
+						.show()
+						.html(res.message);
+				}
             }
         });
 	});
@@ -556,4 +894,58 @@ $(document).ready( function() {
     $('body').on('click', function(e) {
     	$('.mobile-menu').removeClass('mobile-menu__show');
     });
+
+	/**
+	 * Alerts
+	 */
+	$('body').on('click', '.js-close-ask-alert', function(e) {
+		e.preventDefault();
+
+		var el = $(this),
+            wrapper = el.closest('.ask-alert'),
+            url = wrapper.data('key');
+
+        $.ajax({
+            url: url
+        }).always(function(res) {
+            wrapper.fadeOut(250);
+        });
+	});
+
+	/**
+	 * Customer support
+	 */
+	$('body').on('click', '.js-contact-customer-service', function(e) {
+		e.preventDefault();
+		HS.beacon.open();
+	});
+
+    /**
+     * Mixpanel tracks
+     */
+    $('body').on('click', '.js-fb-group', function(e) {
+        var tl = mixpanelTrackLinks($(this));
+        e.preventDefault();
+        mixpanel.track('Clicked on Facebook group', {'URL': $(this).attr('href')});
+        setTimeout(tl, 500);
+    });
+
+    $('body').on('click', '.js-event-apply', function(e) {
+        var tl = mixpanelTrackLinks($(this));
+        e.preventDefault();
+        mixpanel.track('Clicked on Apply Event');
+        setTimeout(tl, 500);
+    });
+
+    function mixpanelTrackLinks(a) {
+        return function() {
+            if(a.attr('target') == '_blank')
+            {
+                var win = window.open(a.attr('href'), '_blank');
+                win.focus();
+            }else{
+                window.location = a.attr('href');
+            }
+        }
+    }
 });

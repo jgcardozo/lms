@@ -6,8 +6,10 @@ use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
+use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -19,11 +21,15 @@ class Module extends Model
 	use CrudTrait;
 	use Sluggable;
 	use LogsActivity;
+	use LockViaUserDate;
+	use UsearableTimezone;
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'];
+	protected $fillable = [
+		'title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'
+	];
 
 	/**
 	 * The "booting" method of the model.
@@ -52,7 +58,7 @@ class Module extends Model
 			'watched' => []
 		];
 
-		foreach($this->lessons as $lesson)
+		foreach($this->lmsLessons as $lesson)
 		{
 			$_progress = $lesson->getProgress($user);
 			$progress['sessions'] = array_merge($progress['sessions'], $_progress['sessions']);
@@ -103,7 +109,7 @@ class Module extends Model
 	 */
 	public function getIsCompletedAttribute()
 	{
-		foreach($this->lessons as $lesson)
+		foreach($this->lmsLessons as $lesson)
 		{
 			if(!$lesson->is_completed)
 			{
@@ -112,24 +118,6 @@ class Module extends Model
 		}
 
 		return true;
-	}
-
-	/**
-	 * Check if the module is locked
-	 * with future date
-	 *
-	 * @return bool
-	 */
-	public function getIsDateLockedAttribute()
-	{
-		if(!empty($this->lock_date)) {
-			$expire = strtotime($this->lock_date);
-			$today = strtotime('today midnight');
-
-			return $today >= $expire ? false : true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -142,7 +130,10 @@ class Module extends Model
 		if(is_role_admin())
 			return false;
 
-		if($this->course->is_locked || !$this->course->areAllStarterSeen())
+		if(!$this->course->is_locked && is_role_vip())
+			return false;
+
+		if($this->course->is_locked || !$this->course->areAllStarterSeen() || $this->course->course_canceled)
 		{
 			return true;
 		}
@@ -151,6 +142,7 @@ class Module extends Model
 		{
 			return true;
 		}
+
 
 		// Get previous module
 		$prevModule = $this->previous_module;
@@ -170,8 +162,10 @@ class Module extends Model
 		// TODO: Check why this is not working
 		// $s3image = \Storage::disk('s3')->url($this->featured_image);
 
-		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . $this->featured_image : '';
+		return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
 	}
+
+	
 
 	/*
 	|--------------------------------------------------------------------------
@@ -186,6 +180,11 @@ class Module extends Model
 	public function lessons()
 	{
 		return $this->hasMany('App\Models\Lesson');
+	}
+
+	public function lmsLessons()
+	{
+		return $this->hasMany('App\Models\Lesson')->where('exclude_from_rule', '!=', true);
 	}
 	
 	public function sluggable()

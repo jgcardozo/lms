@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\RefreshTokenIS::class
+        Commands\RefreshTokenIS::class,
+        Commands\RefreshAutologinKey::class
     ];
 
     /**

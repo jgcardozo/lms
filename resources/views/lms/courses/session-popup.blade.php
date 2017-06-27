@@ -33,7 +33,7 @@
 
             @if(!empty($session->bucket_url))
                 <div class="session-single__content-learn__links">
-                    <h3>Try in to BUCKET.IO</h3>
+                    <h3>Try it in BUCKET.IO</h3>
 
                     <a class="session-single__content-learn__bucket-link" href="{{ $session->bucket_url }}" target="_blank">Take Me There</a>
                 </div>
@@ -85,8 +85,14 @@
 
     <hr>
 
-    <div class="course-progress session-single__completed session-single__completed--mark-complete js-complete-session" data-complete="{{ route('session.completed', $session->slug) }}" style="{{ $videoprogress >= 80 ? '' : 'display: none' }}">
-        <span class="course-progress__bar"></span> Mark as completed
-    </div>
-    <p>Note: You have to watch 80% of the video before you can mark it as complete.</p>
+    @if($session->is_completed)
+        <div class="session-single__completed session-single__completed--mark-complete">
+            <span class="course-progress__bar course-progress__bar--completed"></span> Completed
+        </div>
+    @else
+        <div class="course-progress session-single__completed session-single__completed--mark-complete js-complete-session" data-complete="{{ route('session.completed', $session->id) }}" style="{{ $videoprogress >= 80 || is_role_admin() ? '' : 'display: none' }}">
+            <span class="course-progress__bar"></span> Mark as completed
+        </div>
+        <p>Note: You have to watch 80% of the video before you can mark it as complete.</p>
+    @endif
 </div>

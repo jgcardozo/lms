@@ -21,6 +21,12 @@ class CoachingCallRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'title' => 'required|max:255',
+            'description' => 'required|',
+            'video_url' => 'required|max:255',
+            'video_duration' => 'required|numeric',
+            'course_id' => 'required'
+        ];
     }
 }

@@ -8,7 +8,7 @@
 
 @section('content')
     <main>
-        <div class="grid grid--full course-single" @if($course->featured_image) style="background-image: url({{ $course->getFeaturedImageUrlAttribute() }});" @endif>
+        <div class="grid grid--full course-single" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">
@@ -47,7 +47,7 @@
                         </div>
                     @elseif(!empty($nextSession) && $nextSession !== true)
                         <div class="course-reminder__content">
-                            <p class="course-reminder__blurb">Last Session</p>
+                            <p class="course-reminder__blurb">Next Session</p>
                             <h2 class="course-reminder__title">Welcome to {{ $nextSession->title }}</h2>
                             <p>{{ truncate_string($nextSession->description) }}</p>
                         </div>
@@ -99,12 +99,12 @@
                                     <div class="module__locked">
 
                                     @if($module->is_date_locked)
-                                            {{-- <p>Unlocks {{ date('d-m-Y', strtotime($module->lock_date)) }}</p> --}}
+                                            {{-- <p>Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}</p> --}}
                                     @endif
                                     <i class="icon--lock"></i></div>
                                 @endif
 
-                                <div class="module__featured-image" @if($module->featured_image) style="background-image: url({{ $module->getFeaturedImageUrlAttribute() }});" @endif>
+                                <div class="module__featured-image" @if($module->featured_image) style="background-image: url({{ $module->featured_image_url }});" @endif>
                                     @if(! $module->is_locked)
                                         <div class="module__active" data-percentage="{!! $module->getProgressPercentage() / 100 !!}"></div>
                                     @endif

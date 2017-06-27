@@ -46,7 +46,7 @@
                 <div class="course-starter__list">
                     @foreach($videos as $video)
                         <div id="session-{{ $video->id }}" class="course-starter__item grid--flex flex--space-between">
-                            <div class="course-starter__video grid--flex">
+                            <div class="course-starter__video grid--flex" @if($video->featured_image) style="background-image: url({{ $video->featured_image_url }});" @endif>
                                 <a href="#" data-href="{{ route('session.show', $video->id) }}" class="block__link js-open-session"></a>
                             </div>
 
@@ -61,11 +61,11 @@
                                     @if($video->is_completed)
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>                                    
                                     @elseif($video->is_date_locked)
-                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($video->lock_date)) }}">
+                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
                                             Unlocks {{ date('d-m-Y', strtotime($video->lock_date)) }} 
                                         </div>
                                     @else
-                                        <div style="{{ $video->video_progress >= 80 ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $video->slug) }}">Mark as completed <span class="course-progress__bar"></span></div>
+                                        <div style="{{ $video->video_progress >= 80 || is_role_admin() ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $video->id) }}">Mark as completed <span class="course-progress__bar"></span></div>
                                     @endif
                                 </div>                                
                             </div>                            

@@ -70,11 +70,26 @@ Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 			'as' => 'single.lesson',
 			'uses' => 'LessonController@index'
 		]);
+
+		Route::get('lesson/{lesson}/result', [
+			'as' => 'single.lesson.assessment.results',
+			'uses' => 'LessonController@assessmentResult'
+		]);
 	});
 
 	Route::get('calendar', [
 		'as' => 'calendar',
 		'uses' => 'EventsController@index'
+	]);
+
+	Route::get('notifications', [
+		'as' => 'notifications',
+		'uses' => 'UserController@notifications'
+	]);
+
+	Route::post('notifications/mark-as-read', [
+		'as' => 'notifications.markAsRead',
+		'uses' => 'UserController@notificationsMarkAsRead'
 	]);
 });
 
@@ -104,11 +119,56 @@ Route::group(['middleware' => ['onlyajax', 'auth']], function() {
 		'as' => 'coachingcall.completed',
 		'uses' => 'CoachingCallController@complete'
 	]);
+
+	Route::get('viewalert/{key}', [
+		'as' => 'alert.view',
+		'uses' => 'UserController@viewAlert'
+	]);
+
+	Route::get('calendar/course', [
+		'as' => 'calendar.filter.course',
+		'uses' => 'EventsController@filterCourse'
+	]);
+
+	Route::get('calendar/date', [
+		'as' => 'calendar.filter.date',
+		'uses' => 'EventsController@filterDate'
+	]);
 });
+
+Route::post('lesson/{lesson}/post-to-facebook', [
+	'as' => 'lesson.postToFacebook',
+	'uses' => 'LessonController@postToFb',
+	'middleware' => 'auth'
+]);
+
+Route::post('lesson/{lesson}/answer-question', [
+	'as' => 'lesson.answerQuestion',
+	'uses' => 'LessonController@answerQuestion',
+	'middleware' => 'auth'
+]);
+
+Route::post('lesson/assessment-check', [
+	'as' => 'single.lesson.assessment.check',
+	'uses' => 'LessonController@assessmentCheck'
+]);
+
+Route::post('lesson/{lesson}/testPopUpHtml', [
+	'as' => 'lesson.testPopup',
+	'uses' => 'LessonController@testPopup'
+]);
+
+Route::post('class-marker/webhook/result', 'LessonController@classMarkerResults');
 
 Route::get('calendar/{event}', [
 	'as' => 'event.show',
-	'uses' => 'EventsController@show'
+	'uses' => 'EventsController@show',
+	'middleware' => ['auth', 'onlyajax']
+]);
+
+Route::get('lesson-question/{question}/viewResultsVideoPopup', [
+	'as' => 'single.lesson.viewResultsVideoPopup',
+	'uses' => 'LessonController@viewResultsVideoPopup'
 ]);
 
 /**
@@ -122,11 +182,6 @@ Route::post('survey/store', [
 Route::delete('survey/{id}/delete', [
 	'as' => 'survey.delete',
 	'uses' => 'SurveyController@deleteSurvey'
-]);
-
-Route::get('/test/form', [
-	'as' => 'survey.test',
-	'uses' => 'SurveyController@testSurvey'
 ]);
 
 /**
@@ -166,6 +221,17 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
 
 Route::post('user/register', 'UserController@register');
 
+Route::post('user/sync', 'UserController@syncUserTags');
+
+Route::get('user/register/activate/{uuid}', [
+	'as' => 'user.activate.show',
+	'uses' => 'UserController@activateShow'
+]);
+
+Route::post('user/register/activate/{uuid}', [
+	'as' => 'user.activate.do',
+	'uses' => 'UserController@activateIt'
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -173,7 +239,8 @@ Route::post('user/register', 'UserController@register');
 |--------------------------------------------------------------------------
 */
 Route::get('/auto-login', [
-	'uses' => 'UserController@autologin'
+	'uses' => 'UserController@autologin',
+	'as' => 'user.autologin'
 ]);
 
 /*
@@ -204,15 +271,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('session', 'Admin\SessionCrudController');
     CRUD::resource('resource', 'Admin\ResourceCrudController');
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
+    CRUD::resource('training', 'Admin\TrainingCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
 	CRUD::resource('user', 'Admin\UserCrudController');
+	CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
 
 	Route::get('/', [
 		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
 	]);
 
-	Route::get('dashboard', function() {
-		return view('backpack::dashboard', ['title' => trans('backpack::base.dashboard')]);
+	Route::get('dashboard', function()
+	{
+		$courses = \App\Models\Course::get();
+
+		$lessonsFinished = getBasicLessonsStats();
+
+		return view('backpack::dashboard', ['courses' => $courses, 'score' => $lessonsFinished]);
 	});
 
 	// Settings

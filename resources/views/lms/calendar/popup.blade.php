@@ -10,12 +10,14 @@
 
 	<div class="event-popup__content">
 		<div class="event-popup__content-top grid--flex">
-			<h3>{{ \Carbon\Carbon::parse($event->start_date)->format('F j') }}</h3>
-			<h5>{{ \Carbon\Carbon::parse($event->start_date)->format('g:ia') }} ET</h5>
+			<h3>{{ $event->getDate('start_date')->format('F j') }}</h3>
+			<h5>{{ $event->getDate('start_date')->format('g:ia T') }}</h5>
 		</div>
 
 		<div class="event-popup__description">{!! $event->description !!}</div>
 
-		<a class="event-popup__apply-link" href="{{ $event->url }}" target="_blank">Register</a>
+		@if(!empty($event->url))
+			<a class="event-popup__apply-link js-event-apply" href="{{ $event->url }}" target="_blank">Register Now</a>
+		@endif
 	</div>
 </div>

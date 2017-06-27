@@ -108,13 +108,28 @@ class CourseCrudController extends CrudController
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
+				'format' => 'dd-mm-yyyy g:ia'
+			],
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'label' => 'Lock this course for users registered after this date:',
+			'name' => 'user_lock_date',
+			'type' => 'datetime_picker',
+			'date_picker_options' => [
 				'format' => 'dd-mm-yyyy'
+			],
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
 			]
 		]);
 
 		$this->crud->addField([
 			'label' => 'Lock tags:',
-			'type' => 'select2_multiple',
+			'type' => 'select2_multipleIsTags',
 			'name' => 'lock_tags',
 			'entity' => 'tags',
 			'attribute' => 'title',
@@ -137,15 +152,40 @@ class CourseCrudController extends CrudController
 			'label' => 'Facebook Group ID'
 		]);
 
-		// $this->crud->addField([
-		// 	'label' => 'Infusionsoft Product ID attached to this course:',
-		// 	'type' => 'select2_multiple',
-		// 	'name' => 'is_course_products',
-		// 	'entity' => 'is_course_products',
-		// 	'attribute' => 'product_id',
-		// 	'model' => 'App\Models\ISCourseProductId',
-		// 	'pivot' => true
-		// ]);
+		$_tags = \App\Models\ISTag::get();
+		$tags = [];
+		foreach($_tags as $tag)
+		{
+			$tags[$tag->id] = sprintf('%s - %s' ,$tag->id, $tag->title);
+		}
+
+		$this->crud->addField([
+			'name' => 'payf_tag',
+			'label' => 'Payment fail tag:',
+			'type' => 'select2_from_array',
+			'options' => $tags,
+			'allows_null' => true,
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+			'name' => 'cancel_tag',
+			'label' => 'Cancel tag:',
+			'type' => 'select2_from_array',
+			'options' => $tags,
+			'allows_null' => true,
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			]
+		]);
+
+		$this->crud->addField([
+		 	'label' => 'Infusionsoft Product ID attached to this course:',
+		 	'type' => 'text',
+			'name' => 'billing_is_products'
+		 ]);
 
 		/**
 		 * Add CRUD action button

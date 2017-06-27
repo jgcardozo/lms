@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StarterVideosCompleted;
 use Auth;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use App\Events\WatchedSession;
+use App\Events\LessonComplete;
+use App\Events\ModuleComplete;
 
 class SessionController extends Controller
 {
@@ -24,15 +27,42 @@ class SessionController extends Controller
         //
     }
 
-    public function complete($slug)
+    public function complete($id)
     {
-		$session = Session::findBySlugOrFail($slug);
+		$session = Session::find($id);
 
 		if(!$session) {
 			abort(404);
 		}
 
 		event(new WatchedSession($session));
+
+		if($session->lesson && $session->lesson->is_completed)
+		{
+			$lesson = $session->lesson;
+
+			event(new LessonComplete($lesson));
+
+			if($lesson->module && $lesson->module->is_completed)
+			{
+				$module = $lesson->module;
+
+				event(new ModuleComplete($module));
+			}
+
+			return response()->json([
+				'lesson_complete' => true
+			]);
+		}
+
+		if($session->starter_course_id && $session->course->areAllStarterSeen())
+		{
+			event(new StarterVideosCompleted($session->course));
+		}
+
+		return response()->json([
+			'lesson_complete' => false
+		]);
     }
 
     /**

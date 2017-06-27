@@ -94,7 +94,8 @@
       max-width: 30%;
     }
 
-    input {
+    input,
+    select {
       -ms-flex-preferred-size: 70%;
       flex-basis: 70%;
       max-width: 70%;
@@ -104,6 +105,18 @@
       height: 5rem;
       font-size: 1.4rem;
       color: #4a494a;
+    }
+
+    &__noteditable {
+      input {
+        pointer-events: none;
+        border-color: transparent;
+      }
+    }
+    
+    &.has-error input,
+    &.has-error select {
+      border-color: #DB3333 !important;
     }
   }
 
