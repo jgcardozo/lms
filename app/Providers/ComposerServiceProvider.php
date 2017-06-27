@@ -19,7 +19,7 @@ class ComposerServiceProvider extends ServiceProvider
 		View::composer(['lms.courses.*', 'lms.modules.*', 'lms.lessons.*', 'lms.coachingcalls.*', 'lms.user.*', 'lms.calendar.*'], 'App\Http\ViewComposers\CancelPaymentAlertsComposer');
 		View::composer(['lms.courses.single', 'lms.courses.starter', 'lms.modules.*', 'lms.lessons.*', 'lms.coachingcalls.*'], 'App\Http\ViewComposers\PaymentAlertsComposer');
 		View::composer(['lms.lessons.single'], 'App\Http\ViewComposers\LessonCongratulation');
-		View::composer(['lms.courses.*', 'lms.modules.*', 'lms.lessons.*'], 'App\Http\ViewComposers\LessonQuizResult');
+		View::composer(['lms.courses.*', 'lms.modules.*', 'lms.lessons.single'], 'App\Http\ViewComposers\LessonQuizResult');
 	}
 
     /**

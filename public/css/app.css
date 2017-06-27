@@ -2622,6 +2622,8 @@ p {
   position: relative;
   padding-left: 3.5rem;
   cursor: pointer;
+  display: block;
+  text-align: left;
 }
 
 .lesson__question-radio label:before {

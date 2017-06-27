@@ -467,6 +467,8 @@
     position: relative;
     padding-left: 3.5rem;
     cursor: pointer;
+    display: block;
+    text-align: left;
   }
 
   label:before {

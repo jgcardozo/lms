@@ -17,18 +17,6 @@ class LessonQuizResult
 	 */
 	public function compose(View $view)
 	{
-		$viewData = $view->getData();
-		/*
-		if(!empty($viewData['lesson']))
-		{
-			$lesson = $viewData['lesson'];
-
-			if(!empty($lesson->q_answered) && !$lesson->test_finished)
-			{
-				$view->with('lessonQuizResultPage', $lesson);
-			}
-		}
-		*/
 		$course = null;
 
 		if(!empty($view->course))

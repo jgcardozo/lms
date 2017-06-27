@@ -125,7 +125,7 @@ class LessonController extends Controller
 	{
 		$lessonQuestion = LessonQuestion::findOrFail($lessonQuestion);
 
-		return view('lms.lessons.resultVideoPopup')->with('video', $lessonQuestion->video_url);
+		return view('lms.lessons.resultVideoPopup')->with('video', $lessonQuestion);
 	}
 
     public function classMarkerResults(Request $request)

@@ -32,7 +32,7 @@ class LessonCompleteFired
 
         if(!$lesson->questions->isEmpty())
         {
-            InfusionsoftFlow::addTag($user->contact_id, 7244);
+            InfusionsoftFlow::addTag($user->contact_id, 7224);
         }
 
         mixPanel()->track('Lesson completed', [

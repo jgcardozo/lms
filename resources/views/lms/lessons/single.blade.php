@@ -159,7 +159,7 @@
 
                             <p>Tell us which one of the 5 ways to scale your income you are MOST excited about implementing in YOUR business and you will unlock your special, custom Easter Egg content.</p>
 
-                            <p>I am most interested in learning how to scale my ASK Method Segmentation Funnel using:</p>
+                            <p><strong>I am most interested in learning how to scale my ASK Method Segmentation Funnel using:</strong></p>
 
                             <form method="post" class="js-lesson-answer-question" action="{{ route('lesson.answerQuestion', $lesson->id) }}">
                                 {{ csrf_field() }}
