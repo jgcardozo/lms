@@ -14,7 +14,7 @@ class AlterClassMarkerResultsCertUrlTable extends Migration
     public function up()
     {
         Schema::table('class_marker_results', function (Blueprint $table) {
-            $table->longText('cert_url')->after('passed');
+            $table->longText('cert_url')->nullable()->after('passed');
         });
     }
 
