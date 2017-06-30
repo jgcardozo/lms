@@ -61,7 +61,7 @@ class LessonController extends Controller
 			$score = $row && $row->passed ? $row->score : null;
 		}
 
-		return view('lms.lessons.result')->with(['lesson' => $lesson, 'score' => $score]);
+		return view('lms.lessons.result')->with(['lesson' => $lesson, 'score' => $score, 'result' => $row]);
 	}
     
     public function answerQuestion(Lesson $lesson)

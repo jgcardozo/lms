@@ -19,6 +19,15 @@
                         <div class="lesson-result__score__num">
                             <p>Your score is:</p>
                             <h4>{{ $score }}%</h4>
+
+                            <div>
+                                <div class="lesson-result__cta" style="width: 100%; background: transparent; padding: 0; margin: 0;">
+                                    <a target="_blank" href="{{ route('single.lesson.assessment.results', $lesson->slug) }}" data-user="{{ \Auth::user()->id }}" data-url="{{ route('single.lesson.assessment.check') }}" data-test="{{ $lesson->q_answered->assessment_id }}" data-popup="{{ route('lesson.testPopup', $lesson->id) }}" data-taken="{{ $lesson->test_finished->created_at }}" class="session-single__content-learn__default-btn-link btn js-retake-assessment">Re-take assessment</a>
+                                    @if(!empty($result) && !empty($result->cert_url))
+                                    <a href="{{ $result->cert_url }}" target="_blank" class="btn">Download Certificate</a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                 </div>
 
