@@ -5,8 +5,9 @@ namespace App\Models;
 use Auth;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
-use App\Traits\BackpackCrudTrait;
 use App\Scopes\SessionTypeScope;
+use App\Traits\BackpackCrudTrait;
+use App\Scopes\CoachingCallUserScope;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -33,6 +34,10 @@ class CoachingCall extends Model
 
 		static::addGlobalScope(new OrderScope);
 		static::addGlobalScope(new SessionTypeScope(self::class));
+		if(!is_role_admin())
+		{
+			static::addGlobalScope(new CoachingCallUserScope(Auth::user()->created_at));
+		}
 	}
 
 	/**
