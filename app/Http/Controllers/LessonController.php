@@ -138,6 +138,7 @@ class LessonController extends Controller
 		$user_id = (int) $result['cm_user_id'];
 		$test_id = (int) $test['test_id'];
 		$score = (int) $result['percentage'];
+		$cert_url = !empty($result['certificate_url']) ? $result['certificate_url'] : '';
 		
 		$passed = $result['passed'];
 		$user = User::find($user_id);
@@ -165,13 +166,21 @@ class LessonController extends Controller
 				'course_id' => $q->lesson->course->id,
 				'assessment_id' => $test_id,
 				'score' => $score,
-				'passed' => $passed
+				'passed' => $passed,
+                'cert_url' => $cert_url
 			]);
 		}else{
-			DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->update([
-				'score' => $score,
-				'passed' => $passed
-			]);
+		    $update = [
+                'score' => $score,
+                'passed' => $passed
+            ];
+
+		    if(!empty($cert_url))
+            {
+                $update['cert_url'] = $cert_url;
+            }
+
+			DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->update($update);
 		}
     }
 }
