@@ -27,9 +27,6 @@ return [
 
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
-        'options' => [
-            "ip_pool" => env('SPARKPOST_IP_POOL_ID'),
-        ]
     ],
 
     'stripe' => [
