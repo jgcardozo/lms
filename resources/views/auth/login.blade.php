@@ -14,6 +14,17 @@
 
                         <div class="login__form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
+                            @if ($errors->any())
+                            <script>
+                                dataLayer.push({
+                                    "event":"login",
+                                    "action":"error",
+                                    "message":"Login Failed"
+                                });
+                            </script>
+
+                            @endif
+
                             <div class="login__form-box">
                                 <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Email Address" required autofocus>
 

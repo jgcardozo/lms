@@ -22,7 +22,7 @@ class UserRegistered extends Mailable
     public function __construct($uuid, $email)
     {
         $this->uuid = $uuid;
-		$this->mail = $email;
+	$this->mail = $email;
     }
 
     /**
@@ -33,7 +33,7 @@ class UserRegistered extends Mailable
     public function build()
     {
         return $this->view('lms.mail.newuser')->with('uuid', $this->uuid)->with('email', $this->mail)
-            ->from('contact@askmethod.com', 'Ryan Levesque')
+            ->from('contact@askmethodmail.com', 'Ryan Levesque')
             ->subject('IMPORTANT: Login Details ASK Method Training Portal! (Save this Email)');
     }
 }

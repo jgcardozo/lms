@@ -4,6 +4,14 @@
 
 @section('scripts_before')
     <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
+    @if($score)
+    <script>
+        dataLayer.push({
+        "event":"exam",
+        "score":"{{ $score }}"
+        });
+    </script>
+    @endif
 @endsection
 
 @section('content')

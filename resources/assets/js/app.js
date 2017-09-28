@@ -652,7 +652,7 @@ $(document).ready( function() {
             if(typeof sId != 'undefined')
             {
                 $('body').find('#session-' + sId).find('.course-progress').replaceWith(completeHtml);
-				mixpanel.track("Sessuib completed", {
+				mixpanel.track("Session completed", {
 					"Video length": 213,
 					"id": "hY7gQr0"
 				});

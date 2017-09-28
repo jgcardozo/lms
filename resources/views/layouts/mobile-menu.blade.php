@@ -23,6 +23,7 @@
 					@if($progress_items->facebook_group_id)
 						<li class="list__item"><a href="{{ $progress_items->facebook_group_id }}">Facebook Group</a></li>
 					@endif
+					<li class="list__item"><a href="https://learn.askmethod.com/kickask-challenge/" target="_blank" class="">#Kick<strong>ASK</strong>&nbsp;Challenge</a></li>
 				@endif
 	            <li class="list__item"><a href="{{ route('user.profile') }}">My Profile</a></li>
 	            {{-- <li class="list__item"><a href="#">Progress</a></li> --}}
