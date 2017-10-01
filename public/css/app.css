@@ -285,7 +285,6 @@ th {
   position: absolute;
   /* please don't change 'position' */
   opacity: 0;
-  -webkit-transition: background-color .2s linear, opacity .2s linear;
   transition: background-color .2s linear, opacity .2s linear;
   bottom: 0px;
   /* there must be 'bottom' for ps-scrollbar-x-rail */
@@ -297,8 +296,6 @@ th {
   /* please don't change 'position' */
   background-color: #aaa;
   border-radius: 6px;
-  -webkit-transition: background-color .2s linear, height .2s linear, width .2s ease-in-out, -webkit-border-radius .2s ease-in-out;
-  -webkit-transition: background-color .2s linear, height .2s linear, width .2s ease-in-out, border-radius .2s ease-in-out;
   transition: background-color .2s linear, height .2s linear, width .2s ease-in-out, border-radius .2s ease-in-out;
   bottom: 2px;
   /* there must be 'bottom' for ps-scrollbar-x */
@@ -314,7 +311,6 @@ th {
   position: absolute;
   /* please don't change 'position' */
   opacity: 0;
-  -webkit-transition: background-color .2s linear, opacity .2s linear;
   transition: background-color .2s linear, opacity .2s linear;
   right: 0;
   /* there must be 'right' for ps-scrollbar-y-rail */
@@ -326,8 +322,6 @@ th {
   /* please don't change 'position' */
   background-color: #aaa;
   border-radius: 6px;
-  -webkit-transition: background-color .2s linear, height .2s linear, width .2s ease-in-out, -webkit-border-radius .2s ease-in-out;
-  -webkit-transition: background-color .2s linear, height .2s linear, width .2s ease-in-out, border-radius .2s ease-in-out;
   transition: background-color .2s linear, height .2s linear, width .2s ease-in-out, border-radius .2s ease-in-out;
   right: 2px;
   /* there must be 'right' for ps-scrollbar-y */
@@ -733,7 +727,6 @@ a:hover {
 }
 
 .allnotifications__item--current {
-  -webkit-transition: all 1.2s ease-out;
   transition: all 1.2s ease-out;
   -webkit-animation-delay: 4s;
   animation-delay: 4s;
@@ -1432,7 +1425,6 @@ p {
   background: #000;
   background: rgba(0, 0, 0, 0.6);
   z-index: 100;
-  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
@@ -3719,7 +3711,6 @@ p {
   opacity: 0;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
@@ -3747,7 +3738,6 @@ p {
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
 

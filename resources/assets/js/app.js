@@ -646,6 +646,13 @@ $(document).ready( function() {
                 $('body').find('.js-bonus').show();
             }
 
+            dataLayer.push({
+                'event':'completed',
+                'module': res.module.title,
+                'lesson': res.lesson.title,
+                'session': res.session.title
+            });
+
             var sId = $this.closest('.session-single__content-ajax').find('.session-single__video').data('session'); // Get session id
             $this.replaceWith(completeHtml);
 

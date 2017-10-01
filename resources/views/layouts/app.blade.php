@@ -78,6 +78,15 @@
 
         @yield('scripts_before')
 
+        @if (session('success_login'))
+            <script>
+                dataLayer.push({
+                    'event': 'login',
+                    'action': 'success'
+                });
+            </script>
+        @endif
+
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
 

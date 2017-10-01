@@ -50,9 +50,12 @@ class SessionController extends Controller
 				event(new ModuleComplete($module));
 			}
 
-			return response()->json([
-				'lesson_complete' => true
-			]);
+            return response()->json([
+                'lesson_complete' => true,
+                'session' => $session,
+                'lesson' => $session->lesson ? $session->lesson : '',
+                'module' => $session->lesson && $session->lesson->module ? $session->lesson->module : ''
+            ]);
 		}
 
 		if($session->starter_course_id && $session->course->areAllStarterSeen())
@@ -60,9 +63,12 @@ class SessionController extends Controller
 			event(new StarterVideosCompleted($session->course));
 		}
 
-		return response()->json([
-			'lesson_complete' => false
-		]);
+        return response()->json([
+            'lesson_complete' => false,
+            'session' => $session,
+            'lesson' => $session->lesson ? $session->lesson : '',
+            'module' => $session->lesson && $session->lesson->module ? $session->lesson->module : ''
+        ]);
     }
 
     /**
