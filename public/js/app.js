@@ -12243,6 +12243,12 @@ $(document).ready(function () {
         var $this = $(this),
             completeHtml = '<div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>';
 
+        if ($this.is('.doing')) {
+            return;
+        }
+
+        $this.addClass('doing');
+
         $.ajax({
             url: $this.data('complete')
         }).always(function (res) {
@@ -12267,6 +12273,8 @@ $(document).ready(function () {
                     "id": "hY7gQr0"
                 });
             }
+
+            $this.removeClass('doing');
         });
     });
 
