@@ -45,3 +45,12 @@
         </div>
     </div>
 @endsection
+
+@if (session('success_login'))
+    <script>
+        dataLayer.push({
+            'event': 'login',
+            'action': 'success'
+        });
+    </script>
+@endif
