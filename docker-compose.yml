@@ -1,0 +1,80 @@
+version: '2'
+services:
+
+  ### The mysql image containing the database that the application uses during development
+  mysql:
+    image: mysql:5.7.17
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: codeart
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: asklms
+    volumes:
+      - mysql:/var/lib/mysql
+
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin
+      volumes:
+        - /sessions
+      ports:
+        - 8080:80
+      environment:
+        - PMA_ARBITRARY=1
+      depends_on:
+        - mysql
+
+  ### the default web container
+  web:
+    build:
+      context: docker/web
+      dockerfile: Dockerfile
+    image: asklms:web
+    ports:
+      - 80:80
+    volumes_from:
+      - data
+    links:
+      - php
+
+  ### php-fpm
+  php:
+    build:
+      context: ./docker/php-fpm
+      dockerfile: Dockerfile
+    image: dataexchange:php
+    links:
+      - mail
+      - mysql
+    volumes_from:
+      - data
+    env_file:
+      - ./docker/services.env
+
+  ###  A standard mailcatcher image, go to localhost:1080 to see the mails the application sends
+  mail:
+    image: "schickling/mailcatcher"
+    ports:
+      - 1080:1080
+      - 1025:1025
+
+  ### yarn, dockerized
+  yarn:
+    image: kkarczmarczyk/node-yarn:7.6-slim
+    volumes_from:
+      - data
+    working_dir: /var/www
+    command: tail -f /dev/null
+
+  ### Data image, one place to mount al data on.
+  data:
+    image: tianon/true
+    volumes:
+      - ./:/var/www
+
+### Volume definitions, nothing special. Volumes are kept between runs
+volumes:
+    mysql:
+      driver: "local"
