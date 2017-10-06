@@ -1,3 +1,4 @@
+@role('Administrator')
 @if(!empty($notifications['data']) && $notifications['count_unread'] > 0)
     <div class="popup-notification">
         <div class="popup-notification__content">
@@ -11,3 +12,4 @@
         </div>
     </div>
 @endif
+@endrole
