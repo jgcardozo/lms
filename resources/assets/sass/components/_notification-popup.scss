@@ -1,0 +1,68 @@
+.popup-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    overflow: auto;
+    background: rgba(146, 135, 128, 0.8);
+
+    &__content {
+        position: relative;
+        background: #ffffff;
+        width: 100%;
+        max-width: 30rem;
+        margin: 10rem auto 5rem;
+        padding: 4rem;
+
+        &__badge {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            display: block;
+            width: 12rem;
+            height: 12rem;
+            background: #ffffff;
+            border-radius: 100%;
+            border: 0.7rem solid #dcdcdc;
+        }
+
+        &__message {
+            color: #928780;
+            font-size: 3rem;
+            line-height: 1;
+            text-align: center;
+        }
+
+        &__button {
+            display: block;
+            color: #ffffff;
+            background: #62d262;
+            border-radius: 0.3rem;
+            border: 0;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 0 auto;
+            width: 7rem;
+            text-align: center;
+            height: 4rem;
+            line-height: 4rem;
+
+            &:hover {
+                color: #ffffff;
+            }
+        }
+        &__small-note {
+            margin: 1rem 0 0;
+
+            a {
+                color: #928780;
+                font-size: 1.3rem;
+                text-align: center;
+            }
+        }
+    }
+}

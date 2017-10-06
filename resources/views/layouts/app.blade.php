@@ -76,6 +76,8 @@
             @include('layouts.footer')
         </div>
 
+        @include('lms.notifications.popup')
+
         @yield('scripts_before')
 
         @if (session('success_login'))

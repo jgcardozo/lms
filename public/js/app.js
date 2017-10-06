@@ -11727,6 +11727,16 @@ $(document).ready(function () {
         });
     });
 
+    $('body').on('click', '.js-close-popup-notification', function (e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $this.closest('.popup-notification').fadeOut(150, function () {
+            $(this).remove();
+        });
+    });
+
     /**
      * Close menus, dropdowns, etc. on body click 
      */
