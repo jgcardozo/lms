@@ -309,6 +309,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 		'uses' => 'Admin\LoglistController@index'
 	]);
 
+    Route::get('analytics', [
+        'uses' => 'Admin\AnalyticsController@index'
+    ]);
+
 	Route::get('user-logins', [
 		'uses' => 'Admin\UserLoginsController@index'
 	]);
