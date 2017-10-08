@@ -28,6 +28,15 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Send notifications only to users in cohort:</label>
+                            <select multiple="" name="cohorts[]" class="form-control" style="min-height: 150px;">
+                                @foreach($cohorts as $cohort)
+                                    <option value="{{ $cohort->id }}">{!! $cohort->name !!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label>Notification message</label>
                             <textarea name="message" class="form-control ckeditor"></textarea>
                         </div>

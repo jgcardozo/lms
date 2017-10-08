@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Cohort;
 use App\Models\User;
 use App\Models\Course;
 use App\Notifications\CustomMessage;
@@ -18,15 +19,17 @@ class NotifyController extends Controller
 	public function index()
 	{
 		$courses = Course::get();
+		$cohorts = Cohort::get();
 
-		return view('lms.admin.notify')->with('courses', $courses);
+		return view('lms.admin.notify')->with('courses', $courses)->with('cohorts', $cohorts);
 	}
 
 	public function notify(Request $request)
 	{
-		$users = User::get();
+		$users = User::select('*');
 
 		$courses = $request->get('courses');
+		$cohorts = $request->get('cohorts');
 		$message = $request->get('message');
 
 		if(!empty($courses))
@@ -41,14 +44,17 @@ class NotifyController extends Controller
 				}
 			}
 
-			$users = User::whereHas('is_tags', function($query) use ($tags) {
+			$users->whereHas('is_tags', function($query) use ($tags) {
 				$query->whereIn('id', $tags);
-			})->get();
-		}else{
-			$user = User::get();
+			});
 		}
 
-		$users->each->notify(new CustomMessage($message));
+		if(!empty($cohorts))
+        {
+            $users->whereIn('cohort_id', $cohorts);
+        }
+
+		$users->get()->each->notify(new CustomMessage($message));
 
 		return redirect()->back();
 	}
