@@ -29,7 +29,7 @@
                                     @foreach($logins as $login)
                                         <tr role="row" class="odd">
                                             <td>
-                                                {{ \App\Models\User::find($login->user_id) ? \App\Models\User::find($login->user_id)->email : '' }}
+                                                {{ $login->email }}
                                             </td>
                                             <td>{{ $login->count }}</td>
                                         </tr>
