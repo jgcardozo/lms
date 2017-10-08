@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ISTag;
 use App\Models\Resource;
 use DB;
 use Auth;
@@ -59,6 +60,41 @@ class HomeController extends Controller
 
 	public function test()
 	{
+	    $course = Course::find(3);
+	    $tag = ISTag::find(3786);
+
+	    /*$users = $tag->users()->where('cohort_id', null)->get()->toArray();
+	    $csv = 'id,email,registration_date' . "\n";
+	    foreach($users as $user)
+        {
+            $csv .= sprintf("%s,%s,%s\n", $user['id'], $user['email'], $user['created_at']);
+        }
+
+        file_put_contents('users.txt', $csv);
+	    die();*/
+
+	    // 1. Put users created from 02-10 - 08-10 to Cohort = Sept2017
+        $fromDate = new Carbon('2017-10-02');
+        $toDate = new Carbon('2017-10-09');
+        $users = $tag->users()->whereBetween('users.created_at', [$fromDate->toDateTimeString(), $toDate->toDateTimeString()])->get();
+        \DB::table('users')->whereIn('id', $users->pluck('id')->toArray())->where('cohort_id', '=', null)->update(['cohort_id' => 3]);
+
+        // 2. Put users created from 17-07 - 22-07 to Cohort = July2017
+        $fromDate = new Carbon('2017-07-17');
+        $toDate = new Carbon('2017-07-23');
+        $users = User::whereBetween('users.created_at', [$fromDate->toDateTimeString(), $toDate->toDateTimeString()])->get();
+        \DB::table('users')->whereIn('id', $users->pluck('id')->toArray())->where('cohort_id', '=', null)->update(['cohort_id' => 2]);
+
+        // 3. Put users created from 22-04 - 29-04 to Cohort = April2017
+        $fromDate = new Carbon('2017-04-22');
+        $toDate = new Carbon('2017-04-30');
+        $users = User::whereBetween('users.created_at', [$fromDate->toDateTimeString(), $toDate->toDateTimeString()])->get();
+        \DB::table('users')->whereIn('id', $users->pluck('id')->toArray())->where('cohort_id', '=', null)->update(['cohort_id' => 1]);
+
+        die();
+
+	    // dd($tag->users->whereDate('created_at' > ));
+	    // dd($course->lock_tags);
 		die();
 		// dump(InfusionsoftFlow::is()->data()->query('Affiliate', 10, 0, ['Id' => '%'], ['Id', 'AffCode', 'AffName', 'ContactId'], '', false));
 		// dump(InfusionsoftFlow::is()->data()->query('Referral', 10, 0, ['Id' => '%'], ['Id', 'AffiliateId', 'ContactId', 'DateExpires', 'DateSet', 'IPAddress', 'Info', 'Source', 'Type'], '', false));
