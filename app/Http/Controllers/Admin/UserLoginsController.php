@@ -18,8 +18,11 @@ class UserLoginsController extends Controller
     {
         $num = lms_get_setting('max_ip_logins', 10);
         $userLogins = DB::table('user_logins')
-                        ->select(DB::raw('user_logins.user_id, COUNT(user_logins.ip) AS count, users.email'))
-                        ->join('users', 'user_logins.user_id', '=', 'users.id')
+                        ->select(
+                            [
+                                'user_logins.user_id',
+                                DB::raw('COUNT(user_logins.ip) AS count')
+                            ])
                         ->groupBy('user_logins.user_id')
                         ->orderBy('count', 'desc')
                         ->get();

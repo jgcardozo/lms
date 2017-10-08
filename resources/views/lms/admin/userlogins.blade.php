@@ -27,12 +27,14 @@
 
                                 <tbody>
                                     @foreach($logins as $login)
-                                        <tr role="row" class="odd">
-                                            <td>
-                                                {{ $login->email }}
-                                            </td>
-                                            <td>{{ $login->count }}</td>
-                                        </tr>
+                                        @if(\App\Models\User::find($login->user_id))
+                                            <tr role="row" class="odd">
+                                                <td>
+                                                    {{ \App\Models\User::find($login->user_id)->email }}
+                                                </td>
+                                                <td>{{ $login->count }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
 
