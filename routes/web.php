@@ -275,6 +275,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('event', 'Admin\EventCrudController');
 	CRUD::resource('user', 'Admin\UserCrudController');
 	CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
+	CRUD::resource('cohort', 'Admin\CohortCrudController');
 
 	Route::get('/', [
 		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'

@@ -13,18 +13,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-	use ISLock;
-	use HasRoles;
-	use CrudTrait;
-	use Notifiable;
 
-	/**
+    use ISLock;
+    use HasRoles;
+    use CrudTrait;
+    use Notifiable;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'contact_id', 'email', 'password', 'activation_code', 'timezone'
+        'name',
+        'contact_id',
+        'cohort_id',
+        'email',
+        'password',
+        'activation_code',
+        'timezone'
     ];
 
     /**
@@ -33,99 +40,120 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
-	public function sendPasswordResetNotification($token)
-	{
-		$this->notify(new ResetPasswordNotification($token));
-	}
-
-	public function hasTag($tag)
-	{
-		if(empty($tag))
-		{
-			return false;
-		}
-
-		return (bool) $this->is_tags->contains('id', $tag);
-	}
-
-	public function getTZAttribute()
-	{
-		if(!$this->timezone)
-		{
-			return config('app.timezone');
-		}
-
-		return $this->timezone;
-	}
-
-	/**
-	 * Syncs new IS tags
-	 *
-	 * @return (array) New tags attached
-	 */
-	public function syncIsTags()
-	{
-		// Sync Infusionsoft user tags
-		$is = new InfusionsoftController($this);
-		$newTags = $is->sync();
-
-		if(!empty($newTags))
-		{
-			Log::info('User tags updated. | ID: ' . implode(', ', $newTags));
-		}
-
-		// Check for unlocked course/module/lesson/session
-		// and notify the user
-		/*
-		$items = $is->checkUnlockedCourses($newTags);
-		if(!empty($is))
-		{
-			foreach($items as $item)
-			{
-				$event->user->notify(new UnlockedByTag($item));
-			}
-		}
-		*/
-
-		return $is->sync();
-	}
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| Relations
-	|--------------------------------------------------------------------------
-	*/
-	public function profile()
+    public static function boot()
     {
-		return $this->hasOne('App\Models\Profile');
-	}
-
-	public function sessionsWatched()
-    {
-		return $this->belongsToMany('App\Models\Session', 'session_user');
-	}
-
-	public function is_tags()
-    {
-        return $this->belongsToMany('App\Models\ISTag', 'tag_user', 'user_id', 'tag_id')->withPivot('created_at');
+        static::created(function ($model)
+        {
+            if ( ! empty(env('COHORT_ID')))
+            {
+                $model->cohort()->associate(env('COHORT_ID'));
+                $model->save();
+            }
+        });
     }
 
-	public function fb_posted()
-	{
-		return $this->belongsToMany('App\Models\Lesson', 'fb_lesson', 'user_id', 'lesson_id');
-	}
+    public function cohort()
+    {
+        return $this->belongsTo(Cohort::class);
+    }
 
-	/*
-	|--------------------------------------------------------------------------
-	| Backpack model callbacks
-	|--------------------------------------------------------------------------
-	*/
-	public function admin_user_login_url()
-	{
-		return '<input type="text" readonly="readonly" onClick="this.select();" value="' . route('user.autologin', ['id' => $this->id, 'email' => $this->email, 'key' => \Autologin::getKey()]) . '" style="width: 100%" />';
-	}
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function hasTag($tag)
+    {
+        if (empty($tag))
+        {
+            return false;
+        }
+
+        return (bool)$this->is_tags->contains('id', $tag);
+    }
+
+    public function getTZAttribute()
+    {
+        if ( ! $this->timezone)
+        {
+            return config('app.timezone');
+        }
+
+        return $this->timezone;
+    }
+
+    /**
+     * Syncs new IS tags
+     *
+     * @return (array) New tags attached
+     */
+    public function syncIsTags()
+    {
+        // Sync Infusionsoft user tags
+        $is = new InfusionsoftController($this);
+        $newTags = $is->sync();
+
+        if ( ! empty($newTags))
+        {
+            Log::info('User tags updated. | ID: ' . implode(', ', $newTags));
+        }
+
+        // Check for unlocked course/module/lesson/session
+        // and notify the user
+        /*
+        $items = $is->checkUnlockedCourses($newTags);
+        if(!empty($is))
+        {
+            foreach($items as $item)
+            {
+                $event->user->notify(new UnlockedByTag($item));
+            }
+        }
+        */
+
+        return $is->sync();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relations
+    |--------------------------------------------------------------------------
+    */
+    public function profile()
+    {
+        return $this->hasOne('App\Models\Profile');
+    }
+
+    public function sessionsWatched()
+    {
+        return $this->belongsToMany('App\Models\Session', 'session_user');
+    }
+
+    public function is_tags()
+    {
+        return $this->belongsToMany('App\Models\ISTag', 'tag_user', 'user_id', 'tag_id')
+                    ->withPivot('created_at');
+    }
+
+    public function fb_posted()
+    {
+        return $this->belongsToMany('App\Models\Lesson', 'fb_lesson', 'user_id', 'lesson_id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Backpack model callbacks
+    |--------------------------------------------------------------------------
+    */
+    public function admin_user_login_url()
+    {
+        return '<input type="text" readonly="readonly" onClick="this.select();" value="' . route('user.autologin', ['id'    => $this->id,
+                                                                                                                    'email' => $this->email,
+                                                                                                                    'key'   => \Autologin::getKey()]) . '" style="width: 100%" />';
+    }
 }

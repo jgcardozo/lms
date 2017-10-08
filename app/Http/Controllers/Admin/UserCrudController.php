@@ -134,7 +134,23 @@ class UserCrudController extends CrudController
 				'attribute' => 'title',
 				'model' => 'App\Models\Session',
 				'pivot' => true
-			],
+            ],
+            [
+                 'label' => 'Cohort:',
+                 'type' => 'select2',
+                 'name' => 'cohort_id',
+                 'attribute' => 'name',
+                 'model' => 'App\Models\Cohort'
+            ],
+            [
+               'label' => 'Sessions watched:',
+               'type' => 'select2_multipleSessionsWatched',
+               'name' => 'sessionsWatched',
+               'entity' => 'sessions',
+               'attribute' => 'title',
+               'model' => 'App\Models\Session',
+               'pivot' => true
+            ],
             [
                 // two interconnected entities
                 'label'             => trans('backpack::permissionmanager.user_role_permission'),
