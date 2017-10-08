@@ -60,6 +60,7 @@ class HomeController extends Controller
 
 	public function test()
 	{
+	    die();
 	    $course = Course::find(3);
 	    $tag = ISTag::find(3786);
 
