@@ -11738,7 +11738,7 @@ $(document).ready(function () {
     });
 
     /**
-     * Close menus, dropdowns, etc. on body click 
+     * Close menus, dropdowns, etc. on body click
      */
     $('body').on('click', function () {
         $('.dropdown-menu-wrap, .masthead__notifications-outer-wrap, .masthead__classes-wrap, .course-progress-box').stop().slideUp(200);
@@ -11867,11 +11867,11 @@ $(document).ready(function () {
 
         var x = setInterval(function () {
             /*
-            if(count >= 5)
-            {
-                clearInterval(x);
-            }
-            */
+             if(count >= 5)
+             {
+             clearInterval(x);
+             }
+             */
 
             count++;
 
@@ -11921,10 +11921,10 @@ $(document).ready(function () {
     }
 
     /**
-    * Wistia on second change event handler
-    *
-    * @param s
-    * @param video
+     * Wistia on second change event handler
+     *
+     * @param s
+     * @param video
      */
     function handleVideoSeconds(s, video) {
         var activeVideo = getVideoDetails();
@@ -11947,7 +11947,7 @@ $(document).ready(function () {
      * Get video details only if there is a video popup opened
      *
      * @returns object Wistia Video and session id
-        */
+     */
     function getVideoDetails() {
         var popupWrap = $('body').find('.session-single');
 
@@ -11994,7 +11994,8 @@ $(document).ready(function () {
 
                 window._wq = [];
 
-                _wq.push({ id: wistiaId, onReady: function onReady(video) {
+                _wq.push({
+                    id: wistiaId, onReady: function onReady(video) {
                         video.unbind('secondchange');
                         video.unbind('pause');
 
@@ -12009,7 +12010,8 @@ $(document).ready(function () {
 
                             if (activeVideo.currentProgress < activeVideo.progress) $('body').trigger('session.watch.stop', [activeVideo.session, activeVideo.video, activeVideo.progress - activeVideo.currentProgress]);
                         });
-                    } });
+                    }
+                });
             }
 
             $('body').find('.session-single__close').removeClass('question-close');
@@ -12270,8 +12272,33 @@ $(document).ready(function () {
                 'event': 'completed',
                 'module': res.module.title,
                 'lesson': res.lesson.title,
-                'session': res.session.title
+                'session': res.session.title,
+                'course': res.course.title
             });
+
+            if (res.lesson_complete) {
+                dataLayer.push({
+                    'event': 'completed',
+                    'module': res.module.title,
+                    'lesson': res.lesson.title,
+                    'course': res.course.title
+                });
+            }
+
+            if (res.module_complete) {
+                dataLayer.push({
+                    'event': 'completed',
+                    'module': res.module.title,
+                    'course': res.course.title
+                });
+            }
+
+            if (res.course_complete) {
+                dataLayer.push({
+                    'event': 'completed',
+                    'course': res.course.title
+                });
+            }
 
             var sId = $this.closest('.session-single__content-ajax').find('.session-single__video').data('session'); // Get session id
             $this.replaceWith(completeHtml);

@@ -35,6 +35,16 @@ class SessionController extends Controller
 			abort(404);
 		}
 
+		$finished = [
+		    'lesson_complete' => false,
+            'module_complete' => false,
+            'course_complete' => false,
+            'session' => $session,
+            'lesson' => $session->lesson ? $session->lesson : '',
+            'module' => $session->lesson && $session->lesson->module ? $session->lesson->module : '',
+            'course' => $session->lesson && $session->lesson->module && $session->lesson->module->course ? $session->lesson->module->course : ''
+        ];
+
 		event(new WatchedSession($session));
 
 		if($session->lesson && $session->lesson->is_completed)
@@ -43,19 +53,21 @@ class SessionController extends Controller
 
 			event(new LessonComplete($lesson));
 
+			$finished['lesson_complete'] = true;
+
 			if($lesson->module && $lesson->module->is_completed)
 			{
 				$module = $lesson->module;
 
 				event(new ModuleComplete($module));
-			}
 
-            return response()->json([
-                'lesson_complete' => true,
-                'session' => $session,
-                'lesson' => $session->lesson ? $session->lesson : '',
-                'module' => $session->lesson && $session->lesson->module ? $session->lesson->module : ''
-            ]);
+                $finished['module_complete'] = true;
+
+                if($module->course && $module->course->is_completed)
+                {
+                    $finished['course_complete'] = true;
+                }
+			}
 		}
 
 		if($session->starter_course_id && $session->course->areAllStarterSeen())
@@ -63,12 +75,7 @@ class SessionController extends Controller
 			event(new StarterVideosCompleted($session->course));
 		}
 
-        return response()->json([
-            'lesson_complete' => false,
-            'session' => $session,
-            'lesson' => $session->lesson ? $session->lesson : '',
-            'module' => $session->lesson && $session->lesson->module ? $session->lesson->module : ''
-        ]);
+        return response()->json($finished);
     }
 
     /**

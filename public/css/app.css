@@ -4621,28 +4621,30 @@ p {
 }
 
 .popup-notification__content__message {
+  font-family: "brandon-grotesque-n7", "brandon-grotesque", "Open Sans", sans-serif;
   color: #928780;
-  font-size: 3rem;
+  font-size: 2rem;
   line-height: 1;
+  font-weight: 700;
   text-align: center;
 }
 
-.popup-notification__content__button {
+.popup-notification__content .button {
   display: block;
   color: #ffffff;
   background: #62d262;
   border-radius: 0.3rem;
   border: 0;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: bold;
   margin: 0 auto;
-  width: 7rem;
+  width: 9rem;
   text-align: center;
   height: 4rem;
   line-height: 4rem;
 }
 
-.popup-notification__content__button:hover {
+.popup-notification__content .button:hover {
   color: #ffffff;
 }
 

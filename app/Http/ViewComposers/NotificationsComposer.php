@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use Auth;
+use Carbon\Carbon;
 use Illuminate\View\View;
 
 class NotificationsComposer
@@ -23,6 +24,7 @@ class NotificationsComposer
 
 			$notifications = [
 				'data' => $data,
+                'not_displayed' => $data->where('display_at', null)->count() ? $data->where('display_at', null) : [],
 				'count_unread' => $data->where('read_at', null)->count()
 			];
 		}

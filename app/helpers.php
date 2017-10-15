@@ -4,15 +4,17 @@
  *
  * @return boolean
  */
-if ( !function_exists('changeHeader') ) {
-	function changeHeader()
-	{
-		if ( Request::is('course/*') || Request::is('module/*') || Request::is('lesson/*') ) { 
-		  return true;
-		}
+if ( ! function_exists('changeHeader'))
+{
+    function changeHeader()
+    {
+        if (Request::is('course/*') || Request::is('module/*') || Request::is('lesson/*'))
+        {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }
 
 /**
@@ -20,15 +22,17 @@ if ( !function_exists('changeHeader') ) {
  *
  * @return boolean
  */
-if ( !function_exists('is_home') ) {
-	function is_home()
-	{
-		if (Request::is('/')) { 
-		  return true;
-		}
+if ( ! function_exists('is_home'))
+{
+    function is_home()
+    {
+        if (Request::is('/'))
+        {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }
 
 /**
@@ -37,12 +41,14 @@ if ( !function_exists('is_home') ) {
  * @param  string  $string
  * @param  integer $length [length of returned string]
  * @param  string  $append [string to append at the end of the returned string]
+ *
  * @return string
  */
-if ( !function_exists('truncate_string') ) {
-	function truncate_string( $string, $length=20, $append="&hellip;" )
-	{
-        $string = strip_tags( trim( $string ) );
+if ( ! function_exists('truncate_string'))
+{
+    function truncate_string($string, $length = 20, $append = "&hellip;")
+    {
+        $string = strip_tags(trim($string));
         /*
         if( strlen($string) > $length ) {
             $string = wordwrap( $string, $length );
@@ -62,49 +68,54 @@ if ( !function_exists('truncate_string') ) {
 
         return $text;
         */
-        $words = explode(" ",$string);
-		if(count($words) < $length)
-		{
-			$append = '';
-		}
+        $words = explode(" ", $string);
+        if (count($words) < $length)
+        {
+            $append = '';
+        }
 
-        return implode(" ",array_splice($words, 0, $length)) . $append;
-	}
+        return implode(" ", array_splice($words, 0, $length)) . $append;
+    }
 }
 
 /**
  * Make first word in string bold / strong
  *
  * @param string $string
+ *
  * @return string
  */
-if ( !function_exists('bold_first_word') ) {
-	function bold_first_word( $string )
-	{
-		$title = preg_split("/\s+/",  $string);
-		$title[0] = "<strong> $title[0] </strong>";
-		$title = join(' ', $title);
+if ( ! function_exists('bold_first_word'))
+{
+    function bold_first_word($string)
+    {
+        $title = preg_split("/\s+/", $string);
+        $title[0] = "<strong> $title[0] </strong>";
+        $title = join(' ', $title);
 
-		return $title;
-	}
+        return $title;
+    }
 }
 
 /**
  * Set active class to current path
- * 
- * @param string  $path 
+ *
+ * @param string  $path
  * @param boolean $attr [Set active class together with attribute class]
+ *
  * @return string
  */
-if ( !function_exists('set_active_link') ) {	
-	function set_active_link( $path, $attr=false )
-	{
-		if ( $attr ) {
-			return Request::is($path . '*') ? ' class=active' :  '';	
-		}
+if ( ! function_exists('set_active_link'))
+{
+    function set_active_link($path, $attr = false)
+    {
+        if ($attr)
+        {
+            return Request::is($path . '*') ? ' class=active' : '';
+        }
 
-		return Request::is($path . '*') ? ' active' :  '';
-	}
+        return Request::is($path . '*') ? ' active' : '';
+    }
 }
 
 /**
@@ -112,15 +123,18 @@ if ( !function_exists('set_active_link') ) {
  *
  * @param float $bytes
  * @param int   $decimals
+ *
  * @return string
  */
-if ( !function_exists('human_filesize') ) {
-	function human_filesize($bytes, $decimals = 2)
-	{
-		$size = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-		$factor = floor((strlen($bytes) - 1) / 3);
-		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
-	}
+if ( ! function_exists('human_filesize'))
+{
+    function human_filesize($bytes, $decimals = 2)
+    {
+        $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $factor = floor((strlen($bytes) - 1) / 3);
+
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+    }
 }
 
 /**
@@ -128,11 +142,13 @@ if ( !function_exists('human_filesize') ) {
  *
  * @return boolean
  */
-if ( !function_exists('is_role_admin') ) {
-	function is_role_admin()
-	{
-		return \Auth::user()->hasRole(['Administrator','Editor']);
-	}
+if ( ! function_exists('is_role_admin'))
+{
+    function is_role_admin()
+    {
+        return \Auth::user()
+                    ->hasRole(['Administrator', 'Editor']);
+    }
 }
 
 /**
@@ -140,44 +156,55 @@ if ( !function_exists('is_role_admin') ) {
  *
  * @return boolean
  */
-if ( !function_exists('is_role_vip') ) {
-	function is_role_vip()
-	{
-		return \Auth::user()->hasRole(['Vip']);
-	}
+if ( ! function_exists('is_role_vip'))
+{
+    function is_role_vip()
+    {
+        return \Auth::user()
+                    ->hasRole(['Vip']);
+    }
 }
 
 /**
  * Get setting via key
  */
-if ( !function_exists('lms_get_setting') ) {
-	function lms_get_setting($key, $default = null)
-	{
-		$row = \DB::table('settings')->where('key', $key)->pluck('value')->first();
+if ( ! function_exists('lms_get_setting'))
+{
+    function lms_get_setting($key, $default = null)
+    {
+        $row = \DB::table('settings')
+                  ->where('key', $key)
+                  ->pluck('value')
+                  ->first();
 
-		if(empty($row))
-		{
-			return !empty($default) ? $default : false;
-		}
+        if (empty($row))
+        {
+            return ! empty($default) ? $default : false;
+        }
 
-		return $row;
-	}
+        return $row;
+    }
 }
 
 /**
  * Check ask-masterclass survey
  */
-if ( !function_exists('survey_check') ) {
-	function survey_check(\App\Models\Course $course)
-	{
-		// Popup before course start
-		$popupCheck = DB::table('surveys')->where('user_id', \Auth::user()->id)->get()->toArray();
-		if($course->slug == 'ask-masterclass' && empty($popupCheck)) {
-			return true;
-		}
+if ( ! function_exists('survey_check'))
+{
+    function survey_check(\App\Models\Course $course)
+    {
+        // Popup before course start
+        $popupCheck = DB::table('surveys')
+                        ->where('user_id', \Auth::user()->id)
+                        ->get()
+                        ->toArray();
+        if ($course->slug == 'ask-masterclass' && empty($popupCheck))
+        {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }
 
 /**
@@ -185,134 +212,192 @@ if ( !function_exists('survey_check') ) {
  *
  * @return array
  */
-if ( !function_exists('timezoneList') ) {
-	function timezoneList()
-	{
-		$timezoneIdentifiers = DateTimeZone::listIdentifiers();
-		$utcTime = new DateTime('now', new DateTimeZone('UTC'));
+if ( ! function_exists('timezoneList'))
+{
+    function timezoneList()
+    {
+        $timezoneIdentifiers = DateTimeZone::listIdentifiers();
+        $utcTime = new DateTime('now', new DateTimeZone('UTC'));
 
-		$tempTimezones = array();
-		foreach ($timezoneIdentifiers as $timezoneIdentifier) {
-			$currentTimezone = new DateTimeZone($timezoneIdentifier);
+        $tempTimezones = [];
+        foreach ($timezoneIdentifiers as $timezoneIdentifier)
+        {
+            $currentTimezone = new DateTimeZone($timezoneIdentifier);
 
-			$_timezoneIdentifier = explode('/', $timezoneIdentifier);
+            $_timezoneIdentifier = explode('/', $timezoneIdentifier);
 
-			$tempTimezones[] = array(
-				'offset' => (int)$currentTimezone->getOffset($utcTime),
-				'key' => $timezoneIdentifier,
-				'identifier' => isset($_timezoneIdentifier[1]) ? $_timezoneIdentifier[1] : $_timezoneIdentifier[0]
-			);
-		}
+            $tempTimezones[] = [
+                'offset'     => (int)$currentTimezone->getOffset($utcTime),
+                'key'        => $timezoneIdentifier,
+                'identifier' => isset($_timezoneIdentifier[1]) ? $_timezoneIdentifier[1] : $_timezoneIdentifier[0]
+            ];
+        }
 
-		// Sort the array by offset,identifier ascending
-		usort($tempTimezones, function($a, $b) {
-			return ($a['offset'] == $b['offset'])
-				? strcmp($a['identifier'], $b['identifier'])
-				: $a['offset'] - $b['offset'];
-		});
+        // Sort the array by offset,identifier ascending
+        usort($tempTimezones, function ($a, $b)
+        {
+            return ($a['offset'] == $b['offset'])
+                ? strcmp($a['identifier'], $b['identifier'])
+                : $a['offset'] - $b['offset'];
+        });
 
-		$timezoneList = array();
-		foreach ($tempTimezones as $tz) {
-			$sign = ($tz['offset'] > 0) ? '+' : '-';
-			$offset = gmdate('H:i', abs($tz['offset']));
-			$timezoneList[$tz['key']] = '(UTC ' . $sign . $offset . ') ' .
-				$tz['identifier'];
-		}
+        $timezoneList = [];
+        foreach ($tempTimezones as $tz)
+        {
+            $sign = ($tz['offset'] > 0) ? '+' : '-';
+            $offset = gmdate('H:i', abs($tz['offset']));
+            $timezoneList[$tz['key']] = '(UTC ' . $sign . $offset . ') ' .
+                $tz['identifier'];
+        }
 
-		return $timezoneList;
-	}
+        return $timezoneList;
+    }
 }
 
 /**
  * Adds user credit card to course
  *
- * @param int $user_id    User ID
- * @param int $course_id  Course ID
- * @param int $cc_id      Infusionsoft CreditCard IS
+ * @param int $user_id   User ID
+ * @param int $course_id Course ID
+ * @param int $cc_id     Infusionsoft CreditCard IS
  */
-if ( !function_exists('addISCreditCard') ) {
-	function addISCreditCard($user_id, $course_id, $cc_id)
-	{
-		$qb = DB::table('payment_card_user')->where('course_id', $course_id)->where('user_id', $user_id);
-		$check = $qb->get();
-		if(!$qb->get()->isEmpty())
-		{
-			$qb->limit(1)->update(['cc_id' => $cc_id]);
-		}else{
-			DB::table('payment_card_user')->insert([
-				[
-					'user_id' => $user_id,
-					'course_id' => $course_id,
-					'cc_id' => $cc_id
-				]
-			]);
-		}
-	}
+if ( ! function_exists('addISCreditCard'))
+{
+    function addISCreditCard($user_id, $course_id, $cc_id)
+    {
+        $qb = DB::table('payment_card_user')
+                ->where('course_id', $course_id)
+                ->where('user_id', $user_id);
+        $check = $qb->get();
+        if ( ! $qb->get()
+                  ->isEmpty()
+        )
+        {
+            $qb->limit(1)
+               ->update(['cc_id' => $cc_id]);
+        } else
+        {
+            DB::table('payment_card_user')
+              ->insert([
+                           [
+                               'user_id'   => $user_id,
+                               'course_id' => $course_id,
+                               'cc_id'     => $cc_id
+                           ]
+                       ]);
+        }
+    }
 }
 
 /**
  * Get Mixpanel instance. Easy way.
  */
-if ( !function_exists('mixPanel') ) {
-	function mixPanel()
-	{
-		$mp = Mixpanel::getInstance(env('MIXPANEL_TOKEN'));
+if ( ! function_exists('mixPanel'))
+{
+    function mixPanel()
+    {
+        $mp = Mixpanel::getInstance(env('MIXPANEL_TOKEN'));
 
-		/**
-		 * Assume that only logged in users can use the LMS
-		 */
-		if(\Auth::check())
-		{
-			$user = \Auth::user();
+        /**
+         * Assume that only logged in users can use the LMS
+         */
+        if (\Auth::check())
+        {
+            $user = \Auth::user();
 
-			$mp->people->set($user->id, array(
-				'$first_name'       => $user->profile && $user->profile->first_name ? $user->profile->first_name : '',
-				'$last_name'        => $user->profile && $user->profile->last_name ? $user->profile->last_name : '',
-				'$email'            => $user->email ?: ''
-			));
+            $mp->people->set($user->id, [
+                '$first_name' => $user->profile && $user->profile->first_name ? $user->profile->first_name : '',
+                '$last_name'  => $user->profile && $user->profile->last_name ? $user->profile->last_name : '',
+                '$email'      => $user->email ?: ''
+            ]);
 
-			$mp->identify($user->id);
-		}
+            $mp->identify($user->id);
+        }
 
-		return $mp;
-	}
+        return $mp;
+    }
 }
 
 /**
  * Get basic LMS stats.
  */
-if ( !function_exists('getBasicLessonsStats') ) {
-	function getBasicLessonsStats()
-	{
-		$users = \App\Models\User::get();
-		$lessons = \App\Models\Lesson::get();
+if ( ! function_exists('getBasicLessonsStats'))
+{
+    function getBasicLessonsStats()
+    {
+        $users = \App\Models\User::get();
+        $lessons = \App\Models\Lesson::get();
 
-		// 2880 Minutes - 2 days
-		$lessonsFinished = \Cache::remember('lms.stats', 2880, function () use ($users, $lessons) {
-			$_lessonsFinished = [];
-			foreach($lessons as $lesson)
-			{
-				$_lessonsFinished[$lesson->id]['finished'] = 0;
-				$_lessonsFinished[$lesson->id]['unfinished'] = 0;
+        // 2880 Minutes - 2 days
+        $lessonsFinished = \Cache::remember('lms.stats', 2880, function () use ($users, $lessons)
+        {
+            $_lessonsFinished = [];
+            foreach ($lessons as $lesson)
+            {
+                $_lessonsFinished[$lesson->id]['finished'] = 0;
+                $_lessonsFinished[$lesson->id]['unfinished'] = 0;
 
-				foreach($users as $user)
-				{
-					if(!$lesson->getIsCompletedAttribute($user->id))
-					{
-						$_lessonsFinished[$lesson->id]['unfinished'] = $_lessonsFinished[$lesson->id]['unfinished'] + 1;
-						continue;
-					}
+                foreach ($users as $user)
+                {
+                    if ( ! $lesson->getIsCompletedAttribute($user->id))
+                    {
+                        $_lessonsFinished[$lesson->id]['unfinished'] = $_lessonsFinished[$lesson->id]['unfinished'] + 1;
+                        continue;
+                    }
 
-					$_lessonsFinished[$lesson->id]['finished'] = $_lessonsFinished[$lesson->id]['finished'] + 1;
-				}
+                    $_lessonsFinished[$lesson->id]['finished'] = $_lessonsFinished[$lesson->id]['finished'] + 1;
+                }
 
-				$_lessonsFinished[$lesson->id]['total'] = $_lessonsFinished[$lesson->id]['finished'] + $_lessonsFinished[$lesson->id]['unfinished'];
-				$_lessonsFinished[$lesson->id]['percent'] = round(($_lessonsFinished[$lesson->id]['finished'] / $_lessonsFinished[$lesson->id]['total']) * 100, 2);
-			}
+                $_lessonsFinished[$lesson->id]['total'] = $_lessonsFinished[$lesson->id]['finished'] + $_lessonsFinished[$lesson->id]['unfinished'];
+                $_lessonsFinished[$lesson->id]['percent'] = round(($_lessonsFinished[$lesson->id]['finished'] / $_lessonsFinished[$lesson->id]['total']) * 100, 2);
+            }
 
-			return $_lessonsFinished;
-		});
+            return $_lessonsFinished;
+        });
 
-		return $lessonsFinished;
-	}
+        return $lessonsFinished;
+    }
+}
+
+/**
+ * Compile shortcodes
+ */
+if ( ! function_exists('compileShortcodes'))
+{
+    function compileShortcodes($str)
+    {
+        $str = htmlspecialchars_decode($str);
+
+        preg_match('/\[button(.*?)?\](?:(.+?)?\[\/button\])?/', $str, $matches);
+        if ( ! empty($matches))
+        {
+            $button_text = trim($matches[2]);
+            $attributes = trim($matches[1]);
+            preg_match_all('/(\w+)=["\'](.*?)["\']/', $attributes, $attributes_matches);
+
+            $attributes_keys = $attributes_matches[1];
+            $attributes_values = $attributes_matches[2];
+
+            $urlKey = array_search('url', $attributes_keys);
+            if ($urlKey === false)
+            {
+                return str_replace($matches[0], '', $str);
+            }
+
+            $url = $attributes_values[$urlKey];
+            if ( ! empty($url))
+            {
+                $button = '<a class="button" href="' . $url . '">' . $button_text . '</a>';
+            }
+
+            if ( ! empty($button))
+            {
+                return str_replace($matches[0], $button, $str);
+            }
+
+            return str_replace($matches[0], '', $str);
+        }
+
+        return $str;
+    }
 }

@@ -150,6 +150,25 @@ class Course extends Model
 		return false;
 	}
 
+    /**
+     * Check if all the modules within this module
+     * have been marked as watched by the user
+     *
+     * @return bool
+     */
+    public function getIsCompletedAttribute()
+    {
+        foreach($this->modules as $module)
+        {
+            if(!$module->is_completed)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 	/**
 	 * Get image from S3
 	 */
