@@ -1,4 +1,3 @@
-@role('Administrator')
 @if(!empty($notifications['not_displayed']))
     <div class="popup-notification">
         <div class="popup-notification__content">
@@ -18,4 +17,3 @@
         ?>
     @endforeach
 @endif
-@endrole
