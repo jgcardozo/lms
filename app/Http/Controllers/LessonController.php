@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Carbon\Carbon;
 use App\Models\User;
 use InfusionsoftFlow;
 use App\Models\Lesson;
@@ -63,7 +64,7 @@ class LessonController extends Controller
 
 		return view('lms.lessons.result')->with(['lesson' => $lesson, 'score' => $score, 'result' => $row]);
 	}
-    
+
     public function answerQuestion(Lesson $lesson)
 	{
 		$qID = request()->get('question');
@@ -97,30 +98,36 @@ class LessonController extends Controller
 			'status' => true
 		]);
 	}
-	
+
 	public function assessmentCheck(Lesson $lesson)
 	{
 		$user_id = request()->get('user_id');
 		$test_id = request()->get('test_id');
 		$taken = request()->get('taken');
+		$response = ['first_time' => false];
 
 		$row = DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->first();
-		if(!empty($row) && !empty($taken))
+        $response['status'] = !empty($row);
+        $response['score'] = !empty($row) ? $row->score : 0;
+		if(!empty($row))
 		{
-			$date = $row->created_at;
-			if($date == $taken)
-			{
-				return response()->json([
-					'status' => false
-				]);
-			}
+            if(!empty($taken) && $row->created_at == $taken)
+            {
+                $response['status'] = false;
+            }
+
+            if($row->created_at == $row->passed_at)
+            {
+                $response['first_time'] = true;
+                DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->update(['passed_at' => Carbon::now()]);
+            }
+
+			return response()->json($response);
 		}
 
-		return response()->json([
-			'status' => !empty($row)
-		]);
+		return response()->json($response);
 	}
-	
+
 	public function viewResultsVideoPopup($lessonQuestion)
 	{
 		$lessonQuestion = LessonQuestion::findOrFail($lessonQuestion);
@@ -159,6 +166,8 @@ class LessonController extends Controller
 			}
 		}
 
+        $now = Carbon::now();
+
 		if(!$row)
 		{
 			DB::table('class_marker_results')->insert([
@@ -167,13 +176,21 @@ class LessonController extends Controller
 				'assessment_id' => $test_id,
 				'score' => $score,
 				'passed' => $passed,
-                'cert_url' => $cert_url
+                'cert_url' => $cert_url,
+                'created_at' => $now,
+                'passed_at' => $passed ? $now : null
 			]);
 		}else{
 		    $update = [
                 'score' => $score,
                 'passed' => $passed
             ];
+
+		    if($passed && empty($row->passed_at))
+            {
+                $update['passed_at'] = $now;
+                $update['created_at'] = $now;
+            }
 
 		    if(!empty($cert_url))
             {

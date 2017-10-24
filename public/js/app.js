@@ -11882,6 +11882,12 @@ $(document).ready(function () {
                 success: function success(res) {
                     console.log(res);
                     if (res.status) {
+                        if (res.first_time) {
+                            dataLayer.push({
+                                'event': 'exam',
+                                'score': res.score
+                            });
+                        }
                         clearInterval(x);
                         window.location = href;
                     }
