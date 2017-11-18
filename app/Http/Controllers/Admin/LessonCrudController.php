@@ -74,6 +74,11 @@ class LessonCrudController extends CrudController
 			'label' => 'Wistia Video ID'
 		]);
 
+        $this->crud->addField([
+            'name' => 'session_group_title',
+            'label' => 'Session group title'
+        ]);
+
 		$this->crud->addField([
 			'name' => 'bonus_video_url',
 			'label' => 'Bonus Wistia Video ID',

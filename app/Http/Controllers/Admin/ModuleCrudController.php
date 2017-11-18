@@ -74,6 +74,11 @@ class ModuleCrudController extends CrudController
 			'label' => 'Wistia Video ID'
 		]);
 
+        $this->crud->addField([
+            'name' => 'lesson_group_title',
+            'label' => 'Lesson group title'
+        ]);
+
 		$this->crud->addField([
 			'label' => 'Module featured image',
 			'name' => 'featured_image',

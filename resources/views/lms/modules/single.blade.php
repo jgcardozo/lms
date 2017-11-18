@@ -41,7 +41,7 @@
         
         <div class="grid grid--w950">
             <div class="lessons-list">
-                <h2 class="module-lessons__title">Lessons</h2>
+                <h2 class="module-lessons__title">{{ $module->lesson_group_title }}</h2>
 
                 <div class="module-lessons__list">
                     @foreach($module->lessons as $key => $lesson)

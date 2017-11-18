@@ -28,7 +28,7 @@ class Module extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image'
+		'title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image', 'lesson_group_title'
 	];
 
 	/**

@@ -41,7 +41,7 @@
         
         <div class="grid grid--w950">
             <div class="lesson-sessions">
-                <h2 class="lesson-sessions__title">Sessions</h2>
+                <h2 class="lesson-sessions__title">{{ $lesson->session_group_title }}</h2>
 
                 <div class="lesson-sessions__list">
                     @foreach($lesson->sessions as $key => $session)
