@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,10 +75,10 @@
 
 var _ = __webpack_require__(2);
 var cls = __webpack_require__(7);
-var defaultSettings = __webpack_require__(24);
+var defaultSettings = __webpack_require__(25);
 var dom = __webpack_require__(5);
-var EventManager = __webpack_require__(21);
-var guid = __webpack_require__(22);
+var EventManager = __webpack_require__(22);
+var guid = __webpack_require__(23);
 
 var instances = {};
 
@@ -11452,7 +11452,7 @@ module.exports = Circle;
 
 // Lower level API to animate any kind of svg path
 
-var Tweenable = __webpack_require__(38);
+var Tweenable = __webpack_require__(39);
 var utils = __webpack_require__(6);
 
 var EASING_ALIASES = {
@@ -11636,8 +11636,8 @@ module.exports = Path;
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(14);
 __webpack_require__(15);
+__webpack_require__(16);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -12600,7 +12600,8 @@ $(document).ready(function () {
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
@@ -12613,12 +12614,12 @@ $(document).ready(function () {
  */
 
 window.$ = window.jQuery = __webpack_require__(1);
-window.datepicker = __webpack_require__(17);
+window.datepicker = __webpack_require__(18);
 
-window.pscroll = __webpack_require__(19)($);
+window.pscroll = __webpack_require__(20)($);
 
-window.ProgressBar = __webpack_require__(36);
-window.parsley = __webpack_require__(18);
+window.ProgressBar = __webpack_require__(37);
+window.parsley = __webpack_require__(19);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -12656,7 +12657,7 @@ window.parsley = __webpack_require__(18);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -12805,7 +12806,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }).call(this);
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -12859,7 +12860,7 @@ return $.ui.keyCode = {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// jscs:disable maximumLineLength
@@ -12889,7 +12890,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
 			__webpack_require__(1),
 			__webpack_require__(9),
-			__webpack_require__(16)
+			__webpack_require__(17)
 		], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
@@ -14988,7 +14989,7 @@ return $.datepicker;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery, global) {/*!
@@ -17484,26 +17485,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 });
 //# sourceMappingURL=parsley.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(39)))
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(20);
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(40)))
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(21);
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
-var ps = __webpack_require__(23);
+var ps = __webpack_require__(24);
 var psInstances = __webpack_require__(0);
 
 function mountJQuery(jQuery) {
@@ -17548,7 +17549,7 @@ module.exports = mountJQuery;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17626,7 +17627,7 @@ module.exports = EventManager;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17646,15 +17647,15 @@ module.exports = (function () {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var destroy = __webpack_require__(25);
-var initialize = __webpack_require__(33);
-var update = __webpack_require__(34);
+var destroy = __webpack_require__(26);
+var initialize = __webpack_require__(34);
+var update = __webpack_require__(35);
 
 module.exports = {
   initialize: initialize,
@@ -17664,7 +17665,7 @@ module.exports = {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17687,7 +17688,7 @@ module.exports = {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17716,7 +17717,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17762,7 +17763,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17872,7 +17873,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18033,7 +18034,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18181,7 +18182,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18203,7 +18204,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18325,7 +18326,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18511,7 +18512,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18524,14 +18525,14 @@ var updateGeometry = __webpack_require__(3);
 
 // Handlers
 var handlers = {
-  'click-rail': __webpack_require__(26),
-  'drag-scrollbar': __webpack_require__(27),
-  'keyboard': __webpack_require__(28),
-  'wheel': __webpack_require__(29),
-  'touch': __webpack_require__(32),
-  'selection': __webpack_require__(31)
+  'click-rail': __webpack_require__(27),
+  'drag-scrollbar': __webpack_require__(28),
+  'keyboard': __webpack_require__(29),
+  'wheel': __webpack_require__(30),
+  'touch': __webpack_require__(33),
+  'selection': __webpack_require__(32)
 };
-var nativeScrollHandler = __webpack_require__(30);
+var nativeScrollHandler = __webpack_require__(31);
 
 module.exports = function (element, userSettings) {
   userSettings = typeof userSettings === 'object' ? userSettings : {};
@@ -18555,7 +18556,7 @@ module.exports = function (element, userSettings) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18599,7 +18600,7 @@ module.exports = function (element) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Line shaped progress bar
@@ -18634,14 +18635,14 @@ module.exports = Line;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
     // Higher level API, different shaped progress bars
-    Line: __webpack_require__(35),
+    Line: __webpack_require__(36),
     Circle: __webpack_require__(10),
-    SemiCircle: __webpack_require__(37),
+    SemiCircle: __webpack_require__(38),
 
     // Lower level API to use any SVG path
     Path: __webpack_require__(11),
@@ -18657,7 +18658,7 @@ module.exports = {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Semi-SemiCircle shaped progress bar
@@ -18711,7 +18712,7 @@ module.exports = SemiCircle;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* shifty - v1.5.3 - 2016-11-29 - http://jeremyckahn.github.io/shifty */
@@ -20368,7 +20369,7 @@ var Tweenable = (function () {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 var g;
@@ -20395,7 +20396,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 40 */
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(12);

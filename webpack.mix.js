@@ -19,3 +19,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	.options({
 		processCssUrls: false
 	});
+
+mix.js('node_modules/select2/dist/js/select2.js', 'public/select2');

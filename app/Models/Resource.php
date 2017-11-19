@@ -77,6 +77,11 @@ class Resource extends Model
 		return $this->belongsToMany('App\Models\Session', 'resource_session');
 	}
 
+	public function resourceTags()
+    {
+        return $this->belongsToMany(ResourceTag::class);
+    }
+
 	/*
 	|--------------------------------------------------------------------------
 	| Mutators

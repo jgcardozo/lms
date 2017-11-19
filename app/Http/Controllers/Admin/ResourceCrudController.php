@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Models\Module;
+use App\Models\ResourceTag;
 use App\Traits\BackpackCrudTrait;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\Admin\ResourceCrudRequest as StoreRequest;
@@ -36,7 +37,20 @@ class ResourceCrudController extends CrudController
 			[
 				'label' => 'Size',
 				'name' => 'file_size'
-			]
+			],
+            [
+                'label' => "Tags",
+                'type' => "select_multiple",
+                'name' => 'resources',
+                'entity' => 'resourceTags',
+                'attribute' => "title",
+                'model' => "App\Models\ResourceTag",
+                'pivot' => true
+            ],
+            [
+                'name' => 'created_at',
+                'label' => 'Created'
+            ],
         ]);
 
 
@@ -61,6 +75,16 @@ class ResourceCrudController extends CrudController
 			'disk' => 's3'
 		]);
 
+        $this->crud->addField([
+            'label' => 'Tags:',
+            'type' => 'select2_multipleAllowNew',
+            'name' => 'resourceTags',
+            'entity' => 'resources',
+            'attribute' => 'title',
+            'model' => 'App\Models\ResourceTag',
+            'pivot' => true
+        ]);
+
         /**
          * Enable CRUD reorder
          */
@@ -71,11 +95,79 @@ class ResourceCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        return parent::storeCrud();
+        unset($this->crud->create_fields['resourceTags']);
+
+        // Exec store
+        $parent = parent::storeCrud();
+
+        $this->fixTags($request->get('resourceTags', []));
+
+        return $parent;
     }
 
     public function update(UpdateRequest $request)
     {
-        return parent::updateCrud();
+        unset($this->crud->update_fields['resourceTags']);
+
+        // Exec update
+        $parent = parent::updateCrud();
+
+        $this->fixTags($request->get('resourceTags', []));
+
+        return $parent;
+    }
+
+    private function fixTags($tags)
+    {
+        $toAdd = [];
+        $exists = [];
+
+        foreach($tags as $tag)
+        {
+            try {
+                $resourceTag = ResourceTag::find($tag);
+
+                if(! $resourceTag)
+                {
+                    $toAdd[] = $tag;
+                    continue;
+                }
+
+                $exists[] = $tag;
+            }catch (\Exception $e)
+            {
+                $toAdd[] = $tag;
+            }
+        }
+
+        foreach($toAdd as $item)
+        {
+            $resourceTag = new ResourceTag();
+            $resourceTag->title = $item;
+            $resourceTag->save();
+
+            $exists[] = $resourceTag->id;
+        }
+
+        $action = $this->crud->entry->resourceTags()->sync($exists);
+
+        if(!empty($action['detached']))
+        {
+            $this->removeIfUnused($action['detached']);
+        }
+    }
+
+    private function removeIfUnused($ids)
+    {
+        // Remove resource tag if its not used in any resource
+        $resourceTags = ResourceTag::find($ids);
+
+        foreach($resourceTags as $resourceTag)
+        {
+            if($resourceTag->resources->count() == 0)
+            {
+                $resourceTag->delete();
+            }
+        }
     }
 }
