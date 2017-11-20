@@ -105,11 +105,11 @@
                                 @endif
 
                                 <div class="module__featured-image" @if($module->featured_image) style="background-image: url({{ $module->featured_image_url }});" @endif>
-                                    @if(! $module->is_locked)
+                                    @if(! $module->is_locked && $module->isCompleteVideoFeatureOn())
                                         <div class="module__active" data-percentage="{!! $module->getProgressPercentage() / 100 !!}"></div>
                                     @endif
 
-                                    @if($module->is_completed)
+                                    @if($module->is_completed && $module->isCompleteVideoFeatureOn())
                                         <div class="module__completed">Completed</div>
                                     @endif
                                 </div>

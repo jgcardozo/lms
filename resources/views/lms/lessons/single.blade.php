@@ -66,18 +66,22 @@
                                     <p>{{ truncate_string($session->description) }}</p>
                                 </div>
 
-                                <div class="lesson-sessions__content--right">
-                                    @if($session->is_completed)
-                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>                                    
-                                    @elseif($session->is_date_locked)
-                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
-                                            Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}
-                                        </div>
-                                    @else
-                                        <div style="{{ $session->video_progress || is_role_admin() >= 80 ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $session->id) }}">Mark as completed <span class="course-progress__bar"></span></div>
-                                    @endif
-                                </div>                                
-                            </div>                            
+                                @if($session->isCompleteVideoFeatureOn())
+                                    <div class="lesson-sessions__content--right">
+                                        @if($session->is_completed)
+                                            <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
+                                        @elseif($session->is_date_locked)
+                                            <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
+                                                Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}
+                                            </div>
+                                        @else
+                                            <div style="{{ ! $session->isCourseMustWatch() || $session->video_progress || is_role_admin() >= 80 ? '' : 'display: none;' }}"
+                                                 class="course-progress"
+                                                 data-complete="{{ route('session.completed', $session->id) }}">Mark as completed <span class="course-progress__bar"></span></div>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>

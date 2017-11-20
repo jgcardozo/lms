@@ -187,6 +187,18 @@ class CourseCrudController extends CrudController
 			'name' => 'billing_is_products'
 		 ]);
 
+		$this->crud->addField([
+            'name' => 'must_watch',
+            'label' => 'Turn off mandatory watching(80%) of the videos.',
+            'type' => 'checkbox'
+        ]);
+
+        $this->crud->addField([
+            'name' => 'complete_feature',
+            'label' => 'Turn complete video feature on. This feature can\'t be turned off unti "mandatory watching" is on.',
+            'type' => 'checkbox'
+        ]);
+
 		/**
 		 * Add CRUD action button
 		 */
@@ -232,6 +244,8 @@ class CourseCrudController extends CrudController
 		$module->course_id = $item->id;
 		$module->save();
 
+        $this->fixBooleans($request);
+
 		// show a success message
 		\Alert::success(trans('backpack::crud.insert_success'))->flash();
 
@@ -243,6 +257,23 @@ class CourseCrudController extends CrudController
 
 	public function update(UpdateRequest $request)
 	{
-		return parent::updateCrud();
-	}
+		$parent = parent::updateCrud();
+
+		$this->fixBooleans($request);
+
+        return $parent;
+    }
+
+    /**
+     * @param UpdateRequest|StoreRequest $request
+     */
+    private function fixBooleans($request)
+    {
+        $must_watch = (boolean) $request->input('must_watch');
+        $complete_feature = $must_watch ? true : (boolean) $request->input('complete_feature');
+
+        $this->crud->entry->must_watch = $must_watch;
+        $this->crud->entry->complete_feature = $complete_feature;
+        $this->crud->entry->save();
+    }
 }

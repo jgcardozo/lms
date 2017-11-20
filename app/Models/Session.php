@@ -5,6 +5,7 @@ namespace App\Models;
 use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
+use App\Traits\IsFreeWatch;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
@@ -21,6 +22,7 @@ class Session extends Model
 	use ISLock;
 	use CrudTrait;
 	use Sluggable;
+	use IsFreeWatch;
 	use LogsActivity;
 	use LockViaUserDate;
 	use UsearableTimezone;

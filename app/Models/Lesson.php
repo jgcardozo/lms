@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
+use App\Traits\IsFreeWatch;
 use Backpack\CRUD\CrudTrait;
 use App\Models\LessonQuestion;
 use App\Traits\LockViaUserDate;
@@ -22,6 +23,7 @@ class Lesson extends Model
 	use ISLock;
 	use CrudTrait;
 	use Sluggable;
+	use IsFreeWatch;
 	use LogsActivity;
 	use LockViaUserDate;
 	use BackpackCrudTrait;
@@ -143,16 +145,22 @@ class Lesson extends Model
 			return false;
 
 		if(!$this->course->is_locked && is_role_vip())
-			return false;
+        {
+            return false;
+        }
 
-		if($this->module->is_locked) {
-			return true;
-		}
-
-		if($this->is_tag_locked())
+		if(
+            $this->module->is_locked ||
+            $this->is_tag_locked()
+        )
 		{
 			return true;
 		}
+
+        if(!$this->isCourseMustWatch() && !$this->is_date_locked)
+        {
+            return false;
+        }
 
 		// Get previous lesson
 		$prevLesson = $this->previous_lesson;

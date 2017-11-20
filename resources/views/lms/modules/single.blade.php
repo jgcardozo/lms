@@ -71,7 +71,7 @@
                                         <h4>{{ $lesson->duration }}m</h4>
                                     </div>                                     
                                 </div>
-                                
+
                                 <div class="lessons-list__content--right">
                                     @if($lesson->is_completed)
                                         <div class="course-progress course-progress--completed course-progress__lesson">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
@@ -86,7 +86,9 @@
                                             </div>
                                         @endif
                                     @else
-                                        <div class="course-progress course-progress__lesson"><span class="course-progress__bar course-progress__bar--active" data-percentage="{!! $lesson->getProgressPercentage() / 100 !!}"></span></div>
+                                        @if($lesson->isCompleteVideoFeatureOn())
+                                            <div class="course-progress course-progress__lesson"><span class="course-progress__bar course-progress__bar--active" data-percentage="{!! $lesson->getProgressPercentage() / 100 !!}"></span></div>
+                                        @endif
                                     @endif
                                 </div>                                
                             </div>                            

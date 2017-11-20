@@ -5,6 +5,7 @@ namespace App\Models;
 use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
+use App\Traits\IsFreeWatch;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
@@ -17,10 +18,11 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class Module extends Model
 {
-	use ISLock;
-	use CrudTrait;
-	use Sluggable;
-	use LogsActivity;
+    use ISLock;
+    use CrudTrait;
+    use Sluggable;
+    use IsFreeWatch;
+    use LogsActivity;
 	use LockViaUserDate;
 	use UsearableTimezone;
 	use BackpackCrudTrait;
@@ -128,21 +130,29 @@ class Module extends Model
 	public function getIsLockedAttribute()
 	{
 		if(is_role_admin())
-			return false;
+        {
+            return false;
+        }
 
 		if(!$this->course->is_locked && is_role_vip())
-			return false;
+        {
+            return false;
+        }
 
-		if($this->course->is_locked || !$this->course->areAllStarterSeen() || $this->course->course_canceled)
-		{
-			return true;
-		}
+        if(
+            $this->course->is_locked ||
+            $this->course->course_canceled ||
+            (!$this->course->areAllStarterSeen() && $this->isCourseMustWatch()) ||
+            $this->is_tag_locked()
+        )
+        {
+            return true;
+        }
 
-		if($this->is_tag_locked())
-		{
-			return true;
-		}
-
+        if(!$this->isCourseMustWatch() && !$this->is_date_locked)
+        {
+            return false;
+        }
 
 		// Get previous module
 		$prevModule = $this->previous_module;

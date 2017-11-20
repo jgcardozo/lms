@@ -28,12 +28,17 @@ class Course extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products'
+		'title', 'slug', 'short_description', 'description', 'video_url', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products', 'must_watch', 'complete_feature'
 	];
 
 	protected $dates = [
 		'user_lock_date'
 	];
+
+	protected $casts = [
+        'must_watch' => 'must_watch',
+        'complete_feature' => 'boolean'
+    ];
 
 	/**
 	 * Billing attributes
