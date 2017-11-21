@@ -1,7 +1,7 @@
 <div class="session-single__video-coaching" data-session="{{ $coaching_call->id }}" data-video="{{ $coaching_call->video_url }}">
      <div class="wistia_responsive_padding">
          <div class="wistia_responsive_wrapper">
-             <div class="wistia_embed wistia_async_{{ $coaching_call->video_url }}"></div>
+             @include('lms.components.video', ['model' => $coaching_call])
          </div>
      </div>
 </div>

@@ -31,7 +31,7 @@
                     <div class="single-header-video">
                          <div class="wistia_responsive_padding">
                              <div class="wistia_responsive_wrapper">
-                                 <div class="wistia_embed wistia_async_{{ $module->video_url }}"></div>
+                                 @include('lms.components.video', ['model' => $module])
                              </div>
                          </div>
                     </div>
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="lessons-list__content--right">
-                                    @if($lesson->is_completed)
+                                    @if($lesson->is_completed && $lesson->isCompleteVideoFeatureOn())
                                         <div class="course-progress course-progress--completed course-progress__lesson">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                     @elseif($lesson->is_locked)
                                         @if($lesson->is_date_locked)

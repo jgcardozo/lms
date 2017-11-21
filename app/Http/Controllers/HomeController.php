@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ISTag;
+use App\Models\LessonQuestion;
 use App\Models\Resource;
 use DB;
 use Auth;

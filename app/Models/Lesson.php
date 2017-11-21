@@ -32,7 +32,7 @@ class Lesson extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'description', 'video_url', 'bonus_video_url', 'bonus_video_duration', 'bonus_video_text', 'fb_link', 'module_id', 'featured_image', 'lock_date', 'exclude_from_rule', 'session_group_title'
+		'title', 'slug', 'description', 'video_url', 'video_type_id', 'bonus_video_url', 'bonus_video_type_id', 'bonus_video_duration', 'bonus_video_text', 'fb_link', 'module_id', 'featured_image', 'lock_date', 'exclude_from_rule', 'session_group_title'
 	];
 
 	protected $casts = [
@@ -304,6 +304,16 @@ class Lesson extends Model
 	{
 		return $this->belongsToMany('App\Models\User', 'question_user');
 	}
+
+    public function video_type()
+    {
+        return $this->belongsTo('App\Models\VideoType');
+    }
+
+    public function bonus_video_type()
+    {
+        return $this->belongsTo('App\Models\VideoType', 'bonus_video_type_id');
+    }
 
 	public function sluggable()
 	{

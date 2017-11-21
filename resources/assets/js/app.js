@@ -333,6 +333,12 @@ $(document).ready(function () {
 
         var videoWrap = popupWrap.find('.session-single__video');
 
+        var isWistia = videoWrap.data('videotype');
+        if(isWistia != 1)
+        {
+            return false;
+        }
+
         if (videoWrap) {
             var session_id = videoWrap.data('session');
             video = Wistia.api(videoWrap.find('.wistia_embed').attr('id'));
@@ -368,31 +374,35 @@ $(document).ready(function () {
             var videoWrap = $('body').find('.session-single .session-single__video');
 
             if (videoWrap) {
-                var wistiaId = videoWrap.data('video');
-                videoWrap.data('updated', 0);
+                var isWistia = videoWrap.data('videotype');
+                if(isWistia == 1)
+                {
+                    var wistiaId = videoWrap.data('video');
+                    videoWrap.data('updated', 0);
 
-                window._wq = [];
+                    window._wq = [];
 
-                _wq.push({
-                    id: wistiaId, onReady: function (video) {
-                        video.unbind('secondchange');
-                        video.unbind('pause');
+                    _wq.push({
+                        id: wistiaId, onReady: function (video) {
+                            video.unbind('secondchange');
+                            video.unbind('pause');
 
-                        video.bind('secondchange', function (s) {
-                            handleVideoSeconds(s, video);
-                        });
+                            video.bind('secondchange', function (s) {
+                                handleVideoSeconds(s, video);
+                            });
 
-                        video.bind('pause', function () {
-                            var activeVideo = getVideoDetails();
+                            video.bind('pause', function () {
+                                var activeVideo = getVideoDetails();
 
-                            if (!activeVideo)
-                                return false;
+                                if (!activeVideo)
+                                    return false;
 
-                            if (activeVideo.currentProgress < activeVideo.progress)
-                                $('body').trigger('session.watch.stop', [activeVideo.session, activeVideo.video, activeVideo.progress - activeVideo.currentProgress]);
-                        });
-                    }
-                });
+                                if (activeVideo.currentProgress < activeVideo.progress)
+                                    $('body').trigger('session.watch.stop', [activeVideo.session, activeVideo.video, activeVideo.progress - activeVideo.currentProgress]);
+                            });
+                        }
+                    });
+                }
             }
 
             $('body').find('.session-single__close').removeClass('question-close');
@@ -663,7 +673,7 @@ $(document).ready(function () {
 
             if (res.lesson_complete) {
                 dataLayer.push({
-                    'event': 'completed',
+                    'event': 'completedLesson',
                     'module': res.module.title,
                     'lesson': res.lesson.title,
                     'course': res.course.title
@@ -672,7 +682,7 @@ $(document).ready(function () {
 
             if (res.module_complete) {
                 dataLayer.push({
-                    'event': 'completed',
+                    'event': 'completedModule',
                     'module': res.module.title,
                     'course': res.course.title
                 });
@@ -680,7 +690,7 @@ $(document).ready(function () {
 
             if (res.course_complete) {
                 dataLayer.push({
-                    'event': 'completed',
+                    'event': 'completedCourse',
                     'course': res.course.title
                 });
             }

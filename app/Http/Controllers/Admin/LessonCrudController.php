@@ -69,9 +69,23 @@ class LessonCrudController extends CrudController
 			'type' => 'wysiwyg'
 		]);
 
+        $this->crud->addField([
+            'label' => 'Video Type:',
+            'type' => 'select',
+            'name' => 'video_type_id',
+            'attribute' => 'title',
+            'model' => 'App\Models\VideoType',
+            'wrapperAttributes' => [
+                'class' => 'form-group col-md-2'
+            ]
+        ]);
+
 		$this->crud->addField([
 			'name' => 'video_url',
-			'label' => 'Wistia Video ID'
+			'label' => 'Wistia Video ID',
+            'wrapperAttributes' => [
+                'class' => 'form-group col-md-10'
+            ]
 		]);
 
         $this->crud->addField([
@@ -80,18 +94,30 @@ class LessonCrudController extends CrudController
         ]);
 
 		$this->crud->addField([
-			'name' => 'bonus_video_url',
-			'label' => 'Bonus Wistia Video ID',
+			'name' => 'bonus_video_type_id',
+			'label' => 'Bonus video Type:',
+			'type' => 'select',
+			'attribute' => 'title',
+            'model' => 'App\Models\VideoType',
+			'entity' => 'bonusVideoType',
 			'wrapperAttributes' => [
-				'class' => 'form-group col-md-6'
+				'class' => 'form-group col-md-2'
 			]
 		]);
+
+        $this->crud->addField([
+            'name' => 'bonus_video_url',
+            'label' => 'Bonus Wistia Video ID',
+            'wrapperAttributes' => [
+                'class' => 'form-group col-md-6'
+            ]
+        ]);
 
 		$this->crud->addField([
 			'name' => 'bonus_video_duration',
 			'label' => 'Bonus Wistia Video Duration',
 			'wrapperAttributes' => [
-				'class' => 'form-group col-md-6'
+				'class' => 'form-group col-md-2'
 			]
 		]);
 

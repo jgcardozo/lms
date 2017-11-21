@@ -1,7 +1,7 @@
-<div class="session-single__video" data-session="{{ $session->id }}" data-video="{{ $session->video_url }}" data-progress="{{ $videoprogress }}" data-route="{{ route('session.videoprogress', $session->id) }}">
+<div class="session-single__video" data-videotype="{{ $session->video_type->id }}" data-session="{{ $session->id }}" data-video="{{ $session->video_url }}" data-progress="{{ $videoprogress }}" data-route="{{ route('session.videoprogress', $session->id) }}">
      <div class="wistia_responsive_padding">
          <div class="wistia_responsive_wrapper">
-             <div class="wistia_embed wistia_async_{{ $session->video_url }}"></div>
+             @include('lms.components.video', ['model' => $session])
          </div>
      </div>
 </div>

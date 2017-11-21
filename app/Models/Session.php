@@ -31,7 +31,7 @@ class Session extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'
+		'title', 'slug', 'description', 'video_url', 'video_type_id', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'
 	];
 
 	/**
@@ -138,6 +138,11 @@ class Session extends Model
     {
 		return $this->belongsToMany('App\Models\User', 'session_user');
 	}
+
+    public function video_type()
+    {
+        return $this->belongsTo('App\Models\VideoType');
+    }
 
 	public function sluggable()
     {

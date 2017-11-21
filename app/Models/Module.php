@@ -30,7 +30,7 @@ class Module extends Model
 	use SluggableScopeHelpers;
 
 	protected $fillable = [
-		'title', 'slug', 'description', 'video_url', 'course_id', 'lock_date', 'featured_image', 'lesson_group_title'
+		'title', 'slug', 'description', 'video_url', 'video_type_id', 'course_id', 'lock_date', 'featured_image', 'lesson_group_title'
 	];
 
 	/**
@@ -196,6 +196,11 @@ class Module extends Model
 	{
 		return $this->hasMany('App\Models\Lesson')->where('exclude_from_rule', '!=', true);
 	}
+
+    public function video_type()
+    {
+        return $this->belongsTo('App\Models\VideoType');
+    }
 	
 	public function sluggable()
 	{

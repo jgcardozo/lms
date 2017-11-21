@@ -21,7 +21,7 @@ class CoachingCall extends Model
 
     protected $table = 'sessions';
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'learn_more', 'featured_training_coachingcall'];
+	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_type_id', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'learn_more', 'featured_training_coachingcall'];
 
 	/**
 	 * The "booting" method of the model.
@@ -78,6 +78,11 @@ class CoachingCall extends Model
 	{
 		return $this->belongsToMany('App\Models\User', 'session_user');
 	}
+
+    public function video_type()
+    {
+        return $this->belongsTo('App\Models\VideoType');
+    }
 
 	public function sluggable()
 	{

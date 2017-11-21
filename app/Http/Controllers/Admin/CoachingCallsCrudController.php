@@ -75,11 +75,22 @@ class CoachingCallsCrudController extends CrudController
 			'type' => 'wysiwyg'
 		]);
 
+        $this->crud->addField([
+            'label' => 'Video Type:',
+            'type' => 'select',
+            'name' => 'video_type_id',
+            'attribute' => 'title',
+            'model' => 'App\Models\VideoType',
+            'wrapperAttributes' => [
+                'class' => 'form-group col-md-2'
+            ]
+    ]);
+
 		$this->crud->addField([
 			'name' => 'video_url',
 			'label' => 'Wistia Video ID',
 			'wrapperAttributes' => [
-				'class' => 'form-group col-md-6'
+				'class' => 'form-group col-md-4'
 			]
 		]);
 

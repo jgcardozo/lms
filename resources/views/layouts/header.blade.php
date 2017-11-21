@@ -51,7 +51,6 @@
                                 @if($progress_items->facebook_group_id && !Auth::user()->hasTag($progress_items->cancel_tag))
                                     <li class="grid--flex"><a class="grid--flex flex--align-center js-fb-group" href="{{ $progress_items->facebook_group_id }}" target="_blank"><i class="icon--facebook"></i> Facebook Group</a></li>
                                 @endif
-                                    <li class="grid--flex"><a href="https://learn.askmethod.com/kickask-challenge/" target="_blank" class="grid--flex flex--align-center">#Kick<strong>ASK</strong>&nbsp;Challenge</a></li>
                             @endif
                             </ul>
                         </div>

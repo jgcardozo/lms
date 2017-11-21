@@ -25,7 +25,7 @@
                     <div class="single-header-video">
                          <div class="wistia_responsive_padding">
                              <div class="wistia_responsive_wrapper">
-                                 <div class="wistia_embed wistia_async_{{ $course->video_url }}"></div>
+                                 @include('lms.components.video', ['model' => $course])
                              </div>
                          </div>
                     </div>

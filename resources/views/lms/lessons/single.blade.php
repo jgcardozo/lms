@@ -31,7 +31,7 @@
                     <div class="single-header-video">
                          <div class="wistia_responsive_padding">
                              <div class="wistia_responsive_wrapper">
-                                 <div class="wistia_embed wistia_async_{{ $lesson->video_url }}"></div>
+                                 @include('lms.components.video', ['model' => $lesson])
                              </div>
                          </div>
                     </div>
@@ -104,7 +104,7 @@
                                 <div class="lesson-sessions__item--bonus-video">
                                     <div class="wistia_responsive_padding">
                                         <div class="wistia_responsive_wrapper">
-                                            <div class="wistia_embed wistia_async_{{ $lesson->bonus_video_url }}"></div>
+                                            @include('lms.components.video', ['video_url' => $lesson->bonus_video_url, 'video_type' => $lesson->bonus_video_type->id])
                                         </div>
                                     </div>
                                 </div>

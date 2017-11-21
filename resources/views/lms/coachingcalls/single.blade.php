@@ -40,7 +40,7 @@
                     <div class="single-header-video">
                         <div class="wistia_responsive_padding">
                             <div class="wistia_responsive_wrapper">
-                                <div class="wistia_embed wistia_async_{{ $course->featured_coachingcall->video_url }}"></div>
+                                @include('lms.components.video', ['model' => $course->featured_coachingcall])
                             </div>
                         </div>
                     </div>
