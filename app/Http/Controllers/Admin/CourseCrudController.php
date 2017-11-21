@@ -201,19 +201,19 @@ class CourseCrudController extends CrudController
 			'name' => 'billing_is_products'
 		 ]);
 
-		$this->crud->addField([
-            'name' => 'must_watch',
-            'label' => 'Turn off mandatory watching(80%) of the videos.',
+        $this->crud->addField([
+            'name' => 'complete_feature',
+            'label' => "Turn on the \"mark as complete\" video functionality.<br>Checking this box will allow users to mark videos as completed and track their progress but it will NOT affect any future videos (i.e. they can watch them in non-linear way with all videos being unlocked)",
             'type' => 'checkbox'
         ]);
 
         $this->crud->addField([
-            'name' => 'complete_feature',
-            'label' => 'Turn complete video feature on. This feature can\'t be turned off unti "mandatory watching" is on.',
+            'name' => 'must_watch',
+            'label' => 'Turn on the "watch 80% of video" requirement.<br> This will show videos in linear way, users must watch at least 80% of the video in order to mark the video as completed and complete the whole lesson. A perfect example of this is the ASK Masterclass course. Check this box if you want to have the same functionality as on the masterclass.<br><strong>Note</strong>: If you check this option, the option above MUST be checked too.',
             'type' => 'checkbox'
         ]);
 
-		/**
+        /**
 		 * Add CRUD action button
 		 */
 		$this->crud->addButton('line', 'view_modules', 'model_function', 'view_modules_button', 'end');
