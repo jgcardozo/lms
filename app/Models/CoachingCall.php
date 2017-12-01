@@ -21,7 +21,7 @@ class CoachingCall extends Model
 
     protected $table = 'sessions';
 
-	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_type_id', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'learn_more', 'featured_training_coachingcall'];
+	protected $fillable = ['title', 'slug', 'description', 'video_url', 'video_type_id', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'learn_more', 'featured_training_coachingcall', 'top_coachingcall'];
 
 	/**
 	 * The "booting" method of the model.
@@ -97,6 +97,17 @@ class CoachingCall extends Model
 	{
 		return 'slug';
 	}
+
+    /**
+     * Scope a query to only include top coaching calls.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeTop($query)
+    {
+        return $query->where('top_coachingcall', '=', 1);
+    }
 
 	/*
 	|--------------------------------------------------------------------------

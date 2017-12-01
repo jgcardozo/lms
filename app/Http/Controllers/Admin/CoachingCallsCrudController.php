@@ -151,6 +151,12 @@ class CoachingCallsCrudController extends CrudController
 			'type' => 'checkbox'
 		]);
 
+        $this->crud->addField([
+            'name' => 'top_coachingcall',
+            'label' => 'Use this coaching call as top one.',
+            'type' => 'checkbox'
+        ]);
+
 		$this->crud->addField([
 			'name' => 'type',
 			'type' => 'hidden',
