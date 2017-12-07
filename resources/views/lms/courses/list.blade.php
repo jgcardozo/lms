@@ -44,7 +44,7 @@
 			        </div>
 			    @endforeach
 
-				@if(!empty($bonuses))
+				@if(!empty($bonuses) && is_role_admin())
 					<div class="courseblock" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
 						<div class="courseblock__overlay"></div>
 
