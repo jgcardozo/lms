@@ -3,7 +3,9 @@
 namespace App\Http\ViewComposers;
 
 use Auth;
+use App\Models\User;
 use App\Models\Course;
+use App\Models\Bonus;
 use Illuminate\View\View;
 
 class HeaderComposer
@@ -44,6 +46,20 @@ class HeaderComposer
 			$courses = Course::get();
 		}
 
-		$view->with('notifications', $notifications)->with('progress_items', $lms_items)->with('courses', $courses);
+		$view->with('notifications', $notifications)->with('progress_items', $lms_items)->with('courses', $courses)->with('bonuses', $this->getBonuses($user));
 	}
+
+	private function getBonuses(User $user)
+    {
+        if(!$user)
+        {
+            return [];
+        }
+
+        $userTags = $user->is_tags->pluck('id')->toArray();
+
+        return Bonus::whereHas('lock_tags', function($query) use($userTags) {
+            $query->whereIn('is_lockables.tag_id', $userTags);
+        })->get();
+    }
 }

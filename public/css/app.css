@@ -100,6 +100,7 @@ sub {
 }
 
 img {
+  max-width: 100%;
   border: 0;
 }
 
@@ -4656,4 +4657,25 @@ p {
   color: #928780;
   font-size: 1.3rem;
   text-align: center;
+}
+
+.button {
+  display: inline-block;
+  color: #ffffff;
+  background: #62d262;
+  border-radius: 0.3rem;
+  border: 0;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 0 auto;
+  width: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  height: 4rem;
+  line-height: 4rem;
+}
+
+.button:hover {
+  color: #ffffff;
 }

@@ -39,9 +39,13 @@ class InfusionsoftAccess
 			$slug = $parameters['lesson'];
 			$model = \App\Models\Lesson::findBySlugOrFail($slug);
 		}elseif(array_key_exists('session', $parameters))
-		{
-			$slug = $parameters['session'];
-			$model = \App\Models\Session::findBySlugOrFail($slug);
+        {
+            $slug = $parameters['session'];
+            $model = \App\Models\Session::findBySlugOrFail($slug);
+        }elseif(array_key_exists('bonus', $parameters))
+        {
+            $slug = $parameters['bonus'];
+            $model = \App\Models\Bonus::findBySlugOrFail($slug);
 		}else{
 			return $result;
 		}

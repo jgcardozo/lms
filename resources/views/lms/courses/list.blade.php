@@ -43,6 +43,22 @@
 			        	</div>			            
 			        </div>
 			    @endforeach
+
+				@if(!empty($bonuses))
+					<div class="courseblock" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
+						<div class="courseblock__overlay"></div>
+
+						<div class="courseblock__content">
+							<div class="courseblock__logo"></div>
+
+							<h2 class="courseblock__title ucase">Bonus</h2>
+
+							<p>Lorem ipsum dolor sit amet, consectetur adipis.</p>
+
+							<a href="{{ route('bonus') }}" class="courseblock__link">Access bonus</a>
+						</div>
+					</div>
+				@endif
 		    </section>
 	    </main>
 	@endif

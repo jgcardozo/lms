@@ -43,11 +43,21 @@ Route::get('/', [
 	'uses' => 'HomeController@index'
 ]);
 
+Route::get('bonus', [
+    'as' => 'bonus',
+    'uses' => 'BonusController@index'
+]);
+
 Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
 	Route::get('course/{course}', [
 		'as' => 'single.course',
 		'uses' => 'CourseController@index'
 	]);
+
+	Route::get('bonus/{bonus}', [
+	    'as' => 'single.bonus',
+        'uses' => 'BonusController@show'
+    ]);
 
 	// Check If course survey is finished
 	Route::group(['middleware' => ['survey']], function() {
@@ -276,6 +286,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 	CRUD::resource('user', 'Admin\UserCrudController');
 	CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
 	CRUD::resource('cohort', 'Admin\CohortCrudController');
+	CRUD::resource('bonus', 'Admin\BonusCrudController');
 
 	Route::get('/', [
 		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'

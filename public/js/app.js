@@ -12292,7 +12292,7 @@ $(document).ready(function () {
 
             if (res.lesson_complete) {
                 dataLayer.push({
-                    'event': 'completed',
+                    'event': 'completedLesson',
                     'module': res.module.title,
                     'lesson': res.lesson.title,
                     'course': res.course.title
@@ -12301,7 +12301,7 @@ $(document).ready(function () {
 
             if (res.module_complete) {
                 dataLayer.push({
-                    'event': 'completed',
+                    'event': 'completedModule',
                     'module': res.module.title,
                     'course': res.course.title
                 });
@@ -12309,7 +12309,7 @@ $(document).ready(function () {
 
             if (res.course_complete) {
                 dataLayer.push({
-                    'event': 'completed',
+                    'event': 'completedCourse',
                     'course': res.course.title
                 });
             }
