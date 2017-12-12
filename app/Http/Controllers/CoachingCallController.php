@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\CoachingCall;
+use App\Scopes\CoachingCallUserScope;
 use Illuminate\Http\Request;
+use App\Scopes\SessionTypeScope;
 
 class CoachingCallController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +21,17 @@ class CoachingCallController extends Controller
         $course = Course::findBySlugOrFail($slug);
         $coaching_calls = $course->coachingcall;
 
-        return view('lms.coachingcalls.single')->with(['coaching_calls' => $coaching_calls])->with(['course' => $course]);
+        /** @var Course $course */
+        $top_coaching_calls = $course->coachingcall()
+                                     ->withoutGlobalScopes()
+                                     ->get();
+
+        $top_coaching_calls = $top_coaching_calls->where('top_coachingcall', '=', 1);
+
+        return view('lms.coachingcalls.single')
+            ->with(['coaching_calls' => $coaching_calls])
+            ->with(['top_coaching_calls' => $top_coaching_calls])
+            ->with(['course' => $course]);
     }
 
     /**
@@ -34,7 +47,8 @@ class CoachingCallController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -45,12 +59,13 @@ class CoachingCallController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CoachingCall  $coachingCall
+     * @param  \App\Models\CoachingCall $coachingCall
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($course, $id)
     {
-        $coaching_call = CoachingCall::findOrFail($id);
+        $coaching_call = CoachingCall::withoutGlobalScope(CoachingCallUserScope::class)->findOrFail($id);
 
         return view('lms.coachingcalls.session-popup')->with('coaching_call', $coaching_call);
     }
@@ -58,7 +73,8 @@ class CoachingCallController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CoachingCall  $coachingCall
+     * @param  \App\Models\CoachingCall $coachingCall
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(CoachingCall $coachingCall)
@@ -69,8 +85,9 @@ class CoachingCallController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CoachingCall  $coachingCall
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\CoachingCall $coachingCall
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CoachingCall $coachingCall)
@@ -81,7 +98,8 @@ class CoachingCallController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CoachingCall  $coachingCall
+     * @param  \App\Models\CoachingCall $coachingCall
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(CoachingCall $coachingCall)

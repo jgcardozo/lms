@@ -299,6 +299,9 @@ class Course extends Model
 		return $this->hasMany('App\Models\Session', 'starter_course_id');
 	}
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
 	public function coachingcall()
     {
 		return $this->hasMany('App\Models\CoachingCall')->where('featured_training_coachingcall', false)->orWhere('featured_training_coachingcall', null);

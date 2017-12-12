@@ -49,24 +49,15 @@
         </div>
 
         <div class="grid grid--w950">
-            @if($coaching_calls->where('top_coachingcall', '=', true)->count())
+            @if($top_coaching_calls->count())
                 <div class="lesson-sessions">
-                <h2 class="lesson-sessions__title">{{ $coaching_calls->where('top_coachingcall', '=', true)->count() }}x "BEST OF THE BEST" Q&A CALLS</h2>
+                <h2 class="lesson-sessions__title">{{ $top_coaching_calls->count() }}x "BEST OF THE BEST" Q&A CALLS</h2>
 
                 <div class="lesson-sessions__list">
-                    @foreach($coaching_calls->where('top_coachingcall', '=', true) as $key => $coaching_call)
+                    @foreach($top_coaching_calls as $key => $coaching_call)
                         <div id="session-{{ $coaching_call->id }}" class="lesson-sessions__item grid--flex flex--space-between">
-                            @if($coaching_call->is_date_locked)
-                                <div class="lesson-sessions__item--locked-overlay"></div>
-                            @endif
                             <div class="lesson-sessions__video grid--flex" @if($coaching_call->featured_image) style="background-image: url({{ $coaching_call->featured_image_url }});" @endif>
-                                @if($coaching_call->is_date_locked)
-                                    <div class="course-progress grid--flex flex--align-center flex--just-center">
-                                        <span class="course-progress__bar course-progress__bar--locked"></span>
-                                    </div>
-                                @else
-                                    <a href="#" data-href="{{ route('coachingcall.show', [$course->slug, $coaching_call->id]) }}" class="block__link js-open-session"></a>
-                                @endif
+                                <a href="#" data-href="{{ route('coachingcall.show', [$course->slug, $coaching_call->id]) }}" class="block__link js-open-session"></a>
                             </div>
 
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
@@ -77,15 +68,7 @@
                                 </div>
 
                                 <div class="lesson-sessions__content--right">
-                                    @if($coaching_call->is_completed)
-                                        <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
-                                    @elseif($coaching_call->is_date_locked)
-                                        <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($coaching_call->lock_date)) }}">
-                                            Unlocks {{ date('d-m-Y', strtotime($coaching_call->lock_date)) }}
-                                        </div>
-                                    @else
-                                        <div style="{{ $coaching_call->video_progress >= 80 ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('coachingcall.completed', [$course->slug, $coaching_call->id]) }}">Mark as completed <span class="course-progress__bar"></span></div>
-                                    @endif
+
                                 </div>
                             </div>
                         </div>
