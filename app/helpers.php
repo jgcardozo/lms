@@ -234,8 +234,7 @@ if ( ! function_exists('timezoneList'))
         }
 
         // Sort the array by offset,identifier ascending
-        usort($tempTimezones, function ($a, $b)
-        {
+        usort($tempTimezones, function ($a, $b) {
             return ($a['offset'] == $b['offset'])
                 ? strcmp($a['identifier'], $b['identifier'])
                 : $a['offset'] - $b['offset'];
@@ -325,37 +324,37 @@ if ( ! function_exists('getBasicLessonsStats'))
 {
     function getBasicLessonsStats()
     {
-        $users = \App\Models\User::get();
-        $lessons = \App\Models\Lesson::get();
-
         // 2880 Minutes - 2 days
-        $lessonsFinished = \Cache::remember('lms.stats', 2880, function () use ($users, $lessons)
-        {
-            $_lessonsFinished = [];
+        return \Cache::remember('lms.stats', 2880, function () {
+            $totalUsers = \App\Models\User::count();
+
+            $lessons = \App\Models\Lesson::select(['id'])
+                                         ->with('sessions:id,lesson_id')
+                                         ->get();
+
+            $result = [];
             foreach ($lessons as $lesson)
             {
-                $_lessonsFinished[$lesson->id]['finished'] = 0;
-                $_lessonsFinished[$lesson->id]['unfinished'] = 0;
+                $sessionIds = $lesson->sessions->pluck('id')
+                                               ->toArray();
 
-                foreach ($users as $user)
-                {
-                    if ( ! $lesson->getIsCompletedAttribute($user->id))
-                    {
-                        $_lessonsFinished[$lesson->id]['unfinished'] = $_lessonsFinished[$lesson->id]['unfinished'] + 1;
-                        continue;
-                    }
+                $rawQuery = \DB::table('session_user')
+                               ->whereIn('session_id', $sessionIds)
+                               ->get();
 
-                    $_lessonsFinished[$lesson->id]['finished'] = $_lessonsFinished[$lesson->id]['finished'] + 1;
-                }
+                $results = $rawQuery->groupBy('user_id')
+                                    ->filter(function ($item) use ($sessionIds) {
+                                        return count($item) == count($sessionIds);
+                                    });
 
-                $_lessonsFinished[$lesson->id]['total'] = $_lessonsFinished[$lesson->id]['finished'] + $_lessonsFinished[$lesson->id]['unfinished'];
-                $_lessonsFinished[$lesson->id]['percent'] = round(($_lessonsFinished[$lesson->id]['finished'] / $_lessonsFinished[$lesson->id]['total']) * 100, 2);
+                $result[$lesson->id]['finished'] = count($results);
+                $result[$lesson->id]['unfinished'] = $totalUsers - count($results);
+                $result[$lesson->id]['total'] = $result[$lesson->id]['finished'] + $result[$lesson->id]['unfinished'];
+                $result[$lesson->id]['percent'] = round(($result[$lesson->id]['finished'] / $result[$lesson->id]['total']) * 100, 2);
             }
 
-            return $_lessonsFinished;
+            return $result;
         });
-
-        return $lessonsFinished;
     }
 }
 
