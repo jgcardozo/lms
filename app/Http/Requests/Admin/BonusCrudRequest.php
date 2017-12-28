@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 class BonusCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,10 +23,12 @@ class BonusCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'video_url' => 'required|max:255',
-            'featured_image' => 'required|mimes:jpeg,bmp,png'
+            'title'          => 'required|max:255',
+            'description'    => 'required',
+            'video_url'      => 'required|max:255',
+            'video_type_id'  => 'required',
+            'featured_image' => 'required',
+            'content'        => 'required'
         ];
     }
 }
