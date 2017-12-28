@@ -17,7 +17,7 @@ class CreateBonusesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
-            $table->string('description');
+            $table->longText('description');
             $table->integer('lft')->default(0);
             $table->string('video_url');
             $table->integer('video_type_id')->unsigned()->default(1);
