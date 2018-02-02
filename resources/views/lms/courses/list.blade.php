@@ -44,7 +44,7 @@
 			        </div>
 			    @endforeach
 
-				@if(!empty($bonuses) && is_role_admin())
+				@if(!empty($bonuses))
 					<div class="courseblock" @if($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
 						<div class="courseblock__overlay"></div>
 
@@ -53,7 +53,7 @@
 
 							<h2 class="courseblock__title ucase">Bonus</h2>
 
-							<p>Lorem ipsum dolor sit amet, consectetur adipis.</p>
+							<p>Find all of your bonus trainings here</p>
 
 							<a href="{{ route('bonus') }}" class="courseblock__link">Access bonus</a>
 						</div>
