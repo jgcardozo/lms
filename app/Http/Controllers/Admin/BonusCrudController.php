@@ -87,6 +87,14 @@ class BonusCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => 'Bonus header image',
+            'name' => 'header_image',
+            'type' => 'upload',
+            'upload' => true,
+            'disk' => 's3'
+        ]);
+
+        $this->crud->addField([
             'name' => 'content',
             'label' => 'Content',
             'type' => 'wysiwyg'

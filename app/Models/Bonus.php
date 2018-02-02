@@ -18,7 +18,7 @@ class Bonus extends Model
     use SluggableScopeHelpers;
 
     protected $fillable = [
-        'title', 'slug', 'description', 'content', 'video_url', 'video_type_id', 'featured_image'
+        'title', 'slug', 'description', 'content', 'video_url', 'video_type_id', 'featured_image', 'header_image'
     ];
 
     public function sluggable()
@@ -60,12 +60,40 @@ class Bonus extends Model
         $this->attributes[$attribute_name] = $destination_path . $filename;
     }
 
+    public function setHeaderImageAttribute($value)
+    {
+        $attribute_name = 'header_image';
+        $disk = 's3';
+        $destination_path = 'bonuses/header';
+
+        $request = \Request::instance();
+        $file = $request->file($attribute_name);
+        $filename = date('mdYHis') . '_' . $file->getClientOriginalName();
+
+        // Make the image
+        $image = \Image::make($file);
+
+        // Store the image on disk
+        \Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
+
+        // Save the path to the database
+        $this->attributes[$attribute_name] = $destination_path . $filename;
+    }
+
     /**
      * Get image from S3
      */
     public function getFeaturedImageUrlAttribute()
     {
         return !empty($this->featured_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->featured_image) : '';
+    }
+
+    /**
+     * Get image from S3
+     */
+    public function getHeaderImageUrlAttribute()
+    {
+        return !empty($this->header_image) ? 'https://s3-us-west-1.amazonaws.com/ask-lms/' . rawurlencode($this->header_image) : '';
     }
 
     public function video_type()

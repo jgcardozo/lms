@@ -8,7 +8,7 @@
 
 @section('content')
     <main>
-        <div class="grid grid--full course-single" @if($bonus->featured_image) style="background-image: url({{ $bonus->featured_image_url }});" @endif>
+        <div class="grid grid--full course-single" @if($bonus->header_image) style="background-image: url({{ $bonus->header_image_url }});" @endif>
             <div class="course-single__overlay"></div>
 
             <div class="grid grid--w950 course-single__content">

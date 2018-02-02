@@ -926,6 +926,11 @@ p {
   flex-direction: column;
 }
 
+.flex--wrap {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
 /**
  * Header
  */
@@ -1899,6 +1904,10 @@ p {
   flex-basis: 33.3334%;
   max-width: 33.3334%;
   padding: 0 0.5rem;
+}
+
+.module--push-b {
+  margin-bottom: 2rem;
 }
 
 @media only screen and (max-width: 640px) {

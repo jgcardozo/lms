@@ -25,7 +25,7 @@ class BonusCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
         return [
             'title'          => 'required|max:255',
             'description'    => 'required',
-            'video_url'      => 'required|max:255',
+            'video_url'      => 'max:255',
             'video_type_id'  => 'required',
             'content'        => 'required'
         ];

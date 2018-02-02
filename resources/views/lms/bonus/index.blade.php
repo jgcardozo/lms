@@ -37,9 +37,9 @@
             <div class="course-modules">
                 <h2 class="course-modules__title">Lorem ipsum sit amet</h2>
 
-                <div class="grid--flex course-modules__list">
+                <div class="grid--flex course-modules__list flex--wrap">
                     @foreach($bonuses as $bonus)
-                        <div id="bonus-{{ $bonus->id }}" class="module grid--flex">
+                        <div id="bonus-{{ $bonus->id }}" class="module module--push-b grid--flex">
                             <div class="module__component grid--flex flex--column">
                                 <div class="module__featured-image" @if($bonus->featured_image) style="background-image: url({{ $bonus->featured_image_url }});" @endif>
                                 </div>
