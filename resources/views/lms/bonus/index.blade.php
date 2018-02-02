@@ -14,28 +14,28 @@
             <div class="grid grid--w950 course-single__content">
                 <div class="course-single__content-wrap grid--flex flex--space-between">
                     <div class="single-header-block">
-                        <h2 class="single-header-block__title ucase">Lorem ipsum title</h2>
-                        <p class="single-header-block__content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda doloribus hic ipsa ipsum laboriosam nesciunt quae quia quos saepe, tenetur.</p>
+                        <h2 class="single-header-block__title ucase">Bonus Area</h2>
+                        <!-- <p class="single-header-block__content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda doloribus hic ipsa ipsum laboriosam nesciunt quae quia quos saepe, tenetur.</p>
                         <div class="single-header-block__separator"></div>
                         <div class="single-header-block__content single-header-block__content--small">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem earum exercitationem facilis non repudiandae. Architecto beatae.
-                        </div>                        
+                        </div>                         -->
                     </div>
 
-                    <div class="single-header-video">
+                    <!-- <div class="single-header-video">
                          <div class="wistia_responsive_padding">
                              <div class="wistia_responsive_wrapper">
                                  <div class="wistia_embed wistia_async_teyda95d52"></div>
                              </div>
                          </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
 
         <div class="grid grid--w950">
             <div class="course-modules">
-                <h2 class="course-modules__title">Lorem ipsum sit amet</h2>
+                <!-- <h2 class="course-modules__title">Lorem ipsum sit amet</h2> -->
 
                 <div class="grid--flex course-modules__list flex--wrap">
                     @foreach($bonuses as $bonus)

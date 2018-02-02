@@ -34,6 +34,7 @@
         </div>
 
         <div class="grid grid--w950 course-reminder">
+            @if($course->must_watch)
             <div class="course-reminder__block">
                 <div class="course-reminder__block-wrap grid--flex flex--space-between">
                     @if($starterSeen === false)
@@ -85,6 +86,7 @@
                     @endif
                 </div>
             </div>
+            @endif
         </div>
 
         <div class="grid grid--w950">
