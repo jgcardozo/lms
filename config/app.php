@@ -202,7 +202,12 @@ return [
 		 * Spatie activity log & permissions
 		 */
 		Spatie\Permission\PermissionServiceProvider::class,
-		Spatie\Activitylog\ActivitylogServiceProvider::class,
+        Spatie\Activitylog\ActivitylogServiceProvider::class,
+        
+        /**
+         * Rollbar Error Tracking
+         */
+        Rollbar\Laravel\RollbarServiceProvider::class,
     ],
 
     /*
