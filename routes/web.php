@@ -11,7 +11,6 @@
 |
 */
 
-
 /**
  * ROUTE FOR TESTING
  */
@@ -39,156 +38,155 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 |--------------------------------------------------------------------------
 */
 Route::get('/', [
-	'as' => 'home',
-	'uses' => 'HomeController@index'
+    'as' => 'home',
+    'uses' => 'HomeController@index'
 ]);
 
-Route::group(['middleware' => ['infusionsoft_access', 'auth']], function() {
-	Route::get('course/{course}', [
-		'as' => 'single.course',
-		'uses' => 'CourseController@index'
-	]);
+Route::group(['middleware' => ['infusionsoft_access', 'auth']], function () {
+    Route::get('course/{course}', [
+        'as' => 'single.course',
+        'uses' => 'CourseController@index'
+    ]);
 
-	// Check If course survey is finished
-	Route::group(['middleware' => ['survey']], function() {
-		Route::get('course/{course}/intro', [
-			'as' => 'single.course.starter',
-			'uses' => 'CourseController@starter_videos'
-		]);
+    // Check If course survey is finished
+    Route::group(['middleware' => ['survey']], function () {
+        Route::get('course/{course}/intro', [
+            'as' => 'single.course.starter',
+            'uses' => 'CourseController@starter_videos'
+        ]);
 
-		Route::get('course/{course}/coaching-calls', [
-			'as' => 'single.course.coaching-call',
-			'uses' => 'CoachingCallController@index'
-		]);
+        Route::get('course/{course}/coaching-calls', [
+            'as' => 'single.course.coaching-call',
+            'uses' => 'CoachingCallController@index'
+        ]);
 
-		Route::get('module/{module}', [
-			'as' => 'single.module',
-			'uses' => 'ModuleController@index'
-		]);
+        Route::get('module/{module}', [
+            'as' => 'single.module',
+            'uses' => 'ModuleController@index'
+        ]);
 
-		Route::get('lesson/{lesson}', [
-			'as' => 'single.lesson',
-			'uses' => 'LessonController@index'
-		]);
+        Route::get('lesson/{lesson}', [
+            'as' => 'single.lesson',
+            'uses' => 'LessonController@index'
+        ]);
 
-		Route::get('lesson/{lesson}/result', [
-			'as' => 'single.lesson.assessment.results',
-			'uses' => 'LessonController@assessmentResult'
-		]);
-	});
+        Route::get('lesson/{lesson}/result', [
+            'as' => 'single.lesson.assessment.results',
+            'uses' => 'LessonController@assessmentResult'
+        ]);
+    });
 
-	Route::get('calendar', [
-		'as' => 'calendar',
-		'uses' => 'EventsController@index'
-	]);
+    Route::get('calendar', [
+        'as' => 'calendar',
+        'uses' => 'EventsController@index'
+    ]);
 
-	Route::get('notifications', [
-		'as' => 'notifications',
-		'uses' => 'UserController@notifications'
-	]);
+    Route::get('notifications', [
+        'as' => 'notifications',
+        'uses' => 'UserController@notifications'
+    ]);
 
-	Route::post('notifications/mark-as-read', [
-		'as' => 'notifications.markAsRead',
-		'uses' => 'UserController@notificationsMarkAsRead'
-	]);
+    Route::post('notifications/mark-as-read', [
+        'as' => 'notifications.markAsRead',
+        'uses' => 'UserController@notificationsMarkAsRead'
+    ]);
 });
 
-Route::group(['middleware' => ['onlyajax', 'auth']], function() {
-	Route::get('session/{session}', [
-		'as' => 'session.show',
-		'uses' => 'SessionController@show'
-	]);
+Route::group(['middleware' => ['onlyajax', 'auth']], function () {
+    Route::get('session/{session}', [
+        'as' => 'session.show',
+        'uses' => 'SessionController@show'
+    ]);
 
-	// Mark session as completed
-	Route::get('session/{session}/completed', [
-		'as' => 'session.completed',
-		'uses' => 'SessionController@complete'
-	]);
+    // Mark session as completed
+    Route::get('session/{session}/completed', [
+        'as' => 'session.completed',
+        'uses' => 'SessionController@complete'
+    ]);
 
-	Route::post('session/{session}/videoprogress', [
-		'as' => 'session.videoprogress',
-		'uses' => 'SessionController@videoprogress'
-	]);
+    Route::post('session/{session}/videoprogress', [
+        'as' => 'session.videoprogress',
+        'uses' => 'SessionController@videoprogress'
+    ]);
 
-	Route::get('course/{course}/coaching-calls/{coachingcall}', [
-		'as' => 'coachingcall.show',
-		'uses' => 'CoachingCallController@show'
-	]);
+    Route::get('course/{course}/coaching-calls/{coachingcall}', [
+        'as' => 'coachingcall.show',
+        'uses' => 'CoachingCallController@show'
+    ]);
 
-	Route::get('course/{course}/coaching-calls/{coachingcall}/completed', [
-		'as' => 'coachingcall.completed',
-		'uses' => 'CoachingCallController@complete'
-	]);
+    Route::get('course/{course}/coaching-calls/{coachingcall}/completed', [
+        'as' => 'coachingcall.completed',
+        'uses' => 'CoachingCallController@complete'
+    ]);
 
-	Route::get('viewalert/{key}', [
-		'as' => 'alert.view',
-		'uses' => 'UserController@viewAlert'
-	]);
+    Route::get('viewalert/{key}', [
+        'as' => 'alert.view',
+        'uses' => 'UserController@viewAlert'
+    ]);
 
-	Route::get('calendar/course', [
-		'as' => 'calendar.filter.course',
-		'uses' => 'EventsController@filterCourse'
-	]);
+    Route::get('calendar/course', [
+        'as' => 'calendar.filter.course',
+        'uses' => 'EventsController@filterCourse'
+    ]);
 
-	Route::get('calendar/date', [
-		'as' => 'calendar.filter.date',
-		'uses' => 'EventsController@filterDate'
-	]);
+    Route::get('calendar/date', [
+        'as' => 'calendar.filter.date',
+        'uses' => 'EventsController@filterDate'
+    ]);
 });
 
 Route::post('lesson/{lesson}/post-to-facebook', [
-	'as' => 'lesson.postToFacebook',
-	'uses' => 'LessonController@postToFb',
-	'middleware' => 'auth'
+    'as' => 'lesson.postToFacebook',
+    'uses' => 'LessonController@postToFb',
+    'middleware' => 'auth'
 ]);
 
 Route::post('lesson/{lesson}/answer-question', [
-	'as' => 'lesson.answerQuestion',
-	'uses' => 'LessonController@answerQuestion',
-	'middleware' => 'auth'
+    'as' => 'lesson.answerQuestion',
+    'uses' => 'LessonController@answerQuestion',
+    'middleware' => 'auth'
 ]);
 
 Route::post('lesson/assessment-check', [
-	'as' => 'single.lesson.assessment.check',
-	'uses' => 'LessonController@assessmentCheck'
+    'as' => 'single.lesson.assessment.check',
+    'uses' => 'LessonController@assessmentCheck'
 ]);
 
 Route::post('lesson/{lesson}/testPopUpHtml', [
-	'as' => 'lesson.testPopup',
-	'uses' => 'LessonController@testPopup'
+    'as' => 'lesson.testPopup',
+    'uses' => 'LessonController@testPopup'
 ]);
 
 Route::post('class-marker/webhook/result', 'LessonController@classMarkerResults');
 
 Route::get('calendar/{event}', [
-	'as' => 'event.show',
-	'uses' => 'EventsController@show',
-	'middleware' => ['auth', 'onlyajax']
+    'as' => 'event.show',
+    'uses' => 'EventsController@show',
+    'middleware' => ['auth', 'onlyajax']
 ]);
 
 Route::get('lesson-question/{question}/viewResultsVideoPopup', [
-	'as' => 'single.lesson.viewResultsVideoPopup',
-	'uses' => 'LessonController@viewResultsVideoPopup'
+    'as' => 'single.lesson.viewResultsVideoPopup',
+    'uses' => 'LessonController@viewResultsVideoPopup'
 ]);
 
 /**
  * Survey forms
  */
 Route::post('survey/store', [
-	'as' => 'survey.store',
-	'uses' => 'SurveyController@storeSurvey'
+    'as' => 'survey.store',
+    'uses' => 'SurveyController@storeSurvey'
 ]);
 
 Route::delete('survey/{id}/delete', [
-	'as' => 'survey.delete',
-	'uses' => 'SurveyController@deleteSurvey'
+    'as' => 'survey.delete',
+    'uses' => 'SurveyController@deleteSurvey'
 ]);
 
 /**
  * User routes
  */
-Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
-{
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('profile', [
         'as' => 'user.profile',
         'uses' => 'UserController@profile'
@@ -207,16 +205,16 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function()
         'uses' => 'UserController@settingsStore'
     ]);
 
-	Route::get('billing', [
-		'as' => 'user.billing',
-		'uses' => 'UserController@billing'
-	]);
+    Route::get('billing', [
+        'as' => 'user.billing',
+        'uses' => 'UserController@billing'
+    ]);
 
-	Route::post('billing/changeccard/{invoice_id}', [
-		'as' => 'user.billing.changecard',
-		'uses' => 'UserController@changeCreditCard',
-		'middleware' => 'onlyajax'
-	]);
+    Route::post('billing/changeccard/{invoice_id}', [
+        'as' => 'user.billing.changecard',
+        'uses' => 'UserController@changeCreditCard',
+        'middleware' => 'onlyajax'
+    ]);
 });
 
 Route::post('user/register', 'UserController@register');
@@ -224,13 +222,13 @@ Route::post('user/register', 'UserController@register');
 Route::post('user/sync', 'UserController@syncUserTags');
 
 Route::get('user/register/activate/{uuid}', [
-	'as' => 'user.activate.show',
-	'uses' => 'UserController@activateShow'
+    'as' => 'user.activate.show',
+    'uses' => 'UserController@activateShow'
 ]);
 
 Route::post('user/register/activate/{uuid}', [
-	'as' => 'user.activate.do',
-	'uses' => 'UserController@activateIt'
+    'as' => 'user.activate.do',
+    'uses' => 'UserController@activateIt'
 ]);
 
 /*
@@ -239,8 +237,8 @@ Route::post('user/register/activate/{uuid}', [
 |--------------------------------------------------------------------------
 */
 Route::get('/auto-login', [
-	'uses' => 'UserController@autologin',
-	'as' => 'user.autologin'
+    'uses' => 'UserController@autologin',
+    'as' => 'user.autologin'
 ]);
 
 /*
@@ -249,13 +247,13 @@ Route::get('/auto-login', [
 |--------------------------------------------------------------------------
 */
 Route::get('support', [
-	'as' => 'page.support',
-	'uses' => 'PageController@support'
+    'as' => 'page.support',
+    'uses' => 'PageController@support'
 ]);
 
 Route::get('contact', [
-	'as' => 'page.contact',
-	'uses' => 'PageController@contact'
+    'as' => 'page.contact',
+    'uses' => 'PageController@contact'
 ]);
 
 /*
@@ -263,8 +261,7 @@ Route::get('contact', [
 | Backpack admin panel routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']], function()
-{
+Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']], function () {
     CRUD::resource('course', 'Admin\CourseCrudController');
     CRUD::resource('module', 'Admin\ModuleCrudController');
     CRUD::resource('lesson', 'Admin\LessonCrudController');
@@ -273,57 +270,60 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('coachingcall', 'Admin\CoachingCallsCrudController');
     CRUD::resource('training', 'Admin\TrainingCrudController');
     CRUD::resource('event', 'Admin\EventCrudController');
-	CRUD::resource('user', 'Admin\UserCrudController');
-	CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
+    CRUD::resource('user', 'Admin\UserCrudController');
+    CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
 
-	Route::get('/', [
-		'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
-	]);
+    Route::get('/', [
+        'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
+    ]);
 
-	Route::get('dashboard', function()
-	{
-		$courses = \App\Models\Course::get();
+    Route::get('graduation', 'Admin\GraduationReportController@index');
+    Route::get('graduation/fail-test', 'Admin\GraduationReportController@failTest');
+    Route::get('graduation/finished-course', 'Admin\GraduationReportController@finishedCourse');
 
-		$lessonsFinished = getBasicLessonsStats();
+    Route::get('dashboard', function () {
+        $courses = \App\Models\Course::get();
 
-		return view('backpack::dashboard', ['courses' => $courses, 'score' => $lessonsFinished]);
-	});
+        $lessonsFinished = getBasicLessonsStats();
 
-	// Settings
-	Route::group(['prefix' => 'settings'], function() {
-		Route::get('/', [
-			'uses' => 'Admin\SettingsController@index'
-		]);
+        return view('backpack::dashboard', ['courses' => $courses, 'score' => $lessonsFinished]);
+    });
 
-		Route::get('is/callback', [
-			'uses' => 'Admin\SettingsController@InfusionsoftCallback'
-		]);
+    // Settings
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/', [
+            'uses' => 'Admin\SettingsController@index'
+        ]);
 
-		Route::post('/', [
-			'uses' => 'Admin\SettingsController@save'
-		]);
-	});
+        Route::get('is/callback', [
+            'uses' => 'Admin\SettingsController@InfusionsoftCallback'
+        ]);
 
-	Route::get('log', [
-		'uses' => 'Admin\LoglistController@index'
-	]);
+        Route::post('/', [
+            'uses' => 'Admin\SettingsController@save'
+        ]);
+    });
 
-	Route::get('user-logins', [
-		'uses' => 'Admin\UserLoginsController@index'
-	]);
+    Route::get('log', [
+        'uses' => 'Admin\LoglistController@index'
+    ]);
 
-	Route::get('notify', [
-		'uses' => 'Admin\NotifyController@index'
-	]);
+    Route::get('user-logins', [
+        'uses' => 'Admin\UserLoginsController@index'
+    ]);
 
-	Route::post('notify', [
-		'as' => 'notify.send',
-		'uses' => 'Admin\NotifyController@notify'
-	]);
+    Route::get('notify', [
+        'uses' => 'Admin\NotifyController@index'
+    ]);
 
-	Route::get('survey', [
-		'uses' => 'SurveyController@table'
-	]);
+    Route::post('notify', [
+        'as' => 'notify.send',
+        'uses' => 'Admin\NotifyController@notify'
+    ]);
+
+    Route::get('survey', [
+        'uses' => 'SurveyController@table'
+    ]);
 });
 
 Auth::routes();
