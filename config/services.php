@@ -35,6 +35,7 @@ return [
     ],
     'rollbar' => [
         'access_token' => env('ROLLBAR_TOKEN'),
-        'level' => env('ROLLBAR_LEVEL', 'warning'),
+        'level' => env('ROLLBAR_LEVEL', 'critical'),
+        'person_fn' => env('ROLLBAR_PERSON_FUNCTION', 'rollbar_get_current_user'),
     ],
 ];

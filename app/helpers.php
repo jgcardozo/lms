@@ -4,12 +4,10 @@
  *
  * @return boolean
  */
-if ( ! function_exists('changeHeader'))
-{
+if (!function_exists('changeHeader')) {
     function changeHeader()
     {
-        if (Request::is('course/*') || Request::is('module/*') || Request::is('lesson/*'))
-        {
+        if (Request::is('course/*') || Request::is('module/*') || Request::is('lesson/*')) {
             return true;
         }
 
@@ -22,12 +20,10 @@ if ( ! function_exists('changeHeader'))
  *
  * @return boolean
  */
-if ( ! function_exists('is_home'))
-{
+if (!function_exists('is_home')) {
     function is_home()
     {
-        if (Request::is('/'))
-        {
+        if (Request::is('/')) {
             return true;
         }
 
@@ -44,9 +40,8 @@ if ( ! function_exists('is_home'))
  *
  * @return string
  */
-if ( ! function_exists('truncate_string'))
-{
-    function truncate_string($string, $length = 20, $append = "&hellip;")
+if (!function_exists('truncate_string')) {
+    function truncate_string($string, $length = 20, $append = '&hellip;')
     {
         $string = strip_tags(trim($string));
         /*
@@ -68,13 +63,12 @@ if ( ! function_exists('truncate_string'))
 
         return $text;
         */
-        $words = explode(" ", $string);
-        if (count($words) < $length)
-        {
+        $words = explode(' ', $string);
+        if (count($words) < $length) {
             $append = '';
         }
 
-        return implode(" ", array_splice($words, 0, $length)) . $append;
+        return implode(' ', array_splice($words, 0, $length)) . $append;
     }
 }
 
@@ -85,8 +79,7 @@ if ( ! function_exists('truncate_string'))
  *
  * @return string
  */
-if ( ! function_exists('bold_first_word'))
-{
+if (!function_exists('bold_first_word')) {
     function bold_first_word($string)
     {
         $title = preg_split("/\s+/", $string);
@@ -105,12 +98,10 @@ if ( ! function_exists('bold_first_word'))
  *
  * @return string
  */
-if ( ! function_exists('set_active_link'))
-{
+if (!function_exists('set_active_link')) {
     function set_active_link($path, $attr = false)
     {
-        if ($attr)
-        {
+        if ($attr) {
             return Request::is($path . '*') ? ' class=active' : '';
         }
 
@@ -126,8 +117,7 @@ if ( ! function_exists('set_active_link'))
  *
  * @return string
  */
-if ( ! function_exists('human_filesize'))
-{
+if (!function_exists('human_filesize')) {
     function human_filesize($bytes, $decimals = 2)
     {
         $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -142,8 +132,7 @@ if ( ! function_exists('human_filesize'))
  *
  * @return boolean
  */
-if ( ! function_exists('is_role_admin'))
-{
+if (!function_exists('is_role_admin')) {
     function is_role_admin()
     {
         return \Auth::user()
@@ -156,8 +145,7 @@ if ( ! function_exists('is_role_admin'))
  *
  * @return boolean
  */
-if ( ! function_exists('is_role_vip'))
-{
+if (!function_exists('is_role_vip')) {
     function is_role_vip()
     {
         return \Auth::user()
@@ -168,8 +156,7 @@ if ( ! function_exists('is_role_vip'))
 /**
  * Get setting via key
  */
-if ( ! function_exists('lms_get_setting'))
-{
+if (!function_exists('lms_get_setting')) {
     function lms_get_setting($key, $default = null)
     {
         $row = \DB::table('settings')
@@ -177,9 +164,8 @@ if ( ! function_exists('lms_get_setting'))
                   ->pluck('value')
                   ->first();
 
-        if (empty($row))
-        {
-            return ! empty($default) ? $default : false;
+        if (empty($row)) {
+            return !empty($default) ? $default : false;
         }
 
         return $row;
@@ -189,8 +175,7 @@ if ( ! function_exists('lms_get_setting'))
 /**
  * Check ask-masterclass survey
  */
-if ( ! function_exists('survey_check'))
-{
+if (!function_exists('survey_check')) {
     function survey_check(\App\Models\Course $course)
     {
         // Popup before course start
@@ -198,8 +183,7 @@ if ( ! function_exists('survey_check'))
                         ->where('user_id', \Auth::user()->id)
                         ->get()
                         ->toArray();
-        if ($course->slug == 'ask-masterclass' && empty($popupCheck))
-        {
+        if ($course->slug == 'ask-masterclass' && empty($popupCheck)) {
             return true;
         }
 
@@ -212,23 +196,21 @@ if ( ! function_exists('survey_check'))
  *
  * @return array
  */
-if ( ! function_exists('timezoneList'))
-{
+if (!function_exists('timezoneList')) {
     function timezoneList()
     {
         $timezoneIdentifiers = DateTimeZone::listIdentifiers();
         $utcTime = new DateTime('now', new DateTimeZone('UTC'));
 
         $tempTimezones = [];
-        foreach ($timezoneIdentifiers as $timezoneIdentifier)
-        {
+        foreach ($timezoneIdentifiers as $timezoneIdentifier) {
             $currentTimezone = new DateTimeZone($timezoneIdentifier);
 
             $_timezoneIdentifier = explode('/', $timezoneIdentifier);
 
             $tempTimezones[] = [
-                'offset'     => (int)$currentTimezone->getOffset($utcTime),
-                'key'        => $timezoneIdentifier,
+                'offset' => (int)$currentTimezone->getOffset($utcTime),
+                'key' => $timezoneIdentifier,
                 'identifier' => isset($_timezoneIdentifier[1]) ? $_timezoneIdentifier[1] : $_timezoneIdentifier[0]
             ];
         }
@@ -241,8 +223,7 @@ if ( ! function_exists('timezoneList'))
         });
 
         $timezoneList = [];
-        foreach ($tempTimezones as $tz)
-        {
+        foreach ($tempTimezones as $tz) {
             $sign = ($tz['offset'] > 0) ? '+' : '-';
             $offset = gmdate('H:i', abs($tz['offset']));
             $timezoneList[$tz['key']] = '(UTC ' . $sign . $offset . ') ' .
@@ -260,28 +241,25 @@ if ( ! function_exists('timezoneList'))
  * @param int $course_id Course ID
  * @param int $cc_id     Infusionsoft CreditCard IS
  */
-if ( ! function_exists('addISCreditCard'))
-{
+if (!function_exists('addISCreditCard')) {
     function addISCreditCard($user_id, $course_id, $cc_id)
     {
         $qb = DB::table('payment_card_user')
                 ->where('course_id', $course_id)
                 ->where('user_id', $user_id);
         $check = $qb->get();
-        if ( ! $qb->get()
+        if (!$qb->get()
                   ->isEmpty()
-        )
-        {
+        ) {
             $qb->limit(1)
                ->update(['cc_id' => $cc_id]);
-        } else
-        {
+        } else {
             DB::table('payment_card_user')
               ->insert([
                            [
-                               'user_id'   => $user_id,
+                               'user_id' => $user_id,
                                'course_id' => $course_id,
-                               'cc_id'     => $cc_id
+                               'cc_id' => $cc_id
                            ]
                        ]);
         }
@@ -291,8 +269,7 @@ if ( ! function_exists('addISCreditCard'))
 /**
  * Get Mixpanel instance. Easy way.
  */
-if ( ! function_exists('mixPanel'))
-{
+if (!function_exists('mixPanel')) {
     function mixPanel()
     {
         $mp = Mixpanel::getInstance(env('MIXPANEL_TOKEN'));
@@ -300,14 +277,13 @@ if ( ! function_exists('mixPanel'))
         /**
          * Assume that only logged in users can use the LMS
          */
-        if (\Auth::check())
-        {
+        if (\Auth::check()) {
             $user = \Auth::user();
 
             $mp->people->set($user->id, [
                 '$first_name' => $user->profile && $user->profile->first_name ? $user->profile->first_name : '',
-                '$last_name'  => $user->profile && $user->profile->last_name ? $user->profile->last_name : '',
-                '$email'      => $user->email ?: ''
+                '$last_name' => $user->profile && $user->profile->last_name ? $user->profile->last_name : '',
+                '$email' => $user->email ?: ''
             ]);
 
             $mp->identify($user->id);
@@ -320,8 +296,7 @@ if ( ! function_exists('mixPanel'))
 /**
  * Get basic LMS stats.
  */
-if ( ! function_exists('getBasicLessonsStats'))
-{
+if (!function_exists('getBasicLessonsStats')) {
     function getBasicLessonsStats()
     {
         // 2880 Minutes - 2 days
@@ -333,8 +308,7 @@ if ( ! function_exists('getBasicLessonsStats'))
                                          ->get();
 
             $result = [];
-            foreach ($lessons as $lesson)
-            {
+            foreach ($lessons as $lesson) {
                 $sessionIds = $lesson->sessions->pluck('id')
                                                ->toArray();
 
@@ -361,15 +335,13 @@ if ( ! function_exists('getBasicLessonsStats'))
 /**
  * Compile shortcodes
  */
-if ( ! function_exists('compileShortcodes'))
-{
+if (!function_exists('compileShortcodes')) {
     function compileShortcodes($str)
     {
         $str = htmlspecialchars_decode($str);
 
         preg_match('/\[button(.*?)?\](?:(.+?)?\[\/button\])?/', $str, $matches);
-        if ( ! empty($matches))
-        {
+        if (!empty($matches)) {
             $button_text = trim($matches[2]);
             $attributes = trim($matches[1]);
             preg_match_all('/(\w+)=["\'](.*?)["\']/', $attributes, $attributes_matches);
@@ -378,19 +350,16 @@ if ( ! function_exists('compileShortcodes'))
             $attributes_values = $attributes_matches[2];
 
             $urlKey = array_search('url', $attributes_keys);
-            if ($urlKey === false)
-            {
+            if ($urlKey === false) {
                 return str_replace($matches[0], '', $str);
             }
 
             $url = $attributes_values[$urlKey];
-            if ( ! empty($url))
-            {
+            if (!empty($url)) {
                 $button = '<a class="button" href="' . $url . '">' . $button_text . '</a>';
             }
 
-            if ( ! empty($button))
-            {
+            if (!empty($button)) {
                 return str_replace($matches[0], $button, $str);
             }
 
@@ -398,5 +367,24 @@ if ( ! function_exists('compileShortcodes'))
         }
 
         return $str;
+    }
+}
+
+/**
+ * Compile shortcodes
+ */
+if (!function_exists('rollbar_get_current_user')) {
+    function rollbar_get_current_user()
+    {
+        if (auth()->check()) {
+            $user = auth()->user();
+            return [
+                    'id' => $user->id,
+                    'username' => $user->email,
+                    'email' => $user->email
+                ];
+        }
+
+        return null;
     }
 }
