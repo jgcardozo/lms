@@ -91,8 +91,6 @@ class GraduationReportController extends Controller
                 act.subject_id = 97 AND
                 role_users.role_id = 3 AND
                 results.user_id IS NULL
-            GROUP BY
-                users.id
             ORDER BY 
                 users.id ASC;');
     }
