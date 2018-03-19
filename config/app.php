@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -136,7 +135,6 @@ return [
     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -176,34 +174,34 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-		App\Providers\GamificationServiceProvider::class,
-		App\Providers\InfusionsoftFlow::class,
-		App\Providers\ComposerServiceProvider::class,
-		App\Providers\AutoLoginServiceProvider::class,
+        App\Providers\GamificationServiceProvider::class,
+        App\Providers\InfusionsoftFlow::class,
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\AutoLoginServiceProvider::class,
 
         /*
          * Backpack Service Providers...
          */
         Backpack\Base\BaseServiceProvider::class,
         Backpack\CRUD\CrudServiceProvider::class,
-		Backpack\PermissionManager\PermissionManagerServiceProvider::class,
+        Backpack\PermissionManager\PermissionManagerServiceProvider::class,
 
-		/**
-		 * Sluggable
-		 */
-		Cviebrock\EloquentSluggable\ServiceProvider::class,
+        /**
+         * Sluggable
+         */
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
 
         /**
          * Infusionsoft
          */
         Infusionsoft\FrameworkSupport\Laravel\InfusionsoftServiceProvider::class,
 
-		/**
-		 * Spatie activity log & permissions
-		 */
-		Spatie\Permission\PermissionServiceProvider::class,
+        /**
+         * Spatie activity log & permissions
+         */
+        Spatie\Permission\PermissionServiceProvider::class,
         Spatie\Activitylog\ActivitylogServiceProvider::class,
-        
+
         /**
          * Rollbar Error Tracking
          */
@@ -222,7 +220,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -256,10 +253,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-		'Gamification' => App\Gamification\Contracts\Gamification::class,
+        'Gamification' => App\Gamification\Contracts\Gamification::class,
         'Infusionsoft' => Infusionsoft\FrameworkSupport\Laravel\InfusionsoftFacade::class,
-		'InfusionsoftFlow' => App\InfusionsoftFlow\Facades\InfusionsoftFlow::class,
-		'Autologin' => App\Autologin\Facades\AutoLogin::class
+        'InfusionsoftFlow' => App\InfusionsoftFlow\Facades\InfusionsoftFlow::class,
+        'Autologin' => App\Autologin\Facades\AutoLogin::class
     ],
-
 ];
