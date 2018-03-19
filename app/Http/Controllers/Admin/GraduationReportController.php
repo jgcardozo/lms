@@ -54,7 +54,7 @@ class GraduationReportController extends Controller
     {
         return \DB::select('
             SELECT 
-                users.id, users.name, users.email as email, users.contact_id, cohorts.name as cohorts_name, results.score, users.cohort_id
+                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, results.score, users.cohort_id
             FROM 
                 users 
             LEFT JOIN
@@ -67,7 +67,7 @@ class GraduationReportController extends Controller
                 results.passed = 0 AND
                 role_users.role_id = 3
             ORDER BY 
-                id ASC;');
+                users.id ASC;');
     }
 
     protected function finishedCourseUsers()
@@ -92,9 +92,9 @@ class GraduationReportController extends Controller
                 role_users.role_id = 3 AND
                 results.user_id IS NULL
             GROUP BY
-                users.email
+                users.id
             ORDER BY 
-                id ASC;');
+                users.id ASC;');
     }
 
     /*
