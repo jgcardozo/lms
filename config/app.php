@@ -206,10 +206,6 @@ return [
          * Rollbar Error Tracking
          */
         Rollbar\Laravel\RollbarServiceProvider::class,
-        /**
-         * Export to Excel and CSV library
-         */
-        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -257,7 +253,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Gamification' => App\Gamification\Contracts\Gamification::class,
         'Infusionsoft' => Infusionsoft\FrameworkSupport\Laravel\InfusionsoftFacade::class,
         'InfusionsoftFlow' => App\InfusionsoftFlow\Facades\InfusionsoftFlow::class,

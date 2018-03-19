@@ -32,6 +32,7 @@
           <li><a href="{{ url('admin/coachingcall') }}"><i class="fa fa-university"></i> <span>Coaching Calls</span></a></li>
           <li><a href="{{ url('admin/training') }}"><i class="fa fa-university"></i> <span>Training</span></a></li>
           <li><a href="{{ url('admin/lessonquestion') }}"><i class="fa fa-question"></i> <span>Lesson questions</span></a></li>
+          <li><a href="{{ url('admin/reports') }}"><i class="fa fa-list-alt"></i> <span>Reports</span></a></li>
 
           <li class="header">Events</li>
           <li><a href="{{ url('admin/event') }}"><i class="fa fa-calendar"></i> <span>Events</span></a></li>

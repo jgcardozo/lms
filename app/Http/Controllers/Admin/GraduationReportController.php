@@ -3,36 +3,58 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 class GraduationReportController extends Controller
 {
-    public function index()
-    {
-    }
-
     public function failTest()
     {
-        $users = collect($this->failTestUsers());
-        
-        return \Excel::create('Laravel Excel', function ($excel) use ($users) {
-            $excel->sheet('Excel sheet', function ($sheet) use ($users) {
-                $sheet->setOrientation('landscape');
-                $sheet->fromArray($users->toArray());
-            });
-        })->export('xls');
+        $users = $this->failTestUsers();
+        $columns = ['User ID', 'Name', 'Email', 'Contact ID', 'Cohort', 'Score', 'cohort ID'];
+        $properties = ['id', 'name', 'email', 'contact_id', 'cohorts_name', 'score', 'cohort_id'];
+        $fileName = 'graduation-fail-test.csv';
+
+        return $this->downloadCSV($fileName, $columns, $properties, $users);
     }
 
     public function finishedCourse()
     {
         $users = $this->finishedCourseUsers();
-        return $users;
+        $columns = ['User ID', 'Name', 'Email', 'Contact ID', 'Cohort', 'cohort ID'];
+        $properties = ['id', 'name', 'email', 'contact_id', 'cohorts_name', 'cohort_id'];
+        $fileName = 'graduation-course-finished-not-test.csv';
+
+        return $this->downloadCSV($fileName, $columns, $properties, $users);
+    }
+
+    protected function downloadCSV($fileName, $columns, $properties, $rows)
+    {
+        $fileNamePath = 'downloadables/' . $fileName;
+
+        $file = fopen($fileNamePath, 'w');
+        fputcsv($file, $columns);
+
+        foreach ($rows as $row) {
+            $data = [];
+            foreach ($properties as $property) {
+                $data[] = $row->{$property};
+            }
+            fputcsv($file, $data);
+        }
+        fclose($file);
+
+        $headers = [
+            'Content-type' => 'text/csv'
+        ];
+
+        return Response::download($fileNamePath, $fileName, $headers);
     }
 
     protected function failTestUsers()
     {
         return \DB::select('
             SELECT 
-                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name, results.score, users.cohort_id
+                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, results.score, users.cohort_id
             FROM 
                 users 
             LEFT JOIN
@@ -46,24 +68,13 @@ class GraduationReportController extends Controller
                 role_users.role_id = 3
             ORDER BY 
                 id ASC;');
-        /*
-        return \DB::table('users')
-            ->leftJoin('cohorts', 'cohorts.id', '=', 'users.cohort_id')
-            ->join('class_marker_results as results', 'users.id', '=', 'results.user_id')
-            ->join('role_users', 'users.id', '=', 'role_users.user_id')
-            ->select('users.id', 'users.name', 'users.email as email', 'users.contact_id', 'cohorts.name', 'results.score', 'users.cohort_id')
-            ->where('results.passed', '=', '0')
-            ->where('role_users.role_id', '=', '3')
-            ->orderBy('id', 'ASC')
-            ->get();
-        */
     }
 
     protected function finishedCourseUsers()
     {
         return \DB::select('
             SELECT 
-                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name, users.cohort_id
+                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, users.cohort_id
             FROM 
                 users
             LEFT JOIN
@@ -85,4 +96,16 @@ class GraduationReportController extends Controller
             ORDER BY 
                 id ASC;');
     }
+
+    /*
+        return \DB::table('users')
+            ->leftJoin('cohorts', 'cohorts.id', '=', 'users.cohort_id')
+            ->join('class_marker_results as results', 'users.id', '=', 'results.user_id')
+            ->join('role_users', 'users.id', '=', 'role_users.user_id')
+            ->select('users.id', 'users.name', 'users.email as email', 'users.contact_id', 'cohorts.name', 'results.score', 'users.cohort_id')
+            ->where('results.passed', '=', '0')
+            ->where('role_users.role_id', '=', '3')
+            ->orderBy('id', 'ASC')
+            ->get();
+        */
 }

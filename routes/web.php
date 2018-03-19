@@ -277,9 +277,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
         'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
     ]);
 
-    Route::get('graduation', 'Admin\GraduationReportController@index');
-    Route::get('graduation/fail-test', 'Admin\GraduationReportController@failTest');
-    Route::get('graduation/finished-course', 'Admin\GraduationReportController@finishedCourse');
+    Route::get('reports', 'Admin\ReportController@index');
+    Route::get('graduation-report/fail-test', 'Admin\GraduationReportController@failTest');
+    Route::get('graduation-report/finished-course', 'Admin\GraduationReportController@finishedCourse');
 
     Route::get('dashboard', function () {
         $courses = \App\Models\Course::get();
