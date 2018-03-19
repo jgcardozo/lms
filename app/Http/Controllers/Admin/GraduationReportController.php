@@ -54,7 +54,7 @@ class GraduationReportController extends Controller
     {
         return \DB::select('
             SELECT 
-                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, results.score, users.cohort_id
+                users.id, users.name, users.email as email, users.contact_id, cohorts.name as cohorts_name, results.score, users.cohort_id
             FROM 
                 users 
             LEFT JOIN
