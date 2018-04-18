@@ -123,11 +123,13 @@ class InfusionsoftFlow
 				}catch (\Exception $e) {
 					\Log::critical('Token error.');
 
-					Mail::send([], [], function ($message) {
-						$message->to('panovtomislav@hotmail.com')
-							->subject('[ASK LMS] Token error')
-							->setBody('Re-auth the infusionsoft token');
-					});
+					if(env('APP_ENV') != 'local') {
+                        Mail::send([], [], function ($message) {
+                            $message->to('panovtomislav@hotmail.com')
+                                ->subject('[ASK LMS] Token error')
+                                ->setBody('Re-auth the infusionsoft token');
+                        });
+                    }
 				}
 			}
 		}
