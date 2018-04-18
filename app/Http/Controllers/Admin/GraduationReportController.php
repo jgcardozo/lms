@@ -67,7 +67,7 @@ class GraduationReportController extends Controller
                 results.passed = 0 AND
                 role_users.role_id = 3
             ORDER BY 
-                id ASC;');
+                users.id ASC;');
     }
 
     protected function finishedCourseUsers()
@@ -91,10 +91,8 @@ class GraduationReportController extends Controller
                 act.subject_id = 97 AND
                 role_users.role_id = 3 AND
                 results.user_id IS NULL
-            GROUP BY
-                users.email
             ORDER BY 
-                id ASC;');
+                users.id ASC;');
     }
 
     /*
