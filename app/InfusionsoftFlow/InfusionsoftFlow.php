@@ -121,7 +121,8 @@ class InfusionsoftFlow
 					$this->is->setToken($token);
 					$this->refreshToken();
 				}catch (\Exception $e) {
-					\Log::critical('Token error.');
+					// \Log::critical('Token error.');
+					\Log::critical($e);
 
 					Mail::send([], [], function ($message) {
 						$message->to('panovtomislav@hotmail.com')
