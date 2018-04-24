@@ -298,6 +298,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 
         $lessonsFinished = getBasicLessonsStats();
 
+
         return view('backpack::dashboard', ['courses' => $courses, 'score' => $lessonsFinished]);
     });
 
