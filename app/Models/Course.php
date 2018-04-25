@@ -289,6 +289,12 @@ class Course extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+
+	public function cohorts()
+    {
+        return $this->belongsToMany(Cohort::class);
+    }
+
     public function modules()
     {
 		return $this->hasMany('App\Models\Module');

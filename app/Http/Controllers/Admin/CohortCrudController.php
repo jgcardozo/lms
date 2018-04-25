@@ -36,6 +36,16 @@ class CohortCrudController extends CrudController
 			'name' => 'name',
 			'label' => 'Name'
 		]);
+
+		$this->crud->addField([
+            'label'     => 'Courses',
+            'type'      => 'checklist',
+            'name'      => 'courses',
+            'entity'    => 'courses',
+            'attribute' => 'title',
+            'model'     => "App\Models\Course",
+            'pivot'     => true,
+        ]);
 	}
 
 	public function store(StoreRequest $request)

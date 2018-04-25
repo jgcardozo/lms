@@ -50,15 +50,9 @@ class User extends Authenticatable
         {
             if ( ! empty(env('COHORT_ID')))
             {
-                $model->cohort()->associate(env('COHORT_ID'));
-                $model->save();
+                $model->cohorts()->attach(env('COHORT_ID'));
             }
         });
-    }
-
-    public function cohort()
-    {
-        return $this->belongsTo(Cohort::class);
     }
 
     public function sendPasswordResetNotification($token)
@@ -124,6 +118,12 @@ class User extends Authenticatable
     | Relations
     |--------------------------------------------------------------------------
     */
+
+    public function cohorts()
+    {
+        return $this->belongsToMany(Cohort::class);
+    }
+
     public function profile()
     {
         return $this->hasOne('App\Models\Profile');
