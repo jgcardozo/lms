@@ -311,7 +311,6 @@ class UserController extends Controller
 		{
 			return false;
 		}
-
 		// Sync Infusionsoft user tags
 		$user->syncIsTags();
 	}
