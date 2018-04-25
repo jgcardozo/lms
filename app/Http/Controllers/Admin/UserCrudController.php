@@ -136,12 +136,21 @@ class UserCrudController extends CrudController
 				'pivot' => true
             ],
             [
+                'label'     => 'Cohorts',
+                'type'      => 'checklist',
+                'name'      => 'cohorts',
+                'entity'    => 'cohorts',
+                'attribute' => 'name',
+                'model'     => "App\Models\Cohort",
+                'pivot'     => true,
+            ],
+            /*[
                  'label' => 'Cohort:',
                  'type' => 'select2',
                  'name' => 'cohort_id',
                  'attribute' => 'name',
                  'model' => 'App\Models\Cohort'
-            ],
+            ],*/
             [
                'label' => 'Sessions watched:',
                'type' => 'select2_multipleSessionsWatched',
