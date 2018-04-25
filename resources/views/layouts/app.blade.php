@@ -105,14 +105,14 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
 
-        <script>
+        {{--<script>
             mixpanel.identify({{ \Auth::user()->id }});
             mixpanel.people.set({
                 "$first_name": "{{ \Auth::user()->profile->first_name ?: '' }}",
                 "$last_name": "{{ \Auth::user()->profile->last_name ?: '' }}",
                 "$email": "{{ \Auth::user()->email }}"
             });
-        </script>
+        </script>--}}
 
         @yield('scripts_after')
     </body>
