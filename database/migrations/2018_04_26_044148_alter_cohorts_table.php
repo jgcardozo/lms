@@ -14,7 +14,7 @@ class AlterCohortsTable extends Migration
     public function up()
     {
         Schema::table('cohorts', function (Blueprint $table) {
-            $table->integer('schedule_id');
+            $table->integer('schedule_id')->nullable();
         });
     }
 
@@ -25,6 +25,6 @@ class AlterCohortsTable extends Migration
      */
     public function down()
     {
-        
+
     }
 }
