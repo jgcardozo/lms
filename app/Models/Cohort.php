@@ -11,7 +11,8 @@ class Cohort extends Model
     use CrudTrait;
 
     protected $fillable = [
-        'name'
+        'name',
+        'schedule_id'
     ];
 
     public function users()

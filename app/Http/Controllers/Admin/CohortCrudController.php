@@ -46,6 +46,15 @@ class CohortCrudController extends CrudController
             'model'     => "App\Models\Course",
             'pivot'     => true,
         ]);
+
+        $this->crud->addField([  // Select2
+            'label' => "Schedule",
+            'type' => 'select2',
+            'name' => 'schedule_id', // the db column for the foreign key
+            'entity' => 'schedule', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => "App\\Models\\Schedule" // foreign key model
+        ]);
 	}
 
 	public function store(StoreRequest $request)
