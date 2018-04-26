@@ -23,4 +23,9 @@ class Cohort extends Model
     {
         return $this->belongsToMany(Course::class);
     }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
+    }
 }
