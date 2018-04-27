@@ -345,6 +345,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     ]);
 });
 
+/*
+|--------------------------------------------------------------------------
+| Schedule custom routes
+|--------------------------------------------------------------------------
+*/
+
 Route::post('schedule/create_next','ScheduleController@next');
+
+Route::post('schedule','ScheduleController@store')->name('schedule.store');
 
 Auth::routes();

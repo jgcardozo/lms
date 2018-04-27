@@ -23,7 +23,7 @@ function ajaxCall()
         success: function success(response) {
             var module = $('#modules_lessons');
             module.empty();
-            module.append('<label>Modules and Lessons</label>')
+            module.append('<label>Modules and Lessons</label>');
             $.each(response.modules,function () {
                 module.append(htmlGeneratorModule(this));
                 $.each(this.lessons, function () {
@@ -41,9 +41,9 @@ function htmlGeneratorModule(module) {
     var html =  '<div class="form-group"><div class="input-group"><span class="input-group-addon" id="basic-addon3"><b>Module</b>: '+ module.title +'</span>';
 
     if (type === "dripped") {
-        html += '<input type="number" min="0" class="form-control" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
+        html += '<input type="number" min="0" class="form-control" name="modules['+module.id+']" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
     } else {
-        html += '<input type="date" class="form-control" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
+        html += '<input type="date" class="form-control" name="modules['+module.id+']" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
     }
 
     html += '</div>'+
@@ -56,9 +56,9 @@ function htmlGeneratorLesson(lesson) {
     var html =  '<div class="form-group"><div class="input-group col-md-offset-1"><span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: '+ lesson.title +'</span>';
 
     if (type === "dripped") {
-        html += '<input type="number" min="0" class="form-control" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
+        html += '<input type="number" min="0" class="form-control" name="lessons['+lesson.id+']" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
     } else {
-        html += '<input type="date" class="form-control" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
+        html += '<input type="date" class="form-control" name="lessons['+lesson.id+']" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
     }
 
     html += '</div>'+
@@ -67,3 +67,5 @@ function htmlGeneratorLesson(lesson) {
     return html;
 
 }
+
+

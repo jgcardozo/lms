@@ -31,14 +31,14 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add a new  schedule</h3>
+                    <h3 class="box-title">Add a new schedule</h3>
                 </div>
                 <div class="box-body row display-flex-wrap">
-                    <form action="{{ url('admin/schedule') }}" method="POST" style="margin: 15px">
+                    <form action="{{ route('crud.schedule.store') }}" method="POST" style="margin: 15px">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Name of schedule" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name of schedule" required>
                         </div>
                         <div class="form-group">
                             <label for="course_id">Course</label>
@@ -59,6 +59,17 @@
                             {{--Content is being created dynamically with javascript--}}
                         </div>
 
+                        <div class="box-footer">
+                            <div class="form-group">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-success">
+                                        <span>Save and back</span>
+                                    </button>
+                                </div>
+                                <a href="http://ask.oo/admin/schedule" class="btn btn-default">
+                                    <span class="fa fa-ban"></span> &nbsp;Cancel</a>
+                            </div>
+                        </div>
 
 
                     </form>

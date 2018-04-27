@@ -21,4 +21,15 @@ class ScheduleController extends Controller
 
         return $course;
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'course_id' => 'required',
+            'schedule_type' => 'required'
+        ]);
+
+        dd($request);
+    }
 }
