@@ -1,0 +1,69 @@
+var type = "";
+
+ajaxCall();
+
+$('#schedule_type, #course_id').on('change',function () {
+    ajaxCall();
+});
+
+function ajaxCall()
+{
+    type = $('#schedule_type').val();
+
+    $.ajax({
+        url: "/schedule/create_next",
+        type: "post",
+        data: {
+            'course_id': $('#course_id').val(),
+            'schedule_type' : $('#schedule_type').val()
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function success(response) {
+            var module = $('#modules_lessons');
+            module.empty();
+            module.append('<label>Modules and Lessons</label>')
+            $.each(response.modules,function () {
+                module.append(htmlGeneratorModule(this));
+                $.each(this.lessons, function () {
+                    module.append(htmlGeneratorLesson(this));
+                })
+            })
+        },
+        error: function error(_error) {
+            console.log(_error);
+        }
+    });
+}
+
+function htmlGeneratorModule(module) {
+    var html =  '<div class="form-group"><div class="input-group"><span class="input-group-addon" id="basic-addon3"><b>Module</b>: '+ module.title +'</span>';
+
+    if (type === "dripped") {
+        html += '<input type="number" min="0" class="form-control" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
+    } else {
+        html += '<input type="date" class="form-control" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
+    }
+
+    html += '</div>'+
+            '</div>';
+
+    return html;
+}
+
+function htmlGeneratorLesson(lesson) {
+    var html =  '<div class="form-group"><div class="input-group col-md-offset-1"><span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: '+ lesson.title +'</span>';
+
+    if (type === "dripped") {
+        html += '<input type="number" min="0" class="form-control" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
+    } else {
+        html += '<input type="date" class="form-control" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
+    }
+
+    html += '</div>'+
+        '</div>';
+
+    return html;
+
+}

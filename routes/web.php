@@ -286,6 +286,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('bonus', 'Admin\BonusCrudController');
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
 
+
+
     Route::get('/', [
         'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
     ]);
@@ -342,5 +344,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
         'uses' => 'SurveyController@table'
     ]);
 });
+
+Route::post('schedule/create_next','ScheduleController@next');
 
 Auth::routes();

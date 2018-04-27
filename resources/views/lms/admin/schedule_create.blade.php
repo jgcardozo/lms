@@ -55,10 +55,7 @@
                                 <option value="dripped">Drip</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-success" id="schedule_next" >Next</button>
-                        </div>
-                        <div class="form-group col-md-11 col-md-offset-1">
+                        <div class="form-group col-md-11 col-md-offset-1" id="modules_lessons">
                             {{--Content is being created dynamically with javascript--}}
                         </div>
 
@@ -71,5 +68,5 @@
         </div>
 
     </div>
-
+    <script src="{{ asset('js/schedule_create.js') }}" defer></script>
 @endsection
