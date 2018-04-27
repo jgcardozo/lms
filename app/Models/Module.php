@@ -182,6 +182,12 @@ class Module extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+	public function schedules()
+    {
+        return $this->morphToMany(Schedule::class,'schedulable');
+    }
+
+
 	public function course()
 	{
 		return $this->belongsTo('App\Models\Course');

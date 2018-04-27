@@ -13,10 +13,10 @@ class CreateScheduleDetails extends Migration
      */
     public function up()
     {
-        Schema::create('schedule_details', function (Blueprint $table) {
+        Schema::create('schedulables', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('schedule_id');
-            $table->morphs('object');
+            $table->morphs('schedulable');
             $table->date('lock_date')->nullable();
             $table->integer('drip_days')->nullable();
             $table->timestamps();

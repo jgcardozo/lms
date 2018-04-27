@@ -21,4 +21,14 @@ class Schedule extends Model
         return $this->hasMany(Cohort::class);
     }
 
+    public function modules()
+    {
+        return $this->morphedByMany(Module::class,'schedulable');
+    }
+
+    public function lessons()
+    {
+        return $this->morphedByMany(Lesson::class,'schedulable');
+    }
+
 }

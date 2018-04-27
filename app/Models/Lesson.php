@@ -275,6 +275,11 @@ class Lesson extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function schedules()
+    {
+        return $this->morphToMany(Schedule::class,'schedulable');
+    }
+
 	public function course()
 	{
 		return $this->module()->getResults()->belongsTo('App\Models\Course');
