@@ -20,11 +20,12 @@
 
 @section('content')
     <!-- Default box -->
+    <link href="{{ asset('vendor/adminlte/plugins/datepicker/datepicker3.css') }}" type="text/css" rel="stylesheet">
     <div class="row">
 
         <div class="col-md-8 col-md-offset-2">
-            <a href="http://ask.oo/admin/course"><i class="fa fa-angle-double-left"></i> Back to all
-                <span>courses</span></a><br><br>
+            <a href="http://ask.oo/admin/schedule"><i class="fa fa-angle-double-left"></i> Back to all
+                <span>schedules</span></a><br><br>
         </div>
 
         <!-- THE ACTUAL CONTENT -->
@@ -80,4 +81,7 @@
 
     </div>
     <script src="{{ asset('js/schedule_create.js') }}" defer></script>
+    <script src="{{ asset('vendor/adminlte/plugins/datepicker/bootstrap-datepicker.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('vendor/adminlte/plugins/daterangepicker/moment.min.js') }}" defer></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js" defer></script>
 @endsection

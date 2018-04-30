@@ -1,6 +1,10 @@
 var type = "";
 
-ajaxCall();
+if(window.location.href.indexOf('edit') === -1) {
+    ajaxCall();
+}
+
+$('#datetimepicker').datetimepicker();
 
 $('#schedule_type, #course_id').on('change',function () {
     ajaxCall();
@@ -38,12 +42,14 @@ function ajaxCall()
 }
 
 function htmlGeneratorModule(module) {
-    var html =  '<div class="form-group"><div class="input-group"><span class="input-group-addon" id="basic-addon3"><b>Module</b>: '+ module.title +'</span>';
+    var html =  '';
 
     if (type === "dripped") {
+        html += '<div class="form-group"><div class="input-group"><span class="input-group-addon" id="basic-addon3"><b>Module</b>: '+ module.title +'</span>';
         html += '<input type="number" min="0" class="form-control" name="modules['+module.id+']" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
     } else {
-        html += '<input type="date" class="form-control" name="modules['+module.id+']" id="module_'+module.id+'" aria-describedby="basic-addon3" required>';
+        html += '<div class="form-group date"  data-provide="datepicker"><div class="input-group"><span class="input-group-addon" id="basic-addon3"><b>Module</b>: '+ module.title +'</span>';
+        html += '<input type="text" class="form-control" name="modules['+module.id+']" id="module_'+module.id+'" aria-describedby="basic-addon3" readonly required style="background-color: white"><div class="input-group-addon"><span class="glyphicon glyphicon-th"></span></div>';
     }
 
     html += '</div>'+
@@ -53,12 +59,13 @@ function htmlGeneratorModule(module) {
 }
 
 function htmlGeneratorLesson(lesson) {
-    var html =  '<div class="form-group"><div class="input-group col-md-offset-1"><span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: '+ lesson.title +'</span>';
-
+    var html =  '';
     if (type === "dripped") {
+        html += '<div class="form-group" ><div class="input-group col-md-offset-1"><span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: '+ lesson.title +'</span>';
         html += '<input type="number" min="0" class="form-control" name="lessons['+lesson.id+']" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
     } else {
-        html += '<input type="date" class="form-control" name="lessons['+lesson.id+']" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" required>';
+        html += '<div class="form-group date" data-provide="datepicker"><div class="input-group col-md-offset-1"><span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: '+ lesson.title +'</span>';
+        html += '<input type="text" class="form-control" name="lessons['+lesson.id+']" id="lesson_'+lesson.id+'" aria-describedby="basic-addon3" readonly required style="background-color: white"><div class="input-group-addon"><span class="glyphicon glyphicon-th"></span></div>';
     }
 
     html += '</div>'+
