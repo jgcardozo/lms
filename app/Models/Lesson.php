@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DB;
 use Auth;
+use Carbon\Carbon;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use App\Traits\IsFreeWatch;
@@ -389,4 +390,24 @@ class Lesson extends Model
 		</a>
 		<?php
 	}
+
+    public function getDripOrLockDays($schedule_id)
+    {
+        $id = $this->id;
+
+        $table_row = DB::table('schedulables')
+            ->select('drip_days','lock_date')
+            ->where([
+                ['schedule_id', $schedule_id],
+                ['schedulable_id', $id]
+            ])->get()->first();
+
+
+        if (!empty($table_row->lock_date)) {
+            $lesson_days = Carbon::parse($table_row->lock_date)->format('m-d-Y');
+        } else {
+            $lesson_days = $table_row->drip_days;
+        }
+        return $lesson_days;
+    }
 }
