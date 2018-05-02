@@ -1,14 +1,14 @@
 var type = "";
 
 if(window.location.href.indexOf('edit') === -1) {
-    ajaxCall();
+    ajaxCallModules();
 }
 
 $('#schedule_type, #course_id').on('change',function () {
-    ajaxCall();
+    ajaxCallModules();
 });
 
-function ajaxCall()
+function ajaxCallModules()
 {
     type = $('#schedule_type').val();
 
@@ -23,6 +23,11 @@ function ajaxCall()
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function success(response) {
+
+            if(window.location.href.indexOf('edit') === -1) {
+                ajaxCallCohorts();
+            }
+
             var module = $('#modules_lessons');
             module.empty();
             module.append('<label>Modules and Lessons</label>');
@@ -32,6 +37,32 @@ function ajaxCall()
                     module.append(htmlGeneratorLesson(this));
                 })
             })
+        },
+        error: function error(_error) {
+            console.log(_error);
+        }
+    });
+}
+
+function ajaxCallCohorts() {
+    $.ajax({
+        url: "/schedule/cohorts",
+        type: "post",
+        data: {
+            'course_id': $('#course_id').val()
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function success(response) {
+            $('#cohorts').empty();
+
+            for (var key in response){
+                if (response.hasOwnProperty(key)) {
+                    var html = '<option value="'+key+'">'+response[key]+'</option>';
+                    $('#cohorts').append(html);
+                }
+            }
         },
         error: function error(_error) {
             console.log(_error);

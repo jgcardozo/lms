@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cohort;
 use Illuminate\Http\Request;
 use App\Models\Course;
 
@@ -20,6 +21,19 @@ class ScheduleController extends Controller
         $course = Course::with('modules.lessons')->find($course_id);
 
         return $course;
+    }
+
+    public function getCohorts(Request $request)
+    {
+        $request->validate([
+           'course_id' => 'required'
+        ]);
+
+        $course_id = $request->input('course_id');
+
+        $cohorts = Cohort::where('course_id',$course_id)->pluck('name','id');
+
+        return $cohorts;
     }
 
     public function store(Request $request)

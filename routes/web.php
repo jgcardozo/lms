@@ -353,6 +353,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 
 Route::post('schedule/create_next','ScheduleController@next');
 
+Route::post('schedule/cohorts','ScheduleController@getCohorts');
+
 Route::post('schedule','ScheduleController@store')->name('schedule.store');
 
 Auth::routes();
