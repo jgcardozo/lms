@@ -8,21 +8,23 @@
 
 namespace App\Http\ViewComposers;
 
+use App\Models\Cohort;
 use Illuminate\View\View;
 use App\Models\Course;
 
 class ScheduleCreateComposer
 {
-    protected $courses;
+    protected $courses,$cohorts;
 
 
     public function __construct()
     {
         $this->courses = Course::with('modules.lessons')->get();
+        $this->cohorts = Cohort::with('course')->get();
     }
 
     public function compose(View $view)
     {
-        $view->with('courses',$this->courses);
+        $view->with('courses',$this->courses)->with('cohorts',$this->cohorts);
     }
 }

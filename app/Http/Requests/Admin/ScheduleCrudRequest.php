@@ -30,7 +30,6 @@ class ScheduleCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     {
         return [
             'name' => 'required|max:255',
-            'course_id' => 'required',
             'schedule_type' => 'required'
         ];
     }
