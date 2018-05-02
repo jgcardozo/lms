@@ -78,10 +78,10 @@
                                         </div>
                                     </div>
                                     @else
-                                    <div class="form-group date" data-provide="datepicker">
+                                    <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon" id="basic-addon3"><b>Module</b>: {{ $module->title }}</span>
-                                            <input type="text" class="form-control" name="modules[{{ $module->id }}]" id="module_{{ $module->id }}" aria-describedby="basic-addon3" value="{{ $module->getDripOrLockDays($entry->id) }}" readonly required style="background-color: white">
+                                            <input type="datetime-local" class="form-control" name="modules[{{ $module->id }}]" id="module_{{ $module->id }}" aria-describedby="basic-addon3" value="{{ $module->getDripOrLockDays($entry->id) }}" required style="background-color: white">
                                             <div class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </div>
@@ -91,16 +91,16 @@
                                 @foreach($module->lessons as $lesson)
                                             @if($entry->schedule_type === "dripped")
                                                 <div class="form-group">
-                                                    <div class="input-group input-group col-md-offset-1">
+                                                    <div class="input-group col-md-offset-1">
                                                         <span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: {{ $lesson->title }}</span>
                                                         <input type="number" min="0" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}'" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required>
                                                     </div>
                                                 </div>
                                             @else
-                                                <div class="form-group date" data-provide="datepicker">
-                                                    <div class="input-group input-group col-md-offset-1">
+                                                <div class="form-group">
+                                                    <div class="input-group col-md-offset-1">
                                                         <span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: {{ $lesson->title }}</span>
-                                                        <input type="text" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" readonly required style="background-color: white">
+                                                        <input type="datetime-local" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required style="background-color: white">
                                                         <div class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </div>

@@ -84,4 +84,5 @@
     <script src="{{ asset('vendor/adminlte/plugins/datepicker/bootstrap-datepicker.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('vendor/adminlte/plugins/daterangepicker/moment.min.js') }}" defer></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js" defer></script>
+    <script src="{{ asset('js/datetimepicker_custom.js') }}" defer></script>
 @endsection
