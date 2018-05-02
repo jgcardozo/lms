@@ -50,6 +50,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="cohorts">Cohort</label>
+                            <select multiple class="form-control" id="cohorts" name="cohorts[]" required>
+                                @foreach($cohorts->pluck('name','id')->toArray() as $key => $value)
+                                    <option value="{{ $key }}"> {{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="schedule_type">Schedule type</label>
                             <select class="form-control" id="schedule_type" name="schedule_type" required>
                                 <option value="locked">Lock</option>

@@ -37,14 +37,13 @@ class CohortCrudController extends CrudController
 			'label' => 'Name'
 		]);
 
-		$this->crud->addField([
-            'label'     => 'Courses',
-            'type'      => 'checklist',
-            'name'      => 'courses',
-            'entity'    => 'courses',
-            'attribute' => 'title',
-            'model'     => "App\Models\Course",
-            'pivot'     => true,
+        $this->crud->addField([  // Select2
+            'label' => "Course",
+            'type' => 'select2',
+            'name' => 'course_id', // the db column for the foreign key
+            'entity' => 'course', // the method that defines the relationship in your Model
+            'attribute' => 'title', // foreign key attribute that is shown to user
+            'model' => "App\\Models\\Course" // foreign key model
         ]);
 
         $this->crud->addField([  // Select2

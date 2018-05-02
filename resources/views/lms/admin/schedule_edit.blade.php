@@ -42,15 +42,16 @@
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Name of schedule" required value="{{ $entry->name }}">
                         </div>
+                        <input type="hidden" id="course_id" value="{{ $entry->course_id }}">
                         <div class="form-group">
-                            <label for="course_id">Course</label>
-                            <select class="form-control" id="course_id" name="course_id" required>
-                                <option value="{{ $entry->course_id }}">{{ strip_tags($courses->keyBy('id')->get($entry->course_id)->title) }}</option>
-                                @foreach($courses->pluck('title','id')->toArray() as $key => $value)
-                                    @if($key == $entry->course_id)
-                                        @continue
+                            <label for="cohorts">Cohorts</label>
+                            <select multiple class="form-control" id="cohorts" name="cohorts[]" required>
+                                @foreach($cohorts->where('course_id',$entry->course_id)->pluck('name','id') as $key => $value)
+                                    @if($cohorts->find($key)->schedule_id === $entry->id)
+                                        <option selected value="{{ $key }}"> {{ $value }}</option>
+                                    @else
+                                        <option value="{{ $key }}"> {{ $value }}</option>
                                     @endif
-                                    <option value="{{ $key }}"> {{ strip_tags($value) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -67,7 +68,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-11 col-md-offset-1" id="modules_lessons">
-
+                            <label>Modules and Lessons</label>
                             @foreach($courses->keyBy('id')->get($entry->course_id)->modules as $module)
 
                                     @if($entry->schedule_type === "dripped")
