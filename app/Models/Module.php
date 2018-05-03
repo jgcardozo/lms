@@ -288,7 +288,8 @@ class Module extends Model
             ->select('drip_days','lock_date')
             ->where([
                 ['schedule_id', $schedule_id],
-                ['schedulable_id', $id]
+                ['schedulable_id', $id],
+                ['schedulable_type',"App\Models\Module"]
             ])->get()->first();
 
 

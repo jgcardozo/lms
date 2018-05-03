@@ -92,7 +92,8 @@ class ScheduleCrudController extends CrudController
                 DB::table('schedulables')
                     ->where([
                         ['schedule_id',$schedule->id],
-                        ['schedulable_id',$key]
+                        ['schedulable_id',$key],
+                        ['schedulable_type',"App\Models\Module"]
                     ])
                     ->update([
                         'drip_days' => $value
@@ -102,7 +103,8 @@ class ScheduleCrudController extends CrudController
                 DB::table('schedulables')
                     ->where([
                         ['schedule_id',$schedule->id],
-                        ['schedulable_id',$key]
+                        ['schedulable_id',$key],
+                        ['schedulable_type',"App\Models\Module"]
                     ])
                     ->update([
                         'lock_date' => $value
@@ -120,7 +122,8 @@ class ScheduleCrudController extends CrudController
                     DB::table('schedulables')
                         ->where([
                             ['schedule_id',$schedule->id],
-                            ['schedulable_id',$key]
+                            ['schedulable_id',$key],
+                            ['schedulable_type',"App\Models\Lesson"]
                         ])
                         ->update([
                             'drip_days' => $value
@@ -130,7 +133,8 @@ class ScheduleCrudController extends CrudController
                     DB::table('schedulables')
                         ->where([
                             ['schedule_id',$schedule->id],
-                            ['schedulable_id',$key]
+                            ['schedulable_id',$key],
+                            ['schedulable_type',"App\Models\Lesson"]
                         ])
                         ->update([
                             'lock_date' => $value
