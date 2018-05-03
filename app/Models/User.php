@@ -149,7 +149,7 @@ class User extends Authenticatable
 
 
         if ($schedule_type === "locked" && Carbon::parse($dateOrDay)->gte(now())) {
-            return Carbon::parse($dateOrDay)->toFormattedDateString('M-d-Y');
+            return Carbon::parse($dateOrDay)->toFormattedDateString('m/d/Y');
         }
 
         if ($schedule_type === "dripped") {
