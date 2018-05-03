@@ -84,7 +84,7 @@ trait LockViaUserDate
             $created = $user->is_tags()->where('id',$tag_id)->first()->pivot->created_at;
 
             $unlock_day = Carbon::parse($created);
-            $unlock_day->hour = 6;
+            $unlock_day->hour = 8;
             $unlock_day->minute = 0;
             $unlock_day->second = 0;
             $unlock_day->addDays($dateOrDay);
@@ -97,6 +97,6 @@ trait LockViaUserDate
         }
 
         return true;
-        
+
 	}
 }
