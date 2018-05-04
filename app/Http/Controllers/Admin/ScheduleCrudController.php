@@ -51,8 +51,9 @@ class ScheduleCrudController extends CrudController
                 'label' => 'Name'
             ],
             [
-                'name' => 'course_id',
-                'label' => 'Course ID'
+                'label' => 'Course',
+                'type' => 'model_function',
+                'function_name' => 'admin_course_link'
             ],
             [
                 'name' => 'schedule_type',
@@ -164,15 +165,17 @@ class ScheduleCrudController extends CrudController
         $schedule->save();
 
 
-        foreach (Cohort::where('schedule_id',$id)->get() as $cohort) {
-            $cohort->schedule_id = 0;
-            $cohort->save();
-        }
+        if ($schedule->status !== "default") {
+            foreach (Cohort::where('schedule_id',$id)->get() as $cohort) {
+                $cohort->schedule_id = 0;
+                $cohort->save();
+            }
 
-        foreach ($cohort_ids as $cohort_id) {
-            $cohort = Cohort::find($cohort_id);
-            $cohort->schedule_id = $id;
-            $cohort->save();
+            foreach ($cohort_ids as $cohort_id) {
+                $cohort = Cohort::find($cohort_id);
+                $cohort->schedule_id = $id;
+                $cohort->save();
+            }
         }
 
         // If the scheduled type is dripped update the drip_days column else update the lock_date column
