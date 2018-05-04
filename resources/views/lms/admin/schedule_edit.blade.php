@@ -43,30 +43,57 @@
                             <input type="text" class="form-control" id="name" name="name" placeholder="Name of schedule" required value="{{ $entry->name }}">
                         </div>
                         <input type="hidden" id="course_id" value="{{ $entry->course_id }}">
-                        <div class="form-group">
-                            <label for="cohorts">Cohorts</label>
-                            <select multiple class="form-control" id="cohorts" name="cohorts[]" required>
-                                @foreach($cohorts->where('course_id',$entry->course_id)->pluck('name','id') as $key => $value)
-                                    @if($cohorts->find($key)->schedule_id === $entry->id)
-                                        <option selected value="{{ $key }}"> {{ $value }}</option>
+                        @if($entry->status === "default")
+                            <div class="form-group" hidden>
+                                <label for="cohorts">Cohorts</label>
+                                <select multiple class="form-control" id="cohorts" name="cohorts[]">
+                                    @foreach($cohorts->where('course_id',$entry->course_id)->pluck('name','id') as $key => $value)
+                                        @if($cohorts->find($key)->schedule_id === $entry->id)
+                                            <option selected value="{{ $key }}"> {{ $value }}</option>
+                                        @else
+                                            <option value="{{ $key }}"> {{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group hidden">
+                                <label for="schedule_type">Schedule type</label>
+                                <select class="form-control" id="schedule_type" name="schedule_type">
+                                    @if($entry->schedule_type === "dripped")
+                                        <option value="dripped">Drip</option>
+                                        <option value="locked">Lock</option>
                                     @else
-                                        <option value="{{ $key }}"> {{ $value }}</option>
+                                        <option value="locked">Lock</option>
+                                        <option value="dripped">Drip</option>
                                     @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="schedule_type">Schedule type</label>
-                            <select class="form-control" id="schedule_type" name="schedule_type" required>
-                                @if($entry->schedule_type === "dripped")
-                                    <option value="dripped">Drip</option>
-                                    <option value="locked">Lock</option>
-                                @else
-                                    <option value="locked">Lock</option>
-                                    <option value="dripped">Drip</option>
-                                @endif
-                            </select>
-                        </div>
+                                </select>
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label for="cohorts">Cohorts</label>
+                                <select multiple class="form-control" id="cohorts" name="cohorts[]" required>
+                                    @foreach($cohorts->where('course_id',$entry->course_id)->pluck('name','id') as $key => $value)
+                                        @if($cohorts->find($key)->schedule_id === $entry->id)
+                                            <option selected value="{{ $key }}"> {{ $value }}</option>
+                                        @else
+                                            <option value="{{ $key }}"> {{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="schedule_type">Schedule type</label>
+                                <select class="form-control" id="schedule_type" name="schedule_type" required>
+                                    @if($entry->schedule_type === "dripped")
+                                        <option value="dripped">Drip</option>
+                                        <option value="locked">Lock</option>
+                                    @else
+                                        <option value="locked">Lock</option>
+                                        <option value="dripped">Drip</option>
+                                    @endif
+                                </select>
+                            </div>
+                        @endif
                         <div class="form-group col-md-11 col-md-offset-1" id="modules_lessons">
                             <label>Modules and Lessons</label>
                             @foreach($courses->keyBy('id')->get($entry->course_id)->modules as $module)
@@ -119,7 +146,7 @@
                                         <span>Save and back</span>
                                     </button>
                                 </div>
-                                <a href="http://ask.oo/admin/schedule" class="btn btn-default">
+                                <a href="{{ url('/admin/schedule') }}" class="btn btn-default">
                                     <span class="fa fa-ban"></span> &nbsp;Cancel</a>
                             </div>
                         </div>

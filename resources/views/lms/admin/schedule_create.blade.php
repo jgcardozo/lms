@@ -75,7 +75,7 @@
                                         <span>Save and back</span>
                                     </button>
                                 </div>
-                                <a href="http://ask.oo/admin/schedule" class="btn btn-default">
+                                <a href="{{ url('/admin/schedule') }}" class="btn btn-default">
                                     <span class="fa fa-ban"></span> &nbsp;Cancel</a>
                             </div>
                         </div>

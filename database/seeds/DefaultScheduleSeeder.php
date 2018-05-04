@@ -17,6 +17,7 @@ class DefaultScheduleSeeder extends Seeder
             $schedule->name = "Default";
             $schedule->course_id = $course->id;
             $schedule->schedule_type = "dripped";
+            $schedule->status = "default";
             $schedule->save();
 
             $modules = $course->modules;

@@ -31,4 +31,13 @@ class Schedule extends Model
         return $this->morphedByMany(Lesson::class,'schedulable');
     }
 
+    public function admin_course_link()
+    {
+        ?>
+        <a href="<?php echo route('crud.course.edit', [$this->course_id]); ?>">
+            <?php echo Course::find($this->course_id)->title ?>
+        </a>
+        <?php
+    }
+
 }
