@@ -292,6 +292,21 @@ class Module extends Model
                 ['schedulable_type',"App\Models\Module"]
             ])->get()->first();
 
+        if (empty($table_row)) {
+            $schedule = Schedule::find($schedule_id);
+            $schedule->modules()->attach($this);
+
+            DB::table('schedulables')
+                ->where([
+                    ['schedule_id', $schedule_id],
+                    ['schedulable_id', $id],
+                    ['schedulable_type',"App\Models\Module"]
+                ])->update([
+                    'drip_days' => 0,
+                ]);
+
+            return 0;
+        }
 
         if (!empty($table_row->lock_date)) {
             $module_days = date("Y-m-d\TH:i:s", strtotime($table_row->lock_date));

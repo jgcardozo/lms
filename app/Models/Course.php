@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use Illuminate\Support\Facades\DB;
 use InfusionsoftFlow;
 use App\Traits\ISLock;
 use App\Models\Session;
@@ -57,8 +58,17 @@ class Course extends Model
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
-	}
 
+		static::created(function($course) {
+            $schedule = new \App\Models\Schedule;
+            $schedule->name = "Default for $course->title";
+            $schedule->course_id = $course->id;
+            $schedule->status = "default";
+            $schedule->schedule_type = "dripped";
+            $schedule->save();
+
+        });
+	}
 	/**
 	 * Method that checks if all
 	 * starter videos are seen
