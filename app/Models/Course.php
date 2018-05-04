@@ -289,10 +289,13 @@ class Course extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+	public function tags() {
+        return $this->morphToMany('App\Models\ISTag', 'lockable', 'is_lockables', 'lockable_id', 'tag_id');
+    }
 
 	public function cohorts()
     {
-        return $this->belongsToMany(Cohort::class);
+        return $this->hasMany(Cohort::class);
     }
 
     public function modules()

@@ -3,6 +3,12 @@
 namespace App\Traits;
 
 
+use App\Models\Course;
+use App\Models\Schedule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 trait LockViaUserDate
 {
 	/**
@@ -23,34 +29,74 @@ trait LockViaUserDate
 	 */
 	public function getIsDateLockedAttribute()
 	{
-		if(!empty($this->lock_date))
-		{
-			$expire = strtotime($this->lock_date);
-			$today = time();
+	    $user = Auth::user();
 
-			if($today >= $expire)
-			{
-				return false;
-			}
-		}
+	    $reflection = new \ReflectionClass($this);
+	    $class_name = $reflection->getShortName();
 
-		if(!empty($this->lock_date) && !$this->user_lock_date)
-		{
-			return $today >= $expire ? false : true;
-		}
+        if ($class_name === "Module") {
+            $course_id = $this->course_id;
+        } elseif ($class_name === "Lesson") {
+            $course_id = $this->course->id;
+        } elseif ($class_name === "Session") {
+            return false;
+        }
 
-		if(!empty($this->lock_date) && $this->user_lock_date)
-		{
-			// If user registration date is not greater then item user_lock_date,
-			// that means this item was somewhen unlocked for those same users
-			if( ! \Auth::user()->created_at->gt( $this->user_lock_date ) )
-			{
-				return false;
-			}
 
-			return $today >= $expire ? false : true;
-		}
+        $cohort = $user->cohorts()->where('course_id',$course_id)->first();
 
-		return false;
+        if (empty($cohort)) {
+            $schedule = Schedule::where([
+                ['name',"Default"],
+                ['course_id',$course_id]
+            ])->first();
+        } else {
+            $schedule = Schedule::find($cohort->schedule_id);
+        }
+
+
+        $schedule_type = $schedule->schedule_type;
+
+	    if ($schedule_type === "locked") {
+	        $column_name = "lock_date";
+        } else {
+	        $column_name = "drip_days";
+        }
+
+        $dateOrDay = DB::table('schedulables')
+            ->select($column_name)
+            ->where([
+                'schedule_id' => $schedule->id,
+                'schedulable_type' => $reflection->getName(),
+                'schedulable_id' => $this->id
+            ])->first();
+
+        $dateOrDay = $dateOrDay->$column_name;
+
+
+        if ($schedule_type === "locked" && Carbon::parse($dateOrDay)->lte(now())) {
+            return false;
+        }
+
+        if ($schedule_type === "dripped") {
+            $course = Course::find($course_id);
+            $tag_id = $course->tags->first()->id;
+            $created = $user->is_tags()->where('id',$tag_id)->first()->pivot->created_at;
+
+            $unlock_day = Carbon::parse($created);
+            $unlock_day->hour = 8;
+            $unlock_day->minute = 0;
+            $unlock_day->second = 0;
+            $unlock_day->addDays($dateOrDay);
+
+
+            if ($unlock_day->lte(now())) {
+                return false;
+            }
+
+        }
+
+        return true;
+
 	}
 }
