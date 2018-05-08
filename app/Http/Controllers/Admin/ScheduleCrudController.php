@@ -195,7 +195,7 @@ class ScheduleCrudController extends CrudController
                     ['schedulable_type',"App\Models\Module"]
                 ])
                 ->update([
-                    $column => $value,
+                    $column => date("Y-m-d h:i:s", strtotime($value)),
                     $emptyColumn => null
                 ]);
         }
@@ -209,7 +209,7 @@ class ScheduleCrudController extends CrudController
                         ['schedulable_type',"App\Models\Lesson"]
                     ])
                     ->update([
-                        $column => $value,
+                        $column =>  date("Y-m-d h:i:s", strtotime($value)),
                         $emptyColumn => null
                     ]);
             }

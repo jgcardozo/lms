@@ -309,7 +309,7 @@ class Module extends Model
         }
 
         if (!empty($table_row->lock_date)) {
-            $module_days = date("Y-m-d\TH:i:s", strtotime($table_row->lock_date));
+            $module_days = date("m/d/Y h:i A", strtotime($table_row->lock_date));
         } else {
             $module_days = $table_row->drip_days;
         }

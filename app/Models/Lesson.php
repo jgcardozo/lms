@@ -420,7 +420,7 @@ class Lesson extends Model
         }
 
         if (!empty($table_row->lock_date)) {
-            $lesson_days = date("Y-m-d\TH:i:s", strtotime($table_row->lock_date));;
+            $lesson_days = date("m/d/Y h:i A", strtotime($table_row->lock_date));
         } else {
             $lesson_days = $table_row->drip_days;
         }
