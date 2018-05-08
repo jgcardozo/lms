@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use Carbon\Carbon;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use App\Traits\IsFreeWatch;
@@ -11,6 +12,7 @@ use App\Traits\LockViaUserDate;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
 use App\Traits\UsearableTimezone;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -182,6 +184,12 @@ class Module extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+	public function schedules()
+    {
+        return $this->morphToMany(Schedule::class,'schedulable');
+    }
+
+
 	public function course()
 	{
 		return $this->belongsTo('App\Models\Course');
@@ -271,4 +279,40 @@ class Module extends Model
 		</a>
 		<?php
 	}
+
+    public function getDripOrLockDays($schedule_id)
+    {
+        $id = $this->id;
+
+        $table_row = DB::table('schedulables')
+            ->select('drip_days','lock_date')
+            ->where([
+                ['schedule_id', $schedule_id],
+                ['schedulable_id', $id],
+                ['schedulable_type',"App\Models\Module"]
+            ])->get()->first();
+
+        if (empty($table_row)) {
+            $schedule = Schedule::find($schedule_id);
+            $schedule->modules()->attach($this);
+
+            DB::table('schedulables')
+                ->where([
+                    ['schedule_id', $schedule_id],
+                    ['schedulable_id', $id],
+                    ['schedulable_type',"App\Models\Module"]
+                ])->update([
+                    'drip_days' => 0,
+                ]);
+
+            return 0;
+        }
+
+        if (!empty($table_row->lock_date)) {
+            $module_days = date("m/d/Y h:i A", strtotime($table_row->lock_date));
+        } else {
+            $module_days = $table_row->drip_days;
+        }
+        return $module_days;
+    }
 }

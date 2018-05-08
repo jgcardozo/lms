@@ -15,6 +15,8 @@ const { mix } = require('laravel-mix');
 //    .sass('resources/assets/sass/app.scss', 'public/css');
 
 mix.js('resources/assets/js/app.js', 'public/js')
+	.js('resources/assets/js/schedule_create.js', 'public/js')
+    .js('resources/assets/js/datetimepicker_custom.js', 'public/js')
 	.sass('resources/assets/sass/app.scss', 'public/css')
 	.options({
 		processCssUrls: false

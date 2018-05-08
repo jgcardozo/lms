@@ -78,7 +78,7 @@
                                     @elseif($lesson->is_locked)
                                         @if($lesson->is_date_locked)
                                             <div class="course-progress course-progress__lesson" data-date=" until {{ date('d-m-Y', strtotime($lesson->lock_date)) }}">
-                                                Unlocks {{ date('m/d/Y', strtotime($lesson->getDate('lock_date'))) }} <span class="course-progress__bar course-progress__bar--locked"></span>
+                                               <span> Unlocks {{ Auth::user()->UnlockDate($lesson) }}</span> <span class="course-progress__bar course-progress__bar--locked"></span>
                                             </div>
                                         @else
                                             <div class="course-progress course-progress__lesson">

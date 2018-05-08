@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DB;
 use Auth;
+use Carbon\Carbon;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
 use App\Traits\IsFreeWatch;
@@ -275,6 +276,11 @@ class Lesson extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function schedules()
+    {
+        return $this->morphToMany(Schedule::class,'schedulable');
+    }
+
 	public function course()
 	{
 		return $this->module()->getResults()->belongsTo('App\Models\Course');
@@ -384,4 +390,40 @@ class Lesson extends Model
 		</a>
 		<?php
 	}
+
+    public function getDripOrLockDays($schedule_id)
+    {
+        $id = $this->id;
+
+        $table_row = DB::table('schedulables')
+            ->select('drip_days','lock_date')
+            ->where([
+                ['schedule_id', $schedule_id],
+                ['schedulable_id', $id],
+                ['schedulable_type',"App\Models\Lesson"]
+            ])->get()->first();
+
+        if (empty($table_row)) {
+            $schedule = Schedule::find($schedule_id);
+            $schedule->lessons()->attach($this);
+
+            DB::table('schedulables')
+                ->where([
+                    ['schedule_id', $schedule_id],
+                    ['schedulable_id', $id],
+                    ['schedulable_type',"App\Models\Lesson"]
+                ])->update([
+                    'drip_days' => 0,
+                ]);
+
+            return 0;
+        }
+
+        if (!empty($table_row->lock_date)) {
+            $lesson_days = date("m/d/Y h:i A", strtotime($table_row->lock_date));
+        } else {
+            $lesson_days = $table_row->drip_days;
+        }
+        return $lesson_days;
+    }
 }

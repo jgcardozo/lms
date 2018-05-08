@@ -142,6 +142,17 @@
 
     @yield('after_scripts')
 
+    @if(Route::currentRouteName() == 'crud.schedule.edit')
+        @include('scripts.schedule_scripts')
+        <script src="{{ asset('js/schedule_create.js') }}" defer></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".dtp").datetimepicker();
+            });
+        </script>
+    @endif
+
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>

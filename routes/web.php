@@ -284,6 +284,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
     CRUD::resource('cohort', 'Admin\CohortCrudController');
     CRUD::resource('bonus', 'Admin\BonusCrudController');
+    CRUD::resource('schedule', 'Admin\ScheduleCrudController');
+
+
 
     Route::get('/', [
         'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'
@@ -297,6 +300,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
         $courses = \App\Models\Course::get();
 
         $lessonsFinished = getBasicLessonsStats();
+
 
         return view('backpack::dashboard', ['courses' => $courses, 'score' => $lessonsFinished]);
     });
@@ -341,5 +345,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
         'uses' => 'SurveyController@table'
     ]);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Schedule custom routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('schedule/create_next','ScheduleController@next');
+
+Route::post('schedule/cohorts','ScheduleController@getCohorts');
+
+Route::post('schedule','ScheduleController@store')->name('schedule.store');
+
+Route::post('schedule/driplock','ScheduleController@dripOrLock')->name('schedule.driplock');
 
 Auth::routes();

@@ -11,11 +11,23 @@ class Cohort extends Model
     use CrudTrait;
 
     protected $fillable = [
-        'name'
+        'name',
+        'course_id',
+        'schedule_id'
     ];
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
     }
 }

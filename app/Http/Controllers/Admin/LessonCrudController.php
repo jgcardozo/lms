@@ -38,10 +38,10 @@ class LessonCrudController extends CrudController
 				'name' => 'video_url',
 				'label' => 'Video URL'
 			],
-			[
+			/*[
 				'name' => 'lock_date',
 				'label' => 'Lock date'
-			],
+			],*/
 			[
 				'label' => 'Module',
 				'type' => 'model_function',
@@ -148,14 +148,14 @@ class LessonCrudController extends CrudController
 			'model' => 'App\Models\Module'
 		]);
 
-		$this->crud->addField([
+		/*$this->crud->addField([
 			'label' => 'Lock the lesson until this date:',
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
 				'format' => 'dd-mm-yyyy g:ia'
 			]
-		]);
+		]);*/
 
 		$this->crud->addField([
 			'name' => 'exclude_from_rule',

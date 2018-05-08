@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\ISLock;
+use Carbon\Carbon;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Traits\HasRoles;
@@ -10,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Http\Controllers\InfusionsoftController;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -50,15 +52,9 @@ class User extends Authenticatable
         {
             if ( ! empty(env('COHORT_ID')))
             {
-                $model->cohort()->associate(env('COHORT_ID'));
-                $model->save();
+                $model->cohorts()->attach(env('COHORT_ID'));
             }
         });
-    }
-
-    public function cohort()
-    {
-        return $this->belongsTo(Cohort::class);
     }
 
     public function sendPasswordResetNotification($token)
@@ -118,12 +114,77 @@ class User extends Authenticatable
         return $is->sync();
     }
 
+    public function UnlockDate($lesson)
+    {
+        $course_id = $lesson->course->id;
+
+        $cohort = $this->cohorts()->where('course_id',$course_id)->first();
+
+        if (empty($cohort)) {
+            $schedule = Schedule::where([
+                ['status',"default"],
+                ['course_id',$course_id]
+            ])->first();
+        } else {
+            $schedule = Schedule::find($cohort->schedule_id);
+        }
+
+        $schedule_type = $schedule->schedule_type;
+
+        if ($schedule_type === "locked") {
+            $column_name = "lock_date";
+        } else {
+            $column_name = "drip_days";
+        }
+
+        $dateOrDay = DB::table('schedulables')
+            ->select($column_name)
+            ->where([
+                'schedule_id' => $schedule->id,
+                'schedulable_type' => "App\Models\Lesson",
+                'schedulable_id' => $lesson->id
+            ])->first();
+
+        $dateOrDay = $dateOrDay->$column_name;
+
+
+        if ($schedule_type === "locked" && Carbon::parse($dateOrDay)->gte(now())) {
+            return Carbon::parse($dateOrDay)->toFormattedDateString('m/d/Y');
+        }
+
+        if ($schedule_type === "dripped") {
+            $course = Course::find($course_id);
+            $tag_id = $course->tags->first()->id;
+            $created = $this->is_tags()->where('id',$tag_id)->first()->pivot->created_at;
+
+            $unlock_day = Carbon::parse($created);
+            $unlock_day->hour = 8;
+            $unlock_day->minute = 0;
+            $unlock_day->second = 0;
+            $unlock_day->addDays($dateOrDay);
+
+
+            if ($unlock_day->gte(now())) {
+                return "in ".$unlock_day->diffForHumans(null,true);
+            }
+
+        }
+
+        return true;
+    }
+
 
     /*
     |--------------------------------------------------------------------------
     | Relations
     |--------------------------------------------------------------------------
     */
+
+    public function cohorts()
+    {
+        return $this->belongsToMany(Cohort::class);
+    }
+
     public function profile()
     {
         return $this->hasOne('App\Models\Profile');
