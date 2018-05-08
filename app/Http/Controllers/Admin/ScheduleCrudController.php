@@ -108,7 +108,7 @@ class ScheduleCrudController extends CrudController
                         ['schedulable_type',"App\Models\Module"]
                     ])
                     ->update([
-                        'lock_date' => $value
+                        'lock_date' => date("Y-m-d h:i:s", strtotime($value))
                     ]);
             }
 
@@ -138,7 +138,7 @@ class ScheduleCrudController extends CrudController
                             ['schedulable_type',"App\Models\Lesson"]
                         ])
                         ->update([
-                            'lock_date' => $value
+                            'lock_date' => date("Y-m-d h:i:s", strtotime($value))
                         ]);
                 }
             }

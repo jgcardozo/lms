@@ -26,7 +26,7 @@
     <div class="row">
 
         <div class="col-md-8 col-md-offset-2">
-            <a href="http://ask.oo/admin/schedule"><i class="fa fa-angle-double-left"></i> Back to all
+            <a href="{{ url('/admin/schedule') }}"><i class="fa fa-angle-double-left"></i> Back to all
                 <span>schedules</span></a><br><br>
         </div>
 

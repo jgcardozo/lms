@@ -60,6 +60,9 @@ class ScheduleController extends Controller
 
         for ($i = 0; $i < count($data); $i++) {
             $data[$i] = array_filter((array)$data[$i]);
+            if(isset($data[$i]['lock_date'])) {
+                $data[$i]['lock_date'] = date("m/d/Y h:i A", strtotime($data[$i]['lock_date']));
+            }
         }
         return $data;
     }
