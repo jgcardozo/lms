@@ -188,6 +188,11 @@ class ScheduleCrudController extends CrudController
         }
 
         foreach ($modules as $key => $value) {
+
+            if ($schedule_type === "locked") {
+                $value = date("Y-m-d h:i:s", strtotime($value));
+            }
+
             DB::table('schedulables')
                 ->where([
                     ['schedule_id',$id],
@@ -195,13 +200,18 @@ class ScheduleCrudController extends CrudController
                     ['schedulable_type',"App\Models\Module"]
                 ])
                 ->update([
-                    $column => date("Y-m-d h:i:s", strtotime($value)),
+                    $column => $value,
                     $emptyColumn => null
                 ]);
         }
 
         if (!empty($lessons)) {
             foreach ($lessons as $key => $value) {
+
+                if ($schedule_type === "locked") {
+                    $value = date("Y-m-d h:i:s", strtotime($value));
+                }
+
                 DB::table('schedulables')
                     ->where([
                         ['schedule_id',$id],
@@ -209,7 +219,7 @@ class ScheduleCrudController extends CrudController
                         ['schedulable_type',"App\Models\Lesson"]
                     ])
                     ->update([
-                        $column =>  date("Y-m-d h:i:s", strtotime($value)),
+                        $column =>  $value,
                         $emptyColumn => null
                     ]);
             }
