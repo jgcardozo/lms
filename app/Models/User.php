@@ -122,7 +122,7 @@ class User extends Authenticatable
 
         if (empty($cohort)) {
             $schedule = Schedule::where([
-                ['name',"Default"],
+                ['status',"default"],
                 ['course_id',$course_id]
             ])->first();
         } else {

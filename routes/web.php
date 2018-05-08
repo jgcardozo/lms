@@ -358,4 +358,6 @@ Route::post('schedule/cohorts','ScheduleController@getCohorts');
 
 Route::post('schedule','ScheduleController@store')->name('schedule.store');
 
+Route::post('schedule/driplock','ScheduleController@dripOrLock')->name('schedule.driplock');
+
 Auth::routes();

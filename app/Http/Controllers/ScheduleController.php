@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cohort;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
@@ -45,5 +46,21 @@ class ScheduleController extends Controller
         ]);
 
         dd($request);
+    }
+
+    public function dripOrLock(Request $request)
+    {
+        $schedule_id = $request->input('schedule_id');
+
+        $data =  DB::table('schedulables')
+            ->select()
+            ->where([
+                ['schedule_id',$schedule_id]
+            ])->get()->toArray();
+
+        for ($i = 0; $i < count($data); $i++) {
+            $data[$i] = array_filter((array)$data[$i]);
+        }
+        return $data;
     }
 }
