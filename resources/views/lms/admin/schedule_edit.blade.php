@@ -19,7 +19,9 @@
 @endsection
 
 @section('content')
-    <link href="{{ asset('vendor/adminlte/plugins/datepicker/datepicker3.css') }}" type="text/css" rel="stylesheet">
+
+
+
     <!-- Default box -->
     <div class="row">
 
@@ -107,12 +109,12 @@
                                     </div>
                                     @else
                                     <div class="form-group">
-                                        <div class="input-group">
+                                        <div class="input-group date dtp">
                                             <span class="input-group-addon" id="basic-addon3"><b>Module</b>: {{ $module->title }}</span>
-                                            <input type="datetime-local" class="form-control" name="modules[{{ $module->id }}]" id="module_{{ $module->id }}" aria-describedby="basic-addon3" value="{{ $module->getDripOrLockDays($entry->id) }}" required style="background-color: white">
-                                            <div class="input-group-addon">
+                                            <input type="text" class="form-control" name="modules[{{ $module->id }}]" id="module_{{ $module->id }}" aria-describedby="basic-addon3" value="{{ $module->getDripOrLockDays($entry->id) }}" required style="background-color: white">
+                                            <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
-                                            </div>
+                                            </span>
                                         </div>
                                     </div>
                                     @endif
@@ -126,12 +128,12 @@
                                                 </div>
                                             @else
                                                 <div class="form-group">
-                                                    <div class="input-group col-md-offset-1">
+                                                    <div class="input-group date dtp col-md-offset-1">
                                                         <span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: {{ $lesson->title }}</span>
-                                                        <input type="datetime-local" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required style="background-color: white">
-                                                        <div class="input-group-addon">
+                                                        <input type="text" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required style="background-color: white">
+                                                        <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
-                                                        </div>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             @endif
@@ -157,9 +159,6 @@
 
             </div><!-- /.box -->
         </div>
-        <script src="{{ asset('js/schedule_create.js') }}" defer></script>
-        <script src="{{ asset('vendor/adminlte/plugins/datepicker/bootstrap-datepicker.js') }}" defer></script>
-        <script type="text/javascript" src="{{ asset('vendor/adminlte/plugins/daterangepicker/moment.min.js') }}" defer></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js" defer></script>
+
     </div>
 @endsection
