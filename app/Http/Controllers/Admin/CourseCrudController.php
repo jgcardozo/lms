@@ -43,10 +43,10 @@ class CourseCrudController extends CrudController
 				'name' => 'video_url',
 				'label' => 'Wistia Video ID'
 			],
-			[
+			/*[
 				'name' => 'lock_date',
 				'label' => 'Lock date'
-			],
+			],*/
 			[
 				'name' => 'module_group_title',
 				'label' => 'Module group title'
@@ -117,7 +117,7 @@ class CourseCrudController extends CrudController
 			'disk' => 's3'
 		]);
 
-		$this->crud->addField([
+		/*$this->crud->addField([
 			'label' => 'Lock the course until this date:',
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
@@ -139,7 +139,7 @@ class CourseCrudController extends CrudController
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
 			]
-		]);
+		]);*/
 
 		$this->crud->addField([
 			'label' => 'Lock tags:',

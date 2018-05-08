@@ -43,10 +43,10 @@ class SessionCrudController extends CrudController
 				'name' => 'video_duration',
 				'label' => 'Video duration'
 			],
-			[
+			/*[
 				'name' => 'lock_date',
 				'label' => 'Lock date'
-			],
+			],*/
 			[
 				'label' => 'Lesson',
 				'type' => 'model_function',
@@ -157,14 +157,14 @@ class SessionCrudController extends CrudController
 			'model' => 'App\Models\Course'
 		]);
 
-		$this->crud->addField([
+		/*$this->crud->addField([
 			'label' => 'Lock the session until this date:',
 			'name' => 'lock_date',
 			'type' => 'datetime_picker',
 			'date_picker_options' => [
 				'format' => 'dd-mm-yyyy g:ia'
 			]
-		]);
+		]);*/
 
 		$this->crud->addField([
 			'name' => 'type',
