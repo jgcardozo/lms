@@ -58,6 +58,10 @@ class ScheduleCrudController extends CrudController
             [
                 'name' => 'schedule_type',
                 'label' => 'Schedule Type'
+            ],
+            [
+                'name' => 'status',
+                'label' => 'Status'
             ]
         ]);
     }
@@ -80,6 +84,22 @@ class ScheduleCrudController extends CrudController
 
         foreach ($cohort_ids as $cohort_id) {
             $cohort = Cohort::find($cohort_id);
+
+            if ($cohort->schedule()->exists()) {
+
+                if (count($cohort_ids) == 1) {
+                    \Alert::error($cohort->name.' already has a schedule. Edit the existing one.')->flash();
+
+                    $schedule->delete();
+
+                    return redirect('/admin/schedule');
+                }
+
+                \Alert::warning($cohort->name.' already has a schedule. Edit the existing one.')->flash();
+
+                continue;
+            }
+
             $cohort->schedule_id = $schedule->id;
             $cohort->save();
         }
