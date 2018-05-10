@@ -299,6 +299,11 @@ class Course extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
 	public function tags() {
         return $this->morphToMany('App\Models\ISTag', 'lockable', 'is_lockables', 'lockable_id', 'tag_id');
     }

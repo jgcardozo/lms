@@ -276,6 +276,12 @@ class Lesson extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
     public function schedules()
     {
         return $this->morphToMany(Schedule::class,'schedulable');

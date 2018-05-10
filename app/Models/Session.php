@@ -109,6 +109,11 @@ class Session extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
 	public function resources()
     {
 		return $this->belongsToMany('App\Models\Resource', 'resource_session');

@@ -179,6 +179,10 @@ class User extends Authenticatable
     | Relations
     |--------------------------------------------------------------------------
     */
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
+    }
 
     public function cohorts()
     {
