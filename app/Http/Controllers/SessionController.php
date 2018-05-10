@@ -75,6 +75,12 @@ class SessionController extends Controller
 			event(new StarterVideosCompleted($session->course));
 		}
 
+		$log = new \App\Models\Log;
+		$log->user_id = Auth::user()->id;
+		$log->action_id = 2;
+		$log->save();
+		$session->logs()->save($log);
+
         return response()->json($finished);
     }
 

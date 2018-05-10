@@ -33,5 +33,11 @@ class ModuleCompleteFired
             'module' => $module->title,
             'course' => $module->course ? $module->course->title : ''
         ]);
+
+        $log = new \App\Models\Log;
+        $log->user_id = \Auth::user()->id;
+        $log->action_id = 2;
+        $log->save();
+        $module->logs()->save($log);
     }
 }

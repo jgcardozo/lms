@@ -41,5 +41,11 @@ class LessonCompleteFired
             'course' => $lesson->course ? $lesson->course->title : '',
             'module' => $lesson->module ? $lesson->module->title : ''
         ]);
+
+        $log = new \App\Models\Log;
+        $log->user_id = $user->id;
+        $log->action_id = 2;
+        $log->save();
+        $lesson->logs()->save($log);
     }
 }
