@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\RecordActivity;
 use Carbon\Carbon;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
@@ -17,6 +18,7 @@ class Event extends Model
 	use BackpackCrudTrait;
 	use UsearableTimezone;
 	use SluggableScopeHelpers;
+	use RecordActivity;
 
 	protected $fillable = ['title', 'short_description', 'description', 'start_date', 'end_date', 'event_image', 'url', 'course_id'];
 
@@ -97,4 +99,9 @@ class Event extends Model
 		// Save the path to the database
 		$this->attributes[$attribute_name] = $destination_path . $filename;
 	}
+
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
 }

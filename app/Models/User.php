@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\ISLock;
 use Carbon\Carbon;
 use Backpack\CRUD\CrudTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +55,34 @@ class User extends Authenticatable
             {
                 $model->cohorts()->attach(env('COHORT_ID'));
             }
+
+            $log = new \App\Models\Log;
+            $log->user_id = Auth::id();
+            $log->action_id = 14;
+            $log->activity_id = 7;
+            $log->subject_type = get_class($model);
+            $log->subject_id = $model->id;
+            $log->save();
+        });
+
+        static::updated(function($model) {
+            $log = new \App\Models\Log;
+            $log->user_id = Auth::id();
+            $log->action_id = 8;
+            $log->activity_id = 7;
+            $log->subject_type = get_class($model);
+            $log->subject_id = $model->id;
+            $log->save();
+        });
+
+        static::deleted(function($model) {
+            $log = new \App\Models\Log;
+            $log->user_id = Auth::id();
+            $log->action_id = 13;
+            $log->activity_id = 7;
+            $log->subject_type = get_class($model);
+            $log->subject_id = $model->id;
+            $log->save();
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\RecordActivity;
 use Auth;
 use Carbon\Carbon;
 use App\Traits\ISLock;
@@ -30,6 +31,7 @@ class Module extends Model
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
+	use RecordActivity;
 
 	protected $fillable = [
 		'title', 'slug', 'description', 'video_url', 'video_type_id', 'course_id', 'lock_date', 'featured_image', 'lesson_group_title'

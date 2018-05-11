@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\RecordActivity;
 use DB;
 use Auth;
 use Carbon\Carbon;
@@ -31,6 +32,7 @@ class Lesson extends Model
 	use UsearableTimezone;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
+	use RecordActivity;
 
 	protected $fillable = [
 		'title', 'slug', 'description', 'video_url', 'video_type_id', 'bonus_video_url', 'bonus_video_type_id', 'bonus_video_duration', 'bonus_video_text', 'fb_link', 'module_id', 'featured_image', 'lock_date', 'exclude_from_rule', 'session_group_title'

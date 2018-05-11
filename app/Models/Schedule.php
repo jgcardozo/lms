@@ -16,6 +16,11 @@ class Schedule extends Model
     ];
 
 
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
     public function cohorts()
     {
         return $this->hasMany(Cohort::class);
