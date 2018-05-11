@@ -58,6 +58,10 @@ class ScheduleCrudController extends CrudController
             [
                 'name' => 'schedule_type',
                 'label' => 'Schedule Type'
+            ],
+            [
+                'name' => 'status',
+                'label' => 'Status'
             ]
         ]);
     }
@@ -80,6 +84,22 @@ class ScheduleCrudController extends CrudController
 
         foreach ($cohort_ids as $cohort_id) {
             $cohort = Cohort::find($cohort_id);
+
+            if ($cohort->schedule()->exists()) {
+
+                if (count($cohort_ids) == 1) {
+                    \Alert::error($cohort->name.' already has a schedule. Edit the existing one.')->flash();
+
+                    $schedule->delete();
+
+                    return redirect('/admin/schedule');
+                }
+
+                \Alert::warning($cohort->name.' already has a schedule. Edit the existing one.')->flash();
+
+                continue;
+            }
+
             $cohort->schedule_id = $schedule->id;
             $cohort->save();
         }
@@ -163,15 +183,18 @@ class ScheduleCrudController extends CrudController
         $schedule->name = $name;
         $schedule->schedule_type = $schedule_type;
         $schedule->save();
-
-
+        $current_cohorts = $schedule->cohorts->pluck('id')->toArray();
+        $cohorts_to_remove = array_diff($current_cohorts,$cohort_ids);
+        $cohorts_to_add = array_diff($cohort_ids,$current_cohorts);
+        
         if ($schedule->status !== "default") {
-            foreach (Cohort::where('schedule_id',$id)->get() as $cohort) {
-                $cohort->schedule_id = 0;
+            foreach ($cohorts_to_remove as $cohort_id) {
+                $cohort = Cohort::find($cohort_id);
+                $cohort->schedule_id = null;
                 $cohort->save();
             }
 
-            foreach ($cohort_ids as $cohort_id) {
+            foreach ($cohorts_to_add as $cohort_id) {
                 $cohort = Cohort::find($cohort_id);
                 $cohort->schedule_id = $id;
                 $cohort->save();
@@ -235,7 +258,7 @@ class ScheduleCrudController extends CrudController
         $schedule = Schedule::find($id);
 
         foreach (Cohort::where('schedule_id',$id)->get() as $cohort) {
-            $cohort->schedule_id = 0;
+            $cohort->schedule_id = null;
             $cohort->save();
         }
 
