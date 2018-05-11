@@ -22,7 +22,9 @@ class ActionTableSeeder extends Seeder
         'passed',
         'passed (retaken)',
         'failed',
-        'failed (retaken)'
+        'failed (retaken)',
+        'deleted',
+        'created'
     ];
 
     public function run()

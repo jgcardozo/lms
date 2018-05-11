@@ -16,7 +16,8 @@ class ActivityTableSeeder extends Seeder
         'Billing details',
         'Password',
         'Contact details',
-        'Quiz'
+        'Quiz',
+        'Admin'
     ];
 
     public function run()
