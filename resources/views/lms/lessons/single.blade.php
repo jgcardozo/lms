@@ -63,7 +63,7 @@
                                 <div class="lesson-sessions__content--left">
                                     <h2 class="lesson-sessions__item--title">{{ $session->title }}</h2>
 
-                                    <p>{{ truncate_string($session->description) }}</p>
+                                    <p>{!!  truncate_string($session->description) !!}</p>
                                 </div>
 
                                 @if($session->isCompleteVideoFeatureOn())

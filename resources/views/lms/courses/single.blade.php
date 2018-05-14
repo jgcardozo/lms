@@ -119,7 +119,7 @@
                                 <div class="module__content">
                                     <h2 class="module__title">{{ $module->title }}</h2>
 
-                                    <p>{{ truncate_string($module->description) }}</p>
+                                    <p>{!! truncate_string($module->description) !!}</p>
 
                                     @if($module->is_locked)
                                         <a href="javascript:;" class="module__link">Go To Lesson</a>
