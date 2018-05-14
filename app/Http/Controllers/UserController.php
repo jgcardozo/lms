@@ -265,7 +265,7 @@ class UserController extends Controller
 
         $log = new \App\Models\Log;
         $log->user_id = $user->id;
-        $log->action_id = 4;
+        $log->action_id = 8;
         $log->activity_id = 4;
         $log->save();
 
