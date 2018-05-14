@@ -129,7 +129,7 @@ class ScheduleCrudController extends CrudController
                         ['schedulable_type',"App\Models\Module"]
                     ])
                     ->update([
-                        'lock_date' => date("Y-m-d h:i:s", strtotime($value))
+                        'lock_date' => date("Y-m-d H:i:s", strtotime($value))
                     ]);
             }
 
@@ -159,7 +159,7 @@ class ScheduleCrudController extends CrudController
                             ['schedulable_type',"App\Models\Lesson"]
                         ])
                         ->update([
-                            'lock_date' => date("Y-m-d h:i:s", strtotime($value))
+                            'lock_date' => date("Y-m-d H:i:s", strtotime($value))
                         ]);
                 }
             }
@@ -222,7 +222,7 @@ class ScheduleCrudController extends CrudController
         foreach ($modules as $key => $value) {
 
             if ($schedule_type === "locked") {
-                $value = date("Y-m-d h:i:s", strtotime($value));
+                $value = date("Y-m-d H:i:s", strtotime($value));
             }
 
             DB::table('schedulables')
@@ -241,7 +241,7 @@ class ScheduleCrudController extends CrudController
             foreach ($lessons as $key => $value) {
 
                 if ($schedule_type === "locked") {
-                    $value = date("Y-m-d h:i:s", strtotime($value));
+                    $value = date("Y-m-d H:i:s", strtotime($value));
                 }
 
                 DB::table('schedulables')
