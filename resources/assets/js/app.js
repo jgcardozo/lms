@@ -973,6 +973,18 @@ $(document).ready(function () {
         e.preventDefault();
         mixpanel.track('Clicked on Facebook group', {'URL': $(this).attr('href')});
         setTimeout(tl, 500);
+
+        $.ajax({
+            type: 'POST',
+            url: '/log',
+            data: {
+                'action_id' : 3,
+                'activity_id' : 8
+            },
+            success: function (res) {
+
+            }
+        });
     });
 
     $('body').on('click', '.js-event-apply', function (e) {
@@ -980,6 +992,18 @@ $(document).ready(function () {
         e.preventDefault();
         mixpanel.track('Clicked on Apply Event');
         setTimeout(tl, 500);
+
+        $.ajax({
+            type: 'POST',
+            url: '/log',
+            data: {
+                'action_id' : 3,
+                'activity_id' : 9
+            },
+            success: function (res) {
+
+            }
+        });
     });
 
     function mixpanelTrackLinks(a) {
