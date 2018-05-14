@@ -50,7 +50,7 @@
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Next Session</p>
                             <h2 class="course-reminder__title">Welcome to {{ $nextSession->title }}</h2>
-                            <p>{{ truncate_string($nextSession->description) }}</p>
+                            <p>{!! truncate_string($nextSession->description) !!}</p>
                         </div>
 
                         <?php

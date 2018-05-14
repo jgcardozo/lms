@@ -47,7 +47,7 @@
                                 <div class="module__content">
                                     <h2 class="module__title">{{ $bonus->title }}</h2>
 
-                                    <p>{{ truncate_string($bonus->description) }}</p>
+                                    <p>{!! truncate_string($bonus->description) !!}</p>
 
                                     <a href="{{ route('single.bonus', $bonus->slug) }}" class="module__link">Go To Bonus</a>
                                 </div>

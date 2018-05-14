@@ -54,7 +54,7 @@
                                 <div class="course-starter__content--left">
                                     <h2 class="course-starter__item--title">{{ $video->title }}</h2>
 
-                                    <p>{{ truncate_string($video->description) }}</p>
+                                    <p>{!! truncate_string($video->description) !!}</p>
                                 </div>
 
                                 <div class="course-starter__content--right">
