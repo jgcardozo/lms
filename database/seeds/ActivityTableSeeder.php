@@ -17,7 +17,9 @@ class ActivityTableSeeder extends Seeder
         'Password',
         'Contact details',
         'Quiz',
-        'Admin'
+        'Admin',
+        'Facebook Group',
+        'Apply Event'
     ];
 
     public function run()

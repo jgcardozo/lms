@@ -360,4 +360,6 @@ Route::post('schedule','ScheduleController@store')->name('schedule.store');
 
 Route::post('schedule/driplock','ScheduleController@dripOrLock')->name('schedule.driplock');
 
+Route::post('log','LogController@ajaxLog');
+
 Auth::routes();
