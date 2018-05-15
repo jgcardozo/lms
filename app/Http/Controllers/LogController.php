@@ -24,4 +24,11 @@ class LogController extends Controller
             return response('Error',401);
         }
     }
+
+    public function index()
+    {
+        $logs = \App\Models\Log::with('user')->with('action')->with('activity')->with('subject')->get();
+
+        return view('lms.admin.logs.index',compact('logs',$logs));
+    }
 }
