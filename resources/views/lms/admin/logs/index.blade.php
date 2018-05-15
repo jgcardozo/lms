@@ -24,7 +24,7 @@
                         <td>{{ $log->activity->name }}</td>
                     @endif
                 @endif
-                <td>{{ $log }}</td>
+                <td>{{ json_encode($log) }}</td>
             </tr>
         @endforeach
     </table>
