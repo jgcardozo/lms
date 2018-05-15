@@ -289,7 +289,7 @@ class InfusionsoftFlow
         }
 
         foreach ($tags as $tag) {
-            $this->is->contacts()->addToGroup($contactID, (int)$tag);
+            $this->is->contacts('xml')->addToGroup($contactID, (int)$tag);
         }
 
         return true;
