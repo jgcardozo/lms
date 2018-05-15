@@ -7,6 +7,7 @@ use Mockery\CountValidator\Exception;
 
 class InfusionsoftFlow
 {
+    //...
     protected static $cards = [
         'visaelectron' => [
             'type' => 'visaelectron',
@@ -214,11 +215,11 @@ class InfusionsoftFlow
     public function createCreditCard($user, $creditCard)
     {
         if (!is_object($creditCard)) {
-            $creditCard = (object) $creditCard;
+            $creditCard = (object)$creditCard;
         }
 
         if (!$this->validateCreditCard($user->contact_id, $creditCard)) {
-            return (object) [
+            return (object)[
                 'status' => false,
                 'message' => 'This credit card can not be validated.'
             ];
@@ -239,13 +240,13 @@ class InfusionsoftFlow
         try {
             $newCC = $this->is->data()->add('CreditCard', $creditCardValues);
         } catch (Exception $e) {
-            return (object) [
+            return (object)[
                 'status' => false,
                 'message' => 'This credit card can not be created.'
             ];
         }
 
-        return (object) [
+        return (object)[
             'status' => true,
             'id' => $newCC
         ];
@@ -274,7 +275,7 @@ class InfusionsoftFlow
 
         $fields = array_filter($fields);
 
-        $this->is->contacts()->update((int) $user->contact_id, $fields);
+        $this->is->contacts('xml')->update((int)$user->contact_id, $fields);
     }
 
     public function addTag($contactID = 0, $tags)
@@ -284,11 +285,11 @@ class InfusionsoftFlow
         }
 
         if (!is_array($tags)) {
-            $tags = [(int) $tags];
+            $tags = [(int)$tags];
         }
 
         foreach ($tags as $tag) {
-            $this->is->contacts()->addToGroup($contactID, (int) $tag);
+            $this->is->contacts()->addToGroup($contactID, (int)$tag);
         }
 
         return true;
