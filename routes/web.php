@@ -285,6 +285,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('cohort', 'Admin\CohortCrudController');
     CRUD::resource('bonus', 'Admin\BonusCrudController');
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
+    Route::get('logs','LogController@index')->name('log.index');
 
 
 
@@ -362,6 +363,6 @@ Route::post('schedule/driplock','ScheduleController@dripOrLock')->name('schedule
 
 Route::post('log','LogController@ajaxLog');
 
-Route::get('admin/logs','LogController@index')->name('log.index');
+
 
 Auth::routes();
