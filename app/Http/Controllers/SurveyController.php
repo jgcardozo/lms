@@ -47,6 +47,12 @@ class SurveyController extends Controller
 			}
 		}
 
+		$log = new \App\Models\Log;
+		$log->user_id = Auth::user()->id;
+		$log->action_id = 2;
+		$log->activity_id = 2;
+		$log->save();
+
 		return redirect()->route('single.course.starter', 'ask-masterclass');
 	}
 

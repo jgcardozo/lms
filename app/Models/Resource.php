@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Session;
+use App\Traits\RecordActivity;
 use Illuminate\Http\File;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Resource extends Model
 {
 	use CrudTrait, BackpackCrudTrait;
+	use RecordActivity;
 
 	protected $fillable = ['title', 'file_url'];
 
@@ -72,6 +74,11 @@ class Resource extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
     public function sessions()
 	{
 		return $this->belongsToMany('App\Models\Session', 'resource_session');

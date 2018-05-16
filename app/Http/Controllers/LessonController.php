@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use Carbon\Carbon;
 use App\Models\User;
@@ -39,6 +39,13 @@ class LessonController extends Controller
             'course' => $lesson->course ? $lesson->course->title : '',
             'module' => $lesson->module ? $lesson->module->title : ''
         ]);
+
+        $log = new \App\Models\Log;
+        $log->user_id = Auth::user()->id;
+        $log->action_id = 6;
+        $log->activity_id = 1;
+        $log->save();
+
 
 		return redirect()->back();
     }
@@ -180,6 +187,18 @@ class LessonController extends Controller
                 'created_at' => $now,
                 'passed_at' => $passed ? $now : null
 			]);
+
+            $log = new \App\Models\Log;
+            $log->user_id = $user_id;
+            if ($passed) {
+                $log->action_id = 9;
+            } else {
+                $log->action_id = 11;
+            }
+            $log->activity_id = 6;
+            $log->save();
+            $q->lesson->course->logs()->save($log);
+
 		}else{
 		    $update = [
                 'score' => $score,
@@ -196,6 +215,17 @@ class LessonController extends Controller
             {
                 $update['cert_url'] = $cert_url;
             }
+
+            $log = new \App\Models\Log;
+            $log->user_id = $user_id;
+            if ($passed) {
+                $log->action_id = 10;
+            } else {
+                $log->action_id = 12;
+            }
+            $log->activity_id = 6;
+            $log->save();
+            $q->lesson->course->logs()->save($log);
 
 			DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->update($update);
 		}

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\ISLock;
+use App\Traits\RecordActivity;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Bonus extends Model
     use CrudTrait;
     use BackpackCrudTrait;
     use SluggableScopeHelpers;
+    use RecordActivity;
 
     protected $fillable = [
         'title', 'slug', 'description', 'content', 'video_url', 'video_type_id', 'featured_image', 'header_image'
@@ -109,5 +111,11 @@ class Bonus extends Model
     public function getIsLockedAttribute()
     {
         return $this->is_tag_locked() && !is_role_admin();
+    }
+
+
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
     }
 }

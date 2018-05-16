@@ -46,6 +46,8 @@ class UserController extends Controller
 		{
 			$user = User::where('contact_id', $request->get('contactId'))->get()->first();
 			$user->syncIsTags();
+            $user->cohorts()->detach();
+            $user->cohorts()->attach(env('COHORT_ID'));
 			return;
 		}
 
@@ -189,6 +191,12 @@ class UserController extends Controller
 
 		mixPanel()->track('Updated billing details');
 
+		$log = new \App\Models\Log;
+		$log->user_id = Auth::user()->id;
+		$log->action_id = 8;
+		$log->activity_id = 3;
+		$log->save();
+
 		return response()->json([
 			'status' => true,
 			'message' => 'Your credit card has been successfully processed.'
@@ -226,6 +234,12 @@ class UserController extends Controller
 
 		mixPanel()->track('Updated contact details');
 
+        $log = new \App\Models\Log;
+        $log->user_id = $user->id;
+        $log->action_id = 8;
+        $log->activity_id = 5;
+        $log->save();
+
 		InfusionsoftFlow::syncContactDetails($user);
 
 		return redirect()->back()->with('message', 'Profile successfully updated');
@@ -250,6 +264,14 @@ class UserController extends Controller
 		$user->save();
 
 		mixPanel()->track('Changed password');
+
+        $log = new \App\Models\Log;
+        $log->user_id = $user->id;
+        $log->action_id = 8;
+        $log->activity_id = 4;
+        $log->save();
+
+
 
 		return redirect()->back()->with('message', 'Password successfully updated');
 	}
@@ -283,6 +305,10 @@ class UserController extends Controller
 		{
 			$user = User::find($id);
 			Auth::loginUsingId($user->id);
+            $log = new \App\Models\Log;
+            $log->user_id = $user->id;
+            $log->action_id = 5;
+            $log->save();
 		}
 
 		return redirect('/');

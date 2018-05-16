@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Infusionsoft tag lock content

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\RecordActivity;
 use Auth;
 use App\Traits\ISLock;
 use App\Scopes\OrderScope;
@@ -29,6 +30,7 @@ class Session extends Model
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
+	use RecordActivity;
 
 	protected $fillable = [
 		'title', 'slug', 'description', 'video_url', 'video_type_id', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'
@@ -109,6 +111,11 @@ class Session extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
 	public function resources()
     {
 		return $this->belongsToMany('App\Models\Resource', 'resource_session');
