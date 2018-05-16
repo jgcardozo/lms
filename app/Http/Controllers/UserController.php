@@ -46,8 +46,6 @@ class UserController extends Controller
 		{
 			$user = User::where('contact_id', $request->get('contactId'))->get()->first();
 			$user->syncIsTags();
-			$user->cohorts()->detach();
-			$user->cohorts()->attach(env('COHORT_ID'));
 			return;
 		}
 
