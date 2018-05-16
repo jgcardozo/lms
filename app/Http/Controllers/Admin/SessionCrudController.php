@@ -267,7 +267,8 @@ class SessionCrudController extends CrudController
 		$session_id = $request->get('id');
 		$session = Session::findOrFail($session_id);
 
-		if($request->has('starter_course_id')) {
+
+		if($request->filled('starter_course_id')) {
 			$session->update(['lesson_id' => null]);
 		}
 
