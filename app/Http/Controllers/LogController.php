@@ -27,7 +27,7 @@ class LogController extends Controller
 
     public function index()
     {
-        $logs = \App\Models\Log::with('user')->with('action')->with('activity')->with('subject')->get();
+        $logs = \App\Models\Log::with('user')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->paginate(20);
 
         return view('lms.admin.logs.index',compact('logs',$logs));
     }

@@ -362,6 +362,6 @@ Route::post('schedule/driplock','ScheduleController@dripOrLock')->name('schedule
 
 Route::post('log','LogController@ajaxLog');
 
-Route::get('log','LogController@index')->name('log.index');
+Route::get('admin/logs','LogController@index')->name('log.index');
 
 Auth::routes();
