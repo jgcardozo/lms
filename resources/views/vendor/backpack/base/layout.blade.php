@@ -153,6 +153,16 @@
         </script>
     @endif
 
+    @if(Route::currentRouteName() == 'log.index')
+        @include('scripts.schedule_scripts')
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".dtp").datetimepicker();
+            });
+        </script>
+    @endif
+
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>

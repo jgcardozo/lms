@@ -52,6 +52,11 @@ class LogSuccessfulLogin
             DB::table('user_logins')->where(array_except($logIP, ['created_at']))->update($logIP);
         }
 
+        $log = new \App\Models\Log;
+        $log->user_id = $event->user->id;
+        $log->action_id = 5;
+        $log->save();
+
 		// Sync Infusionsoft user tags
         $event->user->syncIsTags();
 
@@ -60,11 +65,6 @@ class LogSuccessfulLogin
 
         // Log in MixPanel
         mixPanel()->track('Logged in');
-
-        $log = new \App\Models\Log;
-        $log->user_id = $event->user->id;
-        $log->action_id = 5;
-        $log->save();
 
 		// Log the activity
 		activity('user-logged')->causedBy($event->user)->withProperties(['ip' => request()->ip()])->log('User :causer.email has logged in.');
