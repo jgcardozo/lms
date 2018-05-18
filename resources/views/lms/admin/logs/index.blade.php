@@ -9,11 +9,10 @@
 @endsection
 
 @section('content')
+    {{--{{ dd($logs->count()) }}--}}
     <div class="row">
         <div class="col-md-12">
-
             <div class="box box-default">
-
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-12">
@@ -56,7 +55,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group date dtp">
-                                        <span class="input-group-addon" id="basic-addon3"><b>From Date</b></span>
+                                        <span class="input-group-addon" id="fromDate"><b>From Date</b></span>
                                         <input type="text" class="form-control" name="fromDate" id="fromDate" aria-describedby="basic-addon3" value="{{ old('fromDate') }}"  style="background-color: white">
                                         <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -65,7 +64,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group date dtp">
-                                        <span class="input-group-addon" id="basic-addon3"><b>To Date</b></span>
+                                        <span class="input-group-addon" id="toDate"><b>To Date</b></span>
                                         <input type="text" class="form-control" name="toDate" id="toDate" aria-describedby="basic-addon3" value="{{ old('toDate') }}"  style="background-color: white">
                                         <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -93,13 +92,6 @@
 
                                 <tbody>
                                 @foreach($logs as $log)
-                                    @if(!empty(old()))
-                                        @if(old('cohort') !== 'all')
-                                            @if(count($log->user->cohorts->where('id',old('cohort'))) == 0)
-                                                @continue
-                                            @endif
-                                        @endif
-                                    @endif
                                     <tr>
                                         <td>{{ $log->id }}</td>
                                         <td>{{ $log->user->name }}</td>
@@ -107,23 +99,47 @@
                                         @if(empty($log->activity) && empty($log->subject))
                                             <td></td>
                                         @else
-                                        @if(empty($log->activity))
-                                            <td>{{ $log->subject->title }}</td>
-                                        @else
-                                            @if($log->activity->name === "Admin")
-                                                @if(empty($log->subject->title))
-                                                    @if(empty($log->subject->name))
-                                                        <td>{{ $log->subject_type}} <sup>here</sup></td>
+                                            @if($log->activity_id != 7)
+                                                @if(empty($log->activity_id))
+                                                    @if(count($log->subject))
+                                                        @if( empty($log->subject->title) )
+                                                            <td>{{ $log->subject->name }}</td>
+                                                        @else
+                                                            <td>
+                                                            @if(count($log->subject->module))
+                                                                [ {{ $log->subject->module->title }} ]
+                                                            @endif
+                                                                @if(count($log->subject->lesson))
+                                                                    [ {{ $log->subject->lesson->module->title }} - {{ $log->subject->lesson->title }} ]
+                                                                @endif
+                                                            {{ $log->subject->title }}
+                                                            </td>
+                                                        @endif
                                                     @else
-                                                        <td>{{ $log->subject->name}}</td>
+                                                        <td>{{ $log->subject_type }}</td>
                                                     @endif
                                                 @else
-                                                    <td>{{ $log->subject->title }}</td>
+                                                    <td>{{ $log->activity->name }}</td>
                                                 @endif
                                             @else
-                                                <td>{{ $log->activity->name }}</td>
+                                                @if(count($log->subject))
+                                                    @if( empty($log->subject->title) )
+                                                        <td>{{ $log->subject->name }}</td>
+                                                    @else
+                                                        <td>
+                                                        @if(count($log->subject->module))
+                                                            [ {{ $log->subject->module->title }} ]
+                                                        @endif
+                                                        @if(count($log->subject->lesson))
+                                                                [ {{ $log->subject->lesson->module->title }} - {{ $log->subject->lesson->title }} ]
+                                                        @endif
+                                                        {{ $log->subject->title }}
+                                                        </td>
+                                                    @endif
+                                                @else
+                                                    <td>{{ $log->subject_type }}</td>
+                                                @endif
                                             @endif
-                                        @endif
                                         @endif
                                         <td>{{ $log->created_at }}</td>
                                     </tr>
@@ -141,7 +157,7 @@
                                 </tfoot>
                             </table>
 
-                            {{$logs->links()}}
+                            {{--{{$logs->links()}}--}}
                         </div>
                     </div>
                 </div>

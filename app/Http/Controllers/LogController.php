@@ -58,10 +58,19 @@ class LogController extends Controller
                 $logs = $logs->where('created_at','<=', date("Y-m-d H:i:s", strtotime($request->input('toDate'))));
             }
 
-            $logs = $logs->paginate(20);
+            $logs = $logs->get();
+            $logs = $logs->keyBy('id');
+
+            if ($request->input('cohort') !== 'all') {
+                foreach ( $logs as $log ) {
+                    if (!count($log->user->cohorts->where('id',$request->input('cohort')))) {
+                        $logs->forget($log->id);
+                    }
+                }
+            }
         }
         else {
-            $logs = \App\Models\Log::with('user')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->paginate(20);
+            $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->get();
         }
 
         $cohorts = \App\Models\Cohort::all();
