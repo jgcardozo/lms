@@ -161,6 +161,31 @@
                 $(".dtp").datetimepicker();
             });
         </script>
+
+        <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#logTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'csv', 'pdf', 'print', 'pageLength', 'colvis'
+                    ],
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+                });
+            });
+        </script>
+
+        <style>
+            #logTable tr.even {
+                background: #ececec !important;
+            }
+        </style>
     @endif
 
     <!-- JavaScripts -->

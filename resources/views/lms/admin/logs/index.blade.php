@@ -79,7 +79,7 @@
                     <br>
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table table-bordered table-hover dataTable">
+                            <table class="table table-bordered table-hover dataTable" id="logTable">
                                 <thead>
                                 <tr role="row">
                                     <th tabindex="0" rowspan="1" colspan="1">Log Id</th>
@@ -164,4 +164,13 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('after_styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
+@endsection
+
+@section('after_scripts')
+
 @endsection
