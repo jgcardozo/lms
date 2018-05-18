@@ -282,7 +282,7 @@ class ScheduleCrudController extends CrudController
         $schedule->modules()->detach();
         $schedule->lessons()->detach();
 
-        $log = new App\Models\Log;
+        $log = new \App\Models\Log;
         $log->user_id = Auth::user()->id;
         $log->action_id = 13;
         $log->activity_id = 7;
