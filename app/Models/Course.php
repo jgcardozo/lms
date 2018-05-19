@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\RecordActivity;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use InfusionsoftFlow;
@@ -27,6 +28,7 @@ class Course extends Model
 	use BackpackCrudTrait;
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
+	use RecordActivity;
 
 	protected $fillable = [
 		'title', 'slug', 'short_description', 'description', 'video_url', 'video_type_id', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products', 'must_watch', 'complete_feature'
@@ -299,6 +301,11 @@ class Course extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
 	public function tags() {
         return $this->morphToMany('App\Models\ISTag', 'lockable', 'is_lockables', 'lockable_id', 'tag_id');
     }

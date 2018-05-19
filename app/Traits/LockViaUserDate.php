@@ -51,7 +51,12 @@ trait LockViaUserDate
                 ['course_id',$course_id]
             ])->first();
         } else {
-            $schedule = Schedule::find($cohort->schedule_id);
+            if (empty($cohort->schedule_id)) {
+                $schedule = Schedule::where('course_id',$cohort->course_id)->where('status','default')->get()->first();
+            }
+            else {
+                $schedule = Schedule::find($cohort->schedule_id);
+            }
         }
 
 

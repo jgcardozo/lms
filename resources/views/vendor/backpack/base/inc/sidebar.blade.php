@@ -54,6 +54,7 @@
           <li><a href="{{ url('admin/settings') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
           <li><a href="{{ url('admin/log') }}"><i class="fa fa-sticky-note-o"></i> <span>Log</span></a></li>
           <li><a href="{{ url('admin/analytics') }}"><i class="fa fa-tasks"></i> <span>Analytics</span></a></li>
+          <li><a href="{{ url('admin/logs') }}"><i class="fa fa-sticky-note-o"></i> <span>Activities</span></a></li>
           @endrole
           <li><a href="{{ url('admin/elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>
           <li><a href="{{ url('admin/survey') }}"><i class="fa fa-table"></i> <span>Survey</span></a></li>

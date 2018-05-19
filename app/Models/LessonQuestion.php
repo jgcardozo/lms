@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\OrderScope;
+use App\Traits\RecordActivity;
 use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ class LessonQuestion extends Model
 {
 	use CrudTrait;
 	use BackpackCrudTrait;
+	use RecordActivity;
 
 	protected $fillable = [
 		'question', 'video_url', 'video_type_id', 'video_title', 'description', 'featured_image', 'outer_url', 'featured_image', 'assessment_embed_id', 'assessment_id', 'lesson_id', 'is_tags', 'assessment_pass_tags', 'assessment_fail_tags'
@@ -44,6 +46,11 @@ class LessonQuestion extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
 	public function lesson()
 	{
 		return $this->belongsTo('App\Models\Lesson');

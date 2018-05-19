@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\RecordActivity;
 use Auth;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
@@ -18,6 +19,7 @@ class CoachingCall extends Model
 	use Sluggable;
 	use BackpackCrudTrait;
 	use SluggableScopeHelpers;
+	use RecordActivity;
 
     protected $table = 'sessions';
 
@@ -64,6 +66,11 @@ class CoachingCall extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'subject');
+    }
+
 	public function course()
 	{
 		return $this->belongsTo('App\Models\Course');
