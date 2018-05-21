@@ -37,6 +37,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Config;
 use App\Gamification\Contracts\Gamification;
 use MongoDB\Driver\Exception\ExecutionTimeoutException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+
 // use Facebook\FacebookRequest;
 
 
@@ -49,6 +51,7 @@ class HomeController extends Controller
 	}
 
 	public function index() {
+
 		if(Auth::user())
 		{
 			// Courses data set in View composers [HeaderComposer.php]
