@@ -101,15 +101,15 @@
                                         @else
                                             @if($log->activity_id != 7)
                                                 @if(empty($log->activity_id))
-                                                    @if(count($log->subject))
+                                                    @if($log->subject !== null)
                                                         @if( empty($log->subject->title) )
                                                             <td>{{ $log->subject->name }}</td>
                                                         @else
                                                             <td>
-                                                            @if(count($log->subject->module))
+                                                            @if($log->subject->module !== null)
                                                                 [ {{ $log->subject->module->title }} ]
                                                             @endif
-                                                                @if(count($log->subject->lesson))
+                                                                @if($log->subject->lesson !== null)
                                                                     [ {{ $log->subject->lesson->module->title }} - {{ $log->subject->lesson->title }} ]
                                                                 @endif
                                                             {{ $log->subject->title }}
@@ -122,15 +122,15 @@
                                                     <td>{{ $log->activity->name }}</td>
                                                 @endif
                                             @else
-                                                @if(count($log->subject))
+                                                @if($log->subject !== null)
                                                     @if( empty($log->subject->title) )
                                                         <td>{{ $log->subject->name }}</td>
                                                     @else
                                                         <td>
-                                                        @if(count($log->subject->module))
+                                                        @if($log->subject->module !== null)
                                                             [ {{ $log->subject->module->title }} ]
                                                         @endif
-                                                        @if(count($log->subject->lesson))
+                                                        @if($log->subject->lesson !== null)
                                                                 [ {{ $log->subject->lesson->module->title }} - {{ $log->subject->lesson->title }} ]
                                                         @endif
                                                         {{ $log->subject->title }}

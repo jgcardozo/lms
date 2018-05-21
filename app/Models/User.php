@@ -57,7 +57,12 @@ class User extends Authenticatable
             }
 
             $log = new \App\Models\Log;
-            $log->user_id = Auth::id();
+            if (Auth::check()) {
+                $log->user_id = Auth::id();
+            } else {
+                $log->user_id = 1;
+            }
+
             $log->action_id = 14;
             $log->activity_id = 7;
             $log->subject_type = get_class($model);
@@ -67,7 +72,13 @@ class User extends Authenticatable
 
         static::updated(function($model) {
             $log = new \App\Models\Log;
-            $log->user_id = Auth::id();
+
+            if (Auth::check()) {
+                $log->user_id = Auth::id();
+            } else {
+                $log->user_id = 1;
+            }
+            
             $log->action_id = 8;
             $log->activity_id = 7;
             $log->subject_type = get_class($model);

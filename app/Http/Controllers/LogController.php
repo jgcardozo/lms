@@ -58,7 +58,7 @@ class LogController extends Controller
                 $logs = $logs->where('created_at','<=', date("Y-m-d H:i:s", strtotime($request->input('toDate'))));
             }
 
-            $logs = $logs->get();
+            $logs = $logs->orderBy('created_at','DESC')->get();
             $logs = $logs->keyBy('id');
 
             if ($request->input('cohort') !== 'all') {
