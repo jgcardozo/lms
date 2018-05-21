@@ -146,8 +146,8 @@ class LessonController extends Controller
     {
 		http_response_code(200);
 
-		$result = request()->get('result');
-		$test = request()->get('test');
+		$result = $request->input('result');
+		$test = $request->input('test');
 
 		$user_id = (int) $result['cm_user_id'];
 		$test_id = (int) $test['test_id'];
