@@ -261,4 +261,14 @@ class User extends Authenticatable
                                                                                                                     'email' => $this->email,
                                                                                                                     'key'   => \Autologin::getKey()]) . '" style="width: 100%" />';
     }
+
+    public function view_user_activity()
+    {
+        ?>
+        <a href="<?php echo route('log.index',['user_id' => $this->id]); ?>" class="btn btn-xs btn-default">
+            <i class="fa fa-eye"></i>
+            View Activity
+        </a>
+        <?php
+    }
 }
