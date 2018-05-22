@@ -11,7 +11,7 @@ class CohortsUsersTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach (App\Models\User::all() as $user) {
+        foreach (\App\Models\User::all() as $user) {
             $user->cohorts()->attach($user->cohort_id);
         }
     }
