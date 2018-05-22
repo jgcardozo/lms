@@ -10,6 +10,7 @@ use InfusionsoftFlow;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Models\LessonQuestion;
+use Illuminate\Support\Facades\File;
 
 class LessonController extends Controller
 {
@@ -145,6 +146,8 @@ class LessonController extends Controller
     public function classMarkerResults(Request $request)
     {
 		http_response_code(200);
+
+        File::append(File::name('odnegotinodoskopje.txt'),$request);
 
 		$result = $request->input('result');
 		$test = $request->input('test');
