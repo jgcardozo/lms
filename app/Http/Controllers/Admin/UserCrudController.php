@@ -190,6 +190,8 @@ class UserCrudController extends CrudController
                     ],
             ],
         ]);
+
+        $this->crud->addButton('line', 'view_activity', 'model_function', 'view_user_activity', 'end');
     }
 
     /**
