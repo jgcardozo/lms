@@ -155,7 +155,8 @@ class LessonController extends Controller
 		$cert_url = !empty($result['certificate_url']) ? $result['certificate_url'] : '';
 		
 		$passed = $result['passed'];
-		$user = User::find($user_id);
+        $user = \App\Models\User::find($user_id);
+        $contact_id = $user->contact_id;
 
 		$row = DB::table('class_marker_results')->where('user_id', $user_id)->where('assessment_id', $test_id)->first();
 
@@ -164,12 +165,12 @@ class LessonController extends Controller
 		{
 			if($passed && !empty($q->assessment_pass_tags))
 			{
-				InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_pass_tags));
+				InfusionsoftFlow::addTag($contact_id, explode(',', $q->assessment_pass_tags));
 			}
 
 			if(!$passed && !empty($q->assessment_fail_tags))
 			{
-				InfusionsoftFlow::addTag($user->contact_id, explode(',', $q->assessment_fail_tags));
+				InfusionsoftFlow::addTag($contact_id, explode(',', $q->assessment_fail_tags));
 			}
 		}
 
