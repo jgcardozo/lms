@@ -42,12 +42,15 @@ Route::get('/', [
     'uses' => 'HomeController@index'
 ]);
 
-Route::get('bonus', [
-    'as' => 'bonus',
-    'uses' => 'BonusController@index'
-]);
+
 
 Route::group(['middleware' => ['infusionsoft_access', 'auth']], function () {
+    Route::get('bonus', [
+        'as' => 'bonus',
+        'uses' => 'BonusController@index'
+    ]);
+
+
     Route::get('course/{course}', [
         'as' => 'single.course',
         'uses' => 'CourseController@index'
