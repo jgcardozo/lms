@@ -24,10 +24,11 @@ class LessonQuestionCrudRequest extends FormRequest
     public function rules()
     {
         return [
-//            'title' => 'required|max:255',
-//            'description' => 'required',
-//            'video_url' => 'required|max:255',
-//            'module_id' => 'numeric'
+            'question' => 'required|max:255',
+            'description' => 'required',
+            'video_url' => 'required|max:255',
+            'video_title' => 'required'
+//          'module_id' => 'numeric'
         ];
     }
 }
