@@ -27,7 +27,9 @@ class BonusCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
             'description'    => 'required',
             'video_url'      => 'max:255',
             'video_type_id'  => 'required',
-            'content'        => 'required'
+            'content'        => 'required',
+            'featured_image' => 'required',
+            'header_image'   => 'required'
         ];
     }
 }
