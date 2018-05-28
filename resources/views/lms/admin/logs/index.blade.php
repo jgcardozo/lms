@@ -18,7 +18,8 @@
                         <div class="col-sm-12">
                             <form method="get" action="{{ route('log.index') }}" class="form-inline">
                                 {{ csrf_field() }}
-                                <div class="form-group">
+                                @if($userFlag) <input type="hidden" name="user_id" value="{{ old('user_id') }}"> @endif
+                                <div class="form-group @if($userFlag) hidden @endif">
                                     <label for="causer">Caused By</label>
                                     <select class="form-control" name="causer" id="causer">
                                         <option value="all" {{(old('causer') == 'all'?'selected':'')}}>All</option>
@@ -26,7 +27,7 @@
                                         <option value="admin" {{(old('causer') == 'admin'?'selected':'')}}>Admin</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group @if($userFlag) hidden @endif">
                                     <label for="cohort">Cohort</label>
                                     <select class="form-control" name="cohort" id="cohort">
                                         <option value="all">All</option>

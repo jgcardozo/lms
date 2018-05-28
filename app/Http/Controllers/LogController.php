@@ -27,13 +27,20 @@ class LogController extends Controller
 
     public function index(Request $request)
     {
+        $userFlag = false;
         if ($request->has(['_token','causer','cohort','action','activity','fromDate','toDate'])) {
 
             $request->validate([
                 '_token' => 'required'
             ]);
 
-            $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC');
+            if($request->has('user_id')) {
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC');
+                $userFlag = true;
+            } else {
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC');
+            }
+
 
             if ($request->input('causer') === 'admin') {
                 $logs = $logs->where('activity_id','=',7);
@@ -70,7 +77,12 @@ class LogController extends Controller
             }
         }
         else {
-            $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->get();
+            if($request->has('user_id')) {
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC')->get();
+                $userFlag = true;
+            } else {
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->get();
+            }
         }
 
         $cohorts = \App\Models\Cohort::all();
@@ -79,6 +91,6 @@ class LogController extends Controller
 
         $request->flash();
 
-        return view('lms.admin.logs.index',compact('logs','cohorts','actions','activities'));
+        return view('lms.admin.logs.index',compact('logs','cohorts','actions','activities','userFlag'));
     }
 }
