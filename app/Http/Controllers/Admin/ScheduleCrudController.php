@@ -192,11 +192,13 @@ class ScheduleCrudController extends CrudController
         $schedule->name = $name;
         $schedule->schedule_type = $schedule_type;
         $schedule->update();
-        $current_cohorts = $schedule->cohorts->pluck('id')->toArray();
-        $cohorts_to_remove = array_diff($current_cohorts,$cohort_ids);
-        $cohorts_to_add = array_diff($cohort_ids,$current_cohorts);
         
         if ($schedule->status !== "default") {
+
+            $current_cohorts = $schedule->cohorts->pluck('id')->toArray();
+            $cohorts_to_remove = array_diff($current_cohorts,$cohort_ids);
+            $cohorts_to_add = array_diff($cohort_ids,$current_cohorts);
+
             foreach ($cohorts_to_remove as $cohort_id) {
                 $cohort = Cohort::find($cohort_id);
                 $cohort->schedule_id = null;
