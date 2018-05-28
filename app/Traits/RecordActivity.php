@@ -4,6 +4,7 @@ namespace App\Traits;
 
 
 use App\Models\Log;
+use Illuminate\Support\Facades\Artisan;
 
 trait RecordActivity
 {
@@ -17,6 +18,8 @@ trait RecordActivity
             $log->save();
 
             $model->logs()->save($log);
+
+            Artisan::call('cache:clear');
         });
 
         static::updated(function($model){
