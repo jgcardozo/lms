@@ -40,6 +40,18 @@ trait RecordActivity
             $log->save();
 
             $model->logs()->save($log);
+
+            $logs = $model->logs;
+
+            foreach ($logs as $logg) {
+                if(empty($model->title)) {
+                    $logg->deleted = $model->name;
+                } else {
+                    $logg->deleted = $model->title;
+                }
+
+                $logg->save();
+            }
         });
     }
 }

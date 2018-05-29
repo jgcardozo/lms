@@ -138,7 +138,11 @@
                                                         </td>
                                                     @endif
                                                 @else
-                                                    <td>{{ $log->subject_type }}</td>
+                                                    @if(empty($log->deleted))
+                                                        <td>{{ $log->subject_type }}</td>
+                                                    @else
+                                                        <td>{{ $log->deleted }}</td>
+                                                    @endif
                                                 @endif
                                             @endif
                                         @endif
