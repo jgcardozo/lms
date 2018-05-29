@@ -3,6 +3,16 @@
 
 if(window.location.href.indexOf('edit') === -1) {
     ajaxCallModules();
+    $("input[type=radio][name=optradio]").change(function(){
+        var inp = this;
+        $(document).find("input[id*='session']").each(function () {
+            if(inp.value == "yes") {
+                $(this).parent('.col-md-offset-2').css('display','table');
+            } else {
+                $(this).parent('.col-md-offset-2').css('display','none');
+            }
+        })
+    });
 }
 
 $('#schedule_type, #course_id').on('change',function () {
@@ -46,6 +56,11 @@ function ajaxCallModules()
             $(document).find(".dtp").each(function () {
                 $(this).datetimepicker();
             });
+            
+
+            $(document).find("input[id*='session']").each(function () {
+                $(this).parent('.col-md-offset-2').css('display','none');
+            })
         },
         error: function error(_error) {
             console.log(_error);
