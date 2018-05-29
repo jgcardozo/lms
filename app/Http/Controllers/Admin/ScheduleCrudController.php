@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ScheduleCrudRequest;
 use App\Models\Cohort;
+use App\Models\Session;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\Admin\ScheduleCrudRequest as StoreRequest;
 use App\Http\Requests\Admin\ScheduleCrudRequest as UpdateRequest;
@@ -71,6 +72,7 @@ class ScheduleCrudController extends CrudController
     {
         $modules = $request->input('modules');
         $lessons = $request->input('lessons');
+        $sessions = $request->input('sessions');
         $name = $request->input('name');
         $schedule_type = $request->input('schedule_type');
         $cohort_ids = $request->input('cohorts');
@@ -165,6 +167,35 @@ class ScheduleCrudController extends CrudController
             }
         }
 
+        if (!empty($sessions)) {
+            foreach ($sessions as $key => $value) {
+                $schedule->sessions()->attach(Session::find($key));
+
+                if ($schedule_type === "dripped") {
+                    DB::table('schedulables')
+                        ->where([
+                            ['schedule_id',$schedule->id],
+                            ['schedulable_id',$key],
+                            ['schedulable_type',"App\Models\Session"]
+                        ])
+                        ->update([
+                            'drip_days' => $value
+                        ]);
+                }
+                else {
+                    DB::table('schedulables')
+                        ->where([
+                            ['schedule_id',$schedule->id],
+                            ['schedulable_id',$key],
+                            ['schedulable_type',"App\Models\Session"]
+                        ])
+                        ->update([
+                            'lock_date' => date("Y-m-d H:i:s", strtotime($value))
+                        ]);
+                }
+            }
+        }
+
         $log = new \App\Models\Log;
         $log->user_id = Auth::user()->id;
         $log->action_id = 14;
@@ -184,6 +215,7 @@ class ScheduleCrudController extends CrudController
 
         $modules = $request->input('modules');
         $lessons = $request->input('lessons');
+        $sessions = $request->input('sessions');
         $name = $request->input('name');
         $schedule_type = $request->input('schedule_type');
         $cohort_ids = $request->input('cohorts');
@@ -259,6 +291,26 @@ class ScheduleCrudController extends CrudController
             }
         }
 
+        if (!empty($sessions)) {
+            foreach ($sessions as $key => $value) {
+
+                if ($schedule_type === "locked") {
+                    $value = date("Y-m-d H:i:s", strtotime($value));
+                }
+
+                DB::table('schedulables')
+                    ->where([
+                        ['schedule_id',$id],
+                        ['schedulable_id', $key],
+                        ['schedulable_type',"App\Models\Session"]
+                    ])
+                    ->update([
+                        $column =>  $value,
+                        $emptyColumn => null
+                    ]);
+            }
+        }
+
         $log = new \App\Models\Log;
         $log->user_id = Auth::user()->id;
         $log->action_id = 8;
@@ -283,6 +335,7 @@ class ScheduleCrudController extends CrudController
 
         $schedule->modules()->detach();
         $schedule->lessons()->detach();
+        $schedule->sessions()->detach();
 
         $log = new \App\Models\Log;
         $log->user_id = Auth::user()->id;

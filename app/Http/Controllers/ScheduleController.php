@@ -19,7 +19,7 @@ class ScheduleController extends Controller
         $course_id = $request->input('course_id');
         $schedule_type = $request->input('schedule_type');
 
-        $course = Course::with('modules.lessons')->find($course_id);
+        $course = Course::with('modules.lessons.sessions')->find($course_id);
 
         return $course;
     }
