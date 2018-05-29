@@ -15,6 +15,7 @@ use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
@@ -111,6 +112,12 @@ class Session extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function schedules()
+    {
+        return $this->morphToMany(Schedule::class,'schedulable');
+    }
+
+
     public function logs()
     {
         return $this->morphMany('App\Models\Log', 'subject');
@@ -242,4 +249,40 @@ class Session extends Model
 		</a>
 		<?php
 	}
+
+    public function getDripOrLockDays($schedule_id)
+    {
+        $id = $this->id;
+
+        $table_row = DB::table('schedulables')
+            ->select('drip_days','lock_date')
+            ->where([
+                ['schedule_id', $schedule_id],
+                ['schedulable_id', $id],
+                ['schedulable_type',"App\Models\Session"]
+            ])->get()->first();
+
+        if (empty($table_row)) {
+            $schedule = Schedule::find($schedule_id);
+            $schedule->sessions()->attach($this);
+
+            DB::table('schedulables')
+                ->where([
+                    ['schedule_id', $schedule_id],
+                    ['schedulable_id', $id],
+                    ['schedulable_type',"App\Models\Session"]
+                ])->update([
+                    'drip_days' => 0,
+                ]);
+
+            return 0;
+        }
+
+        if (!empty($table_row->lock_date)) {
+            $session_days = date("m/d/Y h:i A", strtotime($table_row->lock_date));
+        } else {
+            $session_days = $table_row->drip_days;
+        }
+        return $session_days;
+    }
 }
