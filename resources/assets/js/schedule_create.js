@@ -24,7 +24,6 @@ function ajaxCallModules()
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function success(response) {
-
             if(window.location.href.indexOf('edit') === -1) {
                 ajaxCallCohorts();
             }
@@ -36,6 +35,9 @@ function ajaxCallModules()
                 module.append(htmlGeneratorModule(this));
                 $.each(this.lessons, function () {
                     module.append(htmlGeneratorLesson(this));
+                    $.each(this.sessions, function () {
+                        module.append(htmlGeneratorSession(this));
+                    })
                 })
             });
 
@@ -146,6 +148,21 @@ function htmlGeneratorLesson(lesson) {
         '</div>';
 
     return html;
+}
 
+function htmlGeneratorSession(session) {
+    var html =  '';
+    if (type === "dripped") {
+        html += '<div class="form-group" ><div class="input-group col-md-offset-2"><span class="input-group-addon" id="basic-addon3"><b>Session</b>: '+ session.title +'</span>';
+        html += '<input type="number" min="0" class="form-control" name="sessions['+session.id+']" id="session_'+session.id+'" aria-describedby="basic-addon3">';
+    } else {
+        html += '<div class="form-group"><div class="input-group date dtp col-md-offset-2"><span class="input-group-addon" id="basic-addon3"><b>Session</b>: '+ session.title +'</span>';
+        html += '<input type="text" class="form-control" name="sessions['+session.id+']" id="session_'+session.id+'" aria-describedby="basic-addon3"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>';
+    }
+
+    html += '</div>'+
+        '</div>';
+
+    return html;
 }
 
