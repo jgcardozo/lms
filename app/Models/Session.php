@@ -64,6 +64,42 @@ class Session extends Model
 		$this->usersWatched()->sync([$user->id], false);
 	}
 
+    public function getPreviousSessionAttribute()
+    {
+        $prevSession = $this->lesson->sessions->where('lft', '<', $this->lft)->last();
+
+        return !$prevSession ? false : $prevSession;
+    }
+
+    /**
+     * Check if this session is locked
+     *
+     * @return bool
+     */
+    public function getIsLockedAttribute()
+    {
+        if(is_role_admin()) {
+            return false;
+        }
+
+        if($this->lesson->is_locked) {
+            return true;
+        }
+
+        if(!$this->isCourseMustWatch() && !$this->is_date_locked)
+        {
+            return false;
+        }
+
+        $prevSession = $this->previous_session;
+        if((!$prevSession || $prevSession->is_completed) && !$this->is_date_locked)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
 	/**
 	 * Check if this session is marked as seen
 	 *
