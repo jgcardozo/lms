@@ -157,6 +157,8 @@ class User extends Authenticatable
     public function UnlockDate($lesson)
     {
         $course_id = $lesson->course->id;
+        $reflection = new \ReflectionClass($lesson);
+        $class_name = $reflection->getName();
 
         $cohort = $this->cohorts()->where('course_id',$course_id)->first();
 
@@ -177,11 +179,12 @@ class User extends Authenticatable
             $column_name = "drip_days";
         }
 
+
         $dateOrDay = DB::table('schedulables')
             ->select($column_name)
             ->where([
                 'schedule_id' => $schedule->id,
-                'schedulable_type' => "App\Models\Lesson",
+                'schedulable_type' => $class_name,
                 'schedulable_id' => $lesson->id
             ])->first();
 

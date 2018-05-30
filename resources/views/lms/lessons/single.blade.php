@@ -72,7 +72,7 @@
                                             <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                         @elseif($session->is_locked)
                                             <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
-                                                Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}
+                                                <span>Unlocks {{ Auth::user()->UnlockDate($session) }}</span>
                                             </div>
                                         @else
                                             <div style="{{ ! $session->isCourseMustWatch() || $session->video_progress || is_role_admin() >= 80 ? '' : 'display: none;' }}"
