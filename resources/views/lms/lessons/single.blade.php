@@ -46,11 +46,11 @@
                 <div class="lesson-sessions__list">
                     @foreach($lesson->sessions as $key => $session)
                         <div id="session-{{ $session->id }}" class="lesson-sessions__item grid--flex flex--space-between">
-                            @if($session->is_date_locked)
+                            @if($session->is_locked)
                                 <div class="lesson-sessions__item--locked-overlay"></div>
                             @endif
                             <div class="lesson-sessions__video grid--flex" @if($session->featured_image) style="background-image: url({{ $session->featured_image_url }});" @endif>
-                                @if($session->is_date_locked)
+                                @if($session->is_locked)
                                     <div class="course-progress grid--flex flex--align-center flex--just-center">
                                         <span class="course-progress__bar course-progress__bar--locked"></span>
                                     </div>
@@ -70,7 +70,7 @@
                                     <div class="lesson-sessions__content--right">
                                         @if($session->is_completed)
                                             <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
-                                        @elseif($session->is_date_locked)
+                                        @elseif($session->is_locked)
                                             <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
                                                 Unlocks {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}
                                             </div>
