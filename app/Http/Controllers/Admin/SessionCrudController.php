@@ -230,7 +230,7 @@ class SessionCrudController extends CrudController
 		}
 
 		$args = [];
-		if($request->has('starter_course_id')) {
+		if($request->filled('starter_course_id')) {
 			$args['lesson_id'] = null;
 		}
 

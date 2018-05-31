@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
-class BonusCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
+class UserUpdateCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
 {
 
     /**
@@ -23,13 +23,11 @@ class BonusCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            'title'          => 'required|max:255',
-            'description'    => 'required',
-            'video_url'      => 'max:255',
-            'video_type_id'  => 'required',
-            'content'        => 'required',
-            'featured_image' => 'required',
-            'header_image'   => 'required'
+            'email'    => 'required',
+            'name'     => 'required',
+            'password' => 'confirmed',
+            'phone1'   => 'required',
+            'company'  => 'required'
         ];
     }
 }

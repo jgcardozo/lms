@@ -25,7 +25,8 @@ class LessonCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
             'title' => 'required|max:255',
             'description' => 'required',
             'video_url' => 'required|max:255',
-            'module_id' => 'numeric'
+            'module_id' => 'numeric',
+            'session_group_title' => 'required'
         ];
     }
 }
