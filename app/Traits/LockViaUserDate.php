@@ -39,7 +39,7 @@ trait LockViaUserDate
         } elseif ($class_name === "Lesson") {
             $course_id = $this->course->id;
         } elseif ($class_name === "Session") {
-            return false;
+            $course_id = $this->course->id;
         }
 
 

@@ -72,6 +72,10 @@
                                 <option value="dripped">Drip</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label class="radio-inline"><input type="radio" value="yes" name="optradio">With Sessions</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="optradio" checked>Without Sessions</label>
+                        </div>
                         <div class="form-group col-md-11 col-md-offset-1" id="modules_lessons">
                             {{--Content is being created dynamically with javascript--}}
                         </div>

@@ -96,6 +96,10 @@
                                 </select>
                             </div>
                         @endif
+                        <div class="form-group">
+                            <label class="radio-inline"><input type="radio" value="yes" name="optradio">With Sessions</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="optradio" checked>Without Sessions</label>
+                        </div>
                         <div class="form-group col-md-11 col-md-offset-1" id="modules_lessons">
                             <label>Modules and Lessons</label>
                             @foreach($courses->keyBy('id')->get($entry->course_id)->modules as $module)
@@ -119,24 +123,44 @@
                                     </div>
                                     @endif
                                 @foreach($module->lessons as $lesson)
+                                    @if($entry->schedule_type === "dripped")
+                                        <div class="form-group">
+                                            <div class="input-group col-md-offset-1">
+                                                <span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: {{ $lesson->title }}</span>
+                                                <input type="number" min="0" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}'" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <div class="input-group date dtp col-md-offset-1">
+                                                <span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: {{ $lesson->title }}</span>
+                                                <input type="text" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required style="background-color: white">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                        @foreach($lesson->sessions as $session)
                                             @if($entry->schedule_type === "dripped")
                                                 <div class="form-group">
-                                                    <div class="input-group col-md-offset-1">
-                                                        <span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: {{ $lesson->title }}</span>
-                                                        <input type="number" min="0" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}'" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required>
+                                                    <div class="input-group col-md-offset-2" style="display: none;">
+                                                        <span class="input-group-addon" id="basic-addon3"><b>Session</b>: {{ $session->title }}</span>
+                                                        <input type="number" min="0" class="form-control" name="sessions[{{ $session->id }}]" id="sessions_{{ $session->id }}'" aria-describedby="basic-addon3" value="{{ $session->getDripOrLockDays($entry->id) }}">
                                                     </div>
                                                 </div>
                                             @else
                                                 <div class="form-group">
-                                                    <div class="input-group date dtp col-md-offset-1">
-                                                        <span class="input-group-addon" id="basic-addon3"><b>Lesson</b>: {{ $lesson->title }}</span>
-                                                        <input type="text" class="form-control" name="lessons[{{ $lesson->id }}]" id="lessons_{{ $lesson->id }}" aria-describedby="basic-addon3" value="{{ $lesson->getDripOrLockDays($entry->id) }}" required style="background-color: white">
+                                                    <div class="input-group date dtp col-md-offset-2" style="display: none;">
+                                                        <span class="input-group-addon" id="basic-addon3"><b>Session</b>: {{ $session->title }}</span>
+                                                        <input type="text" class="form-control" name="sessions[{{ $session->id }}]" id="sessions_{{ $session->id }}" aria-describedby="basic-addon3" value="{{ $session->getDripOrLockDays($entry->id) }}"  style="background-color: white">
                                                         <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
                                                     </div>
                                                 </div>
                                             @endif
+                                        @endforeach
                                 @endforeach
                             @endforeach
                         </div>
