@@ -71,9 +71,15 @@
                                         @if($session->is_completed)
                                             <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>
                                         @elseif($session->is_locked)
-                                            <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
-                                                <span>Unlocks {{ Auth::user()->UnlockDate($session) }}</span>
-                                            </div>
+                                            @if($session->is_date_locked)
+                                                <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($lesson->getDate('lock_date'))) }}">
+                                                    <span>Unlocks {{ Auth::user()->UnlockDate($session) }}</span>
+                                                </div>
+                                            @else
+                                                <div class="course-progress course-progress__lesson">
+                                                    <span class="course-progress__bar course-progress__bar--locked"></span>
+                                                </div>
+                                            @endif
                                         @else
                                             <div style="{{ ! $session->isCourseMustWatch() || $session->video_progress || is_role_admin() >= 80 ? '' : 'display: none;' }}"
                                                  class="course-progress"
