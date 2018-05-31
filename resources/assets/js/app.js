@@ -707,6 +707,7 @@ $(document).ready(function () {
             }
 
             $this.removeClass('doing');
+            window.location.reload(true);
         });
     });
 
