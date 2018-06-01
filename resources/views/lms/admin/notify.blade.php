@@ -19,6 +19,7 @@
                 <form method="post" action="{{ route('notify.send') }}">
                     <div class="box-body">
                         <div class="form-group">
+                            <label class="radio-inline"><input type="radio" value="all" name="optradio">To All Users</label>
                             <label class="radio-inline"><input type="radio" value="user" name="optradio">Specific User</label>
                             <label class="radio-inline"><input type="radio" value="cohort_course" name="optradio" checked>Cohort/Course</label>
                         </div>
@@ -83,9 +84,14 @@
                     if(inp.value == "user") {
                         $(".users").css('display','block');
                         $(".cohort_course").css('display','none');
-                    } else {
+                    }
+                    if(inp.value == "cohort_course") {
                         $(".users").css('display','none');
                         $(".cohort_course").css('display','block');
+                    }
+                    if(inp.value == "all") {
+                        $(".users").css('display','none');
+                        $(".cohort_course").css('display','none');
                     }
                 });
             });

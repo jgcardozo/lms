@@ -36,6 +36,13 @@ class NotifyController extends Controller
 		$cohorts = $request->input('cohorts');
 		$message = $request->input('message');
 		$specificUsers = $request->input('users');
+		$radioButton = $request->input('optradio');
+
+		if($radioButton === "all") {
+            User::all()->each->notify(new CustomMessage($message));
+
+            return redirect()->back();
+        }
 
 		if(!empty($specificUsers)) {
 		    User::find($specificUsers)->each->notify(new CustomMessage($message));
@@ -80,10 +87,6 @@ class NotifyController extends Controller
         } else {
             User::find($usersByCourses)->each->notify(new CustomMessage($message));
             User::find($usersByCohort)->each->notify(new CustomMessage($message));
-        }
-
-        if(empty($usersByCourses) && empty($usersByCohort)) {
-            User::all()->each->notify(new CustomMessage($message));
         }
 
 		return redirect()->back();
