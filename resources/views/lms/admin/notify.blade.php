@@ -19,6 +19,11 @@
                 <form method="post" action="{{ route('notify.send') }}">
                     <div class="box-body">
                         <div class="form-group">
+                            <label class="radio-inline"><input type="radio" value="user" name="optradio">Specific User</label>
+                            <label class="radio-inline"><input type="radio" value="cohort_course" name="optradio" checked>Cohort/Course</label>
+                        </div>
+
+                        <div class="form-group cohort_course">
                             <label>Send notifications only to users in course: <br/> <small>If there you select a course, and send a message to all users</small></label>
                             <select multiple="" name="courses[]" class="form-control" style="min-height: 150px;">
                                 @foreach($courses as $course)
@@ -27,11 +32,20 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group cohort_course">
                             <label>Send notifications only to users in cohort:</label>
                             <select multiple="" name="cohorts[]" class="form-control" style="min-height: 150px;">
                                 @foreach($cohorts as $cohort)
                                     <option value="{{ $cohort->id }}">{!! $cohort->name !!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group users" style="display: none">
+                            <label>Send notifications to specific users: <br/></label>
+                            <select multiple="" name="users[]" class="form-control" style="min-height: 150px;">
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{!! $user->name !!} - {!! $user->email !!}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -63,6 +77,17 @@
                         "filebrowserBrowseUrl": "{{ url(config('backpack.base.route_prefix').'/elfinder/ckeditor') }}",
                         "extraPlugins" : '{{ isset($field['extra_plugins']) ? implode(',', $field['extra_plugins']) : 'oembed,widget' }}'
                     });
+
+                $("input[type=radio][name=optradio]").change(function(){
+                    var inp = this;
+                    if(inp.value == "user") {
+                        $(".users").css('display','block');
+                        $(".cohort_course").css('display','none');
+                    } else {
+                        $(".users").css('display','none');
+                        $(".cohort_course").css('display','block');
+                    }
+                });
             });
     </script>
 @endsection
