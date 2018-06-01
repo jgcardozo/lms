@@ -74,41 +74,41 @@
                         <a class="grid--flex flex--align-center{!! set_active_link('calendar') !!}"" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
                     </div>
 
-                    @role('Administrator')
-                        <div class="masthead__notifications grid--flex flex--align-center">
-                            <a class="js-header-notifications" href="javascript:;">
-                                <i class="icon--notification"></i>
 
-                                @if(!empty($notifications['data']) && $notifications['count_unread'] > 0)
-                                    <span class="masthead__notifications__count">{{ $notifications['count_unread'] }}</span>
-                                @endif
-                            </a>
+                    <div class="masthead__notifications grid--flex flex--align-center">
+                        <a class="js-header-notifications" href="javascript:;">
+                            <i class="icon--notification"></i>
 
-                            <div class="masthead__notifications-outer-wrap">
-                                <div class="masthead__notifications-wrap">
-                                    <div class="masthead__notifications__header">
-                                        <p>Notifications</p>
-                                        <a href="#" class="js-notifications-mark-as-read" data-route="{{ route('notifications.markAsRead') }}">Mark all as read</a>
-                                    </div>
-                                    <ul class="masthead__notifications-list list--unstyled">
-                                        @if(!empty($notifications['data']))
-                                            @foreach($notifications['data']->take(5) as $notification)
-                                                @include('lms.notifications.type.' . snake_case(class_basename($notification->type)))
-                                            @endforeach
-                                        @else
-                                            <li class="masthead__notifications-list__item masthead__notifications-list__item--read-all">
-                                                <a href="{{ route('notifications') }}"><strong>You are up-to-date</strong></a>
-                                            </li>
-                                        @endif
+                            @if(!empty($notifications['data']) && $notifications['count_unread'] > 0)
+                                <span class="masthead__notifications__count">{{ $notifications['count_unread'] }}</span>
+                            @endif
+                        </a>
 
-                                        <li class="masthead__notifications-list__item masthead__notifications-list__item--read-all">
-                                            <a href="{{ route('notifications') }}"><strong>See all notifications.</strong></a>
-                                        </li>
-                                    </ul>
+                        <div class="masthead__notifications-outer-wrap">
+                            <div class="masthead__notifications-wrap">
+                                <div class="masthead__notifications__header">
+                                    <p>Notifications</p>
+                                    <a href="#" class="js-notifications-mark-as-read" data-route="{{ route('notifications.markAsRead') }}">Mark all as read</a>
                                 </div>
+                                <ul class="masthead__notifications-list list--unstyled">
+                                    @if(!empty($notifications['data']))
+                                        @foreach($notifications['data']->take(5) as $notification)
+                                            @include('lms.notifications.type.' . snake_case(class_basename($notification->type)))
+                                        @endforeach
+                                    @else
+                                        <li class="masthead__notifications-list__item masthead__notifications-list__item--read-all">
+                                            <a href="{{ route('notifications') }}"><strong>You are up-to-date</strong></a>
+                                        </li>
+                                    @endif
+
+                                    <li class="masthead__notifications-list__item masthead__notifications-list__item--read-all">
+                                        <a href="{{ route('notifications') }}"><strong>See all notifications.</strong></a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    @endrole
+                    </div>
+
 
                     <div class="masthead__user grid--flex">
                         <ul class="list--inline grid--flex flex--align-center">

@@ -20,17 +20,28 @@ class NotifyController extends Controller
 	{
 		$courses = Course::get();
 		$cohorts = Cohort::get();
+		$users = User::all();
 
-		return view('lms.admin.notify')->with('courses', $courses)->with('cohorts', $cohorts);
+		return view('lms.admin.notify')->with('courses', $courses)->with('cohorts', $cohorts)->with('users', $users);
 	}
 
 	public function notify(Request $request)
 	{
+
+        $usersByCohort = [];
+        $usersByCourses = [];
 		$users = User::select('*');
 
-		$courses = $request->get('courses');
-		$cohorts = $request->get('cohorts');
-		$message = $request->get('message');
+		$courses = $request->input('courses');
+		$cohorts = $request->input('cohorts');
+		$message = $request->input('message');
+		$specificUsers = $request->input('users');
+
+		if(!empty($specificUsers)) {
+		    User::find($specificUsers)->each->notify(new CustomMessage($message));
+
+            return redirect()->back();
+        }
 
 		if(!empty($courses))
 		{
@@ -47,14 +58,33 @@ class NotifyController extends Controller
 			$users->whereHas('is_tags', function($query) use ($tags) {
 				$query->whereIn('id', $tags);
 			});
+
+			$usersByCourses = $users->pluck('id')->toArray();
 		}
 
 		if(!empty($cohorts))
         {
-            $users->whereIn('cohort_id', $cohorts);
+            foreach ($cohorts as $cohort) {
+                $users = Cohort::find($cohort)->users;
+                $users = $users->pluck('id')->toArray();
+                $usersByCohort = array_merge($usersByCohort,$users);
+            }
         }
 
-		$users->get()->each->notify(new CustomMessage($message));
+        if(!empty($usersByCourses) && !empty($usersByCohort)) {
+
+            $usersToNotify = array_merge($usersByCohort,$usersByCourses);
+            $usersToNotify = array_unique($usersToNotify);
+
+            User::find($usersToNotify)->each->notify(new CustomMessage($message));
+        } else {
+            User::find($usersByCourses)->each->notify(new CustomMessage($message));
+            User::find($usersByCohort)->each->notify(new CustomMessage($message));
+        }
+
+        if(empty($usersByCourses) && empty($usersByCohort)) {
+            User::all()->each->notify(new CustomMessage($message));
+        }
 
 		return redirect()->back();
 	}
