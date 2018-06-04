@@ -77,7 +77,14 @@
                 <div class="box-body">
                     @foreach($logs as $log)
                         <p style="display: inline-block"><b>{{ $log->user->name }}</b> sent a notification to
-                            <b>@if(is_array($log->subject)) {{$log->subject['type']}} @else {{ $log->subject }} @endif</b>
+                            <b>
+                                @if(is_array($log->subject))
+                                    {{$log->subject['type']}}
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailsModal{{$log->id}}">View Details</button>
+                                @else
+                                    {{ $log->subject }}
+                                @endif
+                            </b>
                             with a message <b>{{ strip_tags($log->message) }}</b></p>
                         <form method="post" action="{{ route('notification.log.delete',$log->id) }}">
                             {{ method_field('delete') }}
@@ -85,6 +92,35 @@
                             <button class="btn btn-primary" value="{{ $log->id  }}">Delete</button>
                         </form>
                         <hr>
+
+                        <!-- Modal -->
+                        <div id="detailsModal{{$log->id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Details</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            @if($log->subject['type'] === "cohortCourse")
+                                                @include('lms.notifications.partials.courseDetails')
+                                            @else
+                                                @foreach($log->subject['users'] as $user)
+                                                    {{ $user->name }} - {{ $user->email }}
+                                                @endforeach
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     @endforeach
                 </div>
             </div>
