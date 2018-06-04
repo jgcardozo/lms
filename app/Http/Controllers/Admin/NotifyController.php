@@ -52,7 +52,7 @@ class NotifyController extends Controller
 		if($radioButton === "all") {
             User::all()->each->notify(new CustomMessage($message,$uuid));
 
-            $notifyLog->subject = "All users";
+            $notifyLog->subject = ["type" => "All users"];
             $notifyLog->save();
 
             return redirect()->back();
