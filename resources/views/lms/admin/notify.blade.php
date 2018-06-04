@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" type="text/css">
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default">
@@ -43,8 +44,8 @@
                         </div>
 
                         <div class="form-group users" style="display: none">
-                            <label>Send notifications to specific users: <br/></label>
-                            <select multiple="" name="users[]" class="form-control" style="min-height: 150px;">
+                            <label for="users">Send notifications to specific users: <br/></label>
+                            <select multiple="multiple" name="users[]" id="users" class="form-control" style="min-height: 150px;">
                                 @foreach($users as $user)
                                     <option value="{{ $user->id }}">{!! $user->name !!} - {!! $user->email !!}</option>
                                 @endforeach
@@ -71,7 +72,7 @@
 @section('after_scripts')
     <script src="{{ asset('vendor/backpack/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('vendor/backpack/ckeditor/adapters/jquery.js') }}"></script>
-
+    <script src="{{ asset('vendor/adminlte/plugins/select2/select2.min.js') }}"></script>
     <script>
             jQuery(document).ready(function($) {
                     $('textarea[name="message"].ckeditor').ckeditor({
@@ -93,6 +94,12 @@
                         $(".users").css('display','none');
                         $(".cohort_course").css('display','none');
                     }
+                });
+
+                $('#users').select2({
+                    width : "100%",
+                    display : 'block',
+                    theme: 'classic'
                 });
             });
     </script>
