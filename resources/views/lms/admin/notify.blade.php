@@ -80,7 +80,9 @@
                             <b>
                                 @if(is_array($log->subject))
                                     {{$log->subject['type']}}
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailsModal{{$log->id}}">View Details</button>
+                                    @if($log->subject['type'] !== "All users")
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailsModal{{$log->id}}">View Details</button>
+                                    @endif
                                 @else
                                     {{ $log->subject }}
                                 @endif
@@ -107,7 +109,7 @@
                                         <p>
                                             @if($log->subject['type'] === "cohortCourse")
                                                 @include('lms.notifications.partials.courseDetails')
-                                            @else
+                                            @elseif($log->subject['type'] === "users")
                                                 @foreach($log->subject['users'] as $user)
                                                     {{ $user->name }} - {{ $user->email }}
                                                 @endforeach
