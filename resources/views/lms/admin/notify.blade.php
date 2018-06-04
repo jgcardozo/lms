@@ -78,7 +78,7 @@
                     @foreach($logs as $log)
                         <p style="display: inline-block"><b>{{ $log->user->name }}</b> sent a notification to
                             <b>@if(is_array($log->subject)) {{$log->subject['type']}} @else {{ $log->subject }} @endif</b>
-                            with a message <b>{{ $log->message }}</b></p>
+                            with a message <b>{{ strip_tags($log->message) }}</b></p>
                         <form method="post" action="{{ route('notification.log.delete',$log->id) }}">
                             {{ method_field('delete') }}
                             {{ csrf_field() }}
