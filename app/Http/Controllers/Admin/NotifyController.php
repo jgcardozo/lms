@@ -25,8 +25,9 @@ class NotifyController extends Controller
 		$courses = Course::get();
 		$cohorts = Cohort::get();
 		$users = User::all();
+		$logs = NotificationLog::with('user')->get();
 
-		return view('lms.admin.notify')->with('courses', $courses)->with('cohorts', $cohorts)->with('users', $users);
+		return view('lms.admin.notify')->with('courses', $courses)->with('cohorts', $cohorts)->with('users', $users)->with('logs',$logs);
 	}
 
 	public function notify(Request $request)
