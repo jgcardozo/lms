@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Cohort;
+use App\Models\NotificationLog;
 use App\Models\User;
 use App\Models\Course;
 use App\Notifications\CustomMessage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use function MongoDB\BSON\toJSON;
 
 class NotifyController extends Controller
 {
@@ -37,15 +41,27 @@ class NotifyController extends Controller
 		$message = $request->input('message');
 		$specificUsers = $request->input('users');
 		$radioButton = $request->input('optradio');
+        $uuid = (string) Str::uuid();
+
+        $notifyLog = new NotificationLog();
+        $notifyLog->user_id = Auth::id();
+        $notifyLog->uuid = $uuid;
+        $notifyLog->message = $message;
 
 		if($radioButton === "all") {
-            User::all()->each->notify(new CustomMessage($message));
+            User::all()->each->notify(new CustomMessage($message,$uuid));
+
+            $notifyLog->subject = "All users";
+            $notifyLog->save();
 
             return redirect()->back();
         }
 
 		if(!empty($specificUsers)) {
-		    User::find($specificUsers)->each->notify(new CustomMessage($message));
+		    User::find($specificUsers)->each->notify(new CustomMessage($message,$uuid));
+
+            $notifyLog->subject = ["users" => User::find($specificUsers), "type" => "specificUsers"];
+            $notifyLog->save();
 
             return redirect()->back();
         }
@@ -83,11 +99,16 @@ class NotifyController extends Controller
             $usersToNotify = array_merge($usersByCohort,$usersByCourses);
             $usersToNotify = array_unique($usersToNotify);
 
-            User::find($usersToNotify)->each->notify(new CustomMessage($message));
+            User::find($usersToNotify)->each->notify(new CustomMessage($message,$uuid));
+
+
         } else {
-            User::find($usersByCourses)->each->notify(new CustomMessage($message));
-            User::find($usersByCohort)->each->notify(new CustomMessage($message));
+            User::find($usersByCourses)->each->notify(new CustomMessage($message,$uuid));
+            User::find($usersByCohort)->each->notify(new CustomMessage($message,$uuid));
         }
+
+        $notifyLog->subject = ['cohorts' => $cohorts,'courses' => $courses, "type" => "cohortCourse"];
+        $notifyLog->save();
 
 		return redirect()->back();
 	}
