@@ -25,7 +25,7 @@ class NotifyController extends Controller
 		$courses = Course::get();
 		$cohorts = Cohort::get();
 		$users = User::all();
-		$logs = NotificationLog::with('user')->get();
+		$logs = NotificationLog::with('user')->orderBy('created_at','DESC')->get();
 
 		return view('lms.admin.notify')->with('courses', $courses)->with('cohorts', $cohorts)->with('users', $users)->with('logs',$logs);
 	}
@@ -108,7 +108,7 @@ class NotifyController extends Controller
             User::find($usersByCohort)->each->notify(new CustomMessage($message,$uuid));
         }
 
-        $notifyLog->subject = ['cohorts' => $cohorts,'courses' => $courses, "type" => "cohortCourse"];
+        $notifyLog->subject = ['cohorts' => Cohort::find($cohorts),'courses' => $courses, "type" => "cohortCourse"];
         $notifyLog->save();
 
 		return redirect()->back();

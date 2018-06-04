@@ -106,15 +106,14 @@
                                         <h4 class="modal-title">Details</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>
-                                            @if($log->subject['type'] === "cohortCourse")
-                                                @include('lms.notifications.partials.courseDetails')
-                                            @elseif($log->subject['type'] === "users")
-                                                @foreach($log->subject['users'] as $user)
-                                                    {{ $user->name }} - {{ $user->email }}
-                                                @endforeach
-                                            @endif
-                                        </p>
+                                        @if($log->subject['type'] === "cohortCourse")
+                                            @include('lms.notifications.partials.courseDetails')
+                                        @elseif($log->subject['type'] === "specificUsers")
+                                            @foreach($log->subject['users'] as $user)
+                                                <p>{{ $user->name }} - {{ $user->email }}</p>
+                                                <hr>
+                                            @endforeach
+                                        @endif
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -1,10 +1,12 @@
 @if(!is_null($log->subject['courses']))
     @foreach($log->subject['courses'] as $course)
-        {{ \App\Models\Course::find($course)->title }}
+        <p><b>Course: </b>{{  $course->title }}</p>
+        <hr>
     @endforeach
 @endif
 @if(!is_null($log->subject['cohorts']))
     @foreach($log->subject['cohorts'] as $cohort)
-        {{ \App\Models\Cohort::find($cohort)->name }}
+        <p><b>Cohort: </b>{{ $cohort->name }}</p>
+        <hr>
     @endforeach
 @endif
