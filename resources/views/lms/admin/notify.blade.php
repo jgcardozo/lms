@@ -67,6 +67,29 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="box-title">Logs of notifications sent</div>
+                </div>
+                <div class="box-body">
+                    @foreach($logs as $log)
+                        <p style="display: inline-block"><b>{{ $log->user->name }}</b> sent a notification to
+                            <b>@if(is_array($log->subject)) {{$log->subject['type']}} @else {{ $log->subject }} @endif</b>
+                            with a message <b>{{ $log->message }}</b></p>
+                        <form method="post" action="{{ route('notification.log.delete',$log->id) }}">
+                            {{ method_field('delete') }}
+                            {{ csrf_field() }}
+                            <button class="btn btn-primary" value="{{ $log->id  }}">Delete</button>
+                        </form>
+                        <hr>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('after_scripts')
