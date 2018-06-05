@@ -75,7 +75,7 @@
                     <div class="box-title">Logs of notifications sent</div>
                 </div>
                 <div class="box-body">
-                    <table class="table" id="logTable" style="overflow-y: scroll">
+                    <table class="table" id="logTable">
                         @foreach($logs as $log)
                             <tr>
                                 <td>
