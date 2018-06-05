@@ -79,22 +79,17 @@
                         @foreach($logs as $log)
                             <tr>
                                 <td>
-                                    <p style="display: inline-block"><b>{{ $log->user->name }}</b> sent a notification to
+                                   <b>{{ $log->user->name }}</b> sent a notification to
                                         <b>
-                                            @if(is_array($log->subject))
-                                                @if($log->subject['type'] === "specificUsers")
-                                                    Specific Users
-                                                @elseif($log->subject['type'] === "cohortCourse")
-                                                    Cohort/Course
-                                                @else
-                                                    All Users
-                                                @endif
+                                            @if($log->subject['type'] === "specificUsers")
+                                                Specific Users
+                                            @elseif($log->subject['type'] === "cohortCourse")
+                                                Cohort/Course
                                             @else
-                                                {{ $log->subject }}
+                                                All Users
                                             @endif
                                         </b>
                                         with a message <b>{{ strip_tags($log->message) }}</b>
-                                    </p>
                                 </td>
                                 <td>
                                     <form method="post" action="{{ route('notification.log.delete',$log->id) }}">
