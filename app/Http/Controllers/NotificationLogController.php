@@ -18,6 +18,6 @@ class NotificationLogController extends Controller
 
         $notificationLog->delete();
 
-        return redirect()->back();
+        return redirect()->to(url()->previous()."#logTable");
     }
 }
