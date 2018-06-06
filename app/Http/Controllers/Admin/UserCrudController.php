@@ -241,6 +241,11 @@ class UserCrudController extends CrudController
 
 		$this->updateProfile($dataToUpdate['id']);
 
+        if(count(User::where('email',$request->input('email'))->where('id','!=',$dataToUpdate['id'])->get()))
+        {
+            \Alert::error('A user with that email already exists!')->flash();
+            return redirect()->back();
+        }
         // update the row in the db
         $this->crud->update(\Request::get($this->crud->model->getKeyName()), $dataToUpdate);
 
