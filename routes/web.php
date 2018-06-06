@@ -366,6 +366,8 @@ Route::post('schedule/driplock','ScheduleController@dripOrLock')->name('schedule
 
 Route::post('log','LogController@ajaxLog');
 
+Route::delete('notifications/{id}/delete','NotificationLogController@delete')->name('notification.log.delete');
+
 
 
 Auth::routes();

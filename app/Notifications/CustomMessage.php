@@ -11,16 +11,17 @@ class CustomMessage extends Notification
 {
     use Queueable;
 
-    private $message;
+    private $message,$uuid;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($message,$uuid)
     {
         $this->message = $message;
+        $this->uuid = $uuid;
     }
 
     /**
@@ -43,7 +44,8 @@ class CustomMessage extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->message
+            'message' => $this->message,
+            'uuid' => $this->uuid
         ];
     }
 }

@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" type="text/css">
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default">
@@ -43,8 +44,8 @@
                         </div>
 
                         <div class="form-group users" style="display: none">
-                            <label>Send notifications to specific users: <br/></label>
-                            <select multiple="" name="users[]" class="form-control" style="min-height: 150px;">
+                            <label for="users">Send notifications to specific users: <br/></label>
+                            <select multiple="multiple" name="users[]" id="users" class="form-control" style="min-height: 150px;">
                                 @foreach($users as $user)
                                     <option value="{{ $user->id }}">{!! $user->name !!} - {!! $user->email !!}</option>
                                 @endforeach
@@ -66,12 +67,86 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="box-title">Logs of notifications sent</div>
+                </div>
+                <div class="box-body">
+                    <table class="table" id="logTable">
+                        @foreach($logs as $log)
+                            <tr>
+                                <td>
+                                   <b>{{ $log->user->name }}</b> sent a notification to
+                                        <b>
+                                            @if($log->subject['type'] === "specificUsers")
+                                                Specific Users
+                                            @elseif($log->subject['type'] === "cohortCourse")
+                                                Cohort/Course
+                                            @else
+                                                All Users
+                                            @endif
+                                        </b>
+                                        with a message <b>{{ strip_tags($log->message) }}</b>
+                                </td>
+                                <td>
+                                    <form method="post" action="{{ route('notification.log.delete',$log->id) }}">
+                                        {{ method_field('delete') }}
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-primary" value="{{ $log->id  }}">Delete</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    @if(is_array($log->subject))
+                                        @if($log->subject['type'] !== "All users")
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailsModal{{$log->id}}">View Details</button>
+                                        @endif
+                                    @else
+                                        {{ $log->subject }}
+                                    @endif
+                                </td>
+
+                                <!-- Modal -->
+                                <div id="detailsModal{{$log->id}}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Details</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                @if($log->subject['type'] === "cohortCourse")
+                                                    @include('lms.notifications.partials.courseDetails')
+                                                @elseif($log->subject['type'] === "specificUsers")
+                                                    @include('lms.notifications.partials.usersDetails')
+                                                @endif
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                    {{$logs->fragment('logTable')->links()}}
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('after_scripts')
     <script src="{{ asset('vendor/backpack/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('vendor/backpack/ckeditor/adapters/jquery.js') }}"></script>
-
+    <script src="{{ asset('vendor/adminlte/plugins/select2/select2.min.js') }}"></script>
     <script>
             jQuery(document).ready(function($) {
                     $('textarea[name="message"].ckeditor').ckeditor({
@@ -93,6 +168,12 @@
                         $(".users").css('display','none');
                         $(".cohort_course").css('display','none');
                     }
+                });
+
+                $('#users').select2({
+                    width : "100%",
+                    display : 'block',
+                    theme: 'classic'
                 });
             });
     </script>
