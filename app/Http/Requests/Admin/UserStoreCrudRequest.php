@@ -25,6 +25,7 @@ class UserStoreCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
         return [
             'email'    => 'required|unique:'.config('laravel-permission.table_names.users', 'users').',email',
             'name'     => 'required',
+            'contact_id' => 'nullable|numeric',
             'password' => 'required|confirmed',
             'phone1'   => 'required',
             'company'  => 'required'
