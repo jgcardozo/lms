@@ -95,10 +95,37 @@ $(document).ready(function () {
         });
     });
 
+    $(".masthead__notifications-list__item ").click(function () {
+        $(".masthead__notifications-list__item > a").click();
+    });
+
     $('body').on('click', '.js-close-popup-notification', function (e) {
         e.preventDefault();
 
         var $this = $(this);
+        
+        var id = $('#notificationId').text();
+
+        console.log(id);
+        
+        $.ajax({
+            type: 'POST',
+            url: 'notifications/read',
+            data: {
+                "notificationId" : id
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) {
+                var count = $(".masthead__notifications__count").text();
+                if(count > 1) {
+                    $(".masthead__notifications__count").text(count - 1)
+                } else {
+                    $(".masthead__notifications__count").remove();
+                }
+            }
+        });
 
         $this.closest('.popup-notification').fadeOut(150, function () {
             $(this).remove();
