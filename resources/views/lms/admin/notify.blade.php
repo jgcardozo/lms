@@ -17,7 +17,7 @@
                     <div class="box-title">Send notification to users</div>
                 </div>
 
-                <form method="post" action="{{ route('notify.send') }}">
+                <form method="post" action="{{ route('notify.send') }}" id="formNotification">
                     <div class="box-body">
                         <div class="form-group">
                             <label class="radio-inline"><input type="radio" value="all" name="optradio">To All Users</label>
@@ -27,7 +27,7 @@
 
                         <div class="form-group cohort_course">
                             <label>Send notifications only to users in course: <br/> <small>If there you select a course, and send a message to all users</small></label>
-                            <select multiple="" name="courses[]" class="form-control" style="min-height: 150px;">
+                            <select multiple="" name="courses[]" class="form-control" id="courses" style="min-height: 150px;">
                                 @foreach($courses as $course)
                                     <option value="{{ $course->id }}">{!! $course->title !!}</option>
                                 @endforeach
@@ -36,12 +36,13 @@
 
                         <div class="form-group cohort_course">
                             <label>Send notifications only to users in cohort:</label>
-                            <select multiple="" name="cohorts[]" class="form-control" style="min-height: 150px;">
+                            <select multiple="" name="cohorts[]" class="form-control" id="cohorts" style="min-height: 150px;">
                                 @foreach($cohorts as $cohort)
                                     <option value="{{ $cohort->id }}">{!! $cohort->name !!}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <p id="requiredCohortCourse" style="display: none; color: red">*At least one cohort or course is required.</p>
 
                         <div class="form-group users" style="display: none">
                             <label for="users">Send notifications to specific users: <br/></label>
@@ -51,15 +52,17 @@
                                 @endforeach
                             </select>
                         </div>
+                        <p id="requiredUsers" style="display: none; color: red">*At least one user required.</p>
 
                         <div class="form-group">
                             <label>Notification message</label>
                             <textarea name="message" class="form-control ckeditor"></textarea>
                         </div>
+                        <p id="requiredMessage" style="display: none; color: red">*A message is required.</p>
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" id="btnNotificationSubmit">Submit</button>
                     </div>
 
                     {{ csrf_field() }}
@@ -156,18 +159,20 @@
 
                 $("input[type=radio][name=optradio]").change(function(){
                     var inp = this;
-                    if(inp.value == "user") {
+                    if(inp.value === "user") {
                         $(".users").css('display','block');
                         $(".cohort_course").css('display','none');
                     }
-                    if(inp.value == "cohort_course") {
+                    if(inp.value === "cohort_course") {
                         $(".users").css('display','none');
                         $(".cohort_course").css('display','block');
                     }
-                    if(inp.value == "all") {
+                    if(inp.value === "all") {
                         $(".users").css('display','none');
                         $(".cohort_course").css('display','none');
                     }
+
+                    $("#requiredCohortCourse, #requiredMessage, #requiredUsers").css('display','none');
                 });
 
                 $('#users').select2({
@@ -176,5 +181,45 @@
                     theme: 'classic'
                 });
             });
+
+            $('#btnNotificationSubmit').click(function (e) {
+                e.preventDefault();
+
+                $("#requiredCohortCourse, #requiredMessage, #requiredUsers").css('display','none');
+
+                var submit = true;
+
+                var mode = $("input[type=radio][name=optradio]:checked").val();
+
+                if(mode === "user") {
+                    var countUsers = $("#users :selected").length;
+
+                    if(countUsers === 0) {
+                        submit = false;
+                        $("#requiredUsers").css("display","block");
+                    }
+                }
+                if(mode === "cohort_course") {
+                    var countCourses = $("#courses :selected").length;
+                    var countCohorts = $("#cohorts :selected").length;
+
+                    if(countCohorts === 0 && countCourses === 0)
+                    {
+                        submit = false;
+                        $("#requiredCohortCourse").css("display","block");
+                    }
+                }
+
+                if(CKEDITOR.instances.message.getData().length === 0)
+                {
+                    submit = false;
+                    $("#requiredMessage").css("display","block");
+                }
+
+                if(submit)
+                {
+                    $("#formNotification").submit();
+                }
+            })
     </script>
 @endsection
