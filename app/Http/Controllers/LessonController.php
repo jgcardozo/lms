@@ -147,8 +147,6 @@ class LessonController extends Controller
     {
 		http_response_code(200);
 
-        File::append(File::name('odnegotinodoskopje.txt'),$request);
-
 		$result = $request->input('result');
 		$test = $request->input('test');
 
