@@ -51,11 +51,11 @@ class ScheduleCrudController extends CrudController
                 'name' => 'name',
                 'label' => 'Name'
             ],
-            /*[
+            [
                 'label' => 'Course',
                 'type' => 'model_function',
                 'function_name' => 'admin_course_link'
-            ],*/
+            ],
             [
                 'name' => 'schedule_type',
                 'label' => 'Schedule Type'

@@ -76,7 +76,20 @@ trait LockViaUserDate
                 'schedulable_id' => $this->id
             ])->first();
 
-        $dateOrDay = $dateOrDay->$column_name;
+        if(!empty($dateOrDay)) {
+            $dateOrDay  = $dateOrDay->$column_name;
+        } else {
+            if ($schedule_type === "locked") {
+                $dateOrDay = DB::table('schedulables')
+                    ->select($column_name)
+                    ->where([
+                        'schedule_id' => $schedule->id,
+                        'schedulable_type' => $reflection->getName()
+                    ])->orderBy($column_name,'DESC')->first()->$column_name;
+            } else {
+                $dateOrDay = 0;
+            }
+        }
 
 
         if ($schedule_type === "locked" && Carbon::parse($dateOrDay)->lte(now())) {
