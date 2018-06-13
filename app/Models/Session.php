@@ -143,6 +143,21 @@ class Session extends Model
 		return $this->course->user_lock_date;
 	}
 
+	public function getHierarchyNameAttribute()
+    {
+        $name = '';
+        if($this->lesson !== null) {
+            $name = "[ ".$this->lesson->title." ] ".$name;
+            if($this->lesson->module !== null) {
+                $name = "[ ".$this->lesson->module->title." ] ".$name;
+            }
+        }
+
+        $name = $name.$this->title;
+
+        return $name;
+    }
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
