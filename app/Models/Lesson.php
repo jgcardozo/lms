@@ -273,6 +273,17 @@ class Lesson extends Model
 		return $this->course->user_lock_date;
 	}
 
+    public function getHierarchyNameAttribute()
+    {
+        $name = '';
+        if($this->module !== null) {
+            $name = "[ ".$this->module->title." ] ".$name;
+        }
+        $name = $name.$this->title;
+
+        return $name;
+    }
+
 	/*
 	|--------------------------------------------------------------------------
 	| Relations
