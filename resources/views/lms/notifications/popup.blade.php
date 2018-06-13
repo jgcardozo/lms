@@ -7,6 +7,9 @@
             @if($notifications['count_unread'] > 1)
                 <p class="popup-notification__content__small-note"><a href="{{ route('notifications') }}">You have more unread notifications</a></p>
             @endif
+            <p style="display: none" id="notificationId">
+                {{ $notifications['not_displayed']->first()->id }}
+            </p>
         </div>
     </div>
 

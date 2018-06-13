@@ -36,6 +36,11 @@ class Schedule extends Model
         return $this->morphedByMany(Lesson::class,'schedulable');
     }
 
+    public function sessions()
+    {
+        return $this->morphedByMany(Session::class,'schedulable');
+    }
+
     public function admin_course_link()
     {
         ?>
