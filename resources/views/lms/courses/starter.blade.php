@@ -62,7 +62,7 @@
                                         <div class="course-progress course-progress--completed">Completed <span class="course-progress__bar course-progress__bar--completed"></span></div>                                    
                                     @elseif($video->is_date_locked)
                                         <div class="course-progress" data-date=" until {{ date('d-m-Y', strtotime($video->getDate('lock_date'))) }}">
-                                            Unlocks {{ Auth::user()->UnlockDate($video) }}
+                                           {{-- Unlocks {{ Auth::user()->UnlockDate($video) }}--}}
                                         </div>
                                     @else
                                         <div style="{{ $video->video_progress >= 80 || is_role_admin() ? '' : 'display: none;' }}" class="course-progress" data-complete="{{ route('session.completed', $video->id) }}">Mark as completed <span class="course-progress__bar"></span></div>
