@@ -60,11 +60,11 @@
 
                                 <div class="session-single__content-resource--info grid--flex">
                                     <div class="session-single__content-resource--type session-single__content-resource--type-{{ $resource->file_extension }}">
-                                        {{ $resource->file_extension }}
+                                        {!! $resource->file_extension !!}
                                     </div>
 
                                     <div class="session-single__content-resource--file">
-                                        {{ $resource->short_filename }}
+                                        {!!  $resource->short_filename !!}
                                     </div>
 
                                     <div class="session-single__content-resource--file-size">
