@@ -34,29 +34,14 @@ class InfusionsoftAccess
 		{
 			$slug = $parameters['module'];
 			$model = \App\Models\Module::findBySlugOrFail($slug);
-            if($model->course->is_tag_locked())
-            {
-                return redirect('/');
-            }
-
 		}elseif(array_key_exists('lesson', $parameters))
 		{
 			$slug = $parameters['lesson'];
 			$model = \App\Models\Lesson::findBySlugOrFail($slug);
-            if($model->course->is_tag_locked())
-            {
-                return redirect('/');
-            }
-
 		}elseif(array_key_exists('session', $parameters))
         {
             $slug = $parameters['session'];
             $model = \App\Models\Session::findBySlugOrFail($slug);
-            if($model->course->is_tag_locked())
-            {
-                return redirect('/');
-            }
-
         }elseif(array_key_exists('bonus', $parameters))
         {
             $slug = $parameters['bonus'];
@@ -64,8 +49,6 @@ class InfusionsoftAccess
 		}else{
 			return $result;
 		}
-
-
 
 		if(is_role_admin())
 		{
