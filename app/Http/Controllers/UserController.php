@@ -305,10 +305,6 @@ class UserController extends Controller
 		{
 			$user = User::find($id);
 			Auth::loginUsingId($user->id);
-            $log = new \App\Models\Log;
-            $log->user_id = $user->id;
-            $log->action_id = 5;
-            $log->save();
 		}
 
 		return redirect('/');
