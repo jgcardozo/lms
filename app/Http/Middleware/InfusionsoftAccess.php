@@ -34,7 +34,7 @@ class InfusionsoftAccess
 		{
 			$slug = $parameters['module'];
 			$model = \App\Models\Module::findBySlugOrFail($slug);
-            if($model->course->is_tag_locked() && is_role_vip())
+            if($model->course->is_tag_locked())
             {
                 return redirect('/');
             }
@@ -43,7 +43,7 @@ class InfusionsoftAccess
 		{
 			$slug = $parameters['lesson'];
 			$model = \App\Models\Lesson::findBySlugOrFail($slug);
-            if($model->course->is_tag_locked() && is_role_vip())
+            if($model->course->is_tag_locked())
             {
                 return redirect('/');
             }
@@ -52,7 +52,7 @@ class InfusionsoftAccess
         {
             $slug = $parameters['session'];
             $model = \App\Models\Session::findBySlugOrFail($slug);
-            if($model->course->is_tag_locked() && is_role_vip())
+            if($model->course->is_tag_locked())
             {
                 return redirect('/');
             }
