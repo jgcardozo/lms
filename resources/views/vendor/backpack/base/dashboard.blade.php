@@ -21,30 +21,72 @@
                 <div class="box-header with-border">
                     <div class="box-title">Statistics</div>
                 </div>
-
                 <div class="box-body">
-                    @foreach($courses as $course)
-                        <div class="course" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #DCDCDC">
-                            <h4>{!! $course->title !!}</h4>
-                            <div class="modules" style="padding-left: 20px">
-                                @foreach($course->modules as $module)
-                                    <h5>{!! $module->title !!}</h5>
-                                    <div class="lessons" style="padding-left: 20px">
-                                        @foreach($module->lessons as $lesson)
-                                            <h5>
-                                                {!! $lesson->title !!}
-                                                <span style="font-weight: bold; display: inline-block; margin-left: 10px;">{{ $score[$lesson->id]['finished'] }} / {{ $score[$lesson->id]['total'] }} ({{ $score[$lesson->id]['percent'] }}%)</span>
-                                            </h5>
-                                        @endforeach
-                                    </div>
-                                @endforeach
-                            </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <canvas id="modules"></canvas>
                         </div>
-                    @endforeach
+                        <div class="col-md-4">
+                            <canvas id="lessons"></canvas>
+                        </div>
+                        <div class="col-md-4">
+                            <canvas id="sessions"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('custom_scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script>
+        $(document).ready(function () {
+            var ctx = $('#modules');
+            var modulesChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [@foreach($modulePieChart as $key => $value) '{{ $key }}' ,@endforeach],
+                    datasets: [{
+                        label: '% Completed',
+                        data: [@foreach($modulePieChart as $key => $value) {{ $value }} ,@endforeach]
+                    }]
+                },
+                options: Chart.defaults.pie
+            });
+
+            @if(!empty($lessonPieChart))
+            var ctx1 = $('#lessons');
+            var lessonsChart = new Chart(ctx1, {
+                type: 'pie',
+                data: {
+                    labels: [@foreach($lessonPieChart as $key => $value) '{{ $key }}' ,@endforeach],
+                    datasets: [{
+                        label: '% Completed',
+                        data: [@foreach($lessonPieChart as $key => $value) {{ $value }} ,@endforeach]
+                    }]
+                },
+                options: Chart.defaults.pie
+            });
+            @endif
+
+            @if(!empty($sessionPieChart))
+            var ctx2 = $('#sessions');
+            var sessionsChart = new Chart(ctx2, {
+                type: 'pie',
+                data: {
+                    labels: [@foreach($sessionPieChart as $key => $value) '{{ $key }}' ,@endforeach],
+                    datasets: [{
+                        label: '% Completed',
+                        data: [@foreach($sessionPieChart as $key => $value) {{ $value }} ,@endforeach]
+                    }]
+                },
+                options: Chart.defaults.pie
+            });
+            @endif
+        })
+    </script>
 @endsection
 
 @if (session('success_login'))
