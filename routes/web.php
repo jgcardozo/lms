@@ -311,6 +311,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 
     Route::get('dashboard','DashboardController@index');
 
+    Route::get('dashboard/fields','DashboardController@formInputFields');
+
+    Route::get('dashboard/data','DashboardController@pieChartsData');
+
     // Settings
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [
