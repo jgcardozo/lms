@@ -18,6 +18,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	.js('resources/assets/js/schedule_create.js', 'public/js')
     .js('resources/assets/js/datetimepicker_custom.js', 'public/js')
 	.js('resources/assets/js/log_activity.js','public/js')
+    .js('resources/assets/js/dashboard.js','public/js')
 	.sass('resources/assets/sass/app.scss', 'public/css')
 	.options({
 		processCssUrls: false
