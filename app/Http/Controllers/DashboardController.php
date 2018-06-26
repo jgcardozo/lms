@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cohort;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
@@ -10,7 +11,26 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index()
+    {
+        return view('vendor.backpack.base.dashboard');
+
+    }
+
+    protected function percentage($total,$portion)
+    {
+        return round(($portion/$total)*100,2);
+    }
+
+    public function formInputFields()
+    {
+        $courses = Course::with('cohorts','modules.lessons')->get()->toArray();
+
+        return $courses;
+
+    }
+
+    public function pieChartsData(Request $request)
     {
         $moduleCount = [];
         $lessonCount = [];
@@ -42,6 +62,10 @@ class DashboardController extends Controller
 
         $users = $users->get();
         $totalUsers = $users->count();
+
+        if($totalUsers === 0) {
+            return response("error",200);
+        }
 
         foreach (Course::find($course_id)->modules as $module) {
             $moduleCount[$module->title] = 0;
@@ -114,22 +138,32 @@ class DashboardController extends Controller
             $sessionPieChart[$key] = $this->percentage(array_sum($sessionCount),$value);
         }
 
+        $colorPallete = [
+            '#2a2a72',
+            '#3b5249',
+            '#34252f',
+            '#1c3738',
+            '#b68f40',
+            '#531253',
+            '#5e747f',
+            '#aaae8e',
+            '#92140c',
+            '#111d4a',
+            '#f28f3b',
+            '#8f7e4f',
+            '#191923',
+            '#df2935'
+        ];
 
-        return view('vendor.backpack.base.dashboard')->with([
-            'usersCount' => $totalUsers,
-            'moduleCount' => $moduleCount,
-            'lessonCount' => $lessonCount,
-            'sessionCount' => $sessionCount,
-            'moduleAvgCompletion' => $moduleAvgCompletion,
-            'lessonAvgCompletion' => $lessonAvgCompletion,
-            'modulePieChart' => $modulePieChart,
-            'lessonPieChart' => $lessonPieChart,
-            'sessionPieChart' => $sessionPieChart
-        ]);
+        shuffle($colorPallete);
 
-    }
-
-    protected function percentage($total,$portion) {
-        return round(($portion/$total)*100,2);
+        return [
+            $modulePieChart,
+            $lessonPieChart,
+            $sessionPieChart,
+            $moduleAvgCompletion,
+            $lessonAvgCompletion,
+            $colorPallete
+        ];
     }
 }

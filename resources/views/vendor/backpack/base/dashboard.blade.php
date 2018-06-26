@@ -23,6 +23,45 @@
                 </div>
                 <div class="box-body">
                     <div class="row">
+                        <div class="col-md-12">
+                            <form action="#" method="get" class="form-inline">
+
+                                <div class="form-group">
+                                    <label for="course_id">Course:</label>
+                                    <select class="form-control" name="course_id" id="course_id">
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cohort_id">Cohort:</label>
+                                    <select class="form-control" name="cohort_id" id="cohort_id">
+                                        <option value="" disabled selected>Select a cohort</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="module_id">Module:</label>
+                                    <select class="form-control" name="module_id" id="module_id">
+                                        <option value="" disabled selected>Select a module</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lesson_id">Lesson:</label>
+                                    <select class="form-control" name="lesson_id" id="lesson_id">
+                                        <option value="" disabled selected>Select a lesson</option>
+
+                                    </select>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" id="charts_div">
                         <div class="col-md-4">
                             <canvas id="modules"></canvas>
                         </div>
@@ -32,6 +71,7 @@
                         <div class="col-md-4">
                             <canvas id="sessions"></canvas>
                         </div>
+                        <h3 class="text-center" id="error_chart" style="display: none" "> No results were found </h3>
                     </div>
                 </div>
             </div>
@@ -41,52 +81,7 @@
 
 @section('custom_scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-    <script>
-        $(document).ready(function () {
-            var ctx = $('#modules');
-            var modulesChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: [@foreach($modulePieChart as $key => $value) '{{ $key }}' ,@endforeach],
-                    datasets: [{
-                        label: '% Completed',
-                        data: [@foreach($modulePieChart as $key => $value) {{ $value }} ,@endforeach]
-                    }]
-                },
-                options: Chart.defaults.pie
-            });
-
-            @if(!empty($lessonPieChart))
-            var ctx1 = $('#lessons');
-            var lessonsChart = new Chart(ctx1, {
-                type: 'pie',
-                data: {
-                    labels: [@foreach($lessonPieChart as $key => $value) '{{ $key }}' ,@endforeach],
-                    datasets: [{
-                        label: '% Completed',
-                        data: [@foreach($lessonPieChart as $key => $value) {{ $value }} ,@endforeach]
-                    }]
-                },
-                options: Chart.defaults.pie
-            });
-            @endif
-
-            @if(!empty($sessionPieChart))
-            var ctx2 = $('#sessions');
-            var sessionsChart = new Chart(ctx2, {
-                type: 'pie',
-                data: {
-                    labels: [@foreach($sessionPieChart as $key => $value) '{{ $key }}' ,@endforeach],
-                    datasets: [{
-                        label: '% Completed',
-                        data: [@foreach($sessionPieChart as $key => $value) {{ $value }} ,@endforeach]
-                    }]
-                },
-                options: Chart.defaults.pie
-            });
-            @endif
-        })
-    </script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection
 
 @if (session('success_login'))
