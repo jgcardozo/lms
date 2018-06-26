@@ -115,7 +115,9 @@ $(document).ready(function () {
                     $('#error_chart').css('display','none');
                     $('#modules, #lessons, #sessions').css('display','block');
 
-                    colorPallete = response[5];
+                    if( colorPallete.length === 0) {
+                        colorPallete = response[5];
+                    }
 
                     window.piedata = response;
                     createPieCharts(response);
