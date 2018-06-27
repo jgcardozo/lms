@@ -64,14 +64,23 @@
                     <div class="row" id="charts_div">
                         <div class="col-md-4">
                             <canvas id="modules"></canvas>
+                            <div id="moduleLegend" class="text-center">
+
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <canvas id="lessons"></canvas>
+                            <div id="lessonLegend" class="text-center">
+
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <canvas id="sessions"></canvas>
+                            <div id="sessionLegend" class="text-center">
+
+                            </div>
                         </div>
-                        <h3 class="text-center" id="error_chart" style="display: none" "> No results were found </h3>
+                        <h3 class="text-center" id="error_chart" style="display: none"> No results were found </h3>
                     </div>
                 </div>
             </div>
