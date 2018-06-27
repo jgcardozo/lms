@@ -111,6 +111,11 @@ class Session extends Model
 			$user = Auth::user();
 		}
 
+        if(is_numeric($user))
+        {
+            $user = \App\Models\User::find($user);
+        }
+
 		return $this->usersWatched()->where('user_id', $user->id)->exists();
 	}
 
@@ -201,7 +206,7 @@ class Session extends Model
 
 	public function usersWatched()
     {
-		return $this->belongsToMany('App\Models\User', 'session_user');
+		return $this->belongsToMany('App\Models\User', 'session_user')->withPivot(['created_at','user_id','session_id']);
 	}
 
     public function video_type()

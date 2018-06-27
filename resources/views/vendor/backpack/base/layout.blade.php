@@ -189,6 +189,7 @@
         </style>
     @endif
 
+    @yield('custom_scripts')
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
