@@ -163,7 +163,10 @@ class DashboardController extends Controller
             $sessionPieChart,
             $moduleAvgCompletion,
             $lessonAvgCompletion,
-            $colorPallete
+            $colorPallete,
+            $moduleCount,
+            $lessonCount,
+            $sessionCount
         ];
     }
 }
