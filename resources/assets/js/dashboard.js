@@ -109,11 +109,11 @@ $(document).ready(function () {
             },
             success: function success(response) {
                 if(response === 'error') {
-                    $('#modules, #lessons, #sessions').css('display','none');
+                    $('#modules, #lessons, #sessions, #moduleLegend').css('display','none');
                     $('#error_chart').css('display','inherit');
                 } else {
                     $('#error_chart').css('display','none');
-                    $('#modules, #lessons, #sessions').css('display','block');
+                    $('#modules, #lessons, #sessions, #moduleLegend').css('display','block');
 
                     if( colorPallete.length === 0) {
                         colorPallete = response[5];
