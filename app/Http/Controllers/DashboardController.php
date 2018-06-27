@@ -19,6 +19,9 @@ class DashboardController extends Controller
 
     protected function percentage($total,$portion)
     {
+        if($total == 0) {
+            return 0;
+        }
         return round(($portion/$total)*100,2);
     }
 
@@ -88,7 +91,11 @@ class DashboardController extends Controller
                 }
             }
 
-            $moduleAvgCompletion[$module->title] = array_sum($moduleAvgCompletion[$module->title])/count($moduleAvgCompletion[$module->title]);
+            if(count($moduleAvgCompletion[$module->title]) == 0) {
+                $moduleAvgCompletion[$module->title] = 0;
+            } else {
+                $moduleAvgCompletion[$module->title] = array_sum($moduleAvgCompletion[$module->title])/count($moduleAvgCompletion[$module->title]);
+            }
 
             $moduleCount[$module->title] = $this->percentage($totalUsers,$moduleCount[$module->title]);
         }
@@ -106,7 +113,12 @@ class DashboardController extends Controller
                     }
                 }
 
-                $lessonAvgCompletion[$lesson->title] = array_sum($lessonAvgCompletion[$lesson->title])/count($lessonAvgCompletion[$lesson->title]);
+                if(count($lessonAvgCompletion[$lesson->title]) == 0) {
+                    $lessonAvgCompletion[$lesson->title] = 0;
+                } else {
+                    $lessonAvgCompletion[$lesson->title] = array_sum($lessonAvgCompletion[$lesson->title])/count($lessonAvgCompletion[$lesson->title]);
+                }
+
                 $lessonCount[$lesson->title] = $this->percentage($totalUsers,$lessonCount[$lesson->title]);
             }
         }
