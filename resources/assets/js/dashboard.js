@@ -146,12 +146,25 @@ $(document).ready(function () {
                 title: {
                     display: 'true',
                     text: 'Modules'
+                },
+                legend: {
+                    display: false
+                },
+                legendCallback: function (chart) {
+                    var html = "<ul style='list-style: none; font-size: 24px'>";
+                    Object.keys(data[0]).forEach(function (module) {
+                        html += "<li>"+module+" "+data[6][module]+"% - Avg "+data[3][module]+" days</li>";
+                    });
+                    html += "</ul>";
+                    return html;
                 }
             }
         });
 
+        $('#moduleLegend').html(modulesChart.generateLegend());
+
         if(data[1].length !== 0) {
-            $('#lessons').css('display','inherit');
+            $('#lessons, #lessonLegend').css('display','inherit');
 
             var ctx1 = $('#lessons');
             var lessonChart = new Chart(ctx1, {
@@ -168,15 +181,28 @@ $(document).ready(function () {
                     title: {
                         display: 'true',
                         text: 'Lessons'
+                    },
+                    legend: {
+                        display: false
+                    },
+                    legendCallback: function (chart) {
+                        var html = "<ul style='list-style: none; font-size: 24px'>";
+                        Object.keys(data[1]).forEach(function (lesson) {
+                            html += "<li>"+lesson+" "+data[7][lesson]+"% - Avg "+data[4][lesson]+" days</li>";
+                        });
+                        html += "</ul>";
+                        return html;
                     }
                 }
             });
+
+            $('#lessonLegend').html(lessonChart.generateLegend());
         } else {
-            $('#lessons').css('display','none');
+            $('#lessons, #lessonLegend').css('display','none');
         }
 
         if(data[2].length !== 0) {
-            $('#sessions').css('display','inherit');
+            $('#sessions, #sessionLegend').css('display','inherit');
 
             var ctx3 = $('#sessions');
             var sessionChart = new Chart(ctx3, {
@@ -193,11 +219,24 @@ $(document).ready(function () {
                     title: {
                         display: 'true',
                         text: 'Sessions'
+                    },
+                    legend: {
+                        display: false
+                    },
+                    legendCallback: function (chart) {
+                        var html = "<ul style='list-style: none; font-size: 24px'>";
+                        Object.keys(data[2]).forEach(function (session) {
+                            html += "<li>"+session+" "+data[8][session]+"% </li>";
+                        });
+                        html += "</ul>";
+                        return html;
                     }
                 }
             });
+
+            $('#sessionLegend').html(sessionChart.generateLegend());
         } else {
-            $('#sessions').css('display','none');
+            $('#sessions, #sessionLegend').css('display','none');
         }
     }
 
