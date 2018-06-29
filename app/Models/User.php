@@ -222,6 +222,11 @@ class User extends Authenticatable
     | Relations
     |--------------------------------------------------------------------------
     */
+    public function progress()
+    {
+        return $this->hasMany(Progress::class);
+    }
+
     public function logs()
     {
         return $this->hasMany(Log::class);
