@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Cohort;
 use App\Models\Course;
+use App\Models\ISTag;
 use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -22,6 +25,7 @@ class DashboardController extends Controller
         if($total == 0) {
             return 0;
         }
+
         return round(($portion/$total)*100,2);
     }
 
@@ -35,80 +39,82 @@ class DashboardController extends Controller
 
     public function pieChartsData(Request $request)
     {
+        $s = microtime(true);
+
         $moduleCount = [];
         $lessonCount = [];
         $sessionCount = [];
         $moduleAvgCompletion = [];
         $lessonAvgCompletion = [];
 
+        $courses = Course::with('tags','modules.lessons.sessions')->get();
+
 
         if($request->filled('course_id')) {
             $course_id = $request->input('course_id');
-            $tag_id = Course::find($course_id)->tags->first()->id;
+            $tag_id = $courses->find($course_id)->tags->first()->id;
         }
         else {
-            $course_id = Course::first()->id;
-            $tag_id = Course::first()->tags->first()->id;
+            $course_id = $courses->first()->id;
+            $tag_id = $courses->first()->tags->first()->id;
         }
 
-        $users = User::whereHas('is_tags',function ($query) use ($tag_id){
-            $query->where('id',$tag_id);
-        });
+
 
         if($request->filled('cohort_id')) {
             $cohort_id = $request->input('cohort_id');
-            $users->whereHas('cohorts',function ($query) use($cohort_id) {
-                $query->where('cohort_id',$cohort_id);
-            });
+            $users = Cohort::find($cohort_id)->users()->get()->pluck('id')->toArray();
+        } else {
+            $users = ISTag::with('users')->find($tag_id)->users()->get()->pluck('id')->toArray();
         }
 
-
-        $users = $users->get();
-        $totalUsers = $users->count();
+        $totalUsers = count($users);
 
         if($totalUsers === 0) {
             return response("error",200);
         }
 
-        foreach (Course::find($course_id)->modules as $module) {
-            $moduleCount[$module->title] = 0;
-            $moduleAvgCompletion[$module->title] = [];
+        foreach ($courses->find($course_id)->modules as $module) {
+            $moduleCount[$module->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Module' AND progress_id=? AND user_id IN (".implode(",",$users).")",[$module->id]);
+            $moduleCount[$module->title] = $moduleCount[$module->title][0]->counted;
+            $moduleCount[$module->title] = $this->percentage($totalUsers,$moduleCount[$module->title]);
+            $moduleAvgCompletion[$module->title] = 0;
 
+            /*$moduleAvgCompletion[$module->title] = [];
+
+            $u = DB::select("SELECT created_at,user_id FROM `progresses` WHERE ((progress_type LIKE '%Module' AND progress_id=?) OR (progress_type LIKE '%Session' AND progress_id=?)) AND user_id IN (".implode(",",$users).")",[$module->id,$module->lmsLessons->first()->sessions->first()->id]);
+            $u = collect($u);
 
             foreach ($users as $user) {
-                $moduleComplete = true;
-                foreach ($module->lmsLessons as $lesson) {
-                    if (!$lesson->getIsCompletedAttribute($user->id)) {
-                        $moduleComplete = false;
-                    }
-                }
-                if ($moduleComplete) {
-                    $moduleCount[$module->title]++;
-                    $dateEnd = Course::find($course_id)->modules->where('id',$module->id)->first()->lmsLessons->last()->sessions->last()->usersWatched()->where('user_id', $user->id)->first()->pivot->created_at;
-                    $dateStart = Course::find($course_id)->modules->where('id',$module->id)->first()->lmsLessons->first()->sessions->where('starter_course_id',null)->first()->usersWatched()->where('user_id', $user->id)->first()->pivot->created_at;
+                if($u->where('user_id',$user)->count() != 0) {
+                    $dateEnd = Carbon::parse($u->where('user_id',$user)->last()->created_at);
+                    $dateStart = Carbon::parse($u->where('user_id',$user)->first()->created_at);
                     $moduleAvgCompletion[$module->title][] = date_diff($dateEnd,$dateStart)->days;
-
                 }
             }
 
             if(count($moduleAvgCompletion[$module->title]) == 0) {
                 $moduleAvgCompletion[$module->title] = 0;
             } else {
-                $moduleAvgCompletion[$module->title] = array_sum($moduleAvgCompletion[$module->title])/count($moduleAvgCompletion[$module->title]);
-            }
-
-            $moduleCount[$module->title] = $this->percentage($totalUsers,$moduleCount[$module->title]);
+                $moduleAvgCompletion[$module->title] = floor(array_sum($moduleAvgCompletion[$module->title])/count($moduleAvgCompletion[$module->title]));
+            }*/
         }
 
         if($request->filled('module_id')) {
             foreach (Module::find($request->input('module_id'))->lmsLessons as $lesson) {
-                $lessonCount[$lesson->title] = 0;
+
+                $lessonCount[$lesson->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Lesson' AND progress_id=? AND user_id IN (".implode(",",$users).")",[$lesson->id]);
+                $lessonCount[$lesson->title] = $lessonCount[$lesson->title][0]->counted;
+                $lessonCount[$lesson->title] = $this->percentage($totalUsers,$lessonCount[$lesson->title]);
+                $lessonAvgCompletion[$lesson->title] = 0;
+
+                /*$lessonCount[$lesson->title] = 0;
                 $lessonAvgCompletion[$lesson->title] = [];
                 foreach ($users as $user) {
-                    if ($lesson->getIsCompletedAttribute($user->id)) {
+                    if ($lesson->getIsCompletedAttribute($user)) {
                         $lessonCount[$lesson->title]++;
-                        $dateEnd = $lesson->sessions->last()->usersWatched()->where('user_id', $user->id)->first()->pivot->created_at;
-                        $dateStart = $lesson->sessions->where('starter_course_id',null)->first()->usersWatched()->where('user_id', $user->id)->first()->pivot->created_at;
+                        $dateEnd = $lesson->sessions->last()->usersWatched()->where('user_id', $user)->first()->pivot->created_at;
+                        $dateStart = $lesson->sessions->where('starter_course_id',null)->first()->usersWatched()->where('user_id', $user)->first()->pivot->created_at;
                         $lessonAvgCompletion[$lesson->title][] = date_diff($dateEnd,$dateStart)->days;
                     }
                 }
@@ -116,23 +122,27 @@ class DashboardController extends Controller
                 if(count($lessonAvgCompletion[$lesson->title]) == 0) {
                     $lessonAvgCompletion[$lesson->title] = 0;
                 } else {
-                    $lessonAvgCompletion[$lesson->title] = array_sum($lessonAvgCompletion[$lesson->title])/count($lessonAvgCompletion[$lesson->title]);
+                    $lessonAvgCompletion[$lesson->title] = floor(array_sum($lessonAvgCompletion[$lesson->title])/count($lessonAvgCompletion[$lesson->title]));
                 }
 
-                $lessonCount[$lesson->title] = $this->percentage($totalUsers,$lessonCount[$lesson->title]);
+                $lessonCount[$lesson->title] = $this->percentage($totalUsers,$lessonCount[$lesson->title]);*/
             }
         }
 
         if($request->filled('lesson_id')) {
             foreach (Lesson::find($request->input('lesson_id'))->sessions as $session) {
-                $sessionCount[$session->title] = 0;
+                $sessionCount[$session->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Session' AND progress_id=? AND user_id IN (".implode(",",$users).")",[$session->id]);
+                $sessionCount[$session->title] = $sessionCount[$session->title][0]->counted;
+                $sessionCount[$session->title] = $this->percentage($totalUsers,$sessionCount[$session->title]);
+
+                /*$sessionCount[$session->title] = 0;
                 foreach ($users as $user) {
-                    if ($session->getIsCompletedAttribute($user->id)) {
+                    if ($session->getIsCompletedAttribute($user)) {
                         $sessionCount[$session->title]++;
                     }
                 }
 
-                $sessionCount[$session->title] = $this->percentage($totalUsers,$sessionCount[$session->title]);
+                $sessionCount[$session->title] = $this->percentage($totalUsers,$sessionCount[$session->title]);*/
             }
         }
 
@@ -169,6 +179,8 @@ class DashboardController extends Controller
 
         shuffle($colorPallete);
 
+        $e = microtime(true);
+
         return [
             $modulePieChart,
             $lessonPieChart,
@@ -178,7 +190,8 @@ class DashboardController extends Controller
             $colorPallete,
             $moduleCount,
             $lessonCount,
-            $sessionCount
+            $sessionCount,
+            $e-$s,
         ];
     }
 }
