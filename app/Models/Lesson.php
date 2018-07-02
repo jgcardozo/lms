@@ -290,6 +290,11 @@ class Lesson extends Model
 	|--------------------------------------------------------------------------
 	*/
 
+    public function progress()
+    {
+        return $this->morphMany('App\Models\Progress', 'progress');
+    }
+
     public function logs()
     {
         return $this->morphMany('App\Models\Log', 'subject');
