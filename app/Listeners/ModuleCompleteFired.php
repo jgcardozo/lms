@@ -34,6 +34,12 @@ class ModuleCompleteFired
             'course' => $module->course ? $module->course->title : ''
         ]);
 
+        $p = new \App\Models\Progress;
+        $p->user()->associate(Auth::user());
+        $p->setCreatedAt(now());
+        $p->save();
+        $module->progress()->save($p);
+
         $log = new \App\Models\Log;
         $log->user_id = \Auth::user()->id;
         $log->action_id = 2;

@@ -17,7 +17,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-default">
+            <div class="box box-default" id="blurDiv" style="filter:blur(3px);">
                 <div class="box-header with-border">
                     <div class="box-title">Statistics</div>
                 </div>
@@ -83,6 +83,8 @@
                         <h3 class="text-center" id="error_chart" style="display: none"> No results were found </h3>
                     </div>
                 </div>
+            </div>
+            <div id="overlay_loading" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: url('{{asset('images/icons/loading-svg.svg')}}') center no-repeat;">
             </div>
         </div>
     </div>
