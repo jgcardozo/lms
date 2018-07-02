@@ -78,26 +78,22 @@ class DashboardController extends Controller
             $moduleCount[$module->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Module' AND progress_id=? AND user_id IN (".implode(",",$users).")",[$module->id]);
             $moduleCount[$module->title] = $moduleCount[$module->title][0]->counted;
             $moduleCount[$module->title] = $this->percentage($totalUsers,$moduleCount[$module->title]);
-            $moduleAvgCompletion[$module->title] = 0;
 
-            /*$moduleAvgCompletion[$module->title] = [];
+            if($module->lmsLessons->count() > 0) {
+                $sessionId = $module->lmsLessons->first()->sessions->first()->id;
 
-            $u = DB::select("SELECT created_at,user_id FROM `progresses` WHERE ((progress_type LIKE '%Module' AND progress_id=?) OR (progress_type LIKE '%Session' AND progress_id=?)) AND user_id IN (".implode(",",$users).")",[$module->id,$module->lmsLessons->first()->sessions->first()->id]);
-            $u = collect($u);
+                $query = DB::select("SELECT CEIL(AVG(t3.diff)) as avg FROM (SELECT t1.user_id,TIMESTAMPDIFF(DAY,t1.st,t2.en) as diff FROM (SELECT created_at  as st,user_id FROM `progresses` WHERE (progress_type LIKE '%Session' AND progress_id=?) AND user_id IN (".implode(",",$users).")) t1
+INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_type LIKE '%Module' AND progress_id=?) AND user_id IN (".implode(",",$users).")) t2 ON t1.user_id = t2.user_id) t3",[$sessionId,$module->id]);
 
-            foreach ($users as $user) {
-                if($u->where('user_id',$user)->count() != 0) {
-                    $dateEnd = Carbon::parse($u->where('user_id',$user)->last()->created_at);
-                    $dateStart = Carbon::parse($u->where('user_id',$user)->first()->created_at);
-                    $moduleAvgCompletion[$module->title][] = date_diff($dateEnd,$dateStart)->days;
+                $moduleAvgCompletion[$module->title] = $query[0]->avg;
+
+                if($moduleAvgCompletion[$module->title] == null) {
+                    $moduleAvgCompletion[$module->title] = 0;
                 }
+            } else {
+                $moduleAvgCompletion[$module->title] = 0;
             }
 
-            if(count($moduleAvgCompletion[$module->title]) == 0) {
-                $moduleAvgCompletion[$module->title] = 0;
-            } else {
-                $moduleAvgCompletion[$module->title] = floor(array_sum($moduleAvgCompletion[$module->title])/count($moduleAvgCompletion[$module->title]));
-            }*/
         }
 
         if($request->filled('module_id')) {
@@ -106,26 +102,18 @@ class DashboardController extends Controller
                 $lessonCount[$lesson->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Lesson' AND progress_id=? AND user_id IN (".implode(",",$users).")",[$lesson->id]);
                 $lessonCount[$lesson->title] = $lessonCount[$lesson->title][0]->counted;
                 $lessonCount[$lesson->title] = $this->percentage($totalUsers,$lessonCount[$lesson->title]);
-                $lessonAvgCompletion[$lesson->title] = 0;
 
-                /*$lessonCount[$lesson->title] = 0;
-                $lessonAvgCompletion[$lesson->title] = [];
-                foreach ($users as $user) {
-                    if ($lesson->getIsCompletedAttribute($user)) {
-                        $lessonCount[$lesson->title]++;
-                        $dateEnd = $lesson->sessions->last()->usersWatched()->where('user_id', $user)->first()->pivot->created_at;
-                        $dateStart = $lesson->sessions->where('starter_course_id',null)->first()->usersWatched()->where('user_id', $user)->first()->pivot->created_at;
-                        $lessonAvgCompletion[$lesson->title][] = date_diff($dateEnd,$dateStart)->days;
-                    }
-                }
+                $sessionId = $lesson->sessions->first()->id;
 
-                if(count($lessonAvgCompletion[$lesson->title]) == 0) {
+                $query = DB::select("SELECT CEIL(AVG(t3.diff)) as avg FROM (SELECT t1.user_id,TIMESTAMPDIFF(DAY,t1.st,t2.en) as diff FROM (SELECT created_at  as st,user_id FROM `progresses` WHERE (progress_type LIKE '%Session' AND progress_id=?) AND user_id IN (".implode(",",$users).")) t1
+INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_type LIKE '%Lesson' AND progress_id=?) AND user_id IN (".implode(",",$users).")) t2 ON t1.user_id = t2.user_id) t3",[$sessionId,$lesson->id]);
+
+                $lessonAvgCompletion[$lesson->title] = $query[0]->avg;
+
+                if($lessonAvgCompletion[$lesson->title] == null) {
                     $lessonAvgCompletion[$lesson->title] = 0;
-                } else {
-                    $lessonAvgCompletion[$lesson->title] = floor(array_sum($lessonAvgCompletion[$lesson->title])/count($lessonAvgCompletion[$lesson->title]));
                 }
 
-                $lessonCount[$lesson->title] = $this->percentage($totalUsers,$lessonCount[$lesson->title]);*/
             }
         }
 
@@ -134,15 +122,6 @@ class DashboardController extends Controller
                 $sessionCount[$session->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Session' AND progress_id=? AND user_id IN (".implode(",",$users).")",[$session->id]);
                 $sessionCount[$session->title] = $sessionCount[$session->title][0]->counted;
                 $sessionCount[$session->title] = $this->percentage($totalUsers,$sessionCount[$session->title]);
-
-                /*$sessionCount[$session->title] = 0;
-                foreach ($users as $user) {
-                    if ($session->getIsCompletedAttribute($user)) {
-                        $sessionCount[$session->title]++;
-                    }
-                }
-
-                $sessionCount[$session->title] = $this->percentage($totalUsers,$sessionCount[$session->title]);*/
             }
         }
 
