@@ -12,14 +12,25 @@ class SessionTransferSeeder extends Seeder
      */
     public function run()
     {
-        $watched = DB::table('session_user')->select()->get();
+        $watched = DB::table('session_user')->get();
+
+        $data = [];
 
         foreach ($watched as $w) {
-            $p = new \App\Models\Progress;
-            $p->user()->associate($w->user_id);
-            $p->setCreatedAt($w->created_at);
-            $p->save();
-            \App\Models\Session::find($w->session_id)->progress()->save($p);
+           $data[] = [
+           'user_id' => $w->user_id,
+           'created_at' => $w->created_at,
+           'progress_type' => 'App\Models\Session',
+           'progress_id' => $w->session_id
+           ];
         }
+
+        $data = collect($data);
+
+        $chunkedData = $data->chunk(5000);
+        foreach ($chunkedData as $sessions) {
+            DB::table('progresses')->insert($sessions->toArray());
+        }
+
     }
 }
