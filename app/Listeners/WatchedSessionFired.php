@@ -29,6 +29,13 @@ class WatchedSessionFired
     {
         $session = $event->session;
 
+        $p = new \App\Models\Progress;
+        $p->user()->associate(Auth::user());
+        $p->setCreatedAt(now());
+        $p->save();
+        $session->progress()->save($p);
+
+
         // Complete video for user
         $session->markAsComplete();
 
