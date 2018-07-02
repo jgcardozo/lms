@@ -179,6 +179,11 @@ class Session extends Model
         return $this->morphMany('App\Models\Log', 'subject');
     }
 
+    public function progress()
+    {
+        return $this->morphMany('App\Models\Progress', 'progress');
+    }
+
 	public function resources()
     {
 		return $this->belongsToMany('App\Models\Resource', 'resource_session');
