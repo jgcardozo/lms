@@ -42,6 +42,12 @@ class LessonCompleteFired
             'module' => $lesson->module ? $lesson->module->title : ''
         ]);
 
+        $p = new \App\Models\Progress;
+        $p->user()->associate($user);
+        $p->setCreatedAt(now());
+        $p->save();
+        $lesson->progress()->save($p);
+
         $log = new \App\Models\Log;
         $log->user_id = $user->id;
         $log->action_id = 2;
