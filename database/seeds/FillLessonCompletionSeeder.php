@@ -20,6 +20,11 @@ class FillLessonCompletionSeeder extends Seeder
             }
 
             foreach ($module->lmsLessons as $lesson) {
+
+                if($lesson->sessions->count() == 0) {
+                    continue;
+                }
+
                 $sessionsIds = $lesson->sessions->pluck('id')->toArray();
 
                 $userIds = DB::select("SELECT user_id FROM `progresses` WHERE progress_type LIKE '%Session' AND progress_id IN (".implode(", ",$sessionsIds).") GROUP BY user_id HAVING COUNT(DISTINCT progress_id) = ?",[count($sessionsIds)]);
