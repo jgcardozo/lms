@@ -149,6 +149,11 @@ $(document).ready(function () {
     }
 
     function createPieCharts(data) {
+        if(data.length === 0) {
+            $('#lessons, #lessonLegend').css('display','none');
+            $('#sessions, #sessionLegend').css('display','none');
+            return true;
+        }
 
         if(!firstTimeModule) {
             modulesChart.data.labels = Object.keys(data[0]);
@@ -187,6 +192,8 @@ $(document).ready(function () {
 
         if(data[1].length !== 0) {
             if(!firstTimeLesson) {
+                $('#lessons, #lessonLegend').css('display','inherit');
+
                 lessonChart.data.labels = Object.keys(data[1]);
                 lessonChart.data.datasets[0].data = Object.values(data[1]);
                 lessonChart.update();
@@ -226,6 +233,8 @@ $(document).ready(function () {
 
         if(data[2].length !== 0) {
             if(!firstTimeSession){
+                $('#sessions, #sessionLegend').css('display','inherit');
+
                 sessionChart.data.labels = Object.keys(data[2]);
                 sessionChart.data.datasets[0].data = Object.values(data[2]);
                 sessionChart.update();
