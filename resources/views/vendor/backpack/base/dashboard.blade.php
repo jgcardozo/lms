@@ -15,11 +15,19 @@
 
 
 @section('content')
+
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default" id="blurDiv" style="filter:blur(3px);">
                 <div class="box-header with-border">
                     <div class="box-title">Statistics</div>
+                    <button class="btn btn-success" style="float: right">
+                        @if(\Illuminate\Support\Facades\Cache::has('last_sync'))
+                            Synchronize ( {{ \Illuminate\Support\Carbon::createFromTimeString(\Illuminate\Support\Facades\Cache::get('last_sync'))->diffForHumans()  }} )
+                        @else
+                            Synchronize
+                        @endif
+                    </button>
                 </div>
                 <div class="box-body">
                     <div class="row">
