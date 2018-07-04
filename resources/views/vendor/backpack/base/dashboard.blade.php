@@ -15,11 +15,19 @@
 
 
 @section('content')
+
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default" id="blurDiv" style="filter:blur(3px);">
                 <div class="box-header with-border">
                     <div class="box-title">Statistics</div>
+                    <button id="btnSync" class="btn btn-success" style="float: right" @if(\Illuminate\Support\Facades\Cache::has('updating')) {{ \Illuminate\Support\Facades\Cache::get('updating') }} @endif >
+                        @if(\Illuminate\Support\Facades\Cache::has('last_sync'))
+                            Synchronize ( {{ \Illuminate\Support\Carbon::createFromTimeString(\Illuminate\Support\Facades\Cache::get('last_sync'))->diffForHumans()  }} )
+                        @else
+                            Synchronize
+                        @endif
+                    </button>
                 </div>
                 <div class="box-body">
                     <div class="row">
@@ -64,19 +72,19 @@
                     <div class="row" id="charts_div">
                         <div class="col-md-4">
                             <canvas id="modules"></canvas>
-                            <div id="moduleLegend" class="text-center">
+                            <div id="moduleLegend" class="text-left">
 
                             </div>
                         </div>
                         <div class="col-md-4">
                             <canvas id="lessons"></canvas>
-                            <div id="lessonLegend" class="text-center">
+                            <div id="lessonLegend" class="text-left">
 
                             </div>
                         </div>
                         <div class="col-md-4">
                             <canvas id="sessions"></canvas>
-                            <div id="sessionLegend" class="text-center">
+                            <div id="sessionLegend" class="text-left">
 
                             </div>
                         </div>

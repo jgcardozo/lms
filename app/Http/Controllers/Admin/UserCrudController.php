@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
+use App\Models\Module;
 use App\Models\User;
 use App\Models\Profile;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+use App\Models\Progress;
 use App\Http\Requests\Admin\UserStoreCrudRequest as StoreRequest;
 // VALIDATION
 use App\Http\Requests\Admin\UserUpdateCrudRequest as UpdateRequest;
@@ -217,6 +219,7 @@ class UserCrudController extends CrudController
         }
 
 		$this->updateProfile($item->id);
+        $this->updateProgressSessions($request->input('sessionsWatched'),$item->id);
 
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
@@ -238,6 +241,8 @@ class UserCrudController extends CrudController
         if ($request->input('password')) {
             $dataToUpdate['password'] = bcrypt($request->input('password'));
         }
+
+        $this->updateProgressSessions($dataToUpdate['sessionsWatched'],$dataToUpdate['id']);
 
 		$this->updateProfile($dataToUpdate['id']);
 
@@ -283,4 +288,95 @@ class UserCrudController extends CrudController
 			$user->profile()->save($profile);
 		}
 	}
+
+    private function updateProgressSessions($sessionsWatched,$id) {
+        $existing = Progress::where('user_id',$id)->pluck('id')->toArray();
+        $created = Progress::where('user_id',$id)->where('progress_type','LIKE','%Session')->whereRaw("progress_id IN (".implode(', ',$sessionsWatched).")")->pluck('created_at','progress_id')->toArray();
+        if(count($sessionsWatched) > 0) {
+            $data = [];
+
+            foreach ( $sessionsWatched as $session) {
+                if(array_key_exists($session,$created)){
+                    $created_at = $created[$session];
+
+                } else {
+                    $created_at = now();
+                }
+                $data[] = [
+                    'user_id' => $id,
+                    'progress_type' => 'App\Models\Session',
+                    'progress_id' => $session,
+                    'created_at' => $created_at,
+                    'updated_at' => now()
+                ];
+            }
+        }
+
+        $progressData = $this->updateProgressModuleAndLesson($sessionsWatched,$id);
+
+        Progress::destroy($existing);
+        Progress::insert($data);
+        Progress::insert($progressData['lessonData']);
+        Progress::insert($progressData['moduleData']);
+    }
+
+    private function updateProgressModuleAndLesson ($sessionsWatched,$id)
+    {
+        $moduleData = [];
+        $lessonData = [];
+        $modulesComplete = [];
+        foreach (Module::with('lmsLessons.sessions')->get() as $module) {
+            $lessonsComplete = [];
+
+            if($module->lmsLessons->count() == 0) {
+                continue;
+            }
+
+            foreach ($module->lmsLessons as $lesson) {
+                if($lesson->sessions->count() == 0) {
+                    continue;
+                }
+
+                if(count(array_intersect($lesson->sessions->pluck('id')->toArray(),$sessionsWatched)) == $lesson->sessions->count()) {
+                    $lessonsComplete[] = $lesson->id;
+                    if(Progress::where('user_id',$id)->where('progress_type','LIKE','%Session')->where('progress_id',$lesson->sessions->last()->id)->exists()) {
+                        $created_at = Progress::where('user_id',$id)->where('progress_type','LIKE','%Session')->where('progress_id',$lesson->sessions->last()->id)->first()->created_at;
+                    } else {
+                        $created_at = now();
+                    }
+
+                    $lessonData[] = [
+                        'user_id' => $id,
+                        'progress_type' => 'App\Models\Lesson',
+                        'progress_id' => $lesson->id,
+                        'updated_at' => now(),
+                        'created_at' => $created_at
+                    ];
+                }
+            }
+
+            if(count(array_intersect($module->lmsLessons->pluck('id')->toArray(),$lessonsComplete)) == $module->lmsLessons->count()) {
+                $modulesComplete[] = $module->id;
+                if(Progress::where('user_id',$id)->where('progress_type','LIKE','%Session')->where('progress_id',$module->lmsLessons->last()->sessions->last()->id)->exists()) {
+                    $created_at = Progress::where('user_id',$id)->where('progress_type','LIKE','%Session')->where('progress_id',$module->lmsLessons->last()->sessions->last()->id)->first()->created_at;
+                } else {
+                    $created_at = now();
+                }
+                $moduleData[] = [
+                    'user_id' => $id,
+                    'progress_type' => 'App\Models\Module',
+                    'progress_id' => $module->id,
+                    'updated_at' => now(),
+                    'created_at' => $created_at
+                ];
+            }
+
+        }
+
+
+        return [
+            'moduleData' => $moduleData,
+            'lessonData' => $lessonData
+        ];
+    }
 }
