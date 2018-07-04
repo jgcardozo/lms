@@ -15,22 +15,17 @@
 
 
 @section('content')
-
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default" id="blurDiv" style="filter:blur(3px);">
                 <div class="box-header with-border">
                     <div class="box-title">Statistics</div>
                     <button id="btnSync" class="btn btn-success" style="float: right" @if(\Illuminate\Support\Facades\Cache::has('updating')) {{ \Illuminate\Support\Facades\Cache::get('updating') }} @endif >
-                        @if(\Illuminate\Support\Facades\Cache::get('updating') === 'disabled')
-                            Synchronizing ...
-                        @else
                             @if(\Illuminate\Support\Facades\Cache::has('last_sync'))
                                 Synchronize ( {{ \Illuminate\Support\Carbon::createFromTimeString(\Illuminate\Support\Facades\Cache::get('last_sync'))->diffForHumans()  }} )
                             @else
                                 Synchronize
                             @endif
-                        @endif
                     </button>
                 </div>
                 <div class="box-body">

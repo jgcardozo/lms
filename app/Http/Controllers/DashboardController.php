@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CacheCompletionData;
 use App\Models\Cohort;
 use App\Models\Course;
 use App\Models\ISTag;
@@ -10,9 +11,11 @@ use App\Models\Module;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Queue;
 
 class DashboardController extends Controller
 {
@@ -72,7 +75,7 @@ class DashboardController extends Controller
 
     public function cacheFill()
     {
-        Artisan::call('db:seed',['--class' => 'CacheSeeder','--force' => 'true']);
+        $this->dispatchNow(new CacheCompletionData());
 
         return 'cached';
     }
