@@ -298,9 +298,11 @@ $(document).ready(function () {
     }
 
     function generateModuleLegend(data) {
+        var i = 0;
         var html = "<ul style='list-style: none; font-size: 24px'>";
         Object.keys(data[0]).forEach(function (module) {
-            html += "<li>"+module+" "+data[6][module]+"% - Avg "+data[3][module]+" days</li>";
+            html += "<li>"+"<div style=' display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+module+" "+data[6][module]+"% - Avg "+data[3][module]+" days</li>";
+            i++;
         });
         html += "</ul>";
 
@@ -308,9 +310,11 @@ $(document).ready(function () {
     }
 
     function generateLessonLegend(data) {
+        var i = 0;
         var html = "<ul style='list-style: none; font-size: 24px'>";
         Object.keys(data[1]).forEach(function (lesson) {
-            html += "<li>"+lesson+" "+data[7][lesson]+"% - Avg "+data[4][lesson]+" days</li>";
+            html += "<li>"+"<div style=' display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+lesson+" "+data[7][lesson]+"% - Avg "+data[4][lesson]+" days</li>";
+            i++;
         });
         html += "</ul>";
 
@@ -318,9 +322,11 @@ $(document).ready(function () {
     }
 
     function generateSessionLegend(data) {
+        var i = 0;
         var html = "<ul style='list-style: none; font-size: 24px'>";
         Object.keys(data[2]).forEach(function (session) {
-            html += "<li>"+session+" "+data[8][session]+"% </li>";
+            html += "<li>"+"<div style=' display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+session+" "+data[8][session]+"% </li>";
+            i++;
         });
         html += "</ul>";
 
