@@ -14,6 +14,8 @@ $(document).ready(function () {
     var sessionChart = '';
 
     $('#btnSync').on('click',function () {
+        $('#btnSync').html('Synchronizing ...');
+        $('#btnSync').attr('disabled','true');
         $.ajax({
             url: "dashboard/cache",
             type: "get",
@@ -25,6 +27,10 @@ $(document).ready(function () {
             },
             success: function success(response) {
                 console.log(response);
+
+                $('#btnSync').html('Synchronized');
+                $('#btnSync').attr('disabled','false');
+
             },
             error: function error(_error) {
                 console.log(_error);
