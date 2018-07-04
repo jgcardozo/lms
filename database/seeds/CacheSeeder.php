@@ -101,6 +101,10 @@ class CacheSeeder extends Seeder
 
         $totalUsers = count($users);
 
+        if($totalUsers == 0) {
+            return true;
+        }
+
         foreach ($course->modules as $module) {
             $moduleCount[$module->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Module' AND progress_id=? AND user_id IN (" . implode(",", $users) . ")", [$module->id]);
             $moduleCount[$module->title] = $moduleCount[$module->title][0]->counted;
@@ -208,6 +212,10 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
         }
 
         $totalUsers = count($users);
+
+        if($totalUsers == 0) {
+            return true;
+        }
 
         foreach ($course->modules as $module) {
             $moduleCount[$module->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Module' AND progress_id=? AND user_id IN (" . implode(",", $users) . ")", [$module->id]);
@@ -335,6 +343,10 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
         }
 
         $totalUsers = count($users);
+
+        if($totalUsers == 0) {
+            return true;
+        }
 
         foreach ($course->modules as $module) {
             $moduleCount[$module->title] = DB::select("select COUNT(*) as counted from progresses where progress_type LIKE '%Module' AND progress_id=? AND user_id IN (" . implode(",", $users) . ")", [$module->id]);
