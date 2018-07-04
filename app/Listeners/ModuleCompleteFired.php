@@ -35,7 +35,7 @@ class ModuleCompleteFired
         ]);
 
         $p = new \App\Models\Progress;
-        $p->user()->associate(Auth::user());
+        $p->user()->associate(\Auth::user());
         $p->setCreatedAt(now());
         $p->save();
         $module->progress()->save($p);
