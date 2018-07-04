@@ -13,6 +13,25 @@ $(document).ready(function () {
     var lessonChart = '';
     var sessionChart = '';
 
+    $('#btnSync').on('click',function () {
+        $.ajax({
+            url: "dashboard/cache",
+            type: "get",
+            data: {
+
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function success(response) {
+                console.log(response);
+            },
+            error: function error(_error) {
+                console.log(_error);
+            }
+        });
+    });
+
 
     $.ajax({
         url: "dashboard/fields",
@@ -124,11 +143,9 @@ $(document).ready(function () {
             },
             success: function success(response) {
                 if(response === 'error') {
-                    $('#modules, #lessons, #sessions, #moduleLegend').css('display','none');
-                    $('#error_chart').css('display','inherit');
+                    displayError(true);
                 } else {
-                    $('#error_chart').css('display','none');
-                    $('#modules, #lessons, #sessions, #moduleLegend').css('display','block');
+                    displayError(false);
 
                     if( colorPallete.length === 0) {
                         colorPallete = response[5];
@@ -149,6 +166,12 @@ $(document).ready(function () {
     }
 
     function createPieCharts(data) {
+        if(data.length === 0) {
+            displayError(true);
+            return true;
+        } else {
+            displayError(false);
+        }
 
         if(!firstTimeModule) {
             modulesChart.data.labels = Object.keys(data[0]);
@@ -187,6 +210,8 @@ $(document).ready(function () {
 
         if(data[1].length !== 0) {
             if(!firstTimeLesson) {
+                $('#lessons, #lessonLegend').css('display','inherit');
+
                 lessonChart.data.labels = Object.keys(data[1]);
                 lessonChart.data.datasets[0].data = Object.values(data[1]);
                 lessonChart.update();
@@ -222,10 +247,13 @@ $(document).ready(function () {
             }
         } else {
             $('#lessons, #lessonLegend').css('display','none');
+            $('#error_chart').css('display','inherit');
         }
 
         if(data[2].length !== 0) {
             if(!firstTimeSession){
+                $('#sessions, #sessionLegend').css('display','inherit');
+
                 sessionChart.data.labels = Object.keys(data[2]);
                 sessionChart.data.datasets[0].data = Object.values(data[2]);
                 sessionChart.update();
@@ -262,6 +290,7 @@ $(document).ready(function () {
             }
         } else {
             $('#sessions, #sessionLegend').css('display','none');
+            $('#error_chart').css('display','inherit');
         }
 
 
@@ -269,9 +298,11 @@ $(document).ready(function () {
     }
 
     function generateModuleLegend(data) {
+        var i = 0;
         var html = "<ul style='list-style: none; font-size: 24px'>";
         Object.keys(data[0]).forEach(function (module) {
-            html += "<li>"+module+" "+data[6][module]+"% - Avg "+data[3][module]+" days</li>";
+            html += "<li>"+"<div style=' display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+module+" "+data[6][module]+"% - Avg "+data[3][module]+" days</li>";
+            i++;
         });
         html += "</ul>";
 
@@ -279,9 +310,11 @@ $(document).ready(function () {
     }
 
     function generateLessonLegend(data) {
+        var i = 0;
         var html = "<ul style='list-style: none; font-size: 24px'>";
         Object.keys(data[1]).forEach(function (lesson) {
-            html += "<li>"+lesson+" "+data[7][lesson]+"% - Avg "+data[4][lesson]+" days</li>";
+            html += "<li>"+"<div style=' display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+lesson+" "+data[7][lesson]+"% - Avg "+data[4][lesson]+" days</li>";
+            i++;
         });
         html += "</ul>";
 
@@ -289,9 +322,11 @@ $(document).ready(function () {
     }
 
     function generateSessionLegend(data) {
+        var i = 0;
         var html = "<ul style='list-style: none; font-size: 24px'>";
         Object.keys(data[2]).forEach(function (session) {
-            html += "<li>"+session+" "+data[8][session]+"% </li>";
+            html += "<li>"+"<div style=' display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+session+" "+data[8][session]+"% </li>";
+            i++;
         });
         html += "</ul>";
 
@@ -301,6 +336,17 @@ $(document).ready(function () {
     function addBlurAndLoading() {
         $('#overlay_loading').css('display','inherit');
         $('#blurDiv').css('filter','blur(3px)');
+    }
+
+    function displayError(statement) {
+        if(statement) {
+            $('#modules, #lessons, #sessions, #moduleLegend, #lessonLegend, #sessionLegend').css('display','none');
+            $('#error_chart').css('display','inherit');
+        } else {
+            $('#modules, #lessons, #sessions, #moduleLegend, #lessonLegend, #sessionLegend').css('display','block');
+            $('#error_chart').css('display','none');
+        }
+
     }
 
 });

@@ -315,6 +315,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 
     Route::get('dashboard/data','DashboardController@pieChartsData');
 
+    Route::get('dashboard/cache','DashboardController@cacheFill')->name('dashboard.cache');
+
     // Settings
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', [
