@@ -22,10 +22,14 @@
                 <div class="box-header with-border">
                     <div class="box-title">Statistics</div>
                     <button id="btnSync" class="btn btn-success" style="float: right" @if(\Illuminate\Support\Facades\Cache::has('updating')) {{ \Illuminate\Support\Facades\Cache::get('updating') }} @endif >
-                        @if(\Illuminate\Support\Facades\Cache::has('last_sync'))
-                            Synchronize ( {{ \Illuminate\Support\Carbon::createFromTimeString(\Illuminate\Support\Facades\Cache::get('last_sync'))->diffForHumans()  }} )
+                        @if(\Illuminate\Support\Facades\Cache::get('updating') === 'disabled')
+                            Synchronizing ...
                         @else
-                            Synchronize
+                            @if(\Illuminate\Support\Facades\Cache::has('last_sync'))
+                                Synchronize ( {{ \Illuminate\Support\Carbon::createFromTimeString(\Illuminate\Support\Facades\Cache::get('last_sync'))->diffForHumans()  }} )
+                            @else
+                                Synchronize
+                            @endif
                         @endif
                     </button>
                 </div>
