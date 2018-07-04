@@ -72,7 +72,7 @@ class DashboardController extends Controller
 
     public function cacheFill()
     {
-        Artisan::call('db:seed',['--class' => 'CacheSeeder']);
+        Artisan::call('db:seed',['--class' => 'CacheSeeder','--force' => 'true']);
 
         return 'cached';
     }
