@@ -13,6 +13,25 @@ $(document).ready(function () {
     var lessonChart = '';
     var sessionChart = '';
 
+    $('#btnSync').on('click',function () {
+        $.ajax({
+            url: "dashboard/cache",
+            type: "get",
+            data: {
+
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function success(response) {
+                console.log(response);
+            },
+            error: function error(_error) {
+                console.log(_error);
+            }
+        });
+    });
+
 
     $.ajax({
         url: "dashboard/fields",
@@ -152,6 +171,7 @@ $(document).ready(function () {
         if(data.length === 0) {
             $('#lessons, #lessonLegend').css('display','none');
             $('#sessions, #sessionLegend').css('display','none');
+            $('#error_chart').css('display','inherit');
             return true;
         }
 
@@ -229,6 +249,7 @@ $(document).ready(function () {
             }
         } else {
             $('#lessons, #lessonLegend').css('display','none');
+            $('#error_chart').css('display','inherit');
         }
 
         if(data[2].length !== 0) {
@@ -271,6 +292,7 @@ $(document).ready(function () {
             }
         } else {
             $('#sessions, #sessionLegend').css('display','none');
+            $('#error_chart').css('display','inherit');
         }
 
 
