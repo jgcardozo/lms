@@ -90,6 +90,10 @@ class CacheSeeder extends Seeder
         $lessonPieChart = [];
         $sessionPieChart = [];
 
+        if($course->tags->count() == 0) {
+            return true;
+        }
+
         $tag_id = $course->tags->first()->id;
 
         if($user) {
@@ -202,6 +206,10 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
         $modulePieChart = [];
         $lessonPieChart = [];
         $sessionPieChart = [];
+
+        if($course->tags->count() == 0) {
+            return true;
+        }
 
         $tag_id = $course->tags->first()->id;
 
@@ -334,6 +342,9 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
         $lessonPieChart = [];
         $sessionPieChart = [];
 
+        if($course->tags->count() == 0) {
+            return true;
+        }
         $tag_id = $course->tags->first()->id;
 
         if($user) {
