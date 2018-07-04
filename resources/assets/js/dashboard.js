@@ -143,11 +143,9 @@ $(document).ready(function () {
             },
             success: function success(response) {
                 if(response === 'error') {
-                    $('#modules, #lessons, #sessions, #moduleLegend').css('display','none');
-                    $('#error_chart').css('display','inherit');
+                    displayError(true);
                 } else {
-                    $('#error_chart').css('display','none');
-                    $('#modules, #lessons, #sessions, #moduleLegend').css('display','block');
+                    displayError(false);
 
                     if( colorPallete.length === 0) {
                         colorPallete = response[5];
@@ -169,10 +167,10 @@ $(document).ready(function () {
 
     function createPieCharts(data) {
         if(data.length === 0) {
-            $('#lessons, #lessonLegend').css('display','none');
-            $('#sessions, #sessionLegend').css('display','none');
-            $('#error_chart').css('display','inherit');
+            displayError(true);
             return true;
+        } else {
+            displayError(false);
         }
 
         if(!firstTimeModule) {
@@ -332,6 +330,17 @@ $(document).ready(function () {
     function addBlurAndLoading() {
         $('#overlay_loading').css('display','inherit');
         $('#blurDiv').css('filter','blur(3px)');
+    }
+
+    function displayError(statement) {
+        if(statement) {
+            $('#modules, #lessons, #sessions, #moduleLegend, #lessonLegend, #sessionLegend').css('display','none');
+            $('#error_chart').css('display','inherit');
+        } else {
+            $('#modules, #lessons, #sessions, #moduleLegend, #lessonLegend, #sessionLegend').css('display','block');
+            $('#error_chart').css('display','none');
+        }
+
     }
 
 });
