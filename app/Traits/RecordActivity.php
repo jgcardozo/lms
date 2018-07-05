@@ -18,8 +18,6 @@ trait RecordActivity
             $log->save();
 
             $model->logs()->save($log);
-
-            Artisan::call('cache:clear');
         });
 
         static::updated(function($model){
