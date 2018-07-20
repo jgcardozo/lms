@@ -68,6 +68,13 @@ class UserController extends Controller
 		$newUser->activation_code = $uuid;
 		$newUser->save();
 
+        if($request->filled('cohortId')) {
+            $cohortId = $request->input('cohortId');
+
+            $newUser->cohorts()->attach($cohortId);
+        }
+
+
 		$profile = new Profile();
 		$profile->first_name = $request->has('firstname') ? $request->get('firstname') : '';
 		$profile->last_name = $request->has('lastname') ? $request->get('lastname') : '';
