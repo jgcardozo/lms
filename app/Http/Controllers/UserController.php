@@ -50,8 +50,8 @@ class UserController extends Controller
 			if($request->filled('cohortId')) {
 			    $cohortId = $request->input('cohortId');
 
-			    if(!$user->cohorts()->where('id',$cohortId)->exists()) {
-                    $user->cohorts()->attach($cohortId);
+			    if($user->cohorts->where('id',$cohortId)->count() == 0) {
+			        $user->cohorts()->attach($cohortId);
                 }
             }
 			return;
