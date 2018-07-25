@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cohort;
 use Auth;
 use Autologin;
 use Validator;
@@ -45,17 +46,18 @@ class UserController extends Controller
 		if(!User::where('contact_id', $request->get('contactId'))->get()->isEmpty())
 		{
 			$user = User::where('contact_id', $request->get('contactId'))->get()->first();
-			$user->syncIsTags();
 
-			if($request->filled('cohortId')) {
-			    $cohortId = $request->input('cohortId');
+            if($request->filled('cohortId')) {
+                $cohortId = $request->input('cohortId');
 
-			    if($user->cohorts->where('id',$cohortId)->count() == 0) {
-			        $user->cohorts()->attach($cohortId);
+                if($user->cohorts->where('id',$cohortId)->count() == 0 && Cohort::where('id',$cohortId)->count() > 0) {
+                    $user->cohorts()->attach($cohortId);
                 }
             }
-			return;
-		}
+            $user->syncIsTags();
+
+            return;
+        }
 
 		$password = str_random(16);
 		$uuid = uniqid();
