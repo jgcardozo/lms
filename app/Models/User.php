@@ -51,10 +51,6 @@ class User extends Authenticatable
     {
         static::created(function ($model)
         {
-            if ( ! empty(env('COHORT_ID')))
-            {
-                $model->cohorts()->attach(env('COHORT_ID'));
-            }
 
             $log = new \App\Models\Log;
             if (Auth::check()) {
