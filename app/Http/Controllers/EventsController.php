@@ -16,7 +16,7 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $events = Event::get();
+        $events = Event::orderBy('start_date','asc')->get();
         $courses = Course::get();
 
 		return view('lms.calendar.index')
