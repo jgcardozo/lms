@@ -51,11 +51,11 @@
 						<div class="courseblock__content">
 							<div class="courseblock__logo"></div>
 
-							<h2 class="courseblock__title ucase">Bonus</h2>
+							<h2 class="courseblock__title ucase">Bonuses</h2>
 
 							<p>Find all of your bonus trainings here</p>
 
-							<a href="{{ route('bonus') }}" class="courseblock__link">Access bonus</a>
+							<a href="{{ route('bonus') }}" class="courseblock__link">Access bonuses</a>
 						</div>
 					</div>
 				@endif
