@@ -19,6 +19,10 @@
                                 <a href="{{ route('single.module', $lesson->module->slug) }}">
                                     Back to <strong>{{ $lesson->module->title }}</strong>
                                 </a>
+                            @else
+                                <a href="{{ route('single.course', $lesson->course->slug) }}">
+                                    Back to <strong>{!! $lesson->course->title !!}</strong>
+                                </a>
                             @endif
                         </div>
 
