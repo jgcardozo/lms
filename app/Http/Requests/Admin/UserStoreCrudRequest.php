@@ -28,7 +28,6 @@ class UserStoreCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
             'contact_id' => 'nullable|numeric',
             'password' => 'required|confirmed',
             'phone1'   => 'required',
-            'company'  => 'required'
         ];
     }
 }
