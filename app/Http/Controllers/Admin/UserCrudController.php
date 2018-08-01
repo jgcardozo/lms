@@ -221,7 +221,9 @@ class UserCrudController extends CrudController
 		$this->updateProfile($item->id);
 
 
-        $this->updateProgressSessions($request->input('sessionsWatched'),$item->id);
+        if($request->filled('sessionsWatched')) {
+            $this->updateProgressSessions($request->input('sessionsWatched'),$item->id);
+        }
 
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
