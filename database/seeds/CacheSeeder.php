@@ -230,7 +230,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
             $moduleCount[$module->title] = $moduleCount[$module->title][0]->counted;
             $moduleCount[$module->title] = $this->percentage($totalUsers, $moduleCount[$module->title]);
 
-            if ($module->lmsLessons->count() > 0) {
+            if ($module->lmsLessons->count() > 0 && $module->lmsLessons->first()->sessions->count() > 0) {
                 $sessionId = $module->lmsLessons->first()->sessions->first()->id;
 
                 $query = DB::select("SELECT CEIL(AVG(t3.diff)) as avg FROM (SELECT t1.user_id,TIMESTAMPDIFF(DAY,t1.st,t2.en) as diff FROM (SELECT created_at  as st,user_id FROM `progresses` WHERE (progress_type LIKE '%Session' AND progress_id=?) AND user_id IN (" . implode(",", $users) . ")) t1
@@ -364,7 +364,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
             $moduleCount[$module->title] = $moduleCount[$module->title][0]->counted;
             $moduleCount[$module->title] = $this->percentage($totalUsers, $moduleCount[$module->title]);
 
-            if ($module->lmsLessons->count() > 0) {
+            if ($module->lmsLessons->count() > 0 && $module->lmsLessons->first()->sessions->count() > 0) {
                 $sessionId = $module->lmsLessons->first()->sessions->first()->id;
 
                 $query = DB::select("SELECT CEIL(AVG(t3.diff)) as avg FROM (SELECT t1.user_id,TIMESTAMPDIFF(DAY,t1.st,t2.en) as diff FROM (SELECT created_at  as st,user_id FROM `progresses` WHERE (progress_type LIKE '%Session' AND progress_id=?) AND user_id IN (" . implode(",", $users) . ")) t1
