@@ -32,21 +32,23 @@ class LessonController extends Controller
 
     public function postToFb(Lesson $lesson)
     {
-		$lesson->usersPosted()->attach(Auth::user()->id);
 
-        mixPanel()->track('Posted to Facebook', [
-            'lesson_id' => $lesson->id,
-            'lesson' => $lesson->title,
-            'course' => $lesson->course ? $lesson->course->title : '',
-            'module' => $lesson->module ? $lesson->module->title : ''
-        ]);
+        if(!$lesson->usersPosted()->where('id',Auth::user()->id)->exists()) {
+            $lesson->usersPosted()->attach(Auth::user()->id);
 
-        $log = new \App\Models\Log;
-        $log->user_id = Auth::user()->id;
-        $log->action_id = 6;
-        $log->activity_id = 1;
-        $log->save();
+            mixPanel()->track('Posted to Facebook', [
+                'lesson_id' => $lesson->id,
+                'lesson' => $lesson->title,
+                'course' => $lesson->course ? $lesson->course->title : '',
+                'module' => $lesson->module ? $lesson->module->title : ''
+            ]);
 
+            $log = new \App\Models\Log;
+            $log->user_id = Auth::user()->id;
+            $log->action_id = 6;
+            $log->activity_id = 1;
+            $log->save();
+        }
 
 		return redirect()->back();
     }
