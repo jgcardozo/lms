@@ -79,7 +79,7 @@ Class SettingsController extends BaseController
 				foreach($catTags as $tag)
 				{
 					$tagId = $tag['Id'];
-					$tagTitle = $tag['GroupName'];
+					$tagTitle = addslashes($tag['GroupName']);
 
 					$sqlVal .= !empty($sqlVal) ? ',' : '';
 					$sqlVal .= "($tagId,'$tagTitle')";
