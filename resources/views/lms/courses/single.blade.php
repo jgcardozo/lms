@@ -93,7 +93,7 @@
             <div class="course-modules">
                 <h2 class="course-modules__title">{{ $course->module_group_title }}</h2>
 
-                <div class="grid--flex course-modules__list">
+                <div class="grid--flex course-modules__list flex--row {{ count($course->modules) === 4 ? 'four' : '' }} ">
                     @foreach($course->modules as $key => $module)
                         <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}">
                             <div class="module__component grid--flex flex--column">

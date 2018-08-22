@@ -49,9 +49,16 @@ a:hover {
   display: inline-block;
 }
 
+
 .spacer__top--big,
 .grid.spacer__top--big {
   margin-top: 6rem;
+
+  @media all and (max-width: 768px) {
+    margin-top: 1rem;
+
+    h1 { margin-bottom: 1rem; }
+  }
 }
 
 .clearfix:before,
@@ -242,3 +249,4 @@ a:hover {
     }
   }
 }
+
