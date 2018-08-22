@@ -307,7 +307,7 @@ $(document).ready(function () {
         var i = 0;
         var html = "<ul style='list-style: none; font-size: 20px'>";
         Object.keys(data[0]).forEach(function (module) {
-            html += "<li>"+"<div style='margin-right: 20px; display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+module+" "+data[6][module]+"% ("+data[9]+"\\"+Math.ceil(data[9]*(data[6][module]/100))+") - Avg "+data[3][module]+" days</li>";
+            html += "<li>"+"<div style='margin-right: 20px; display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+module+" "+data[6][module]+"% ("+Math.ceil(data[9]*(data[6][module]/100))+" out of "+data[9]+") - Avg "+data[3][module]+" days</li>";
             i++;
         });
         html += "</ul>";
@@ -319,7 +319,7 @@ $(document).ready(function () {
         var i = 0;
         var html = "<ul style='list-style: none; font-size: 20px'>";
         Object.keys(data[1]).forEach(function (lesson) {
-            html += "<li>"+"<div style='margin-right: 20px; display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+lesson+" "+data[7][lesson]+"% ("+data[9]+"\\"+Math.ceil(data[9]*(data[7][lesson]/100))+") - Avg "+data[4][lesson]+" days</li>";
+            html += "<li>"+"<div style='margin-right: 20px; display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+lesson+" "+data[7][lesson]+"% ("+Math.ceil(data[9]*(data[7][lesson]/100))+" out of "+data[9]+") - Avg "+data[4][lesson]+" days</li>";
             i++;
         });
         html += "</ul>";
@@ -331,7 +331,7 @@ $(document).ready(function () {
         var i = 0;
         var html = "<ul style='list-style: none; font-size: 20px'>";
         Object.keys(data[2]).forEach(function (session) {
-            html += "<li>"+"<div style='margin-right: 20px; display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+session+" "+data[8][session]+"% (" +data[9]+"\\"+Math.ceil(data[9]*(data[8][session]/100))+ ")</li>";
+            html += "<li>"+"<div style='margin-right: 20px; display: inline-block; height: 15px;width: 35px; background-color:"+colorPallete[i]+"'></div>"+session+" "+data[8][session]+"% (" +Math.ceil(data[9]*(data[8][session]/100))+" out of "+data[9]+")</li>";
             i++;
         });
         html += "</ul>";
