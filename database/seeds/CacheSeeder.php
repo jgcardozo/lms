@@ -152,6 +152,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
                 $moduleCount,
                 $lessonCount,
                 $sessionCount,
+                $totalUsers
             ];
         } else {
             $dataForCache[$course->id] = [
@@ -164,6 +165,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
                 $moduleCount,
                 $lessonCount,
                 $sessionCount,
+                $totalUsers
             ];
         }
 
@@ -291,6 +293,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
                 $moduleCount,
                 $lessonCount,
                 $sessionCount,
+                $totalUsers
             ];
         } else {
             $dataForCache[$course->id."-".$module_id->id] = [
@@ -303,6 +306,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
                 $moduleCount,
                 $lessonCount,
                 $sessionCount,
+                $totalUsers
             ];
         }
 
@@ -435,6 +439,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
                 $moduleCount,
                 $lessonCount,
                 $sessionCount,
+                $totalUsers
             ];
         } else {
             $dataForCache[$course->id."-".$moduleM->id."-".$lessonL->id] = [
@@ -447,6 +452,7 @@ INNER JOIN (SELECT created_at  as en,user_id FROM `progresses` WHERE (progress_t
                 $moduleCount,
                 $lessonCount,
                 $sessionCount,
+                $totalUsers
             ];
         }
 
