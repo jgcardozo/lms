@@ -5,7 +5,7 @@
 @section('content')
 	@if(! empty($courses))
 		<main class="grid grid--lg spacer__top--big">
-			<h1 class="page--title">Courses</h1>
+			<h1 class="page--title txt--capitalize pl-10">Welcome {{ auth()->user()->name }}</h1>
 
 			<section class="grid--flex courseblock--flex">
 			    @foreach($courses as $course)
@@ -33,7 +33,6 @@
 								<h2 class="courseblock__title ucase">{!! bold_first_word($course->title) !!}</h2>
 
 								<p>{!! $course->short_description !!}</p>
-
 								@if($course->is_locked)
 									@if($course->apply_now)
 										<a href="{{ $course->apply_now }}" class="courseblock__link" target="_blank">{!! $course->apply_now_label !!}</a>
@@ -56,12 +55,12 @@
 
 							<div class="courseblock__content">
 								<div class="courseblock__logo"></div>
+									<div class="courseblock__content__wrapper">
+										<h2 class="courseblock__title ucase">Bonuses</h2>
 
-								<h2 class="courseblock__title ucase">Bonuses</h2>
-
-								<p>Find all of your bonus trainings here</p>
-
-								<a href="{{ route('bonus') }}" class="courseblock__link">Access bonuses</a>
+										<p>Find all of your bonus trainings here</p>
+									<a href="{{ route('bonus') }}" class="courseblock__link">Access bonuses</a>
+								</div>
 							</div>
 						</div>
 					</div>

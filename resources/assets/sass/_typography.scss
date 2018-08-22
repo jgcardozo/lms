@@ -48,6 +48,10 @@ h6, .h6 { font-size: $font-size-h6; }
 
 .page--title {
   text-transform: uppercase;
+
+  &.txt--capitalize {
+    text-transform: capitalize;
+  }
 }
 
 
