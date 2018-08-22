@@ -313,6 +313,12 @@
     font-size: 1.4rem;
     color: $brand-grey-light;
     margin: 0 0 1rem;
+    word-break: break-word;
+    min-height: 76px;
+
+    @media all and (max-width: 640px) {
+      min-height: inherit;
+    }
   }
 }
 
