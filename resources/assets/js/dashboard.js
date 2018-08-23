@@ -36,6 +36,11 @@ $(document).ready(function () {
                 console.log(_error);
             }
         });
+
+        setTimeout(
+            function() {
+                window.location.reload(true);
+            }, 1000);
     });
 
 
