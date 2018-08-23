@@ -76,7 +76,5 @@ class DashboardController extends Controller
     public function cacheFill()
     {
         shell_exec('cd .. && php artisan db:seed --class CacheSeeder --force');
-
-        return 'cached';
     }
 }
