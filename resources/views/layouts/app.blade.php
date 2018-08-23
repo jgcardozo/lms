@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}?v=276" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}?v=123" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
