@@ -28,7 +28,7 @@ class DashboardController extends Controller
 
     public function formInputFields()
     {
-        $courses = Course::with('cohorts', 'modules.lessons')->get()->toArray();
+        $courses = Course::with('cohorts', 'modules.lessons')->orderBy('id','asc')->get()->toArray();
 
         return $courses;
 
