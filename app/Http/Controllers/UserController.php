@@ -54,7 +54,10 @@ class UserController extends Controller
                     $user->cohorts()->attach($cohortId);
                 }
             }
+
             $user->syncIsTags();
+
+            Mail::to($user)->send(new \App\Mail\ExistingUser($user->email));
 
             return;
         }
