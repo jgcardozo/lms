@@ -7,6 +7,6 @@
 <p>4. Click Sign In</p>
 <br />
 <p>All my best,</p>
-<p>Ryan :slightly_smiling_face:</p>
+<p>Ryan :-)</p>
 <br />
 <p>P.S. If you have any trouble, feel free to reach out to our Support team: contact@askmethod.com</p>
