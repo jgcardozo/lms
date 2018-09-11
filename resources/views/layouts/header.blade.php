@@ -67,9 +67,11 @@
 
                 <div class="masthead__right grid--flex">
                     @if(changeHeader())
-                        <div class="masthead__progress grid--flex flex--align-center">
-                            <a class="js-header-progress" href="javascript:;">Course Progress</a>
-                        </div>
+                        @if( isset($progress_items) && $progress_items->id != 12 )
+                            <div class="masthead__progress grid--flex flex--align-center">
+                                    <a class="js-header-progress" href="javascript:;">Course Progress</a>
+                            </div>
+                        @endif
                     @endif
 
                     <div class="masthead__calendar grid--flex">
