@@ -174,9 +174,9 @@
                 $('#logTable').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
-                        'csv', 'pdf', 'print', 'pageLength', 'colvis'
+                        'csv', 'pdf', 'print',  'colvis'
                     ],
-                    "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]],
+                    "paging": false,
                     "order": [[4,"desc"]]
                 });
             });
