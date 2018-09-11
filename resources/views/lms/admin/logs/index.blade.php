@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-    {{--{{ dd($logs->count()) }}--}}
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default">
@@ -170,7 +169,7 @@
                                 </tfoot>
                             </table>
 
-                            {{--{{$logs->links()}}--}}
+                            {{$logs->links()}}
                         </div>
                     </div>
                 </div>
