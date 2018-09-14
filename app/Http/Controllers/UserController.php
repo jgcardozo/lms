@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cohort;
 use Auth;
 use Autologin;
 use Validator;
@@ -45,11 +46,21 @@ class UserController extends Controller
 		if(!User::where('contact_id', $request->get('contactId'))->get()->isEmpty())
 		{
 			$user = User::where('contact_id', $request->get('contactId'))->get()->first();
-			$user->syncIsTags();
-            $user->cohorts()->detach();
-            $user->cohorts()->attach(env('COHORT_ID'));
-			return;
-		}
+
+            if($request->filled('cohortId')) {
+                $cohortId = $request->input('cohortId');
+
+                if($user->cohorts->where('id',$cohortId)->count() == 0 && Cohort::where('id',$cohortId)->count() > 0) {
+                    $user->cohorts()->attach($cohortId);
+                }
+            }
+
+            $user->syncIsTags();
+
+            Mail::to($user)->send(new \App\Mail\ExistingUser($user->email));
+
+            return;
+        }
 
 		$password = str_random(16);
 		$uuid = uniqid();
@@ -61,6 +72,13 @@ class UserController extends Controller
 		$newUser->password = bcrypt($password);
 		$newUser->activation_code = $uuid;
 		$newUser->save();
+
+        if($request->filled('cohortId')) {
+            $cohortId = $request->input('cohortId');
+
+            $newUser->cohorts()->attach($cohortId);
+        }
+
 
 		$profile = new Profile();
 		$profile->first_name = $request->has('firstname') ? $request->get('firstname') : '';
@@ -305,10 +323,6 @@ class UserController extends Controller
 		{
 			$user = User::find($id);
 			Auth::loginUsingId($user->id);
-            $log = new \App\Models\Log;
-            $log->user_id = $user->id;
-            $log->action_id = 5;
-            $log->save();
 		}
 
 		return redirect('/');

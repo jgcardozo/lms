@@ -275,7 +275,7 @@ class InfusionsoftFlow
 
         $fields = array_filter($fields);
 
-        $this->is->contacts()->update((int)$user->contact_id, $fields);
+        $this->is->contacts('xml')->update((int)$user->contact_id, $fields);
     }
 
     public function addTag($contactID = 0, $tags)
@@ -289,7 +289,7 @@ class InfusionsoftFlow
         }
 
         foreach ($tags as $tag) {
-            $this->is->contacts()->addToGroup($contactID, (int)$tag);
+            $this->is->contacts('xml')->addToGroup($contactID, (int)$tag);
         }
 
         return true;

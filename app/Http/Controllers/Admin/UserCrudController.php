@@ -219,7 +219,11 @@ class UserCrudController extends CrudController
         }
 
 		$this->updateProfile($item->id);
-        $this->updateProgressSessions($request->input('sessionsWatched'),$item->id);
+
+
+        if($request->filled('sessionsWatched')) {
+            $this->updateProgressSessions($request->input('sessionsWatched'),$item->id);
+        }
 
         // show a success message
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
@@ -242,7 +246,12 @@ class UserCrudController extends CrudController
             $dataToUpdate['password'] = bcrypt($request->input('password'));
         }
 
-        $this->updateProgressSessions($dataToUpdate['sessionsWatched'],$dataToUpdate['id']);
+        if(array_key_exists('sessionsWatched',$dataToUpdate)) {
+            $this->updateProgressSessions($dataToUpdate['sessionsWatched'],$dataToUpdate['id']);
+        } else {
+            $this->updateProgressSessions([],$dataToUpdate['id']);
+        }
+
 
 		$this->updateProfile($dataToUpdate['id']);
 
@@ -291,8 +300,9 @@ class UserCrudController extends CrudController
 
     private function updateProgressSessions($sessionsWatched,$id) {
         $existing = Progress::where('user_id',$id)->pluck('id')->toArray();
-        $created = Progress::where('user_id',$id)->where('progress_type','LIKE','%Session')->whereRaw("progress_id IN (".implode(', ',$sessionsWatched).")")->pluck('created_at','progress_id')->toArray();
+
         if(count($sessionsWatched) > 0) {
+            $created = Progress::where('user_id',$id)->where('progress_type','LIKE','%Session')->whereRaw("progress_id IN (".implode(', ',$sessionsWatched).")")->pluck('created_at','progress_id')->toArray();
             $data = [];
 
             foreach ( $sessionsWatched as $session) {
@@ -310,14 +320,18 @@ class UserCrudController extends CrudController
                     'updated_at' => now()
                 ];
             }
+
+            $progressData = $this->updateProgressModuleAndLesson($sessionsWatched,$id);
+
+            Progress::destroy($existing);
+            Progress::insert($data);
+            Progress::insert($progressData['lessonData']);
+            Progress::insert($progressData['moduleData']);
+        } else {
+            Progress::destroy($existing);
         }
 
-        $progressData = $this->updateProgressModuleAndLesson($sessionsWatched,$id);
 
-        Progress::destroy($existing);
-        Progress::insert($data);
-        Progress::insert($progressData['lessonData']);
-        Progress::insert($progressData['moduleData']);
     }
 
     private function updateProgressModuleAndLesson ($sessionsWatched,$id)

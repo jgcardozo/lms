@@ -51,10 +51,6 @@ class User extends Authenticatable
     {
         static::created(function ($model)
         {
-            if ( ! empty(env('COHORT_ID')))
-            {
-                $model->cohorts()->attach(env('COHORT_ID'));
-            }
 
             $log = new \App\Models\Log;
             if (Auth::check()) {
@@ -91,9 +87,16 @@ class User extends Authenticatable
             $log->user_id = Auth::id();
             $log->action_id = 13;
             $log->activity_id = 7;
-            $log->subject_type = get_class($model);
-            $log->subject_id = $model->id;
+            $log->deleted_user = $model->email;
             $log->save();
+
+            $logs = $model->logs;
+
+            foreach ($logs as $logg) {
+                $logg->deleted_user = $model->email;
+
+                $logg->save();
+            }
         });
     }
 
@@ -229,7 +232,7 @@ class User extends Authenticatable
 
     public function logs()
     {
-        return $this->hasMany(Log::class);
+        return $this->hasMany(\App\Models\Log::class);
     }
 
     public function cohorts()

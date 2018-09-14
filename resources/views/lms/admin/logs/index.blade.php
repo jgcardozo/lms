@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-    {{--{{ dd($logs->count()) }}--}}
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default">
@@ -95,7 +94,11 @@
                                 @foreach($logs as $log)
                                     <tr>
                                         <td>{{ $log->id }}</td>
-                                        <td>{{ $log->user->name }}</td>
+                                        @if($log->user !== null)
+                                            <td>{{ $log->user->name }}</td>
+                                        @else
+                                            <td>{{ $log->deleted_user }}</td>
+                                        @endif
                                         <td>{{ $log->action->name }}</td>
                                         @if(empty($log->activity) && empty($log->subject))
                                             <td></td>
@@ -139,7 +142,11 @@
                                                     @endif
                                                 @else
                                                     @if(empty($log->deleted))
-                                                        <td>{{ $log->subject_type }}</td>
+                                                        @if(empty($log->deleted_user))
+                                                            <td>{{ $log->subject_type }}</td>
+                                                        @else
+                                                            <td>{{ $log->deleted_user }}</td>
+                                                        @endif
                                                     @else
                                                         <td>{{ $log->deleted }}</td>
                                                     @endif
@@ -162,7 +169,7 @@
                                 </tfoot>
                             </table>
 
-                            {{--{{$logs->links()}}--}}
+                            {{$logs->links()}}
                         </div>
                     </div>
                 </div>

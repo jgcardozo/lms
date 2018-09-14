@@ -64,7 +64,7 @@
                                 <div class="lesson-sessions__content--left">
                                     <h2 class="lesson-sessions__item--title">{{ $coaching_call->title }}</h2>
 
-                                    <p>{{ truncate_string($coaching_call->description) }}</p>
+                                    <p>{!! truncate_string($coaching_call->description) !!}</p>
                                 </div>
 
                                 <div class="lesson-sessions__content--right">
@@ -100,7 +100,7 @@
                                 <div class="lesson-sessions__content--left">
                                     <h2 class="lesson-sessions__item--title">{{ $coaching_call->title }}</h2>
 
-                                    <p>{{ truncate_string($coaching_call->description) }}</p>
+                                    <p>{!! truncate_string($coaching_call->description) !!}</p>
                                 </div>
 
                                 <div class="lesson-sessions__content--right">

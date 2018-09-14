@@ -19,6 +19,10 @@
                                 <a href="{{ route('single.module', $lesson->module->slug) }}">
                                     Back to <strong>{{ $lesson->module->title }}</strong>
                                 </a>
+                            @else
+                                <a href="{{ route('single.course', $lesson->course->slug) }}">
+                                    Back to <strong>{!! $lesson->course->title !!}</strong>
+                                </a>
                             @endif
                         </div>
 
@@ -63,7 +67,7 @@
                                 <div class="lesson-sessions__content--left">
                                     <h2 class="lesson-sessions__item--title">{{ $session->title }}</h2>
 
-                                    <p>{{ truncate_string($session->description) }}</p>
+                                    <p>{!!  truncate_string($session->description) !!}</p>
                                 </div>
 
                                 @if($session->isCompleteVideoFeatureOn())

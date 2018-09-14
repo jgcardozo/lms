@@ -82,6 +82,11 @@ class Session extends Model
             return false;
         }
 
+        if(!$this->course->is_locked && is_role_vip())
+        {
+            return false;
+        }
+
         if($this->lesson->is_locked) {
             return true;
         }

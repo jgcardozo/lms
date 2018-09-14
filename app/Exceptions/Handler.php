@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,18 +24,40 @@ class Handler extends ExceptionHandler
         \Illuminate\Validation\ValidationException::class,
     ];
 
+    protected $dontReportToRollbar = [
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Session\TokenMismatchException::class,
+        \Illuminate\Validation\ValidationException::class,
+        MethodNotAllowedHttpException::class,
+    ];
     /**
      * Report or log an exception.
-     *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
-     * @return void
+     * @param Exception $exception
+     * @return mixed|void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
-        Log::error($exception);
+        $this->reportToRollbar($exception);
         parent::report($exception);
+    }
+
+    /**
+     * Report exceptions Rollbar, excluding exceptions listed in $dontReportToRollbar
+     * @param Exception $exception
+     */
+    public function reportToRollbar(Exception $exception){
+        foreach ($this->dontReportToRollbar as $exceptionType){
+            if($exception instanceof $exceptionType) {
+                return;
+            }
+        }
+        Log::error($exception);
     }
 
     /**

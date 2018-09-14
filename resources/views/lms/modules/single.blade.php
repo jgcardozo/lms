@@ -57,7 +57,7 @@
                                     @else
                                         <h2 class="lessons-list__item--title"><a href="{{ route('single.lesson', $lesson->slug) }}">{{ $lesson->title }}</a></h2>
                                     @endif
-                                    <p>{{ truncate_string($lesson->description) }}</p>
+                                    <p>{!!  truncate_string($lesson->description) !!}</p>
                                 </div>
 
                                 <div class="lessons-list__content--center grid--flex flex--space-between">

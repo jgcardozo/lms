@@ -48,6 +48,6 @@ class WatchedSessionFired
         ]);
 
         // Log the activity
-        activity('session-watched')->causedBy(Auth::user())->withProperties(['ip' => request()->ip()])->performedOn($session)->log('User <strong>:causer.email</strong> finished session <strong>:subject.title</strong> [:subject.id]');
+        //activity('session-watched')->causedBy(Auth::user())->withProperties(['ip' => request()->ip()])->performedOn($session)->log('User <strong>:causer.email</strong> finished session <strong>:subject.title</strong> [:subject.id]');
     }
 }

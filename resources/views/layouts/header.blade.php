@@ -37,6 +37,8 @@
                         <ul class="list--inline grid--flex">
                             @if(!$progress_items->starter_videos->isEmpty())
                                 <li class="grid--flex"><a href="{{ route('single.course.starter', $progress_items->slug) }}" class="grid--flex flex--align-center {{ survey_check($progress_items) ? 'js-open-surveyPopup' : '' }}">Welcome</a></li>
+                            @else
+                                <li class="grid--flex"><a href="{{ route('single.course', $progress_items->slug) }}" class="grid--flex flex--align-center">Welcome</a></li>
                             @endif
 
                             @if(isset($progress_items))
@@ -65,9 +67,11 @@
 
                 <div class="masthead__right grid--flex">
                     @if(changeHeader())
-                        <div class="masthead__progress grid--flex flex--align-center">
-                            <a class="js-header-progress" href="javascript:;">Course Progress</a>
-                        </div>
+                        @if( isset($progress_items) && $progress_items->id != 12 )
+                            <div class="masthead__progress grid--flex flex--align-center">
+                                    <a class="js-header-progress" href="javascript:;">Course Progress</a>
+                            </div>
+                        @endif
                     @endif
 
                     <div class="masthead__calendar grid--flex">

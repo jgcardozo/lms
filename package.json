@@ -16,10 +16,9 @@
     "perfect-scrollbar": "^0.6.16",
     "progressbar.js": "^1.0.1",
     "resolve-url-loader": "^2.3.0",
-    "sass-loader": "^6.0.7"
-  },
-  "dependencies": {
+    "sass-loader": "^6.0.7",
     "moment": "^2.22.1",
     "select2": "^4.0.6-rc.1"
-  }
+  },
+  "dependencies": {}
 }

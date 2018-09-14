@@ -50,7 +50,7 @@
                         <div class="course-reminder__content">
                             <p class="course-reminder__blurb">Next Session</p>
                             <h2 class="course-reminder__title">Welcome to {{ $nextSession->title }}</h2>
-                            <p>{{ truncate_string($nextSession->description) }}</p>
+                            <p>{!! truncate_string($nextSession->description) !!}</p>
                         </div>
 
                         <?php
@@ -93,7 +93,7 @@
             <div class="course-modules">
                 <h2 class="course-modules__title">{{ $course->module_group_title }}</h2>
 
-                <div class="grid--flex course-modules__list">
+                <div class="grid--flex course-modules__list flex--row {{ count($course->modules) === 4 ? 'four' : '' }} ">
                     @foreach($course->modules as $key => $module)
                         <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}">
                             <div class="module__component grid--flex flex--column">
@@ -119,7 +119,7 @@
                                 <div class="module__content">
                                     <h2 class="module__title">{{ $module->title }}</h2>
 
-                                    <p>{{ truncate_string($module->description) }}</p>
+                                    <p>{!! truncate_string($module->description) !!}</p>
 
                                     @if($module->is_locked)
                                         <a href="javascript:;" class="module__link">Go To Lesson</a>
