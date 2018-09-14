@@ -145,14 +145,14 @@
                                             @if($entry->schedule_type === "dripped")
                                                 <div class="form-group">
                                                     <div class="input-group col-md-offset-2" style="display: none;">
-                                                        <span class="input-group-addon" id="basic-addon3"><b>Session</b>: {{ $session->title }}</span>
+                                                        <span class="input-group-addon" id="basic-addon3"><b>Session</b>: {{ str_limit($session->title, 40) }}</span>
                                                         <input type="number" min="0" class="form-control" name="sessions[{{ $session->id }}]" id="sessions_{{ $session->id }}'" aria-describedby="basic-addon3" value="{{ $session->getDripOrLockDays($entry->id) }}">
                                                     </div>
                                                 </div>
                                             @else
                                                 <div class="form-group">
                                                     <div class="input-group date dtp col-md-offset-2" style="display: none;">
-                                                        <span class="input-group-addon" id="basic-addon3"><b>Session</b>: {{ $session->title }}</span>
+                                                        <span class="input-group-addon" id="basic-addon3"><b>Session</b>: {{ str_limit($session->title, 40) }}</span>
                                                         <input type="text" class="form-control" name="sessions[{{ $session->id }}]" id="sessions_{{ $session->id }}" aria-describedby="basic-addon3" value="{{ $session->getDripOrLockDays($entry->id) }}"  style="background-color: white">
                                                         <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
