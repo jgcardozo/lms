@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Bonus;
 use App\Traits\BackpackCrudTrait;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\Admin\BonusCrudRequest as StoreRequest;
@@ -125,6 +126,6 @@ class BonusCrudController extends CrudController
 
 	public function update(UpdateRequest $request)
 	{
-		return parent::updateCrud();
+	    return parent::updateCrud();
     }
 }
