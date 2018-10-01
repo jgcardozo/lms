@@ -320,6 +320,11 @@ class Course extends Model
 		return $this->hasMany('App\Models\Module');
 	}
 
+	public function modules_not_hidden()
+    {
+        return $this->modules()->where('hidden','=',0);
+    }
+
 	public function starter_videos()
     {
 		return $this->hasMany('App\Models\Session', 'starter_course_id');
