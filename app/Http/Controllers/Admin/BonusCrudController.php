@@ -6,7 +6,7 @@ use App\Models\Bonus;
 use App\Traits\BackpackCrudTrait;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\Admin\BonusCrudRequest as StoreRequest;
-use App\Http\Requests\Admin\BonusCrudUpdateRequest as UpdateRequest;
+use App\Http\Requests\Admin\BonusCrudRequest as UpdateRequest;
 
 class BonusCrudController extends CrudController
 {
@@ -126,12 +126,6 @@ class BonusCrudController extends CrudController
 
 	public function update(UpdateRequest $request)
 	{
-
-	    if(!$request->has('header_image') && empty(Bonus::find($request->input('id'))->header_image)) {
-            \Alert::error('The header field is required')->flash();
-            return redirect()->back();
-        }
-
-		return parent::updateCrud();
+	    return parent::updateCrud();
     }
 }
