@@ -14,7 +14,7 @@ class AlterModuleTableAddVisibilityField extends Migration
     public function up()
     {
         Schema::table('modules', function (Blueprint $table) {
-            $table->boolean('hidden')->default(false);
+            $table->string('module_status')->default('locked');
         });
     }
 
@@ -26,7 +26,7 @@ class AlterModuleTableAddVisibilityField extends Migration
     public function down()
     {
         Schema::table('modules', function (Blueprint $table) {
-            $table->dropColumn('hidden');
+            $table->dropColumn('module_status');
         });
     }
 }
