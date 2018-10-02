@@ -95,7 +95,7 @@
 
                 <div class="grid--flex course-modules__list flex--row {{ count($course->modules_not_hidden) === 4 ? 'four' : '' }} ">
                     @foreach($course->modules as $key => $module)
-                        <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}" @if($module->is_locked && $module->hidden) style="display:none;" @endif>
+                        <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}" @if($module->is_locked && $module->module_status === 'hidden') style="display:none;" @endif>
                             <div class="module__component grid--flex flex--column">
                                 @if($module->is_locked)
                                     <div class="module__locked">

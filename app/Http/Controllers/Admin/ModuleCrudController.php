@@ -129,12 +129,12 @@ class ModuleCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'hidden',
-            'label' => 'Visibility',
+            'name' => 'module_status',
+            'label' => 'Module Status',
             'type' => 'radio',
             'options' => [
-                0 => 'Locked',
-                1 => 'Hidden'
+                'locked' => 'Locked',
+                'hidden' => 'Hidden'
             ],
             'inline' => true
         ]);

@@ -322,7 +322,7 @@ class Course extends Model
 
 	public function modules_not_hidden()
     {
-        return $this->modules()->where('hidden','=',0);
+        return $this->modules()->where('module_status','!=','hidden');
     }
 
 	public function starter_videos()
