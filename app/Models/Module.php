@@ -138,7 +138,7 @@ class Module extends Model
             return false;
         }
 
-		if(!$this->course->is_locked && is_role_vip())
+		if(!$this->course->is_locked && is_role_vip() && !$this->is_tag_locked())
         {
             return false;
         }
