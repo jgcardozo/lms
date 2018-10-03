@@ -34,7 +34,7 @@ class Module extends Model
 	use RecordActivity;
 
 	protected $fillable = [
-		'title', 'slug', 'description', 'video_url', 'video_type_id', 'course_id', 'lock_date', 'featured_image', 'lesson_group_title'
+		'title', 'slug', 'description', 'video_url', 'video_type_id', 'course_id', 'lock_date', 'featured_image', 'lesson_group_title', 'module_status'
 	];
 
 	/**

@@ -118,6 +118,27 @@ class ModuleCrudController extends CrudController
 			'allows_null' => false,
 		]);
 
+        $this->crud->addField([
+            'label' => 'Lock tags:',
+            'type' => 'select2_multipleIsTags',
+            'name' => 'lock_tags',
+            'entity' => 'tags',
+            'attribute' => 'title',
+            'model' => 'App\Models\ISTag',
+            'pivot' => true
+        ]);
+
+        $this->crud->addField([
+            'name' => 'module_status',
+            'label' => 'Module Status',
+            'type' => 'radio',
+            'options' => [
+                'locked' => 'Locked',
+                'hidden' => 'Hidden'
+            ],
+            'inline' => true
+        ]);
+
 		/*$this->crud->addField([
 			'label' => 'Lock the module until this date:',
 			'name' => 'lock_date',
