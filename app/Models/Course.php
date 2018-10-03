@@ -322,7 +322,17 @@ class Course extends Model
 
 	public function modules_not_hidden()
     {
-        return $this->modules()->where('module_status','!=','hidden');
+        $totalModules = $this->modules()->count();
+
+        $hiddenModules = 0;
+
+        foreach ($this->modules as $totalModule) {
+            if ($totalModule->is_locked && $totalModule->module_status === 'hidden') {
+                $hiddenModules++;
+            }
+        }
+
+        return $totalModules-$hiddenModules;
     }
 
 	public function starter_videos()
