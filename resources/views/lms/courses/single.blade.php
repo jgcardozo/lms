@@ -55,22 +55,21 @@
 
                         <?php
                             $t = false;
-                            foreach($course->modules as $key => $module)
-                            {
-                                if($module->is_locked)
+                            foreach ($course->modules as $key => $module) {
+                                if ($module->is_locked) {
                                     continue;
+                                }
 
                                 $t = true;
                             }
 
-                            if($t)
-                            {
+                            if ($t) {
                                 ?>
                                 <div class="grid--flex flex--align-center">
                                     <a href="{{ route('single.lesson', $nextSession->lesson->slug) }}" class="course-reminder__link">Resume Lesson</a>
                                 </div>
                                 <?php
-                            }else{
+                            } else {
                                 ?>
                                 <div class="grid--flex flex--align-center">
                                     <a href="#" class="course-reminder__link">Unlocks soon</a>
@@ -93,9 +92,10 @@
             <div class="course-modules">
                 <h2 class="course-modules__title">{{ $course->module_group_title }}</h2>
 
-                <div class="grid--flex course-modules__list flex--row {{ count($course->modules) === 4 ? 'four' : '' }} ">
+                <div class="grid--flex course-modules__list flex--row {{ $course->modules_not_hidden() === 4 ? 'four' : '' }} ">
                     @foreach($course->modules as $key => $module)
-                        <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}">
+                        @if($module->is_tag_locked())
+                        <div id="module-{{ $module->id }}" class="module grid--flex {{ ($key % 3) == 0 ? 'module--first' : '' }}" @if($module->is_locked && $module->module_status === 'hidden') style="display:none;" @endif>
                             <div class="module__component grid--flex flex--column">
                                 @if($module->is_locked)
                                     <div class="module__locked">
@@ -129,6 +129,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

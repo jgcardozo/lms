@@ -320,6 +320,21 @@ class Course extends Model
 		return $this->hasMany('App\Models\Module');
 	}
 
+	public function modules_not_hidden()
+    {
+        $totalModules = $this->modules()->count();
+
+        $hiddenModules = 0;
+
+        foreach ($this->modules as $totalModule) {
+            if ($totalModule->is_locked && $totalModule->module_status === 'hidden') {
+                $hiddenModules++;
+            }
+        }
+
+        return $totalModules-$hiddenModules;
+    }
+
 	public function starter_videos()
     {
 		return $this->hasMany('App\Models\Session', 'starter_course_id');
