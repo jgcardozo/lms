@@ -51,11 +51,12 @@ class LoginController extends Controller
         //     header('Location: '.env('APP_DOBLE_SIGNIN_URL').'/'.$user->id.'/'.$user->remember_token);
         //     die();
         // }
+
+        return $this->redirectTo;
+        // TODO: Move this if up after the login issue is solved
         if (Auth::user()->hasRole('Administrator')) {
             return '/admin/dashboard';
         }
-
-        return $this->redirectTo;
     }
 
     protected function sendLoginResponse(Request $request)
