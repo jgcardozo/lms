@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/set-session';
 
     /**
      * Create a new controller instance.
@@ -46,8 +46,12 @@ class LoginController extends Controller
      */
     public function redirectPath()
     {
-        if(Auth::user()->hasRole('Administrator'))
-        {
+        // if (env('APP_DOBLE_SIGNIN_URL')) {
+        //     $user = auth()->user();
+        //     header('Location: '.env('APP_DOBLE_SIGNIN_URL').'/'.$user->id.'/'.$user->remember_token);
+        //     die();
+        // }
+        if (Auth::user()->hasRole('Administrator')) {
             return '/admin/dashboard';
         }
 
@@ -59,7 +63,7 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
-
+        
         return $this->authenticated($request, $this->guard()->user())
             ?: redirect()->intended($this->redirectPath())->with('success_login', 'Success login');
     }

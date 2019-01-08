@@ -93,7 +93,7 @@ class InfusionsoftFlow
     public function __construct($is)
     {
         $this->is = $is;
-        $this->setToken();
+        // $this->setToken();
     }
 
     public function is()

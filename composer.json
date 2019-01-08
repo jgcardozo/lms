@@ -20,7 +20,8 @@
         "rollbar/rollbar-laravel": "^2.2",
         "spatie/laravel-activitylog": ">=1.12",
         "spatie/laravel-permission": ">=1.12",
-        "stephanecoinon/papertrail": "^1.0"
+        "stephanecoinon/papertrail": "^1.0",
+        "symfony/process": "^4.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -53,8 +54,7 @@
             "php artisan key:generate"
         ],
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

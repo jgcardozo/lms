@@ -11,6 +11,16 @@
 |
 */
 
+Route::get('cookie', function () {
+    return session()->all();
+});
+
+Route::get('set-session', function () {
+    $user = auth()->user();
+    $redirectTo = env('APP_DOBLE_SIGNIN_URL').'/'.$user->id.'/'.$user->remember_token;
+    return view('set-session', compact('redirectTo'));
+});
+
 /**
  * ROUTE FOR TESTING
  */
@@ -44,7 +54,8 @@ Route::get('/', [
 
 
 
-Route::group(['middleware' => ['infusionsoft_access', 'auth']], function () {
+// Route::group(['middleware' => ['infusionsoft_access', 'auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('bonus', [
         'as' => 'bonus',
         'uses' => 'BonusController@index'
@@ -288,7 +299,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('cohort', 'Admin\CohortCrudController');
     CRUD::resource('bonus', 'Admin\BonusCrudController');
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
-    Route::get('logs','LogController@index')->name('log.index');
+    Route::get('logs', 'LogController@index')->name('log.index');
 
 
 
@@ -309,13 +320,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
         return view('backpack::dashboard', ['courses' => $courses, 'score' => $lessonsFinished]);
     });*/
 
-    Route::get('dashboard','DashboardController@index');
+    Route::get('dashboard', 'DashboardController@index');
 
-    Route::get('dashboard/fields','DashboardController@formInputFields');
+    Route::get('dashboard/fields', 'DashboardController@formInputFields');
 
-    Route::get('dashboard/data','DashboardController@pieChartsData');
+    Route::get('dashboard/data', 'DashboardController@pieChartsData');
 
-    Route::get('dashboard/cache','DashboardController@cacheFill')->name('dashboard.cache');
+    Route::get('dashboard/cache', 'DashboardController@cacheFill')->name('dashboard.cache');
 
     // Settings
     Route::group(['prefix' => 'settings'], function () {
@@ -364,19 +375,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
 |--------------------------------------------------------------------------
 */
 
-Route::post('schedule/create_next','ScheduleController@next');
+Route::post('schedule/create_next', 'ScheduleController@next');
 
-Route::post('schedule/cohorts','ScheduleController@getCohorts');
+Route::post('schedule/cohorts', 'ScheduleController@getCohorts');
 
-Route::post('schedule','ScheduleController@store')->name('schedule.store');
+Route::post('schedule', 'ScheduleController@store')->name('schedule.store');
 
-Route::post('schedule/driplock','ScheduleController@dripOrLock')->name('schedule.driplock');
+Route::post('schedule/driplock', 'ScheduleController@dripOrLock')->name('schedule.driplock');
 
-Route::post('log','LogController@ajaxLog');
+Route::post('log', 'LogController@ajaxLog');
 
-Route::delete('notifications/{id}/delete','NotificationLogController@delete')->name('notification.log.delete');
+Route::delete('notifications/{id}/delete', 'NotificationLogController@delete')->name('notification.log.delete');
 
-Route::post('notifications/read','NotificationLogController@markAsReadSingle')->name('notification.read');
+Route::post('notifications/read', 'NotificationLogController@markAsReadSingle')->name('notification.read');
 
 
 
