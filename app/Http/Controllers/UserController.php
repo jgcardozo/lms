@@ -335,7 +335,7 @@ class UserController extends Controller
             return false;
         }
         
-        logger('Infusionsoft Sync', $request->all());
+        logger()->error('Infusionsoft Sync', $request->all());
 
         $user = User::where('contact_id', request()->get('contactId'))
             ->orWhere('email', request()->get('email'))
