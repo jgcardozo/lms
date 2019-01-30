@@ -335,7 +335,10 @@ class UserController extends Controller
             return false;
         }
 
-        $user = User::where('contact_id', request()->get('contactId'))->get()->first();
+        $user = User::where('contact_id', request()->get('contactId'))
+            ->orWhere('email', request()->get('email'))
+            ->get()
+            ->first();
         if (empty($user)) {
             return false;
         }
