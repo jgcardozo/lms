@@ -43,8 +43,19 @@ class UserController extends Controller
             return;
         }
 
-        if (!User::where('contact_id', $request->get('contactId'))->get()->isEmpty()) {
-            $user = User::where('contact_id', $request->get('contactId'))->get()->first();
+        if (!User::where('contact_id', $request->get('contactId'))
+            ->orWhere('email', request()->get('email'))
+            ->get()
+            ->isEmpty()) {
+            $user = User::where('contact_id', $request->get('contactId'))
+                ->orWhere('email', request()->get('email'))
+                ->get()
+                ->first();
+            
+            if (!$user->contact_id) {
+                $user->contact_id = $request->get('contactId');
+                $user->save();
+            }
 
             if ($request->filled('cohortId')) {
                 $cohortId = $request->input('cohortId');
