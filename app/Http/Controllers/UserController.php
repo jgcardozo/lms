@@ -334,6 +334,8 @@ class UserController extends Controller
         if (!request()->has('contactId')) {
             return false;
         }
+        
+        logger('Infusionsoft Sync', $request->all());
 
         $user = User::where('contact_id', request()->get('contactId'))
             ->orWhere('email', request()->get('email'))
