@@ -40,7 +40,7 @@
 										<button type="button" class="courseblock__link">Coming Soon</button>
 									@endif
 								@else
-									@if($course->id == 12 && (request()->ip() == '24.55.7.81' || request()->ip() == '89.205.77.112'))
+									@if($course->id == 12 && (str_contains(auth()->user()->email, '@askmethod.com') || str_contains(auth()->user()->email, '@rlassociatesllc.com')))
 									<a href="{{ env('LMSV2_URL','https://ask.academy') }}" class="courseblock__link">Access Training</a>
 									@else
 									<a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Access Training</a>
