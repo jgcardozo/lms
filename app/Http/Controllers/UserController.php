@@ -341,9 +341,17 @@ class UserController extends Controller
             ->orWhere('email', request()->get('email'))
             ->get()
             ->first();
+            
         if (empty($user)) {
             return false;
         }
+        
+        if (!$user->contact_id) {
+            $user->contact_id = $request->get('contactId');
+            $user->save();
+        }
+
+
         // Sync Infusionsoft user tags
         $user->syncIsTags();
     }
