@@ -25,7 +25,11 @@
                                         </li>
                                     @else
                                         <li class="masthead__classes-list__item">
+                                            @if($course->id == 12 && (str_contains(auth()->user()->email, '@askmethod.com') || str_contains(auth()->user()->email, '@rlassociatesllc.com')))
+                                            <a class="masthead__classes-link" href="{{ env('LMSV2_URL','https://ask.academy') }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
+                                            @else
                                             <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
+                                            @endif
                                         </li>
                                     @endif
                                 @endforeach
@@ -165,12 +169,12 @@
                 <?php
                 $all_watched = false;
 
-                if ( isset($progress_items) ) { 
+                if (isset($progress_items)) {
                     $current_lesson_id = null;
                     
 
-                    if ( $progress_items->getNextSession() ) {
-                        if ( isset($progress_items->getNextSession()->lesson) ) {
+                    if ($progress_items->getNextSession()) {
+                        if (isset($progress_items->getNextSession()->lesson)) {
                             $current_lesson_id = $progress_items->getNextSession()->lesson->id;
                         } else {
                             $all_watched = true;
@@ -180,36 +184,36 @@
                     $module_count = 1;
                     $lesson_count = 1;
 
-                    foreach ( $progress_items->modules as $module ) {
+                    foreach ($progress_items->modules as $module) {
                         echo "<li class='course-progress-box__item grid--flex flex--column'>";
 
                         echo "<div class='course-progress-box__item--lessons grid--flex flex--space-around'>";
-                        foreach ( $module->lessons as $lesson ) {
+                        foreach ($module->lessons as $lesson) {
                             $current_lesson = null;
                             $current_lesson_class = null;
                             $is_completed = null;
 
-                            if ( $lesson->is_completed ) {
+                            if ($lesson->is_completed) {
                                 $is_completed = " course-progress-box__item--lesson-mark__completed";
                             }
 
-                            if ( isset($current_lesson_id) && $current_lesson_id ) {
-                                if ( $current_lesson_id == $lesson->id ) {
+                            if (isset($current_lesson_id) && $current_lesson_id) {
+                                if ($current_lesson_id == $lesson->id) {
                                     $current_lesson = "<div class='course-progress-box__item--lesson-current'>You are Here</div>";
                                     $current_lesson_class = " course-progress-box__item--lesson-mark__current ";
                                 }
                             }
 
                             $lesson_box = "<div class='course-progress-box__item--lesson-box'>";
-                            $lesson_box .= $current_lesson;                     
+                            $lesson_box .= $current_lesson;
                             $lesson_box .= "<div class='course-progress-box__item--lesson-mark$current_lesson_class$is_completed'><div class='course-progress-box__item--lesson-mark__hover'></div></div>";
                             $lesson_box .= "<div class='course-progress-box__item--lesson-mark__info'>";
                             $lesson_box .= "<h6>$module->title</h6>";
                             $lesson_box .= "<h2>$lesson->title</h2>";
                             $lesson_box .= "<p>" . truncate_string($lesson->description) . "</p>";
                             // Check if module is locked
-                            if ( $lesson->is_locked ) {
-                                if ( $lesson->is_date_locked ) {
+                            if ($lesson->is_locked) {
+                                if ($lesson->is_date_locked) {
                                     $lesson_box .= "<div class='course-progress-box__item--lesson-mark__locked'>Locked</div>";
                                 } else {
                                     $lesson_box .= "<div class='course-progress-box__item--lesson-mark__locked'>Locked</div>";
@@ -227,13 +231,13 @@
                         }
                         echo "</div>";
 
-                        $module_box = "<div class='course-progress-box__item--module'>";    
+                        $module_box = "<div class='course-progress-box__item--module'>";
                         $module_box .= "<h6>Module $module_count</h6>";
                         $module_box .= "<h2>$module->title</h2>";
                         $module_box .= "<p>" . truncate_string($module->description, 16) . "</p>";
                         // Check if module is locked
-                        if ( $module->is_locked ) {
-                            if ( $module->is_date_locked ) {
+                        if ($module->is_locked) {
+                            if ($module->is_date_locked) {
                                 $module_box .= "<div class='course-progress-box__item--module__locked'>Locked</div>";
                             } else {
                                 $module_box .= "<div class='course-progress-box__item--module__locked'>Locked</div>";
