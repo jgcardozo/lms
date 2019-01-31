@@ -34,7 +34,8 @@ class User extends Authenticatable
         'email',
         'password',
         'activation_code',
-        'timezone'
+        'timezone',
+        'user_profile_id'
     ];
 
     /**
