@@ -25,7 +25,7 @@
                                         </li>
                                     @else
                                         <li class="masthead__classes-list__item">
-                                            @if($course->id == 12 && (str_contains(auth()->user()->email, '@askmethod.com') || str_contains(auth()->user()->email, '@rlassociatesllc.com')))
+                                            @if($course->id == 12)
                                             <a class="masthead__classes-link" href="{{ env('LMSV2_URL','https://ask.academy') }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
                                             @else
                                             <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
