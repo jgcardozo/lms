@@ -324,6 +324,7 @@ class UserController extends Controller
         if (Autologin::validate($id, $mail, $key)) {
             $user = User::find($id);
             Auth::loginUsingId($user->id);
+            return redirect('/set-session');
         }
 
         return redirect('/');
