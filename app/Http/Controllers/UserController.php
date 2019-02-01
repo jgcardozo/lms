@@ -324,7 +324,6 @@ class UserController extends Controller
         if (Autologin::validate($id, $mail, $key)) {
             $user = User::find($id);
             Auth::loginUsingId($user->id);
-            return redirect(env('APP_DOBLE_SIGNIN_FALLBACK', 'https://ask.academy/').'kjf9823jn3/' . $user->id.'/'.$user->remember_token);
         }
 
         return redirect('/');
