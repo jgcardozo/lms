@@ -156,7 +156,7 @@ class User extends Authenticatable
 
         $data = [
             'event' => 'lms_sync_tags',
-            'tags' => $newTags,
+            'tags' => $this->is_tags->pluck('id'),
             'user_id' => $this->id
         ];
 
