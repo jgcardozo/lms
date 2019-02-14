@@ -21,16 +21,15 @@ Route::get('set-session', function () {
     return view('set-session', compact('redirectTo'));
 });
 
-Route::get('/kjf9823jn3/{userId}/{userRememberToken}', function ($userId, $userRememberToken) {
+Route::get('/kjf9823jn3/{userId}/{userRememberToken?}', function ($userId, $userRememberToken=null) {
     $redirectTo = env('APP_DOBLE_SIGNIN_FALLBACK');
     
     try {
         $user = App\Models\User::whereId($userId)->whereRememberToken($userRememberToken)->firstOrFail();
-        Auth::loginUsingId( $user->id );
+        Auth::loginUsingId($user->id);
         $redirectUrl = env('APP_DOBLE_SIGNIN_FALLBACK');
 
-        return redirect( $redirectUrl);
-    
+        return redirect($redirectUrl);
     } catch (Exception $e) {
         info('The user id:'.$userId.' couldn\'t be loged in');
         header("Location: {$redirectTo}");

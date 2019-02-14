@@ -40,7 +40,11 @@
 										<button type="button" class="courseblock__link">Coming Soon</button>
 									@endif
 								@else
+									@if($course->id == 12)
+									<a href="{{ link_to_lms2() }}" class="courseblock__link">Access Training</a>
+									@else
 									<a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Access Training</a>
+									@endif
 								@endif
 							</div>
 			        	</div>
