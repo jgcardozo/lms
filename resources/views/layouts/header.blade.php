@@ -26,7 +26,7 @@
                                     @else
                                         <li class="masthead__classes-list__item">
                                             @if($course->id == 12)
-                                            <a class="masthead__classes-link" href="{{ env('LMSV2_URL','https://ask.academy') }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
+                                            <a class="masthead__classes-link" href="{{ link_to_lms2() }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
                                             @else
                                             <a class="masthead__classes-link" href="{{ route('single.course', $course->slug) }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
                                             @endif

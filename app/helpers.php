@@ -388,3 +388,20 @@ if (!function_exists('rollbar_get_current_user')) {
         return null;
     }
 }
+
+/**
+ * LMS v2 url with ID and Remember Token
+ */
+if (!function_exists('link_to_lms2')) {
+    function link_to_lms2()
+    {
+        $url = env('LMSV2_URL', 'https://ask.academy');
+        if (!auth()->check()) {
+            return $url;
+        }
+
+        $user = auth()->user();
+        
+        return $url."?user_id={$user->id}&token={$user->remember_token}";
+    }
+}
