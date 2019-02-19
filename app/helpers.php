@@ -401,7 +401,47 @@ if (!function_exists('link_to_lms2')) {
         }
 
         $user = auth()->user();
+        $hash = encrypt($user->id);
         
-        return $url."?user_id={$user->id}&token={$user->remember_token}";
+        return $url."?hash={$hash}&token={$user->remember_token}";
+    }
+}
+
+/**
+ * LMS v2 url with ID and Remember Token
+ */
+if (!function_exists('form_to_lms2')) {
+    function form_to_lms2($image=null, $course=null)
+    {
+        try {
+            $url = env('LMSV2_URL', 'https://ask.academy');
+            if (!auth()->check()) {
+                return $url;
+            }
+
+            $user = auth()->user();
+            $hash = encrypt($user->id);
+
+            $form = '<form action="'.$url.'" method="post">';
+            $form .= '<input type="hidden" name="hash" value="'.$hash.'">';
+            $form .= '<input type="hidden" name="token" value="'.$user->remember_token.'">';
+            if ($image) {
+                $form .= '<button type="submit" class="masthead__classes-link" ';
+                if ($course->logo_image) {
+                    $form .= 'style="border: none; border-bottom: 0.1rem solid #dadada; padding-top: 10px; padding-bottom: 10px; background-image: url('.$course->getLogoImageUrlAttribute().');"';
+                } else {
+                    $form .= 'style="border: none"';
+                }
+                $form .= '>'.bold_first_word($course->title).'</button>';
+            } else {
+                $form .= '<button type="submit" class="courseblock__link">Access Training</button>';
+            }
+            $form .= csrf_field();
+            $form .= '</form>';
+            
+            return $form;
+        } catch (Exception $e) {
+            return '';
+        }
     }
 }

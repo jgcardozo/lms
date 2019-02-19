@@ -41,7 +41,7 @@
 									@endif
 								@else
 									@if($course->id == 12)
-									<a href="{{ link_to_lms2() }}" class="courseblock__link">Access Training</a>
+										{!! form_to_lms2() !!}
 									@else
 									<a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Access Training</a>
 									@endif
