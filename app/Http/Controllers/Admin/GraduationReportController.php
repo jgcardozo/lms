@@ -54,11 +54,13 @@ class GraduationReportController extends Controller
     {
         return \DB::select('
             SELECT 
-                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, results.score, users.cohort_id
+                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, results.score, cohort_user.cohort_id
             FROM 
                 users 
             LEFT JOIN
-                cohorts ON cohorts.id = users.cohort_id
+                cohort_user ON cohort_user.user_id = users.id
+            LEFT JOIN
+                cohorts ON cohorts.id = cohort_user.cohort_id
             INNER JOIN 
                 class_marker_results AS results  ON users.id = results.user_id
             INNER JOIN
@@ -74,11 +76,13 @@ class GraduationReportController extends Controller
     {
         return \DB::select('
             SELECT 
-                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, users.cohort_id
+                users.id, users.name, LCASE(users.email) as email, users.contact_id, cohorts.name as cohorts_name, cohort_user.cohort_id
             FROM 
                 users
             LEFT JOIN
-                cohorts ON cohorts.id = users.cohort_id 
+                cohort_user ON cohort_user.user_id = users.id
+            LEFT JOIN
+                cohorts ON cohorts.id = cohort_user.cohort_id
             LEFT JOIN
                 class_marker_results AS results ON users.id = results.user_id
             INNER JOIN
