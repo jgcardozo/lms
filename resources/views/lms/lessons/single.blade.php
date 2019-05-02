@@ -101,7 +101,7 @@
                         <div class="lesson-sessions__item lesson-sessions__item--bonus js-bonus" style="@if(!$lesson->is_completed) display: none @endif">
                             <p>Awesome! You have finished this Lesson. Time to unlock a hidden bonus by answering a simple question: <strong>What was your biggest takeaway from this module?</strong></p>
 
-                            <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->fb_link }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">
+                            <form method="post" class="js-lesson-post-to-facebook" data-fburl="{{ $lesson->custom_link }}" action="{{ route('lesson.postToFacebook', $lesson->id) }}">
                                 {{ csrf_field() }}
                                 <input type="submit" value="Post to Facebook">
                             </form>
