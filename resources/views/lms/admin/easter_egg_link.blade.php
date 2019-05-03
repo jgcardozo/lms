@@ -44,7 +44,9 @@
                         <div class="form-group col-md-11 col-md-offset-1" id="modules_lessons">
                             @foreach($course->modules as $module)
 
-                                <label>{{ $module->title }}</label>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><b>{{ $module->title }}</b></div>
+                                </div>
 
                                 @foreach($module->lessons as $lesson)
 
