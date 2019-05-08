@@ -36,6 +36,7 @@
           <li><a href="{{ url('admin/bonus') }}"><i class="fa fa-book"></i> <span>Bonus</span></a></li>
           <li><a href="{{ url('admin/reports') }}"><i class="fa fa-list-alt"></i> <span>Reports</span></a></li>
           <li><a href="{{ url('admin/schedule') }}"><i class="fa fa-list-alt"></i> <span>Schedules</span></a></li>
+          <li><a href="{{ url('admin/easter_links') }}"><i class="fa fa-list-alt"></i> <span>Easter Links</span></a></li>
 
           <li class="header">Events</li>
           <li><a href="{{ url('admin/event') }}"><i class="fa fa-calendar"></i> <span>Events</span></a></li>

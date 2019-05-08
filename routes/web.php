@@ -316,7 +316,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
     Route::get('logs', 'LogController@index')->name('log.index');
 
-
+    Route::resource('easter_links','EasterLinksController');
 
     Route::get('/', [
         'uses' => '\Backpack\Base\app\Http\Controllers\AdminController@redirect'

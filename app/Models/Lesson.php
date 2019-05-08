@@ -64,6 +64,11 @@ class Lesson extends Model
 		return '[' . $this->module->title . '] - ' . $this->title;
 	}
 
+	public function getCustomLinkAttribute()
+    {
+        return $this->fbLinks()->find(auth()->user()->cohort_id)->pivot->fb_link ?? $this->fb_link;
+    }
+
 	/**
 	 * Get progress array,
 	 * all sessions vs completed sessions
@@ -289,6 +294,11 @@ class Lesson extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+
+	public function fbLinks()
+    {
+        return $this->belongsToMany(Cohort::class,'easter_egg_links')->withPivot(['lesson_id','cohort_id','fb_link']);
+    }
 
     public function progress()
     {
