@@ -15,9 +15,10 @@ class EasterLinksController extends Controller
      */
     public function index()
     {
-        $course = Course::find(3);
-        $cohorts = Cohort::with('fbLinks')->get();
-        return view('lms.admin.easter_egg_link',compact('course','cohorts'));
+        $courses = Course::all();
+        $course = $courses->find(3);
+        $cohorts = Cohort::with(['fbLinksLesson','fbLinksCourse'])->get();
+        return view('lms.admin.easter_egg_link',compact('course','cohorts','courses'));
     }
 
     /**
@@ -40,13 +41,20 @@ class EasterLinksController extends Controller
     {
         $cohort = Cohort::find($request->get('cohort'));
         $lessons = $request->get('lessons');
-        $filtered = [];
+        $courses = $request->get('courses');
+        $filteredLessons = [];
+        $filteredCourses = [];
 
         foreach (array_filter($lessons) as $id => $link) {
-            $filtered[$id] = ['fb_link' => $link];
+            $filteredLessons[$id] = ['fb_link' => $link];
         }
 
-        $cohort->fbLinks()->sync($filtered);
+        foreach (array_filter($courses) as $id => $link) {
+            $filteredCourses[$id] = ['fb_link' => $link];
+        }
+
+        $cohort->fbLinksLesson()->sync($filteredLessons);
+        $cohort->fbLinksCourse()->sync($filteredCourses);
 
         return redirect()->back()->withInput();
     }
@@ -59,9 +67,14 @@ class EasterLinksController extends Controller
      */
     public function show($id)
     {
-        $cohort = Cohort::with('fbLinks')->find($id)->fblinks->pluck('pivot');
+        $cohort = Cohort::with(['fbLinksLesson','fbLinksCourse'])->find($id);
+        $fbLinkLessons = $cohort->fbLinksLesson->pluck('pivot');
+        $fbLinkCourses = $cohort->fbLinksCourse->pluck('pivot');
 
-        return response()->json($cohort,200);
+        return response()->json([
+            "fbLinkLessons" => $fbLinkLessons,
+            "fbLinkCourses" => $fbLinkCourses
+        ],200);
     }
 
     /**
