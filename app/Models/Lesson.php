@@ -297,11 +297,12 @@ class Lesson extends Model
 
 	public function fbLinks()
     {
-        return $this->belongsToMany(Cohort::class,'easter_egg_links')->withPivot(['lesson_id','cohort_id','fb_link']);
+        return $this->morphToMany(Cohort::class,'linkable','easter_egg_links')->withPivot(['fb_link']);
     }
 
     public function progress()
     {
+
         return $this->morphMany('App\Models\Progress', 'progress');
     }
 

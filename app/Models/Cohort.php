@@ -18,9 +18,14 @@ class Cohort extends Model
         'schedule_id'
     ];
 
-    public function fbLinks()
+    public function fbLinksLesson()
     {
-        return $this->belongsToMany(Lesson::class,'easter_egg_links')->withPivot(['lesson_id','cohort_id','fb_link']);
+        return $this->morphedByMany(Lesson::class,'linkable','easter_egg_links')->withPivot(['fb_link']);
+    }
+
+    public function fbLinksCourse()
+    {
+        return $this->morphedByMany(Course::class,'linkable','easter_egg_links')->withPivot(['fb_link']);
     }
 
     public function logs()
