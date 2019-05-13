@@ -49,7 +49,7 @@ class HeaderComposer
 		$view->with('notifications', $notifications)->with('progress_items', $lms_items)->with('courses', $courses)->with('bonuses', $this->getBonuses($user));
 	}
 
-	private function getBonuses(User $user)
+	private function getBonuses($user)
     {
         if(!$user)
         {
