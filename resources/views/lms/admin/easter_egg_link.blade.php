@@ -61,6 +61,23 @@
                             @endforeach
                         </div>
 
+                        <div class="form-group col-md-11 col-md-offset-1" id="courses">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><b>Courses</b></div>
+                            </div>
+
+                            @foreach($courses as $course)
+
+                                <div class="form-group">
+                                    <div class="input-group col-md-offset-1">
+                                        <span class="input-group-addon" id="basic-addon3"><b>Course</b>: {!! $course->title !!}</span>
+                                        <input type="text" class="form-control" name="courses[{{ $course->id }}]" id="courses_{{ $course->id }}" aria-describedby="basic-addon3" value=""   style="background-color: white">
+                                    </div>
+                                </div>
+
+                            @endforeach
+                        </div>
+
                         <div class="box-footer">
                             <div class="form-group">
                                 <div class="btn-group">
@@ -88,9 +105,12 @@
             $.get('/admin/easter_links/'+ $('#cohorts').val())
                 .then(function (response) {
                     $('[id^="lessons"]').val('');
-                    if(response && response.length) {
-                        response.forEach(function (link) {
-                            $('#lessons_'+link.lesson_id).val(link.fb_link)
+                    if(response && Object.keys(response).length) {
+                        response.fbLinkLessons.forEach(function (link) {
+                            $('#lessons_'+link.linkable_id).val(link.fb_link)
+                        });
+                        response.fbLinkCourses.forEach(function (link) {
+                            $('#courses_'+link.linkable_id).val(link.fb_link)
                         })
                     }
                 });
@@ -99,9 +119,12 @@
                  $.get('/admin/easter_links/'+ $(this).val())
                      .then(function (response) {
                          $('[id^="lessons"]').val('');
-                         if(response && response.length) {
-                             response.forEach(function (link) {
-                                 $('#lessons_'+link.lesson_id).val(link.fb_link)
+                         if(response && Object.keys(response).length) {
+                             response.fbLinkLessons.forEach(function (link) {
+                                 $('#lessons_'+link.linkable_id).val(link.fb_link)
+                             });
+                             response.fbLinkCourses.forEach(function (link) {
+                                 $('#courses_'+link.linkable_id).val(link.fb_link)
                              })
                          }
                      })
