@@ -149,6 +149,11 @@ class Course extends Model
 		return true;
 	}
 
+    public function getCustomLinkAttribute()
+    {
+        return $this->fbLinks()->find(auth()->user()->cohort_id)->pivot->fb_link ?? $this->facebook_group_id;
+    }
+
 	/**
 	 * Check if course is locked
 	 *
@@ -301,6 +306,11 @@ class Course extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function fbLinks()
+    {
+        return $this->morphToMany(Cohort::class,'linkable','easter_egg_links')->withPivot(['fb_link']);
+    }
+
     public function logs()
     {
         return $this->morphMany('App\Models\Log', 'subject');

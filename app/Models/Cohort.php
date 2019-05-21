@@ -18,6 +18,16 @@ class Cohort extends Model
         'schedule_id'
     ];
 
+    public function fbLinksLesson()
+    {
+        return $this->morphedByMany(Lesson::class,'linkable','easter_egg_links')->withPivot(['fb_link']);
+    }
+
+    public function fbLinksCourse()
+    {
+        return $this->morphedByMany(Course::class,'linkable','easter_egg_links')->withPivot(['fb_link']);
+    }
+
     public function logs()
     {
         return $this->morphMany('App\Models\Log', 'subject');
@@ -36,5 +46,10 @@ class Cohort extends Model
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function link($lessonId)
+    {
+        return $this->fbLinks()->find($lessonId)->pivot->fb_link ?? '';
     }
 }
