@@ -78,7 +78,7 @@
             @endif
 
             <div class="lesson-sessions">
-                <h2 class="lesson-sessions__title">Coaching Calls</h2>
+                <h2 class="lesson-sessions__title">Q&A Calls</h2>
 
                 <div class="lesson-sessions__list">
                     @foreach($coaching_calls as $key => $coaching_call)
