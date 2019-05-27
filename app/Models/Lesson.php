@@ -66,7 +66,7 @@ class Lesson extends Model
 
 	public function getCustomLinkAttribute()
     {
-        return $this->fbLinks()->find(auth()->user()->cohort_id)->pivot->fb_link ?? $this->fb_link;
+        return $this->fbLinks()->find(auth()->user()->cohorts()->where('course_id',3)->first()->id)->pivot->fb_link ?? $this->fb_link;
     }
 
 	/**
