@@ -61,7 +61,7 @@ class UserController extends Controller
                 $role = $request->get('lmsrole');
 
                 if($role != 1 || $role != 2) {
-                    $user->syncRoles($request->get('lmsrole'));
+                    $user->roles()->sync($role);
                 }
             }
 
@@ -368,7 +368,7 @@ class UserController extends Controller
             $role = $request->get('lmsrole');
 
             if($role != 1 || $role != 2) {
-                $user->syncRoles($request->get('lmsrole'));
+                $user->roles()->sync($role);
             }
         }
         
