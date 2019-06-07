@@ -351,7 +351,7 @@ class UserController extends Controller
 
     public function syncUserTags(Request $request)
     {
-        \Log::error['user_synced', $request->all()]);
+        \Log::error(['user_synced', $request->all()]);
 
         if (!request()->has('contactId')) {
             return false;
