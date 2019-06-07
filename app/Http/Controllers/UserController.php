@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        info('Infusionsoft Register', $request->all());
+        \Log::info(['user_registered', $request->all()]);
         $rules = [
             'contactId' => 'required|numeric',
             'email' => 'required'
@@ -351,6 +351,8 @@ class UserController extends Controller
 
     public function syncUserTags(Request $request)
     {
+        \Log::info(['user_synced', $request->all()]);
+
         if (!request()->has('contactId')) {
             return false;
         }
