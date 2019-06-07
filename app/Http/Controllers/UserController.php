@@ -57,6 +57,14 @@ class UserController extends Controller
                 $user->save();
             }
 
+            if($request->has('lmsrole') && $request->filled('lmsrole')) {
+                $role = $request->get('lmsrole');
+
+                if($role != 1 || $role != 2) {
+                    $user->syncRoles($request->get('lmsrole'));
+                }
+            }
+
             if ($request->filled('cohortId')) {
                 $cohortId = $request->input('cohortId');
 
@@ -346,8 +354,6 @@ class UserController extends Controller
         if (!request()->has('contactId')) {
             return false;
         }
-        
-        logger()->error('Infusionsoft Sync', [$request->all()]);
 
         $user = User::where('contact_id', request()->get('contactId'))
             ->orWhere('email', request()->get('email'))
@@ -356,6 +362,14 @@ class UserController extends Controller
             
         if (empty($user)) {
             return false;
+        }
+
+        if($request->has('lmsrole') && $request->filled('lmsrole')) {
+            $role = $request->get('lmsrole');
+
+            if($role != 1 || $role != 2) {
+                $user->syncRoles($request->get('lmsrole'));
+            }
         }
         
         if (!$user->contact_id) {
