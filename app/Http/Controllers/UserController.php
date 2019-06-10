@@ -30,7 +30,6 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        info('Infusionsoft Register', $request->all());
         $rules = [
             'contactId' => 'required|numeric',
             'email' => 'required'
