@@ -21,6 +21,8 @@ Route::get('set-session', function () {
     return view('set-session', compact('redirectTo'));
 });
 
+Route::post('/user/cancel-access','InfusionSoftCancelController');
+
 Route::get('/kjf9823jn3/{userId}/{userRememberToken?}', function ($userId, $userRememberToken=null) {
     $redirectTo = env('APP_DOBLE_SIGNIN_FALLBACK');
     
