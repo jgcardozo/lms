@@ -164,7 +164,7 @@ class User extends Authenticatable
         $curl = curl_init();
 
         curl_setopt_array($curl,[
-            CURLOPT_URL => "https://ask.academy/hooks/chfy8356md",
+            CURLOPT_URL => env('LMSV2_URL')."/hooks/chfy8356md",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
