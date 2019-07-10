@@ -31,8 +31,8 @@ class InfusionSoftCancelController extends Controller
         $data = [
             'event' => 'infusionsoft_cancel_tag',
             'email' => $request->get('email'),
-            'contact_id' => $request->get('contact_id'),
-            'cancel_tag' => $request->get('cancel_tag')
+            'contact_id' => $request->get('contactId'),
+            'cancel_tag' => $request->get('cancelTag')
         ];
 
         $curl = curl_init();
