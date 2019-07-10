@@ -9,9 +9,9 @@ class InfusionSoftCancelController extends Controller
     public function __invoke(Request $request)
     {
         $rules = [
-            'contact_id' => 'required|numeric',
+            'contactId' => 'required|numeric',
             'email' => 'required',
-            'cancel_tag' => 'required'
+            'cancelTag' => 'required'
         ];
 
         $validator = \Validator::make($request->all(), $rules);
@@ -19,8 +19,8 @@ class InfusionSoftCancelController extends Controller
         if ($validator->fails()) {
             activity('infusionsoft-cancel-failed')
                 ->withProperties([
-                    'contactID' => $request->get('contact_id'),
-                    'cancelTag' => $request->get('cancel_tag')
+                    'contactID' => $request->get('contactId'),
+                    'cancelTag' => $request->get('cancelTag')
                 ])
                 ->log('User with Infusionsoft ID <strong>:properties.contactID</strong> failed to cancel.');
 
@@ -31,8 +31,8 @@ class InfusionSoftCancelController extends Controller
         $data = [
             'event' => 'infusionsoft_cancel_tag',
             'email' => $request->get('email'),
-            'contact_id' => $request->get('contact_id'),
-            'cancel_tag' => $request->get('cancel_tag')
+            'contact_id' => $request->get('contactId'),
+            'cancel_tag' => $request->get('cancelTag')
         ];
 
         $curl = curl_init();
