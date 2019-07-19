@@ -16,6 +16,7 @@ class VerifyCsrfToken extends BaseVerifier
         'user/sync',
         'class-marker/webhook/result',
         'lesson/assessment-check',
-        'user/cancel-access'
+        'user/cancel-access',
+        'hooks/push-to-academy'
     ];
 }
