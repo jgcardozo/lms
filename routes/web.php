@@ -23,6 +23,8 @@ Route::get('set-session', function () {
 
 Route::post('/user/cancel-access','InfusionSoftCancelController');
 
+Route::post('/hooks/push-to-academy', 'PushHooksToAcademyController');
+
 Route::get('/kjf9823jn3/{userId}/{userRememberToken?}', function ($userId, $userRememberToken=null) {
     $redirectTo = env('APP_DOBLE_SIGNIN_FALLBACK');
     
