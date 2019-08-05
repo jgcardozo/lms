@@ -62,7 +62,7 @@
 
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
                                 <div class="lesson-sessions__content--left">
-                                    <h2 class="lesson-sessions__item--title">{{ $coaching_call->title }}</h2>
+                                    <h2 class="lesson-sessions__item--title"><a href="#" data-href="{{ route('coachingcall.show', [$course->slug, $coaching_call->id]) }}" class="block__link js-open-session">{{ $coaching_call->title }}</a></h2>
 
                                     <p>{!! truncate_string($coaching_call->description) !!}</p>
                                 </div>
