@@ -37,6 +37,11 @@ class Event extends Model
 		return $this->belongsTo('App\Models\Course');
 	}
 
+    public function cohorts()
+    {
+        return $this->belongsToMany(Cohort::class);
+    }
+
 	public function sluggable()
 	{
 		return [

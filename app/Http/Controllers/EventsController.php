@@ -19,6 +19,23 @@ class EventsController extends Controller
         $events = Event::orderBy('start_date','asc')->get();
         $courses = Course::get();
 
+        $events = $events->filter(function ($event) {
+            if(is_role_admin() || is_role_vip()) {
+                return true;
+            }
+
+            if($event->cohorts->count()) {
+                $userCohorts = auth()->user()->cohorts->pluck('id');
+                $eventCohorts = $event->cohorts->pluck('id');
+                if($eventCohorts->intersect($userCohorts)->isEmpty()) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+
 		return view('lms.calendar.index')
 				->with('allEvents', $events)
 				->with('futureEvents', $events->where('start_date', '>', Carbon::now()->startOfDay()))

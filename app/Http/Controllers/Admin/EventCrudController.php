@@ -123,6 +123,16 @@ class EventCrudController extends CrudController
 			]
 		]);
 
+		$this->crud->addField([
+            'label'     => 'Cohorts',
+            'type'      => 'checklist',
+            'name'      => 'cohorts',
+            'entity'    => 'cohorts',
+            'attribute' => 'name',
+            'model'     => "App\Models\Cohort",
+            'pivot'     => true,
+        ]);
+
 
 		/**
 		 * Setup CRUD filters
