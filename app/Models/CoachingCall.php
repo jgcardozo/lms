@@ -66,6 +66,11 @@ class CoachingCall extends Model
 	| Relations
 	|--------------------------------------------------------------------------
 	*/
+    public function cohorts()
+    {
+        return $this->belongsToMany(Cohort::class);
+    }
+
     public function logs()
     {
         return $this->morphMany('App\Models\Log', 'subject');

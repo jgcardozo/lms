@@ -162,6 +162,16 @@ class CoachingCallsCrudController extends CrudController
 			'type' => 'hidden',
 			'value' => \App\Models\CoachingCall::class
 		]);
+
+        $this->crud->addField([
+            'label'     => 'Cohorts',
+            'type'      => 'checklist',
+            'name'      => 'cohorts',
+            'entity'    => 'cohorts',
+            'attribute' => 'name',
+            'model'     => "App\Models\Cohort",
+            'pivot'     => true,
+        ]);
 	}
 
 	public function store(StoreRequest $request)
