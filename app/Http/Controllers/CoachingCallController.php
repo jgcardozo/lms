@@ -21,6 +21,22 @@ class CoachingCallController extends Controller
         $course = Course::findBySlugOrFail($slug);
         $coaching_calls = $course->coachingcall;
 
+        $coaching_calls = $coaching_calls->filter(function ($coaching_call) {
+            if(is_role_admin() || is_role_vip()) {
+                return true;
+            }
+
+            if($coaching_call->cohorts->count()) {
+                $userCohorts = auth()->user()->cohorts->pluck('id');
+                $coachingCallCohorts = $coaching_call->cohorts->pluck('id');
+                if($coachingCallCohorts->intersect($userCohorts)->isEmpty()) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
         /** @var Course $course */
         $top_coaching_calls = $course->coachingcall()
                                      ->withoutGlobalScopes()
