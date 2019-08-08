@@ -8,6 +8,11 @@ class InfusionSoftCancelController extends Controller
 {
     public function __invoke(Request $request)
     {
+        \Log::info([
+            'infusion_soft_cancel_event_occurred' => $request->all()
+        ]);
+
+
         $rules = [
             'contactId' => 'required|numeric',
             'email' => 'required',
