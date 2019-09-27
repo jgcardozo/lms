@@ -105,6 +105,8 @@ class UserController extends Controller
 
         $newUser->assignRole('Customer');
 
+        $newUser->syncIsTags();
+        
         Mail::to($newUser)->send(new \App\Mail\UserRegistered($uuid, $newUser->email));
         activity('user-registered-success')->causedBy($newUser)->log('New user with email: <strong>:causer.email</strong> registered.');
     }
