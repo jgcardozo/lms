@@ -113,4 +113,14 @@ class NotifyController extends Controller
 
 		return redirect()->back();
 	}
+
+	public function searchForUsers(Request $request) {
+	    $term = $request->get('term');
+
+	    $users = User::select(['id','name','email'])->where('name','like',"%$term%")
+            ->orWhere('email','like',"%$term%")
+            ->get();
+
+	    return response()->json($users, 200);
+    }
 }
