@@ -378,6 +378,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
         'uses' => 'Admin\NotifyController@index'
     ]);
 
+    Route::get('notify-get-users', 'Admin\NotifyController@searchForUsers');
+
     Route::post('notify', [
         'as' => 'notify.send',
         'uses' => 'Admin\NotifyController@notify'

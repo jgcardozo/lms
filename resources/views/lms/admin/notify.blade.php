@@ -47,9 +47,7 @@
                         <div class="form-group users" style="display: none">
                             <label for="users">Send notifications to specific users: <br/></label>
                             <select multiple="multiple" name="users[]" id="users" class="form-control" style="min-height: 150px;">
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{!! $user->name !!} - {!! $user->email !!}</option>
-                                @endforeach
+
                             </select>
                         </div>
                         <p id="requiredUsers" style="display: none; color: red">*At least one user required.</p>
@@ -152,10 +150,10 @@
     <script src="{{ asset('vendor/adminlte/plugins/select2/select2.min.js') }}"></script>
     <script>
             jQuery(document).ready(function($) {
-                    $('textarea[name="message"].ckeditor').ckeditor({
-                        "filebrowserBrowseUrl": "{{ url(config('backpack.base.route_prefix').'/elfinder/ckeditor') }}",
-                        "extraPlugins" : '{{ isset($field['extra_plugins']) ? implode(',', $field['extra_plugins']) : 'oembed,widget' }}'
-                    });
+                $('textarea[name="message"].ckeditor').ckeditor({
+                    "filebrowserBrowseUrl": "{{ url(config('backpack.base.route_prefix').'/elfinder/ckeditor') }}",
+                    "extraPlugins" : '{{ isset($field['extra_plugins']) ? implode(',', $field['extra_plugins']) : 'oembed,widget' }}'
+                });
 
                 $("input[type=radio][name=optradio]").change(function(){
                     var inp = this;
@@ -178,8 +176,25 @@
                 $('#users').select2({
                     width : "100%",
                     display : 'block',
-                    theme: 'classic'
+                    theme: 'classic',
+                    ajax: {
+                        url: '/admin/notify-get-users',
+                        processResults: function(data, params) {
+                            return {
+                                results: data
+                            }
+                        }
+                    },
+                    placeholder: 'Search for users',
+                    minimumInputLength: 3,
+                    templateResult: function (item) {
+                        return $("<span>"+ item.name + " - " + item.email +"</span>");
+                    },
+                    templateSelection: function (item) {
+                        return item.email;
+                    }
                 });
+
             });
 
             $('#btnNotificationSubmit').click(function (e) {
