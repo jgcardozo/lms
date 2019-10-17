@@ -49,7 +49,7 @@
         </div>
 
         <div class="grid grid--w950">
-            @if($top_coaching_calls->count() && auth()->user()->cohorts()->where('course_id',3)->first()->id <= 8)
+            @if(is_role_admin() || ($top_coaching_calls->count() && auth()->user()->cohorts()->where('course_id',3)->first()->id <= 8))
                 <div class="lesson-sessions">
                 <h2 class="lesson-sessions__title">{{ $top_coaching_calls->count() }}x "BEST OF THE BEST" Q&A CALLS</h2>
 
