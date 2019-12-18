@@ -32,7 +32,10 @@ class ResourceCrudController extends CrudController
             [
                 'label' => 'Title',
                 'type' => 'model_function',
-                'function_name' => 'admin_editable_title'
+                'function_name' => 'admin_editable_title',
+                'searchLogic' => function($query, $column, $searchTerm) {
+                    $query->orWhere('title','like',"%{$searchTerm}%");
+                }
             ],
 			[
 				'label' => 'Size',
@@ -59,7 +62,7 @@ class ResourceCrudController extends CrudController
          */
         $this->crud->addField([
             'name' => 'title',
-            'label' => 'Title'
+            'label' => 'Title',
         ]);
 
         $this->crud->addField([
