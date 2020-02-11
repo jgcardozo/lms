@@ -33,7 +33,8 @@
                                         <th tabindex="7" rowspan="1" colspan="1">User</th>
                                         <th tabindex="8" rowspan="1" colspan="1">Q1 Char… Count</th>
                                         <th tabindex="9" rowspan="1" colspan="1">Score</th>
-                                        <th tabindex="10" rowspan="1" colspan="1">Action</th>
+                                        <th tabindex="10" rowspan="1" colspan="1">Date</th>
+                                        <th tabindex="11" rowspan="1" colspan="1">Action</th>
                                     </tr>
                                 </thead>
 
@@ -58,6 +59,7 @@
                                                     @endif
                                                 </strong>
                                             </td>
+                                            <td>{{ \Carbon\Carbon::parse($row->created_at)->format('m/d/Y') }}</td>
                                             <td>
                                                 <a href="#" data-href="{{ route('survey.delete', $row->id) }}" class="btn btn-xs btn-default js-delete-survey">
                                                     <i class="fa fa-trash"></i>
