@@ -51,9 +51,9 @@ class EventsController extends Controller
 
 			if(is_null($course))
 			{
-				$allEvents = Event::get();
+				$allEvents = Event::orderBy('start_date','asc')->get();
 			}else{
-				$allEvents = $course->events;
+				$allEvents = $course->events()->orderBy('start_date','asc')->get();
 			}
 
 			$futureEvents = $allEvents->where('start_date', '>', Carbon::now()->startOfDay());
