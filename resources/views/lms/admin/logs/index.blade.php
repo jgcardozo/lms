@@ -169,7 +169,7 @@
                                 </tfoot>
                             </table>
 
-                            {{$logs->links()}}
+                            {{$logs->appends(request()->except('page'))->links()}}
                         </div>
                     </div>
                 </div>
