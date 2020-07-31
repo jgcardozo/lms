@@ -65,16 +65,16 @@ class LogController extends Controller
                 $logs = $logs->where('created_at','<=', date("Y-m-d H:i:s", strtotime($request->input('toDate'))));
             }
 
-            $logs = $logs->orderBy('created_at','DESC')->get();
-            $logs = $logs->keyBy('id');
-
-            if ($request->input('cohort') !== 'all') {
-                foreach ( $logs as $log ) {
-                    if (!count($log->user->cohorts->where('id',$request->input('cohort')))) {
-                        $logs->forget($log->id);
-                    }
-                }
-            }
+            $logs = $logs->orderBy('created_at','DESC')->paginate(2000);
+//            $logs = $logs->keyBy('id');
+//
+//            if ($request->input('cohort') !== 'all') {
+//                foreach ( $logs as $log ) {
+//                    if (!count($log->user->cohorts->where('id',$request->input('cohort')))) {
+//                        $logs->forget($log->id);
+//                    }
+//                }
+//            }
         }
         else {
             if($request->has('user_id')) {
