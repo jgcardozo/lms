@@ -28,7 +28,7 @@ class LogController extends Controller
     public function index(Request $request)
     {
         $userFlag = false;
-        if ($request->has(['_token','causer','cohort','action','activity','fromDate','toDate'])) {
+        if ($request->has(['_token','causer','cohort','action','activity'])) {
 
             $request->validate([
                 '_token' => 'required'
