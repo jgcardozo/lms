@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Clue\StreamFilter\fun;
 
 class LogController extends Controller
 {
@@ -63,6 +64,14 @@ class LogController extends Controller
 
             if ($request->filled('toDate')) {
                 $logs = $logs->where('created_at','<=', date("Y-m-d H:i:s", strtotime($request->input('toDate'))));
+            }
+
+            if($request->input('cohort') !== 'all') {
+                $logs = $logs->whereHas('user', function ($query) use ($request) {
+                   $query->whereHas('cohorts', function($q) use ($request) {
+                        $q->where('cohorts.id', $request->input('cohort'));
+                   });
+                });
             }
 
             $logs = $logs->orderBy('created_at','DESC')->paginate(2000);
