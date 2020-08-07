@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cohort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,23 +67,12 @@ class LogController extends Controller
             }
 
             if($request->input('cohort') !== 'all') {
-                $logs = $logs->whereHas('user', function ($query) use ($request) {
-                   $query->whereHas('cohorts', function($q) use ($request) {
-                        $q->where('cohorts.id', $request->input('cohort'));
-                   });
-                });
-            }
+                $cohort = Cohort::find($request->input('cohort'));
+                $userIds = $cohort->users()->pluck('users.id');
+                $logs = $logs->whereIn('user_id', $userIds);
 
-            $logs = $logs->orderBy('created_at','DESC')->paginate(2000);
-//            $logs = $logs->keyBy('id');
-//
-//            if ($request->input('cohort') !== 'all') {
-//                foreach ( $logs as $log ) {
-//                    if (!count($log->user->cohorts->where('id',$request->input('cohort')))) {
-//                        $logs->forget($log->id);
-//                    }
-//                }
-//            }
+                $logs = $logs->orderBy('created_at', 'DESC')->paginate(2000);
+            }
         }
         else {
             if($request->has('user_id')) {
