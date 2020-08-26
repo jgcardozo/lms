@@ -71,15 +71,15 @@ class LogController extends Controller
                 $userIds = $cohort->users()->pluck('users.id');
                 $logs = $logs->whereIn('user_id', $userIds);
 
-                $logs = $logs->orderBy('created_at', 'DESC')->paginate(30000);
+                $logs = $logs->orderBy('created_at', 'DESC')->paginate(5000);
             }
         }
         else {
             if($request->has('user_id')) {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC')->paginate(30000);
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC')->paginate(5000);
                 $userFlag = true;
             } else {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->paginate(30000);
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->paginate(5000);
             }
         }
 
