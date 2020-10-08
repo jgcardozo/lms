@@ -71,6 +71,7 @@ class LogController extends Controller
                 $userIds = $cohort->users()->pluck('users.id');
                 $logs = $logs->whereIn('user_id', $userIds);
             }
+            
             $logs = $logs->orderBy('created_at', 'DESC')->paginate(5000);
         }
         else {
