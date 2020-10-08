@@ -70,9 +70,8 @@ class LogController extends Controller
                 $cohort = Cohort::find($request->input('cohort'));
                 $userIds = $cohort->users()->pluck('users.id');
                 $logs = $logs->whereIn('user_id', $userIds);
-
-                $logs = $logs->orderBy('created_at', 'DESC')->paginate(5000);
             }
+            $logs = $logs->orderBy('created_at', 'DESC')->paginate(5000);
         }
         else {
             if($request->has('user_id')) {
