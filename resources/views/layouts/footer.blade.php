@@ -9,7 +9,7 @@
 
 			<div class="footer-component">
 				<ul class="list--inline">
-	    			<li class="list__item"><a href="https://get.askmethod.com/terms-conditions/" target="_blank">Terms of Service</a></li>
+	    			<li class="list__item"><a href="https://theaskstore.com/terms-conditions/" target="_blank">Terms of Service</a></li>
 	    			<li class="list__item"><a href="https://get.askmethod.com/earnings-disclaimer/" target="_blank">Earnings Disclaimer</a></li>
 	    			<li class="list__item"><a href="https://get.askmethod.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
 					<li class="list__item last"><a href="https://get.askmethod.com/contact/" target="_blank">Contact</a></li>
