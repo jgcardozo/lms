@@ -203,3 +203,15 @@
         </div>
     </div>
 @endsection
+
+<script>
+    $('body').on('click', '.session-single__close', function (e) {
+        var url = new URLSearchParams(window.location.href);
+        url.delete("session");
+    });
+
+    $('body').on('click', '.js-open-session', function (e) {
+        var url = new URLSearchParams(window.location.href);
+        url.append("session", $(this).data('sessionId'));
+    });
+</script>
