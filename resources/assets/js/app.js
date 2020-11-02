@@ -292,7 +292,6 @@ $(document).ready(function () {
         }, 5000);
 
         $('body').find('.session-single__close').on('click', function (e) {
-            window.history.replaceState({}, '')
             e.preventDefault();
             clearInterval(x);
         });
@@ -439,7 +438,8 @@ $(document).ready(function () {
                 $('body').trigger('session.watch.open');
             });
 
-            window.history.pushState({'session':$(this).data('sessionId')}, '');
+            var url = new URLSearchParams(window.location.href);
+            url.append("session", $(this).data('sessionId'));
         });
     });
 
@@ -453,6 +453,9 @@ $(document).ready(function () {
 
         $('body').css('overflow', 'initial');
         $('.session-single').fadeOut();
+
+        var url = new URLSearchParams(window.location.href);
+        url.delete("session");
     });
 
     window.addEventListener('beforeunload', function (e) {
