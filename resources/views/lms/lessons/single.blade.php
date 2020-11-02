@@ -59,13 +59,13 @@
                                         <span class="course-progress__bar course-progress__bar--locked"></span>
                                     </div>
                                 @else
-                                    <a href="#" data-href="{{ route('session.show', $session->id) }}" data-sessionId="{{ $session->id }}" class="block__link js-open-session"></a>
+                                    <a href="#" data-href="{{ route('session.show', $session->id) }}" data-session-id="{{ $session->id }}" class="block__link js-open-session"></a>
                                 @endif
                             </div>
 
                             <div class="lesson-sessions__content grid--flex flex--space-between flex--align-center">
                                 <div class="lesson-sessions__content--left">
-                                    <h2 class="lesson-sessions__item--title"><a href="#" data-href="{{ route('session.show', $session->id) }}" data-sessionId="{{ $session->id }}" class="block__link js-open-session">{{ $session->title }}</a></h2>
+                                    <h2 class="lesson-sessions__item--title"><a href="#" data-href="{{ route('session.show', $session->id) }}" data-session-id="{{ $session->id }}" class="block__link js-open-session">{{ $session->title }}</a></h2>
 
                                     <p>{!!  truncate_string($session->description) !!}</p>
                                 </div>
@@ -206,12 +206,18 @@
 
 <script>
     $('body').on('click', '.session-single__close', function (e) {
-        var url = new URLSearchParams(window.location.href);
-        url.delete("session");
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search.slice(1));
+        params.delete("session");
+
+        window.history.replaceState("", "", "?");
     });
 
     $('body').on('click', '.js-open-session', function (e) {
-        var url = new URLSearchParams(window.location.href);
-        url.append("session", $(this).data('sessionId'));
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search.slice(1));
+        params.append("session", $(e.target).data('session-id'));
+
+        window.history.replaceState("", "", "?" + params.toString());
     });
 </script>
