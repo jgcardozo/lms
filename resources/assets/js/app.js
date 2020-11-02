@@ -437,9 +437,6 @@ $(document).ready(function () {
             $('.session-single').fadeIn(250, function () {
                 $('body').trigger('session.watch.open');
             });
-
-            var url = new URLSearchParams(window.location.href);
-            url.append("session", $(this).data('sessionId'));
         });
     });
 
@@ -453,9 +450,6 @@ $(document).ready(function () {
 
         $('body').css('overflow', 'initial');
         $('.session-single').fadeOut();
-
-        var url = new URLSearchParams(window.location.href);
-        url.delete("session");
     });
 
     window.addEventListener('beforeunload', function (e) {
