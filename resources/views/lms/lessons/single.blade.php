@@ -203,27 +203,3 @@
         </div>
     </div>
 @endsection
-
-<script>
-    $(document).ready(function () {
-        $('body').on('click', '.session-single__close', function (e) {
-            var url = new URL(window.location.href);
-            var params = new URLSearchParams(url.search.slice(1));
-            params.delete("session");
-
-            window.history.replaceState("", "", "?");
-
-            console.log(params.toString(), "remove");
-        });
-
-        $('body').on('click', '.js-open-session', function (e) {
-            var url = new URL(window.location.href);
-            var params = new URLSearchParams(url.search.slice(1));
-            params.append("session", $(e.target).data('session-id'));
-
-            window.history.replaceState("", "", "?" + params.toString());
-
-            console.log(params.toString(), "append");
-        });
-    })
-</script>
