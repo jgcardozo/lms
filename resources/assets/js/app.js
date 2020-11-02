@@ -292,6 +292,7 @@ $(document).ready(function () {
         }, 5000);
 
         $('body').find('.session-single__close').on('click', function (e) {
+            window.history.replaceState({}, '')
             e.preventDefault();
             clearInterval(x);
         });
@@ -437,6 +438,8 @@ $(document).ready(function () {
             $('.session-single').fadeIn(250, function () {
                 $('body').trigger('session.watch.open');
             });
+
+            window.history.pushState({'session':$(this).data('sessionId')}, '');
         });
     });
 
