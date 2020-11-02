@@ -203,3 +203,18 @@
         </div>
     </div>
 @endsection
+
+<script>
+    document.getElementsByClassName("js-open-session").addEventListener("click", function (event) {
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search.slice(1));
+        var el = event.target.dataset.sessionId;
+        params.append("session", el);
+
+        window.history.replaceState("", "", "?" + params.toString());
+
+        console.log(params.toString(), "append");
+    })
+
+    //session-single__close
+</script>
