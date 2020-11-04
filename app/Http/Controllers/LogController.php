@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\ElasticSearch\Repositories\ElasticSearchLogsRepository;
 use App\Models\Cohort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LogController extends Controller
 {
+    protected $repo;
+
+    public function __construct()
+    {
+        $this->repo = new ElasticSearchLogsRepository();
+    }
+
     public function ajaxLog(Request $request)
     {
         if (Auth::check()) {
@@ -29,11 +37,15 @@ class LogController extends Controller
     public function index(Request $request)
     {
         $userFlag = false;
+
         if ($request->has(['_token','causer','cohort','action','activity'])) {
 
             $request->validate([
                 '_token' => 'required'
             ]);
+
+            $res = $this->repo->search($request);
+//            dump($res);
 
             if($request->has('user_id')) {
                 $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC');
