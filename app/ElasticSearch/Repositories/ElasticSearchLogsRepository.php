@@ -116,6 +116,7 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
             $this->appendDateTimeRangeFilter($request->only(['fromDate', 'toDate']), $parameters);
         }
+
         try {
             return $this->client->search($parameters);
         } catch (\Exception $exception) {
@@ -207,8 +208,8 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
     private function appendDateTimeRangeFilter($dateRange, &$parameters)
     {
-        $from = $dateRange['fromDate'] ? date("Y-m-d H:i:s", strtotime($dateRange['fromDate'])) : null;
-        $to = $dateRange['toDate'] ? date("Y-m-d H:i:s", strtotime($dateRange['toDate'])) : null;
+        $from = array_key_exists('fromDate', $dateRange) ? date("Y-m-d H:i:s", strtotime($dateRange['fromDate'])) : null;
+        $to = array_key_exists('toDate', $dateRange) ? date("Y-m-d H:i:s", strtotime($dateRange['toDate'])) : null;
 
         if($from) {
             $parameters['body']['query']['bool']['filter'][] = [

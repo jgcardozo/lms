@@ -319,6 +319,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('bonus', 'Admin\BonusCrudController');
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
     Route::get('logs', 'LogController@index')->name('log.index');
+    Route::get('logs/search', 'LogController@search')->name('log.search');
 
     Route::resource('easter_links','EasterLinksController');
 

@@ -21,7 +21,8 @@
     "sass-loader": "^6.0.7",
     "select2": "^4.0.6-rc.1",
     "vue": "^2.5.17",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "axios": "^0.19"
   },
   "dependencies": {}
 }

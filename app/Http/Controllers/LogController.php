@@ -36,7 +36,7 @@ class LogController extends Controller
 
     public function index(Request $request)
     {
-        $userFlag = false;
+        $userFlag = $request->has('user_id');
 
         if ($request->has(['_token','causer','cohort','action','activity'])) {
 
@@ -44,55 +44,6 @@ class LogController extends Controller
                 '_token' => 'required'
             ]);
 
-            $res = $this->repo->search($request);
-//            dump($res);
-
-            if($request->has('user_id')) {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC');
-                $userFlag = true;
-            } else {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC');
-            }
-
-
-            if ($request->input('causer') === 'admin') {
-                $logs = $logs->where('activity_id','=',7);
-            } elseif ($request->input('causer') === 'user') {
-                $logs = $logs->where('activity_id','!=',7);
-            }
-
-
-            if ($request->input('action') !== 'all') {
-                $logs = $logs->where('action_id','=',$request->input('action'));
-            }
-
-            if ($request->input('activity') !== 'all') {
-                $logs = $logs->where('activity_id','=',$request->input('activity'));
-            }
-
-            if ($request->filled('fromDate')) {
-                $logs = $logs->where('created_at','>=', date("Y-m-d H:i:s", strtotime($request->input('fromDate'))));
-            }
-
-            if ($request->filled('toDate')) {
-                $logs = $logs->where('created_at','<=', date("Y-m-d H:i:s", strtotime($request->input('toDate'))));
-            }
-
-            if($request->input('cohort') !== 'all') {
-                $cohort = Cohort::find($request->input('cohort'));
-                $userIds = $cohort->users()->pluck('users.id');
-                $logs = $logs->whereIn('user_id', $userIds);
-
-                $logs = $logs->orderBy('created_at', 'DESC')->paginate(2000);
-            }
-        }
-        else {
-            if($request->has('user_id')) {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC')->paginate(2);
-                $userFlag = true;
-            } else {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->paginate(2);
-            }
         }
 
         $cohorts = \App\Models\Cohort::all();
@@ -102,5 +53,11 @@ class LogController extends Controller
         $request->flash();
 
         return view('lms.admin.logs.index',compact('logs','cohorts','actions','activities','userFlag'));
+    }
+
+
+    public function search(Request $request)
+    {
+        return $this->repo->search($request);
     }
 }

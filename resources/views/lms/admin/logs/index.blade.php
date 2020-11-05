@@ -77,107 +77,12 @@
                         </div>
                     </div>
                     <br>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-bordered table-hover dataTable" id="logTable">
-                                <thead>
-                                <tr role="row">
-                                    <th tabindex="0" rowspan="1" colspan="1">Log Id</th>
-                                    <th tabindex="1" rowspan="1" colspan="1">User</th>
-                                    <th tabindex="2" rowspan="1" colspan="1">Action</th>
-                                    <th tabindex="3" rowspan="1" colspan="1">Subject</th>
-                                    <th tabindex="4" rowspan="1" colspan="1">Timestamp</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                @foreach($logs as $log)
-                                    <tr>
-                                        <td>{{ $log->id }}</td>
-                                        @if($log->user !== null)
-                                            <td>{{ $log->user->name }}</td>
-                                        @else
-                                            <td>{{ $log->deleted_user }}</td>
-                                        @endif
-                                        <td>{{ $log->action->name }}</td>
-                                        @if(empty($log->activity) && empty($log->subject))
-                                            <td></td>
-                                        @else
-                                            @if($log->activity_id != 7)
-                                                @if(empty($log->activity_id))
-                                                    @if($log->subject !== null)
-                                                        @if( empty($log->subject->title) )
-                                                            <td>{{ $log->subject->name }}</td>
-                                                        @else
-                                                            <td>
-                                                            @if($log->subject->module !== null)
-                                                                [ {{ $log->subject->module->title }} ]
-                                                            @endif
-                                                                @if($log->subject->lesson !== null)
-                                                                    [ {{ $log->subject->lesson->module->title }} - {{ $log->subject->lesson->title }} ]
-                                                                @endif
-                                                            {{ $log->subject->title }}
-                                                            </td>
-                                                        @endif
-                                                    @else
-                                                        <td>{{ $log->subject_type }}</td>
-                                                    @endif
-                                                @else
-                                                    <td>{{ $log->activity->name }}</td>
-                                                @endif
-                                            @else
-                                                @if($log->subject !== null)
-                                                    @if( empty($log->subject->title) )
-                                                        <td>{{ $log->subject->name }}</td>
-                                                    @else
-                                                        <td>
-                                                        @if($log->subject->module !== null)
-                                                            [ {{ $log->subject->module->title }} ]
-                                                        @endif
-                                                        @if($log->subject->lesson !== null)
-                                                                [ {{ $log->subject->lesson->module->title }} - {{ $log->subject->lesson->title }} ]
-                                                        @endif
-                                                        {{ $log->subject->title }}
-                                                        </td>
-                                                    @endif
-                                                @else
-                                                    @if(empty($log->deleted))
-                                                        @if(empty($log->deleted_user))
-                                                            <td>{{ $log->subject_type }}</td>
-                                                        @else
-                                                            <td>{{ $log->deleted_user }}</td>
-                                                        @endif
-                                                    @else
-                                                        <td>{{ $log->deleted }}</td>
-                                                    @endif
-                                                @endif
-                                            @endif
-                                        @endif
-                                        <td>{{ $log->created_at }}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-
-                                <tfoot>
-                                <tr role="row">
-                                    <th tabindex="0" rowspan="1" colspan="1">Log Id</th>
-                                    <th tabindex="1" rowspan="1" colspan="1">User</th>
-                                    <th tabindex="2" rowspan="1" colspan="1">Action</th>
-                                    <th tabindex="3" rowspan="1" colspan="1">Subject</th>
-                                    <th tabindex="4" rowspan="1" colspan="1">Timestamp</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-
-                            {{$logs->appends(request()->except('page'))->links()}}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div id="app">
-            <example></example>
+            <logs-table></logs-table>
         </div>
     </div>
 
