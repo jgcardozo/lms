@@ -203,37 +203,3 @@
         </div>
     </div>
 @endsection
-
-<script>
-
-    var elements = document.getElementsByClassName("js-open-session");
-
-    var appendFunction = function() {
-        var attribute = this.getAttribute("data-session-id");
-        var url = new URL(window.location.href);
-        var params = new URLSearchParams(url.search.slice(1));
-        params.append("session", attribute);
-
-        window.history.replaceState("", "", "?" + params.toString());
-
-        console.log(params.toString(), "append");
-    };
-
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('click', appendFunction, false);
-    }
-
-
-    // document.getElementsByClassName("js-open-session").addEventListener("click", function (event) {
-    //     var url = new URL(window.location.href);
-    //     var params = new URLSearchParams(url.search.slice(1));
-    //     var el = event.target.dataset.sessionId;
-    //     params.append("session", el);
-    //
-    //     window.history.replaceState("", "", "?" + params.toString());
-    //
-    //     console.log(params.toString(), "append");
-    // })
-
-    //session-single__close
-</script>
