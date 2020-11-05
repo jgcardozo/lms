@@ -440,11 +440,13 @@ $(document).ready(function () {
 
             var url = new URL(window.location.href);
             var params = new URLSearchParams(url.search.slice(1));
+            if(params.has("session")) {
+                params.delete("session");
+            }
+
             params.append("session", $(e.target).data('session-id'));
 
             window.history.replaceState("", "", "?" + params.toString());
-
-            console.log(params.toString(), "append");
         });
     });
 
@@ -464,8 +466,6 @@ $(document).ready(function () {
         params.delete("session");
 
         window.history.replaceState("", "", "?");
-
-        console.log(params.toString(), "remove");
     });
 
     window.addEventListener('beforeunload', function (e) {
