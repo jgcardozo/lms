@@ -175,7 +175,13 @@
                 </div>
             </div>
         </div>
+
+        <div id="app">
+            <example></example>
+        </div>
     </div>
+
+
 @endsection
 
 @section('after_styles')

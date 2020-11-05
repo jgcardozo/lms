@@ -102,16 +102,20 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
         $this->setSortOrder($request->get('sort'), $request->get('order'), $parameters);
 
-        $this->appendCauserFilter($request->get('causer'), $parameters);
+        $this->appendUserFilter($request->get('user_id'), $parameters);
 
-        $this->appendCohortFilter($request->get('cohort'), $parameters);
+        // if user is admin
+        if($request->has('_token')) {
+            $this->appendCauserFilter($request->get('causer'), $parameters); // admin or user
 
-        $this->appendActionFilter($request->get('action'), $parameters);
+            $this->appendCohortFilter($request->get('cohort'), $parameters);
 
-        $this->appendActivityFilter($request->get('activity'), $parameters);
+            $this->appendActionFilter($request->get('action'), $parameters);
 
-        $this->appendDateTimeRangeFilter($request->only(['fromDate', 'toDate']), $parameters);
+            $this->appendActivityFilter($request->get('activity'), $parameters);
 
+            $this->appendDateTimeRangeFilter($request->only(['fromDate', 'toDate']), $parameters);
+        }
         try {
             return $this->client->search($parameters);
         } catch (\Exception $exception) {
@@ -142,6 +146,16 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
             default:
                 return "created_at";
         }
+    }
+
+
+    private function appendUserFilter($userId, &$parameters)
+    {
+        if (is_null($userId)) { return; }
+
+        $parameters['body']['query']['bool']['filter'][] = [
+            "term" => ["user.id" => (int)$userId],
+        ];
     }
 
     private function appendCauserFilter($causer, &$parameters)

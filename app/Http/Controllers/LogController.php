@@ -88,10 +88,10 @@ class LogController extends Controller
         }
         else {
             if($request->has('user_id')) {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC')->paginate(2000);
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$request->input('user_id'))->orderBy('created_at','DESC')->paginate(2);
                 $userFlag = true;
             } else {
-                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->paginate(2000);
+                $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->orderBy('created_at','DESC')->paginate(2);
             }
         }
 
