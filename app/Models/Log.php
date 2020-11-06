@@ -47,8 +47,7 @@ class Log extends Model
                         "id" => [ "type" => "integer" ],
                         "type" => [ "type" => "keyword" ],
                         "name" => [ "type" => "keyword" ],
-                        "email" => [ "type" => "keyword" ],
-                        "is_deleted" => [ "type" => "boolean" ],
+                        "email" => [ "type" => "keyword" ]
                     ]
                 ],
                 "cohorts" => [

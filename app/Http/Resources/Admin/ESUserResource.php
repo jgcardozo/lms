@@ -19,8 +19,7 @@ class ESUserResource extends JsonResource
             "id" => $this->user_id,
             "type" => $this->activity_id == 7 ? "admin" : "user",
             "name" => $this->user !== null ? $this->user->name : null,
-            "email" => $this->user !== null ? $this->user->email : $this->deleted_user,
-            "is_deleted" => $this->deleted_user ? true : false,
+            "email" => $this->user !== null ? $this->user->email : $this->deleted_user
         ];
     }
 }

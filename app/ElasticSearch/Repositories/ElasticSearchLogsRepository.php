@@ -90,8 +90,23 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
     }
 
+    private function count($parameters)
+    {
+        if(array_key_exists("size", $parameters["body"])) {
+            unset($parameters["body"]["size"]);
+        }
+
+        if(array_key_exists("sort", $parameters["body"])) {
+            unset($parameters["body"]["sort"]);
+        }
+
+        return $this->client->count($parameters);
+    }
+
     public function search(Request $request)
     {
+        $filters = $request->get('filters');
+
         $parameters = [
             "index" => $this->indexName,
         ];
@@ -100,25 +115,29 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
             "size" => 10000
         ];
 
-        $this->setSortOrder($request->get('sort'), $request->get('order'), $parameters);
+        $this->setSortOrder($filters['sort'], $filters['order'], $parameters);
 
-        $this->appendUserFilter($request->get('user_id'), $parameters);
+        $this->appendUserFilter($filters['user_id'], $parameters);
 
         // if user is admin
-        if($request->has('_token')) {
-            $this->appendCauserFilter($request->get('causer'), $parameters); // admin or user
+        if(is_null($filters['user_id'])) {
+            $this->appendCauserFilter($filters['causer'], $parameters);
 
-            $this->appendCohortFilter($request->get('cohort'), $parameters);
+            $this->appendCohortFilter($filters['cohort'], $parameters);
 
-            $this->appendActionFilter($request->get('action'), $parameters);
+            $this->appendActionFilter($filters['action'], $parameters);
 
-            $this->appendActivityFilter($request->get('activity'), $parameters);
+            $this->appendActivityFilter($filters['activity'], $parameters);
 
-            $this->appendDateTimeRangeFilter($request->only(['fromDate', 'toDate']), $parameters);
+            $this->appendDateTimeRangeFilter($filters['fromDate'], $filters['toDate'], $parameters);
         }
 
         try {
-            return $this->client->search($parameters);
+            $result = $this->client->search($parameters);
+            $totalCount = $this->count($parameters);
+            $result["hits"]["total"]["total"] = $totalCount["count"];
+
+            return $result;
         } catch (\Exception $exception) {
             ElasticSearchFailed::dispatch($exception, 'search');
         }
@@ -206,10 +225,10 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         ];
     }
 
-    private function appendDateTimeRangeFilter($dateRange, &$parameters)
+    private function appendDateTimeRangeFilter($fromDate, $toDate, &$parameters)
     {
-        $from = array_key_exists('fromDate', $dateRange) ? date("Y-m-d H:i:s", strtotime($dateRange['fromDate'])) : null;
-        $to = array_key_exists('toDate', $dateRange) ? date("Y-m-d H:i:s", strtotime($dateRange['toDate'])) : null;
+        $from = !is_null($fromDate) ? date("Y-m-d H:i:s", strtotime($fromDate)) : null;
+        $to = !is_null($toDate) ? date("Y-m-d H:i:s", strtotime($toDate)) : null;
 
         if($from) {
             $parameters['body']['query']['bool']['filter'][] = [

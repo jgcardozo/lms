@@ -38,14 +38,6 @@ class LogController extends Controller
     {
         $userFlag = $request->has('user_id');
 
-        if ($request->has(['_token','causer','cohort','action','activity'])) {
-
-            $request->validate([
-                '_token' => 'required'
-            ]);
-
-        }
-
         $cohorts = \App\Models\Cohort::all();
         $actions = \App\Models\Action::all();
         $activities = \App\Models\Activity::all()->except(7);

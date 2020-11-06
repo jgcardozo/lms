@@ -23,6 +23,9 @@
             <tbody>
             </tbody>
         </table>
+        <div>
+            <label>Showing {{stats.value}} of total {{stats.total}}</label>
+        </div>
     </div>
 </template>
 
@@ -40,17 +43,31 @@
         },
         methods: {
             search: function () {
-                let url = "logs/search";
-                let token = "DA70t2tJcQbInLozcF9ZtyYt8Mk8SToROZe1GyvL";
+                // url = url+"causer=all&cohort=1&action=2&activity=all&sort=id&order=asc";
+                // url = url+"?user_id=53079";
 
-                // create the URL here and send request
-                url = url+"?_token="+token+"&causer=all&cohort=1&action=2&activity=all&sort=id&order=asc";
-                axios.get(url).then(response => this.hits = response.data.hits.hits)
-            },
+                axios.post('logs/search', {
+                    filters: {
+                         "causer": "all",    // admin, user or "all"
+                         "cohort": 1,        // cohort ID or "all"
+                         "action": 2,        // action ID or "all"
+                         "activity": "all",  // activity ID or "all"
+                         "sort": "id",       // po koja kolona se sortira
+                         "order": "asc",     // asc or desc
+                         "fromDate": null,   // filter From
+                         "toDate": null,     // filter To
+                         "user_id": null    // user ID or null
+                    }
+                }).then((response) => {
+                    this.hits = response.data.hits.hits;
+                    this.stats = response.data.hits.total;
+                });
+            }
         },
         data() {
             return {
-                hits: []
+                hits: [],
+                stats: {}
             }
         }
     }
