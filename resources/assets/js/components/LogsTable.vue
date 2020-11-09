@@ -1,5 +1,6 @@
 <template>
     <div>
+        <button v-on:click="search">search</button>
         <table class="table table-bordered table-hover dataTable" id="logTable">
             <thead>
             <tr role="row">
@@ -41,31 +42,43 @@
         mounted() {
             this.search();
         },
+        props: ['cohorts', 'actions', 'activities'],
         methods: {
             search: function () {
+                console.log("test sesarch");
+                const { causer, cohor, action } = this.filters;
+                const url = `logs/search${causer && `?causer=${causer}`}`;
+
+                console.log("url", url);
                 // url = url+"causer=all&cohort=1&action=2&activity=all&sort=id&order=asc";
                 // url = url+"?user_id=53079";
 
-                axios.post('logs/search', {
-                    filters: {
-                         "causer": "all",    // admin, user or "all"
-                         "cohort": 1,        // cohort ID or "all"
-                         "action": 2,        // action ID or "all"
-                         "activity": "all",  // activity ID or "all"
-                         "sort": "id",       // po koja kolona se sortira
-                         "order": "asc",     // asc or desc
-                         "fromDate": null,   // filter From
-                         "toDate": null,     // filter To
-                         "user_id": null    // user ID or null
-                    }
-                }).then((response) => {
-                    this.hits = response.data.hits.hits;
-                    this.stats = response.data.hits.total;
-                });
+                // axios.post('logs/search', {
+                //     filters: {
+                //          "query": "text goes here" 
+                //          "causer": "all",    // admin, user or "all"
+                //          "cohort": 1,        // cohort ID or "all"
+                //          "action": 2,        // action ID or "all"
+                //          "activity": "all",  // activity ID or "all"
+                //          "sort": "id",       // po koja kolona se sortira
+                //          "order": "asc",     // asc or desc
+                //          "fromDate": null,   // filter From
+                //          "toDate": null,     // filter To
+                //          "user_id": null    // user ID or null
+                //     }
+                // }).then((response) => {
+                //     this.hits = response.data.hits.hits;
+                //     this.stats = response.data.hits.total;
+                // });
             }
         },
         data() {
             return {
+                filters: {
+                    causer: "all",
+                    cohor: "",
+                    action: "",
+                },
                 hits: [],
                 stats: {}
             }
@@ -73,3 +86,7 @@
     }
 
 </script>
+
+<style scoped>
+
+</style>
