@@ -154,7 +154,7 @@
     @endif
 
     @if(Route::currentRouteName() == 'log.index')
-        @include('scripts.schedule_scripts')
+        <!-- @include('scripts.schedule_scripts')
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -186,7 +186,7 @@
             #logTable tr.even {
                 background: #ececec !important;
             }
-        </style>
+        </style> -->
     @endif
 
     @yield('custom_scripts')
