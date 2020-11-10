@@ -105,6 +105,7 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
     public function search(Request $request)
     {
+        $query = $request->get('query');
         $filters = $request->get('filters');
 
         $parameters = [
@@ -117,22 +118,25 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
         $this->setSortOrder($filters['sort'], $filters['order'], $parameters);
 
+        $this->appendQueryTerm($query, $parameters);
+
         $this->appendUserFilter($filters['user_id'], $parameters);
+
+        $this->appendActionFilter($filters['action'], $parameters);
+
+        $this->appendActivityFilter($filters['activity'], $parameters);
+
+        $this->appendDateTimeRangeFilter($filters['fromDate'], $filters['toDate'], $parameters);
 
         // if user is admin
         if(is_null($filters['user_id'])) {
             $this->appendCauserFilter($filters['causer'], $parameters);
 
             $this->appendCohortFilter($filters['cohort'], $parameters);
-
-            $this->appendActionFilter($filters['action'], $parameters);
-
-            $this->appendActivityFilter($filters['activity'], $parameters);
-
-            $this->appendDateTimeRangeFilter($filters['fromDate'], $filters['toDate'], $parameters);
         }
 
         try {
+//            dd($parameters);
             $result = $this->client->search($parameters);
             $totalCount = $this->count($parameters);
             $result["hits"]["total"]["total"] = $totalCount["count"];
@@ -158,9 +162,9 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
             case "id":
                 return "id";
             case "user":
-                return "user.email";
+                return "user.email.original";
             case "action":
-                return "action.name";
+                return "action.name.original";
             case "subject":
                 return "subject.tree";
             default:
@@ -168,6 +172,37 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         }
     }
 
+
+
+    private function appendQueryTerm($query, &$parameters)
+    {
+        $trimmedQuery = trim($query);
+
+        if (empty($trimmedQuery)) {
+            $parameters['body']['query']['bool']['must'] = [
+                [ "match_all" => new \stdClass() ]
+            ];
+        } else {
+            $parameters['body']['query']['bool']['must'][] = [
+                "bool" => [
+                    "should" => [
+                        [
+                            "match" => [ "id" => $trimmedQuery ]
+                        ],
+                        [
+                            "match" => [ "user.name" => $trimmedQuery ]
+                        ],
+                        [
+                            "match" => [ "user.email" => $trimmedQuery ]
+                        ],
+                        [
+                            "match" => [ "subject.tree" => $trimmedQuery ]
+                        ]
+                    ]
+                ]
+            ];
+        }
+    }
 
     private function appendUserFilter($userId, &$parameters)
     {

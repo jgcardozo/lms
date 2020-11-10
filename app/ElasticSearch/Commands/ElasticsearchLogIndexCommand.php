@@ -64,7 +64,7 @@ class ElasticsearchLogIndexCommand extends Command
             $elastic->setIndexName();
 
             if($elastic->indexExists()) {
-                $this->error("Index for model ".class_basename($class). " exists. Run elasticsearch:reindex '{$model}' instead.");
+                $this->error("Index for model ".class_basename($class). " exists. Run elasticsearch:batch-reindex '{$model}' instead.");
             } else {
                 $elastic->createIndex();
 
