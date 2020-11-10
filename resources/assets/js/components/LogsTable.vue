@@ -81,9 +81,9 @@
                     </div>
 
                     <div class="csv_search">
-                        <div>
-                            <input type="text" name="search" v-model="query" placeholder="Search" />
-                        </div>
+                        <form method="get" action="logs/export" v-if="hits.length > 0">
+                            <button type="submit" class="m-b-10 m-t-10" name="csv">CSV</button>
+                        </form>
 
                         <div class="items-count">
                             <label for="itemsCount">Items per page:</label>
@@ -106,9 +106,7 @@
                     </div>
 
                     <div v-else>
-                        <form method="get" action="logs/export">
-                            <button type="submit" class="m-b-10 m-t-10" name="csv">CSV</button>
-                        </form>
+                        
                         <!-- TABLE -->
                         <div v-if="tableLoading">
                             <Spinner :modifierClass="'spinner--table'"/>
@@ -382,7 +380,7 @@
 
                 const dateObject = new Date(date);
                 const year = dateObject.getFullYear();
-                const month = dateObject.getMonth();
+                const month = dateObject.getMonth() + 1;
                 const day = dateObject.getDate();
                 const hour = dateObject.getHours();
                 const minutes = dateObject.getMinutes();
