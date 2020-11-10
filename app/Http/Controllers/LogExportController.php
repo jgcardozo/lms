@@ -11,19 +11,19 @@ class LogExportController extends Controller
 {
     public function __invoke(Request $request)
     {
-//        $filters = [
-//        "causer"=> "all",    // admin, user or "all"
-//            "cohort"=> "all",        // cohort ID or "all"
-//            "action"=> "all",        // action ID or "all"
-//            "activity"=> "all",  // activity ID or "all"
-//            "sort"=> "timestamp",       // po koja kolona se sortira
-//            "order"=> "desc",     // asc or desc
-//            "fromDate"=> null,   // filter From
-//            "toDate"=> null,     // filter To
-//            "user_id"=> null    // user ID or null
-//        ];
+        $filters = [
+                "causer"=> "all",    // admin, user or "all"
+                "cohort"=> "all",        // cohort ID or "all"
+                "action"=> "all",        // action ID or "all"
+                "activity"=> "all",  // activity ID or "all"
+                "sort"=> "timestamp",       // po koja kolona se sortira
+                "order"=> "desc",     // asc or desc
+                "fromDate"=> null,   // filter From
+                "toDate"=> null,     // filter To
+                "user_id"=> null    // user ID or null
+            ];
 
-        $filters = $request->get('filters');
+//        $filters = $request->get('filters');
 
         if($filters['user_id']) {
             $logs = \App\Models\Log::with('user.cohorts')->with('action')->with('activity')->with('subject')->where('user_id',$filters['user_id'])->orderBy('created_at','DESC');
