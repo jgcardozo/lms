@@ -1,0 +1,33 @@
+.table {
+  background-color: #fff;
+
+  thead tr {
+    th:nth-child(1) { width: 65px;  }
+    th:nth-child(2) { width: 300px; }
+    th:nth-child(3) { width: 85px;  }
+    th:last-child { width: 120px;   }
+  }
+
+  tr td {
+    padding: 8px !important;
+    border: 1px solid #ddd;
+  }
+
+  tbody tr:nth-child(even) { background-color: #ececec; }
+
+  // Sorting icons
+  &--sort {
+    &-default,
+    &-latest,
+    &-oldest {
+      cursor: pointer;
+      background-repeat: no-repeat;
+      background-position: right center;
+    }
+
+    &-default { background-image: url('../images/table-sort-default.png');  }
+    &-latest  { background-image: url('../images/table-sort-asc.png'); }
+    &-oldest  { background-image: url('../images/table-sort-desc.png'); }
+  }
+
+}
