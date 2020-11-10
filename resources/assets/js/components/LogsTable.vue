@@ -41,24 +41,40 @@
                                     <option v-for="activity in activities" :key="activity.id" :value="activity.id">{{ activity.name }}</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
-                                    <div class="input-group date dtp">
-                                        <span class="input-group-addon" id="fromDate"><b>From Date</b></span>
-                                        <input type="text" class="form-control" name="fromDate" id="fromDate" aria-describedby="basic-addon3" :v-bind="filters.fromDate"  style="background-color: white">
-                                        <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                    </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
+                                    <Datetime 
+                                        v-model="filters.fromDate"
+                                        :input-class="'form-control'"
+                                        type="datetime"
+                                        :use12-hour="false"
+                                        :format="'yyyy-MM-dd T'"
+                                        :auto="true"
+                                    />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
-                                <div class="form-group">
-                                    <div class="input-group date dtp">
-                                        <span class="input-group-addon" id="toDate"><b>To Date</b></span>
-                                        <input type="text" class="form-control" name="toDate" id="toDate" aria-describedby="basic-addon3" v-bind="filters.toDate"  style="background-color: white">
-                                        <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
+                                    <Datetime 
+                                        v-model="filters.toDate"
+                                        :input-class="'form-control'"
+                                        type="datetime"
+                                        :use12-hour="false"
+                                        :format="'yyyy-MM-dd T'"
+                                        :auto="true"
+                                    />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
+                            </div>
 
                             <button v-on:click="search" class="btn btn-primary">Search</button>
                         </div>
@@ -233,22 +249,11 @@
 </template>
 
 <script>
-
-    // TODO: Finish table and add filters
-    // TODO: Make logic for creating the correct URL for search:
-        // - add logic for handling sort value [x]
-        // - add logic for handling order value [x]
-        // - add sorting functionality [x]
-        // - spinner and loading state [x]
-        // - show message if no hits exist [x]
-        // - add logic for handling fromDate and toDate - how does it works??
-        // - CSV export dowlnload [x]
-    // TODO: Pagination using jw-pagination [x]
-
     import Vue from "vue";
     import axios from "axios";
     import JwPagination from "jw-vue-pagination";
     import Spinner from "./Spinner";
+    import { Datetime } from 'vue-datetime';
 
     Vue.component('jw-pagination', JwPagination);
 
@@ -289,7 +294,7 @@
             this.search();
         },
         props: ['cohorts', 'actions', 'activities'],
-        components: { Spinner },
+        components: { Spinner, Datetime },
         methods: {
             // Check and get the user ID from the query parameter if it exists
             checkForUserID() {
@@ -306,6 +311,10 @@
                 // Desctructure filters
                 const { causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
 
+                // Format the selected from and to dates and send the formatted values
+                const formatted_fromDate = await this.formatDate(fromDate);
+                const formatted_toDate = await this.formatDate(toDate);
+
                 const response = await axios.post(`logs/search`, {
                     query: this.query, 
                     filters: {
@@ -315,8 +324,8 @@
                         activity,
                         sort,
                         order,
-                        fromDate,
-                        toDate,
+                        fromDate: formatted_fromDate ? formatted_fromDate : null,
+                        toDate: formatted_toDate ? formatted_toDate : null,
                         user_id
                     }
                 });
@@ -333,28 +342,6 @@
                 // Hide spinner and show the table
                 this.pageLoading = false;
                 this.tableLoading = false;
-                
-
-                // NOTE: Ke se izbrise
-                // Example:
-                // url = url+"causer=all&cohort=1&action=2&activity=all&sort=id&order=asc";
-                // url = url+"?user_id=53079";
-                // axios.post(`logs/search${url_filters}`, {
-                //     // filters: {
-                //     //      "causer": "all",    // admin, user or "all"
-                //     //      "cohort": 1,        // cohort ID or "all"
-                //     //      "action": 2,        // action ID or "all"
-                //     //      "activity": "all",  // activity ID or "all"
-                //     //      "sort": "id",       // po koja kolona se sortira
-                //     //      "order": "asc",     // asc or desc
-                //     //      "fromDate": null,   // filter From
-                //     //      "toDate": null,     // filter To
-                //     //      "user_id": null    // user ID or null
-                //     // }
-                // }).then((response) => {
-                //     this.hits = response.data.hits.hits;
-                //     this.stats = response.data.hits.total;
-                // });
             },
 
             // Set the sort and order state
@@ -386,6 +373,29 @@
             // Handle pagination and items displayed
             onChangePage(pageOfItems) {
                 this.pageOfItems = pageOfItems;
+            },
+
+            // Format the dates in 'yyyy-MM-dd H:mm' format
+            formatDate(date) {
+                // Exit if no date was selected
+                if (!date) return;
+
+                const dateObject = new Date(date);
+                const year = dateObject.getFullYear();
+                const month = dateObject.getMonth();
+                const day = dateObject.getDate();
+                const hour = dateObject.getHours();
+                const minutes = dateObject.getMinutes();
+
+                const formattedMonth = month <= 9 ? `0${month}` : month;
+                const formattedDay = day <= 9 ? `0${day}` : day;
+                const formattedHour = hour <= 9 ? `0${hour}` : hour;
+                const formattedMinutes = minutes <= 9 ? `0${minutes}` : minutes; 
+
+                // Fully formatted date to be returned
+                const formattedDate = `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinutes}`;
+
+                return formattedDate;
             }
         }
     }
