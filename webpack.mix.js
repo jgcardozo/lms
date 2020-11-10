@@ -22,10 +22,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	.sass('resources/assets/sass/app.scss', 'public/css')
 	.options({
 		processCssUrls: false
-	});
+	}).version();
 
-if (mix.inProduction) {
-	mix.version();
-}
+// if (mix.inProduction) {
+// 	mix.version();
+// }
 
 mix.js('node_modules/select2/dist/js/select2.js', 'public/select2');
