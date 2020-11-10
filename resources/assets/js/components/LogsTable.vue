@@ -71,42 +71,52 @@
                         <thead>
                         <tr role="row">
                             <th 
-                            tabindex="0" 
-                            rowspan="1" 
-                            colspan="1" 
-                            @click="sortTablePageItems('id')"
-                            :class="getColumnSortOrderClass('id')"
+                                tabindex="0" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('id')"
+                                :class="getColumnSortOrderClass('id')"
                             >
                                 Log Id
                             </th>
+
                             <th 
-                            tabindex="1" 
-                            rowspan="1" 
-                            colspan="1" 
-                            @click="sortTablePageItems('user')"
-                            :class="getColumnSortOrderClass('user')"
-                            >User</th>
+                                tabindex="1" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('user')"
+                                :class="getColumnSortOrderClass('user')"
+                            >
+                                User
+                            </th>
+
                             <th 
-                            tabindex="2" 
-                            rowspan="1" 
-                            colspan="1" 
-                            @click="sortTablePageItems('action')"
-                            :class="getColumnSortOrderClass('action')"
+                                tabindex="2" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('action')"
+                                :class="getColumnSortOrderClass('action')"
                             >Action</th>
+
                             <th 
-                            tabindex="3" 
-                            rowspan="1" 
-                            colspan="1" 
-                            @click="sortTablePageItems('subject')"
-                            :class="getColumnSortOrderClass('subject')"
-                            >Subject</th>
+                                tabindex="3" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('subject')"
+                                :class="getColumnSortOrderClass('subject')"
+                            >
+                                Subject
+                            </th>
+
                             <th 
-                            tabindex="4" 
-                            rowspan="1" 
-                            colspan="1" 
-                            @click="sortTablePageItems('timestamp')"
-                            :class="getColumnSortOrderClass('timestamp')"
-                            >Timestamp</th>
+                                tabindex="4" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('timestamp')"
+                                :class="getColumnSortOrderClass('timestamp')"
+                            >
+                                Timestamp
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -137,10 +147,10 @@
 
     // TODO: Finish table and add filters
     // TODO: Make logic for creating the correct URL for search:
-        // - add logic for handling sort value
-        // - add logic for handling order value
+        // - add logic for handling sort value [x]
+        // - add logic for handling order value [x]
         // - add logic for handling fromDate and toDate - how does it works??
-
+    // TODO: Pagination using jw-pagination
 
     import axios from "axios";
 
@@ -153,7 +163,7 @@
                     cohort: "all",
                     action: "all",
                     activity: "all",
-                    sort: "id",
+                    sort: "",
                     order: "asc",
                     fromDate: null,
                     toDate: null,
@@ -168,21 +178,6 @@
             this.search();
         },
         props: ['cohorts', 'actions', 'activities'],
-        computed: {
-            sortedHits: function() {
-                if (this.filters.sort === "id" && this.filters.order === "asc") {
-                    this.hits = this.hits.sort(function (a, b) {
-                        return a._source.id - b._source.id
-                    });
-                } else if (this.filters.sort === "id" && this.filters.order === "desc") {
-                    this.hits = this.hits.sort(function (a, b) {
-                        return b._source.id - a._source.id;
-                    });
-                }
-
-                console.log('called');
-            }
-        },
         methods: {
             // Check and get the user ID from the query parameter if it exists
             checkForUserID() {
@@ -200,9 +195,6 @@
                 const queryFilter = query ? `&query=${query}` : '';
                 const fromDateFilter = fromDate ? `&fromDate=${fromDate}` : '';
                 const toDateFilter = toDate ? `&toDate=${toDate}` : '';
-
-                console.log("FROM DATE: ", fromDateFilter);
-                console.log("TO DATE: ", toDateFilter);
 
                 // Check if user ID exits to use specific filters
                 if (user_id) {
@@ -258,11 +250,11 @@
             getColumnSortOrderClass(column) {
                 switch (true) {
                     case this.filters.order === 'asc' && this.filters.sort === column:
-                        return 'table--sort--latest';
+                        return 'table--sort-latest';
                     case  this.filters.order === 'desc' && this.filters.sort === column:
-                        return 'table--sort--oldest';
+                        return 'table--sort-oldest';
                     default:
-                        return 'table--sort--default';
+                        return 'table--sort-default';
                 }
             },
         }
@@ -276,23 +268,5 @@
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
-}
-
-.table {
-    background-color: #fff;
-
-    thead tr {
-        th:nth-child(1) { width: 65px;  }
-        th:nth-child(2) { width: 300px; }
-        th:nth-child(3) { width: 85px;  }
-        th:last-child { width: 120px;   }
-    }
-
-    tr td {
-        padding: 8px !important;
-        border: 1px solid #ddd;
-    }
-
-    tbody tr:nth-child(even) { background-color: #ececec; }
 }
 </style>
