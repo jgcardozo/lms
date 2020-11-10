@@ -18,6 +18,12 @@ Vue.component('example', require('./components/Example.vue'));
 Vue.component('logs-table', require('./components/LogsTable.vue'));
 Vue.component('spinner', require('./components/Spinner.vue'));
 
+import { Datetime } from 'vue-datetime'
+// You need a specific loader for CSS files
+import 'vue-datetime/dist/vue-datetime.css'
+ 
+Vue.use(Datetime)
+
 const app = new Vue({
     el: '#app'
 });
