@@ -81,8 +81,8 @@
                     </div>
 
                     <div class="csv_search">
-                        <form method="get" action="logs/export" v-if="hits.length > 0">
-                            <button type="submit" class="m-b-10 m-t-10" name="csv">CSV</button>
+                        <form method="get" action="logs/export">
+                            <button type="submit" class="m-b-10 m-t-10" name="csv" :disabled="hits.length === 0">CSV</button>
                         </form>
 
                         <div class="items-count">
