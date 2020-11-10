@@ -416,9 +416,4 @@ Route::delete('notifications/{id}/delete', 'NotificationLogController@delete')->
 
 Route::post('notifications/read', 'NotificationLogController@markAsReadSingle')->name('notification.read');
 
-Route::get('test/{id}', function($id){
-    $log = \App\Models\Log::find($id);
-    return new \App\Http\Resources\Admin\ESLogResource($log);
-});
-
 Auth::routes();
