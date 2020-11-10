@@ -1,5 +1,8 @@
 <template>
-    <div class="row">
+    <div v-if="isLoading">
+        <Spinner />
+    </div>
+    <div class="row" v-else>
         <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-body">
@@ -63,7 +66,6 @@
 
                     <div class="csv_search">
                         <div>
-                            <button name="CSV">CSV</button>
                             <input type="text" name="search" v-model="filters.query" placeholder="Search" />
                         </div>
 
@@ -77,7 +79,9 @@
                                 <option value="1000">1000</option>
                             </select>
                         </div>
+
                     </div>
+                    <button class="m-b-10 m-t-10" name="csv">CSV</button>
 
                     <!-- TABLE -->
                     <table class="table table-bordered table-hover dataTable">
@@ -227,6 +231,7 @@
     import Vue from "vue";
     import axios from "axios";
     import JwPagination from "jw-vue-pagination";
+    import Spinner from "./Spinner";
 
     Vue.component('jw-pagination', JwPagination);
 
@@ -257,6 +262,7 @@
                 stats: {},
                 pageOfItems: [],
                 pageItemsCount: 10,
+                isLoading: true,
                 customLabels
             }
         },
@@ -265,6 +271,7 @@
             this.search();
         },
         props: ['cohorts', 'actions', 'activities'],
+        components: { Spinner },
         computed: {
             sortedHits: function() {
                 const { sort, order } = this.filters;
@@ -343,12 +350,14 @@
 
                     url_filters = `${defaultFilters}${queryFilter}${fromDateFilter}${toDateFilter}`;
                 };
-                
 
                 const response = await axios.post(`logs/search${url_filters}`);
 
                 this.hits = response.data.hits.hits;
                 this.stats = response.data.hits.total;
+
+                // Hide spinner and show the table
+                this.isLoading = false;
                 
 
                 // NOTE: Ke se izbrise

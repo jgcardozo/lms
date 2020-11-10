@@ -16,6 +16,7 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('logs-table', require('./components/LogsTable.vue'));
+Vue.component('spinner', require('./components/Spinner.vue'));
 
 const app = new Vue({
     el: '#app'
