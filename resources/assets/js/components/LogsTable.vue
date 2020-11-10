@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isLoading">
+    <div v-if="pageLoading">
         <Spinner />
     </div>
     <div class="row" v-else>
@@ -84,7 +84,10 @@
                     <button class="m-b-10 m-t-10" name="csv">CSV</button>
 
                     <!-- TABLE -->
-                    <table class="table table-bordered table-hover dataTable">
+                    <div v-if="tableLoading">
+                        <Spinner :modifierClass="'spinner--table'"/>
+                    </div>
+                    <table class="table table-bordered table-hover dataTable" :class="{'table--loading': tableLoading}">
                         <thead>
                         <tr role="row">
                             <th 
@@ -205,7 +208,7 @@
                     </div>
 
                     <jw-pagination 
-                        :items="sortedHits"
+                        :items="hits"
                         @changePage="onChangePage"
                         :pageSize="pageItemsCount"
                         :key="pageItemsCount"
@@ -224,7 +227,9 @@
     // TODO: Make logic for creating the correct URL for search:
         // - add logic for handling sort value [x]
         // - add logic for handling order value [x]
-        // - add sorting functionality 
+        // - add sorting functionality [x]
+        // - spinner and loading state [x]
+        // - show message if no hits exist
         // - add logic for handling fromDate and toDate - how does it works??
     // TODO: Pagination using jw-pagination [x]
 
@@ -262,7 +267,8 @@
                 stats: {},
                 pageOfItems: [],
                 pageItemsCount: 10,
-                isLoading: true,
+                pageLoading: true,
+                tableLoading: true,
                 customLabels
             }
         },
@@ -272,56 +278,6 @@
         },
         props: ['cohorts', 'actions', 'activities'],
         components: { Spinner },
-        computed: {
-            sortedHits: function() {
-                const { sort, order } = this.filters;
-
-                switch(true) {
-                    case sort === "id" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.id - b._source.id;
-                        });
-                        break;
-                    case sort === "id" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.id - a._source.id;
-                        });
-                        break;
-                    case sort === "action" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.action.name - b._source.action.name;
-                        });
-                        break;
-                    case sort === "action" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.action.name - a._source.action.name
-                        });
-                        break;
-                    case sort === "subject" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.subject.tree - b._source.subject.tree;
-                        });
-                        break;
-                    case sort === "subject" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.subject.tree - a._source.subject.tree;
-                        });
-                        break;
-                    case sort === "timestamp" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.created_at - b._source.created_at;
-                        });
-                        break;
-                    case sort === "timestamp" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.created_at - a._source.created_at;
-                        });
-                        break;
-                }
-
-                return this.hits;
-            }
-        },
         methods: {
             // Check and get the user ID from the query parameter if it exists
             checkForUserID() {
@@ -332,32 +288,32 @@
             },
 
             search: async function () {
+                // Set loading state
+                this.tableLoading = true;
+
                 const { query, causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
 
-                let url_filters = "";
-
-                const queryFilter = query ? `&query=${query}` : '';
-                const fromDateFilter = fromDate ? `&fromDate=${fromDate}` : '';
-                const toDateFilter = toDate ? `&toDate=${toDate}` : '';
-
-                // Check if user ID exits to use specific filters
-                if (user_id) {
-                    const defaultFilters = `?user_id=${user_id}&action=${action}&activity=${activity}&sort=${sort}&order=${order}`;
-
-                    url_filters = `${defaultFilters}${queryFilter}${fromDateFilter}${toDateFilter}`;
-                } else {
-                    const defaultFilters = `?causer=${causer}&cohort=${cohort}&action=${action}&activity=${activity}&sort=${sort}&order=${order}`;
-
-                    url_filters = `${defaultFilters}${queryFilter}${fromDateFilter}${toDateFilter}`;
-                };
-
-                const response = await axios.post(`logs/search${url_filters}`);
+                const response = await axios.post(`logs/search`, { 
+                    filters: {
+                        query,
+                        causer,
+                        cohort,
+                        action,
+                        activity,
+                        sort,
+                        order,
+                        fromDate,
+                        toDate,
+                        user_id
+                    }
+                });
 
                 this.hits = response.data.hits.hits;
                 this.stats = response.data.hits.total;
 
                 // Hide spinner and show the table
-                this.isLoading = false;
+                this.pageLoading = false;
+                this.tableLoading = false;
                 
 
                 // NOTE: Ke se izbrise
@@ -386,10 +342,14 @@
             sortTablePageItems(column) {
                 if (column === this.filters.sort) {
                     this.filters.order = this.filters.order === "asc" ? "desc" : "";
+                    this.filters.sort = this.filters.order === "" ? "" : this.filters.sort;
                 } else {
                     this.filters.sort = column;
                     this.filters.order = "asc";
                 }
+
+                // Query the endpoint again
+                this.search();
             },
 
             // Add or remove a sorting class based on selected table column

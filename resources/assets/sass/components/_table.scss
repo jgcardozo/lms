@@ -1,5 +1,6 @@
 .table {
   background-color: #fff;
+  transition: 0.3s ease;
 
   thead tr {
     th:nth-child(1) { width: 65px;  }
@@ -30,4 +31,6 @@
     &-oldest  { background-image: url('../images/table-sort-desc.png'); }
   }
 
+  // Loading state
+  &--loading { opacity: 0.5; }
 }
