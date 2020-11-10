@@ -66,7 +66,7 @@
 
                     <div class="csv_search">
                         <div>
-                            <input type="text" name="search" v-model="filters.query" placeholder="Search" />
+                            <input type="text" name="search" v-model="query" placeholder="Search" />
                         </div>
 
                         <div class="items-count">
@@ -81,139 +81,149 @@
                         </div>
 
                     </div>
-                    <button class="m-b-10 m-t-10" name="csv">CSV</button>
 
-                    <!-- TABLE -->
-                    <div v-if="tableLoading">
-                        <Spinner :modifierClass="'spinner--table'"/>
+                    <div v-if="hits.length === 0">
+                        <div class="no-data">
+                            <p>No data available.</p>
+                            <Spinner v-if="tableLoading" />
+                        </div>
                     </div>
-                    <table class="table table-bordered table-hover dataTable" :class="{'table--loading': tableLoading}">
-                        <thead>
-                        <tr role="row">
-                            <th 
-                                tabindex="0" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('id')"
-                                :class="getColumnSortOrderClass('id')"
-                            >
-                                Log Id
-                            </th>
 
-                            <th 
-                                tabindex="1" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('user')"
-                                :class="getColumnSortOrderClass('user')"
-                            >
-                                User
-                            </th>
+                    <div v-else>
+                        <button class="m-b-10 m-t-10" name="csv">CSV</button>
 
-                            <th 
-                                tabindex="2" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('action')"
-                                :class="getColumnSortOrderClass('action')"
-                            >Action</th>
-
-                            <th 
-                                tabindex="3" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('subject')"
-                                :class="getColumnSortOrderClass('subject')"
-                            >
-                                Subject
-                            </th>
-
-                            <th 
-                                tabindex="4" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('timestamp')"
-                                :class="getColumnSortOrderClass('timestamp')"
-                            >
-                                Timestamp
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="hit in pageOfItems" :key="hit._source.id">
-                                <td>{{hit._source.id}}</td>
-
-                                <td v-if="hit._source.user.name != null"> {{hit._source.user.name}} </td>
-                                <td v-else> {{hit._source.user.email}} </td>
-
-                                <td>{{hit._source.action.name}}</td>
-                                <td>{{hit._source.subject.tree}}</td>
-                                <td>{{hit._source.created_at}}</td>
-                            </tr>
+                        <!-- TABLE -->
+                        <div v-if="tableLoading">
+                            <Spinner :modifierClass="'spinner--table'"/>
+                        </div>
+                        <table class="table table-bordered table-hover dataTable" :class="{'table--loading': tableLoading}">
+                            <thead>
                             <tr role="row">
-                            <th 
-                                tabindex="0" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('id')"
-                                :class="getColumnSortOrderClass('id')"
-                            >
-                                Log Id
-                            </th>
+                                <th 
+                                    tabindex="0" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('id')"
+                                    :class="getColumnSortOrderClass('id')"
+                                >
+                                    Log Id
+                                </th>
 
-                            <th 
-                                tabindex="1" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('user')"
-                                :class="getColumnSortOrderClass('user')"
-                            >
-                                User
-                            </th>
+                                <th 
+                                    tabindex="1" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('user')"
+                                    :class="getColumnSortOrderClass('user')"
+                                >
+                                    User
+                                </th>
 
-                            <th 
-                                tabindex="2" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('action')"
-                                :class="getColumnSortOrderClass('action')"
-                            >Action</th>
+                                <th 
+                                    tabindex="2" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('action')"
+                                    :class="getColumnSortOrderClass('action')"
+                                >Action</th>
 
-                            <th 
-                                tabindex="3" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('subject')"
-                                :class="getColumnSortOrderClass('subject')"
-                            >
-                                Subject
-                            </th>
+                                <th 
+                                    tabindex="3" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('subject')"
+                                    :class="getColumnSortOrderClass('subject')"
+                                >
+                                    Subject
+                                </th>
 
-                            <th 
-                                tabindex="4" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('timestamp')"
-                                :class="getColumnSortOrderClass('timestamp')"
-                            >
-                                Timestamp
-                            </th>
-                        </tr>
-                        </tbody>
-                    </table>
+                                <th 
+                                    tabindex="4" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('timestamp')"
+                                    :class="getColumnSortOrderClass('timestamp')"
+                                >
+                                    Timestamp
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="hit in pageOfItems" :key="hit._source.id">
+                                    <td>{{hit._source.id}}</td>
 
-                    <!-- DISPLAYED COUNT -->
-                    <div class="m-b-20 m-t-20">
-                        <label>Showing {{pageOfItems.length}} of total {{stats.total}}</label>
+                                    <td v-if="hit._source.user.name != null"> {{hit._source.user.name}} </td>
+                                    <td v-else> {{hit._source.user.email}} </td>
+
+                                    <td>{{hit._source.action.name}}</td>
+                                    <td>{{hit._source.subject.tree}}</td>
+                                    <td>{{hit._source.created_at}}</td>
+                                </tr>
+                                <tr role="row">
+                                <th 
+                                    tabindex="0" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('id')"
+                                    :class="getColumnSortOrderClass('id')"
+                                >
+                                    Log Id
+                                </th>
+
+                                <th 
+                                    tabindex="1" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('user')"
+                                    :class="getColumnSortOrderClass('user')"
+                                >
+                                    User
+                                </th>
+
+                                <th 
+                                    tabindex="2" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('action')"
+                                    :class="getColumnSortOrderClass('action')"
+                                >Action</th>
+
+                                <th 
+                                    tabindex="3" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('subject')"
+                                    :class="getColumnSortOrderClass('subject')"
+                                >
+                                    Subject
+                                </th>
+
+                                <th 
+                                    tabindex="4" 
+                                    rowspan="1" 
+                                    colspan="1" 
+                                    @click="sortTablePageItems('timestamp')"
+                                    :class="getColumnSortOrderClass('timestamp')"
+                                >
+                                    Timestamp
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- DISPLAYED COUNT -->
+                        <div class="m-b-20 m-t-20">
+                            <label>Showing {{pageOfItems.length}} of total {{stats.total}}</label>
+                        </div>
+
+                        <jw-pagination 
+                            :items="hits"
+                            @changePage="onChangePage"
+                            :pageSize="pageItemsCount"
+                            :key="pageItemsCount"
+                            :labels="customLabels"
+                        ></jw-pagination>
                     </div>
-
-                    <jw-pagination 
-                        :items="hits"
-                        @changePage="onChangePage"
-                        :pageSize="pageItemsCount"
-                        :key="pageItemsCount"
-                        :labels="customLabels"
-                    ></jw-pagination>
 
                 </div>
             </div>
@@ -251,8 +261,8 @@
     export default {
         data() {
             return {
+                query: "",
                 filters: {
-                    query: "",
                     causer: "all",
                     cohort: "all",
                     action: "all",
@@ -290,12 +300,13 @@
             search: async function () {
                 // Set loading state
                 this.tableLoading = true;
+                
+                // Desctructure filters
+                const { causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
 
-                const { query, causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
-
-                const response = await axios.post(`logs/search`, { 
+                const response = await axios.post(`logs/search`, {
+                    query: this.query, 
                     filters: {
-                        query,
                         causer,
                         cohort,
                         action,
@@ -308,8 +319,14 @@
                     }
                 });
 
-                this.hits = response.data.hits.hits;
-                this.stats = response.data.hits.total;
+                // Populate table if data exists
+                if (response.data.hits) {
+                    this.hits = response.data.hits.hits;
+                    this.stats = response.data.hits.total;
+                } else {
+                    this.hits = [];
+                    this.stats = {};
+                }
 
                 // Hide spinner and show the table
                 this.pageLoading = false;
@@ -387,5 +404,28 @@
     align-items: center;
     
     & label { width: 200px; }
+}
+
+.no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 18px;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .half-circle-spinner { 
+        width: 20px;
+        height: 20px;
+        position: relative;
+        top: unset;
+        left: unset;
+        transform: translate(10px, -5px);
+
+        .circle { border: calc(25px / 10) solid transparent; }
+    }
 }
 </style>
