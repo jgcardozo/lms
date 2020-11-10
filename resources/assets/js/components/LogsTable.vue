@@ -120,7 +120,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="hit in hits" :key="hit._source.id">
+                            <tr v-for="hit in pageOfItems" :key="hit._source.id">
                                 <td>{{hit._source.id}}</td>
 
                                 <td v-if="hit._source.user.name != null"> {{hit._source.user.name}} </td>
@@ -135,8 +135,17 @@
 
                     <!-- DISPLAYED COUNT -->
                     <div>
-                        <label>Showing {{stats.value}} of total {{stats.total}}</label>
+                        <label>Showing {{pageOfItems.length}} of total {{stats.total}}</label>
                     </div>
+
+                    <jw-pagination 
+                        :items="sortedHits"
+                        @changePage="onChangePage"
+                        :pageSize="pageItemsCount"
+                        :key="pageItemsCount"
+                        :labels="customLabels"
+                    ></jw-pagination>
+
                 </div>
             </div>
         </div>
@@ -149,10 +158,22 @@
     // TODO: Make logic for creating the correct URL for search:
         // - add logic for handling sort value [x]
         // - add logic for handling order value [x]
+        // - add sorting functionality 
         // - add logic for handling fromDate and toDate - how does it works??
     // TODO: Pagination using jw-pagination
-
+    import Vue from "vue";
     import axios from "axios";
+    import JwPagination from "jw-vue-pagination";
+
+    Vue.component('jw-pagination', JwPagination);
+
+    // Custom labels for the pagination
+    const customLabels = {
+        first: "<<",
+        last: ">>",
+        previous: "<",
+        next: ">"
+    }
 
     export default {
         data() {
@@ -170,7 +191,10 @@
                     user_id: null
                 },
                 hits: [],
-                stats: {}
+                stats: {},
+                pageOfItems: [],
+                pageItemsCount: 10,
+                customLabels
             }
         },
         mounted() {
@@ -178,6 +202,60 @@
             this.search();
         },
         props: ['cohorts', 'actions', 'activities'],
+        computed: {
+            sortedHits: function() {
+                const { sort, order } = this.filters;
+
+                switch(true) {
+                    case sort === "id" && order === "asc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return a._source.id - b._source.id;
+                        });
+                        break;
+                    case sort === "id" && order === "desc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return b._source.id - a._source.id;
+                        });
+                        break;
+                    // case sort === "user" && order === "asc":
+                    //     this.hits = this.hits.sort(function (a, b) {
+
+                    //     })
+                    case sort === "action" && order === "asc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return a._source.action.name - b._source.action.name;
+                        });
+                        break;
+                    case sort === "action" && order === "desc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return b._source.action.name - a._source.action.name
+                        });
+                        break;
+                    case sort === "subject" && order === "asc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return a._source.subject.tree - b._source.subject.tree;
+                        });
+                        break;
+                    case sort === "subject" && order === "desc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return b._source.subject.tree - a._source.subject.tree;
+                        });
+                        break;
+                    case sort === "timestamp" && order === "asc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return a._source.created_at - b._source.created_at;
+                        });
+                        break;
+                    case sort === "timestamp" && order === "desc":
+                        this.hits = this.hits.sort(function (a,b) {
+                            return b._source.created_at - a._source.created_at;
+                        });
+                        break;
+                }
+
+                return this.hits;
+            }
+        },
         methods: {
             // Check and get the user ID from the query parameter if it exists
             checkForUserID() {
@@ -236,6 +314,7 @@
                 // });
             },
 
+            // Set the sort and order state
             sortTablePageItems(column) {
                 if (column === this.filters.sort) {
                     this.filters.order = this.filters.order === "asc" ? "desc" : "asc";
@@ -243,10 +322,9 @@
                     this.filters.sort = column;
                     this.filters.order = "asc";
                 }
-
-                this.sortedHits();
             },
 
+            // Add or remove a sorting class based on selected table column
             getColumnSortOrderClass(column) {
                 switch (true) {
                     case this.filters.order === 'asc' && this.filters.sort === column:
@@ -257,6 +335,11 @@
                         return 'table--sort-default';
                 }
             },
+
+            // Handle pagination and items displayed
+            onChangePage(pageOfItems) {
+                this.pageOfItems = pageOfItems;
+            }
         }
     }
 
