@@ -61,20 +61,57 @@
                         </div>
                     </div>
 
+                    <div class="csv_search">
+                        <button name="CSV">CSV</button>
+                        <input type="text" name="search" v-model="filters.query" placeholder="Search" />
+                    </div>
+
                     <!-- TABLE -->
                     <table class="table table-bordered table-hover dataTable">
                         <thead>
                         <tr role="row">
-                            <th tabindex="0" rowspan="1" colspan="1">Log Id</th>
-                            <th tabindex="1" rowspan="1" colspan="1">User</th>
-                            <th tabindex="2" rowspan="1" colspan="1">Action</th>
-                            <th tabindex="3" rowspan="1" colspan="1">Subject</th>
-                            <th tabindex="4" rowspan="1" colspan="1">Timestamp</th>
+                            <th 
+                            tabindex="0" 
+                            rowspan="1" 
+                            colspan="1" 
+                            @click="sortTablePageItems('id')"
+                            :class="getColumnSortOrderClass('id')"
+                            >
+                                Log Id
+                            </th>
+                            <th 
+                            tabindex="1" 
+                            rowspan="1" 
+                            colspan="1" 
+                            @click="sortTablePageItems('user')"
+                            :class="getColumnSortOrderClass('user')"
+                            >User</th>
+                            <th 
+                            tabindex="2" 
+                            rowspan="1" 
+                            colspan="1" 
+                            @click="sortTablePageItems('action')"
+                            :class="getColumnSortOrderClass('action')"
+                            >Action</th>
+                            <th 
+                            tabindex="3" 
+                            rowspan="1" 
+                            colspan="1" 
+                            @click="sortTablePageItems('subject')"
+                            :class="getColumnSortOrderClass('subject')"
+                            >Subject</th>
+                            <th 
+                            tabindex="4" 
+                            rowspan="1" 
+                            colspan="1" 
+                            @click="sortTablePageItems('timestamp')"
+                            :class="getColumnSortOrderClass('timestamp')"
+                            >Timestamp</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="hit in hits" :key="hit._id">
-                                <td>{{hit._id}}</td>
+                            <tr v-for="hit in hits" :key="hit._source.id">
+                                <td>{{hit._source.id}}</td>
 
                                 <td v-if="hit._source.user.name != null"> {{hit._source.user.name}} </td>
                                 <td v-else> {{hit._source.user.email}} </td>
@@ -131,6 +168,21 @@
             this.search();
         },
         props: ['cohorts', 'actions', 'activities'],
+        computed: {
+            sortedHits: function() {
+                if (this.filters.sort === "id" && this.filters.order === "asc") {
+                    this.hits = this.hits.sort(function (a, b) {
+                        return a._source.id - b._source.id
+                    });
+                } else if (this.filters.sort === "id" && this.filters.order === "desc") {
+                    this.hits = this.hits.sort(function (a, b) {
+                        return b._source.id - a._source.id;
+                    });
+                }
+
+                console.log('called');
+            }
+        },
         methods: {
             // Check and get the user ID from the query parameter if it exists
             checkForUserID() {
@@ -148,6 +200,9 @@
                 const queryFilter = query ? `&query=${query}` : '';
                 const fromDateFilter = fromDate ? `&fromDate=${fromDate}` : '';
                 const toDateFilter = toDate ? `&toDate=${toDate}` : '';
+
+                console.log("FROM DATE: ", fromDateFilter);
+                console.log("TO DATE: ", toDateFilter);
 
                 // Check if user ID exits to use specific filters
                 if (user_id) {
@@ -187,13 +242,42 @@
                 //     this.hits = response.data.hits.hits;
                 //     this.stats = response.data.hits.total;
                 // });
-            }
+            },
+
+            sortTablePageItems(column) {
+                if (column === this.filters.sort) {
+                    this.filters.order = this.filters.order === "asc" ? "desc" : "asc";
+                } else {
+                    this.filters.sort = column;
+                    this.filters.order = "asc";
+                }
+
+                this.sortedHits();
+            },
+
+            getColumnSortOrderClass(column) {
+                switch (true) {
+                    case this.filters.order === 'asc' && this.filters.sort === column:
+                        return 'table--sort--latest';
+                    case  this.filters.order === 'desc' && this.filters.sort === column:
+                        return 'table--sort--oldest';
+                    default:
+                        return 'table--sort--default';
+                }
+            },
         }
     }
 
 </script>
 
 <style lang="scss" scoped>
+.csv_search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
 .table {
     background-color: #fff;
 
@@ -209,6 +293,6 @@
         border: 1px solid #ddd;
     }
 
-    tbody tr:nth-child(odd) { background-color: #ececec; }
+    tbody tr:nth-child(even) { background-color: #ececec; }
 }
 </style>
