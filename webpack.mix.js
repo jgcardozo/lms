@@ -24,4 +24,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 		processCssUrls: false
 	});
 
+if (mix.inProduction) {
+	mix.version();
+}
+
 mix.js('node_modules/select2/dist/js/select2.js', 'public/select2');

@@ -44,7 +44,7 @@ class LogController extends Controller
 
         $request->flash();
 
-        return view('lms.admin.logs.index',compact('logs','cohorts','actions','activities','userFlag'));
+        return view('lms.admin.logs.index',compact('cohorts','actions','activities','userFlag'));
     }
 
 

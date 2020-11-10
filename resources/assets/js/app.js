@@ -440,6 +440,16 @@ $(document).ready(function () {
             $('.session-single').fadeIn(250, function () {
                 $('body').trigger('session.watch.open');
             });
+
+            var url = new URL(window.location.href);
+            var params = new URLSearchParams(url.search.slice(1));
+            if(params.has("session")) {
+                params.delete("session");
+            }
+
+            params.append("session", $(e.target).data('session-id'));
+
+            window.history.replaceState("", "", "?" + params.toString());
         });
     });
 
@@ -453,6 +463,12 @@ $(document).ready(function () {
 
         $('body').css('overflow', 'initial');
         $('.session-single').fadeOut();
+
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search.slice(1));
+        params.delete("session");
+
+        window.history.replaceState("", "", "?");
     });
 
     window.addEventListener('beforeunload', function (e) {

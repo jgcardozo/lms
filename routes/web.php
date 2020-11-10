@@ -320,6 +320,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
     Route::get('logs', 'LogController@index')->name('log.index');
     Route::post('logs/search', 'LogController@search')->name('log.search');
+    Route::get('logs/export', 'LogExportController')->name('log.export');
+//    Route::get('test', function (){
+//        $subject = new \App\Http\Resources\Admin\ESSubjectResource(\App\Models\Log::find(432716));
+//        return $subject->resolve()['tree'];
+//    });
 
     Route::resource('easter_links','EasterLinksController');
 
@@ -410,10 +415,5 @@ Route::post('log', 'LogController@ajaxLog');
 Route::delete('notifications/{id}/delete', 'NotificationLogController@delete')->name('notification.log.delete');
 
 Route::post('notifications/read', 'NotificationLogController@markAsReadSingle')->name('notification.read');
-
-Route::get('test/{id}', function($id){
-    $log = \App\Models\Log::find($id);
-    return new \App\Http\Resources\Admin\ESLogResource($log);
-});
 
 Auth::routes();

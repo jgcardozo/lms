@@ -40,14 +40,29 @@ class Log extends Model
     {
         return [
             "properties" => [
-                "id" => [ "type" => "integer" ],
+                "id" => [
+                    "type" => "text",
+                    "fields" => [
+                        "original" => [ "type" => "integer" ]
+                    ]
+                ],
                 "user" => [
                     "type" => "object",
                     "properties" => [
                         "id" => [ "type" => "integer" ],
                         "type" => [ "type" => "keyword" ],
-                        "name" => [ "type" => "keyword" ],
-                        "email" => [ "type" => "keyword" ]
+                        "name" => [
+                            "type" => "text",
+                            "fields" => [
+                                "original" => [ "type" => "keyword" ]
+                            ]
+                        ],
+                        "email" => [
+                            "type" => "text",
+                            "fields" => [
+                                "original" => [ "type" => "keyword" ]
+                            ]
+                        ]
                     ]
                 ],
                 "cohorts" => [
@@ -62,7 +77,7 @@ class Log extends Model
                     "properties" => [
                         "type" => [ "type" => "keyword" ],
                         "id" => [ "type" => "integer"],
-                        "tree" => [ "type" => "keyword" ],
+                        "tree" => [ "type" => "text" ],
                     ]
                 ],
                 "activity" => [
