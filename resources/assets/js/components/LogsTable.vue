@@ -42,23 +42,23 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <div class="input-group date dtp">
-                                    <span class="input-group-addon" id="fromDate"><b>From Date</b></span>
-                                    <input type="text" class="form-control" name="fromDate" id="fromDate" aria-describedby="basic-addon3" style="background-color: white">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                    <div class="input-group date dtp">
+                                        <span class="input-group-addon" id="fromDate"><b>From Date</b></span>
+                                        <input type="text" class="form-control" name="fromDate" id="fromDate" aria-describedby="basic-addon3" :v-bind="filters.fromDate"  style="background-color: white">
+                                        <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group date dtp">
-                                    <span class="input-group-addon" id="toDate"><b>To Date</b></span>
-                                    <input type="text" class="form-control" name="toDate" id="toDate" aria-describedby="basic-addon3" style="background-color: white">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                <div class="form-group">
+                                    <div class="input-group date dtp">
+                                        <span class="input-group-addon" id="toDate"><b>To Date</b></span>
+                                        <input type="text" class="form-control" name="toDate" id="toDate" aria-describedby="basic-addon3" v-bind="filters.toDate"  style="background-color: white">
+                                        <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                    </div>
                                 </div>
-                            </div>
 
                             <button v-on:click="search" class="btn btn-primary">Search</button>
                         </div>
@@ -90,13 +90,14 @@
                     </div>
 
                     <div v-else>
-                        <button class="m-b-10 m-t-10" name="csv">CSV</button>
-
+                        <form method="get" action="logs/export">
+                            <button type="submit" class="m-b-10 m-t-10" name="csv">CSV</button>
+                        </form>
                         <!-- TABLE -->
                         <div v-if="tableLoading">
                             <Spinner :modifierClass="'spinner--table'"/>
                         </div>
-                        <table class="table table-bordered table-hover dataTable" :class="{'table--loading': tableLoading}">
+                        <table class="table table-bordered table-hover" :class="{'table--loading': tableLoading}">
                             <thead>
                             <tr role="row">
                                 <th 
@@ -239,8 +240,9 @@
         // - add logic for handling order value [x]
         // - add sorting functionality [x]
         // - spinner and loading state [x]
-        // - show message if no hits exist
+        // - show message if no hits exist [x]
         // - add logic for handling fromDate and toDate - how does it works??
+        // - CSV export dowlnload [x]
     // TODO: Pagination using jw-pagination [x]
 
     import Vue from "vue";

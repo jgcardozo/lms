@@ -12,6 +12,11 @@
   tr td {
     padding: 8px !important;
     border: 1px solid #ddd;
+
+    &:last-child { 
+      font-size: 12px !important;
+      vertical-align: bottom !important;
+    }
   }
 
   tbody tr:nth-child(even) { background-color: #ececec; }
