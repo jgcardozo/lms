@@ -62,8 +62,21 @@
                     </div>
 
                     <div class="csv_search">
-                        <button name="CSV">CSV</button>
-                        <input type="text" name="search" v-model="filters.query" placeholder="Search" />
+                        <div>
+                            <button name="CSV">CSV</button>
+                            <input type="text" name="search" v-model="filters.query" placeholder="Search" />
+                        </div>
+
+                        <div class="items-count">
+                            <label for="itemsCount">Items per page:</label>
+                            <select class="form-control" name="itemsCount" id="itemsCount" v-model="pageItemsCount">
+                                <option value="10">10</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- TABLE -->
@@ -130,11 +143,60 @@
                                 <td>{{hit._source.subject.tree}}</td>
                                 <td>{{hit._source.created_at}}</td>
                             </tr>
+                            <tr role="row">
+                            <th 
+                                tabindex="0" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('id')"
+                                :class="getColumnSortOrderClass('id')"
+                            >
+                                Log Id
+                            </th>
+
+                            <th 
+                                tabindex="1" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('user')"
+                                :class="getColumnSortOrderClass('user')"
+                            >
+                                User
+                            </th>
+
+                            <th 
+                                tabindex="2" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('action')"
+                                :class="getColumnSortOrderClass('action')"
+                            >Action</th>
+
+                            <th 
+                                tabindex="3" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('subject')"
+                                :class="getColumnSortOrderClass('subject')"
+                            >
+                                Subject
+                            </th>
+
+                            <th 
+                                tabindex="4" 
+                                rowspan="1" 
+                                colspan="1" 
+                                @click="sortTablePageItems('timestamp')"
+                                :class="getColumnSortOrderClass('timestamp')"
+                            >
+                                Timestamp
+                            </th>
+                        </tr>
                         </tbody>
                     </table>
 
                     <!-- DISPLAYED COUNT -->
-                    <div>
+                    <div class="m-b-20 m-t-20">
                         <label>Showing {{pageOfItems.length}} of total {{stats.total}}</label>
                     </div>
 
@@ -160,7 +222,8 @@
         // - add logic for handling order value [x]
         // - add sorting functionality 
         // - add logic for handling fromDate and toDate - how does it works??
-    // TODO: Pagination using jw-pagination
+    // TODO: Pagination using jw-pagination [x]
+
     import Vue from "vue";
     import axios from "axios";
     import JwPagination from "jw-vue-pagination";
@@ -217,10 +280,6 @@
                             return b._source.id - a._source.id;
                         });
                         break;
-                    // case sort === "user" && order === "asc":
-                    //     this.hits = this.hits.sort(function (a, b) {
-
-                    //     })
                     case sort === "action" && order === "asc":
                         this.hits = this.hits.sort(function (a,b) {
                             return a._source.action.name - b._source.action.name;
@@ -317,7 +376,7 @@
             // Set the sort and order state
             sortTablePageItems(column) {
                 if (column === this.filters.sort) {
-                    this.filters.order = this.filters.order === "asc" ? "desc" : "asc";
+                    this.filters.order = this.filters.order === "asc" ? "desc" : "";
                 } else {
                     this.filters.sort = column;
                     this.filters.order = "asc";
@@ -351,5 +410,13 @@
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
+}
+
+.items-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    & label { width: 200px; }
 }
 </style>
