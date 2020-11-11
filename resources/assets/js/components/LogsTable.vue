@@ -9,7 +9,7 @@
                     <!-- FILTERS -->
                     <div class="row form-inline m-b-20">
                         <div class="col-sm-12">
-                            <div class="form-group">
+                            <div class="form-group" v-if="filters.user_id === null">
                                 <label for="causer">Caused By</label>
                                 <select class="form-control" name="causer" id="causer" v-model="filters.causer">
                                     <option value="all">All</option>
@@ -18,7 +18,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-if="filters.user_id === null">
                                 <label for="cohort">Cohort</label>
                                 <select class="form-control" name="cohort" id="cohort" v-model="filters.cohort">
                                     <option value="all">All</option>
@@ -85,8 +85,19 @@
                     </div>
 
                     <div class="csv_search">
-                        <form method="get" action="logs/export">
-                            <button type="submit" class="m-b-10 m-t-10" name="csv" :disabled="hits.length === 0">CSV</button>
+                        <form method="GET" action="logs/export">
+                            <input type="hidden" name="_token" :value="csrfToken">
+                            <input type="text" name="causer" :value="filters.causer" hidden>
+                            <input type="text" name="cohort" :value="filters.cohort" hidden>
+                            <input type="text" name="action" :value="filters.action" hidden>
+                            <input type="text" name="activity" :value="filters.activity" hidden>
+                            <input type="text" name="sort" :value="filters.sort" hidden>
+                            <input type="text" name="order" :value="filters.order" hidden>
+                            <input type="text" name="fromDate" :value="filters.fromDate" hidden>
+                            <input type="text" name="toDate" :value="filters.toDate" hidden>
+                            <input type="text" name="user_id" :value="filters.user_id" hidden>
+
+                            <button type="submit" class="m-b-10 m-t-10" :disabled="hits.length === 0">CSV</button>
                         </form>
 
                         <div class="items-count">
@@ -178,8 +189,9 @@
                         <div class="m-b-20 m-t-20">
                             <label>Showing {{pageOfItems.length}} of total {{ new Intl.NumberFormat('en-US').format(stats.value) }} </label>
                             <p class="count-note" v-if="stats.total > 10000">
-                                <em>*Due to preserving the performance, maximum of 10,000 records are shown. Total number of records is: 
-                                    <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>
+                                <em>*In order to preserve the performance, maximum of 10,000 records are shown. Total number of records is:
+                                    <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>.
+                                    You can get all entries by exporting the data to a .csv file.
                                 </em>
                             </p>
                         </div>
@@ -219,14 +231,14 @@
     export default {
         data() {
             return {
-                query: "",
+                csrfToken: document.querySelector('meta[name="csrf-token"]').content,
                 filters: {
                     causer: "all",
                     cohort: "all",
                     action: "all",
                     activity: "all",
-                    sort: "",
-                    order: "asc",
+                    sort: "timestamp",
+                    order: "desc",
                     fromDate: null,
                     toDate: null,
                     user_id: null
@@ -252,7 +264,9 @@
                 const url = new URLSearchParams(window.location.search);
                 const userID = parseInt(url.get("user_id"));
 
-                this.filters.user_id = userID;
+                if(!Number.isNaN(userID)){
+                    this.filters.user_id = userID;
+                }
             },
 
             search: async function () {
@@ -267,7 +281,6 @@
                 const formatted_toDate = await this.formatDate(toDate);
 
                 const response = await axios.post(`logs/search`, {
-                    query: this.query, 
                     filters: {
                         causer,
                         cohort,

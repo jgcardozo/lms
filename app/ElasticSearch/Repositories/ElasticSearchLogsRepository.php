@@ -253,4 +253,22 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
             ];
         }
     }
+
+    public function getLogsByIds(array $ids)
+    {
+        $params = [
+            'body' => [
+                'docs' => [
+                ]
+            ]
+        ];
+        foreach ($ids as $id) {
+            $params['body']['docs'][] = [
+                '_index' => $this->indexName,
+                '_id' => $id
+            ];
+        }
+
+        return  $this->client->mget($params);
+    }
 }
