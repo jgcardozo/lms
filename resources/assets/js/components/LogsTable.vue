@@ -47,15 +47,17 @@
                                     <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
                                     <Datetime 
                                         v-model="filters.fromDate"
+                                        input-id="startDate"
                                         :input-class="'form-control'"
                                         type="datetime"
-                                        :use12-hour="true"
                                         :format="'yyyy-MM-dd T'"
-                                        :auto="true"
-                                    />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                        auto
+                                        use12-hour
+                                    >
+                                        <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </Datetime>
                                 </div>
                             </div>
 
@@ -64,15 +66,17 @@
                                     <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
                                     <Datetime 
                                         v-model="filters.toDate"
+                                        input-id="endDate"
                                         :input-class="'form-control'"
                                         type="datetime"
-                                        :use12-hour="true"
                                         :format="'yyyy-MM-dd T'"
-                                        :auto="true"
-                                    />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                        auto
+                                        use12-hour
+                                    >
+                                        <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </Datetime>
                                 </div>
                             </div>
 
@@ -447,5 +451,10 @@
 .count-note {
     font-size: 11px;
     color: #e1302a;
+}
+
+.input-group-addon--datetimepicker { 
+    height: 34px;
+    border-left: none;
 }
 </style>
