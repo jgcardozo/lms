@@ -36,6 +36,8 @@
     &-oldest  { background-image: url('../images/table-sort-desc.png'); }
   }
 
+  &--subject-column { background-image: none; }
+
   // Loading state
   &--loading { opacity: 0.5; }
 }

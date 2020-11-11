@@ -1,0 +1,9 @@
+.vdatetime {
+  * { cursor: pointer !important; }
+
+  &-popup__header { background: #3c8dbc !important;}
+  &-calendar__month__day--selected > span > span { background: #3c8dbc !important; }
+
+  &-popup__actions__button,
+  &-time-picker__item--selected { color: #3c8dbc !important; }
+}

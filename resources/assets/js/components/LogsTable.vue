@@ -47,15 +47,17 @@
                                     <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
                                     <Datetime 
                                         v-model="filters.fromDate"
+                                        input-id="startDate"
                                         :input-class="'form-control'"
                                         type="datetime"
-                                        :use12-hour="false"
                                         :format="'yyyy-MM-dd T'"
-                                        :auto="true"
-                                    />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                        auto
+                                        use12-hour
+                                    >
+                                        <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </Datetime>
                                 </div>
                             </div>
 
@@ -64,15 +66,17 @@
                                     <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
                                     <Datetime 
                                         v-model="filters.toDate"
+                                        input-id="endDate"
                                         :input-class="'form-control'"
                                         type="datetime"
-                                        :use12-hour="false"
                                         :format="'yyyy-MM-dd T'"
-                                        :auto="true"
-                                    />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                        auto
+                                        use12-hour
+                                    >
+                                        <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </Datetime>
                                 </div>
                             </div>
 
@@ -88,11 +92,11 @@
                         <div class="items-count">
                             <label for="itemsCount">Items per page:</label>
                             <select class="form-control" name="itemsCount" id="itemsCount" v-model="pageItemsCount">
-                                <option value="10">10</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                                <option value="500">500</option>
-                                <option value="1000">1000</option>
+                                <option :value="10">10</option>
+                                <option :value="50">50</option>
+                                <option :value="100">100</option>
+                                <option :value="500">500</option>
+                                <option :value="1000">1000</option>
                             </select>
                         </div>
 
@@ -114,51 +118,23 @@
                         <table class="table table-bordered table-hover" :class="{'table--loading': tableLoading}">
                             <thead>
                             <tr role="row">
-                                <th 
-                                    tabindex="0" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('id')"
-                                    :class="getColumnSortOrderClass('id')"
-                                >
+                                <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
                                     Log Id
                                 </th>
 
-                                <th 
-                                    tabindex="1" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('user')"
-                                    :class="getColumnSortOrderClass('user')"
-                                >
+                                <th tabindex="1" rowspan="1" colspan="1" @click="sortTablePageItems('user')" :class="getColumnSortOrderClass('user')">
                                     User
                                 </th>
 
-                                <th 
-                                    tabindex="2" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('action')"
-                                    :class="getColumnSortOrderClass('action')"
-                                >Action</th>
+                                <th tabindex="2" rowspan="1" colspan="1" @click="sortTablePageItems('action')" :class="getColumnSortOrderClass('action')">
+                                    Action
+                                </th>
 
-                                <th 
-                                    tabindex="3" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('subject')"
-                                    :class="getColumnSortOrderClass('subject')"
-                                >
+                                <th tabindex="3" rowspan="1" colspan="1" class="table--subject-column" :class="getColumnSortOrderClass('subject')">
                                     Subject
                                 </th>
 
-                                <th 
-                                    tabindex="4" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('timestamp')"
-                                    :class="getColumnSortOrderClass('timestamp')"
-                                >
+                                <th tabindex="4" rowspan="1" colspan="1" @click="sortTablePageItems('timestamp')" :class="getColumnSortOrderClass('timestamp')">
                                     Timestamp
                                 </th>
                             </tr>
@@ -175,51 +151,23 @@
                                     <td>{{hit._source.created_at}}</td>
                                 </tr>
                                 <tr role="row">
-                                <th 
-                                    tabindex="0" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('id')"
-                                    :class="getColumnSortOrderClass('id')"
-                                >
+                                <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
                                     Log Id
                                 </th>
 
-                                <th 
-                                    tabindex="1" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('user')"
-                                    :class="getColumnSortOrderClass('user')"
-                                >
+                                <th tabindex="1" rowspan="1" colspan="1" @click="sortTablePageItems('user')" :class="getColumnSortOrderClass('user')">
                                     User
                                 </th>
 
-                                <th 
-                                    tabindex="2" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('action')"
-                                    :class="getColumnSortOrderClass('action')"
-                                >Action</th>
+                                <th tabindex="2" rowspan="1" colspan="1" @click="sortTablePageItems('action')" :class="getColumnSortOrderClass('action')">
+                                    Action
+                                </th>
 
-                                <th 
-                                    tabindex="3" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('subject')"
-                                    :class="getColumnSortOrderClass('subject')"
-                                >
+                                <th tabindex="3" rowspan="1" colspan="1" class="table--subject-column" :class="getColumnSortOrderClass('subject')">
                                     Subject
                                 </th>
 
-                                <th 
-                                    tabindex="4" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('timestamp')"
-                                    :class="getColumnSortOrderClass('timestamp')"
-                                >
+                                <th tabindex="4" rowspan="1" colspan="1" @click="sortTablePageItems('timestamp')" :class="getColumnSortOrderClass('timestamp')">
                                     Timestamp
                                 </th>
                             </tr>
@@ -228,7 +176,12 @@
 
                         <!-- DISPLAYED COUNT -->
                         <div class="m-b-20 m-t-20">
-                            <label>Showing {{pageOfItems.length}} of total {{stats.total}}</label>
+                            <label>Showing {{pageOfItems.length}} of total {{ new Intl.NumberFormat('en-US').format(stats.value) }} </label>
+                            <p class="count-note" v-if="stats.total > 10000">
+                                <em>*Due to preserving the performance, maximum of 10,000 records are shown. Total number of records is: 
+                                    <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>
+                                </em>
+                            </p>
                         </div>
 
                         <jw-pagination 
@@ -437,5 +390,15 @@
 
         .circle { border: calc(25px / 10) solid transparent; }
     }
+}
+
+.count-note {
+    font-size: 11px;
+    color: #e1302a;
+}
+
+.input-group-addon--datetimepicker { 
+    height: 34px;
+    border-left: none;
 }
 </style>
