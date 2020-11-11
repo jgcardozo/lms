@@ -49,7 +49,7 @@
                                         v-model="filters.fromDate"
                                         :input-class="'form-control'"
                                         type="datetime"
-                                        :use12-hour="false"
+                                        :use12-hour="true"
                                         :format="'yyyy-MM-dd T'"
                                         :auto="true"
                                     />
@@ -66,7 +66,7 @@
                                         v-model="filters.toDate"
                                         :input-class="'form-control'"
                                         type="datetime"
-                                        :use12-hour="false"
+                                        :use12-hour="true"
                                         :format="'yyyy-MM-dd T'"
                                         :auto="true"
                                     />
@@ -228,7 +228,12 @@
 
                         <!-- DISPLAYED COUNT -->
                         <div class="m-b-20 m-t-20">
-                            <label>Showing {{pageOfItems.length}} of total {{stats.total}}</label>
+                            <label>Showing {{pageOfItems.length}} of total 10,000</label>
+                            <p class="count-note">
+                                <em>*Due to preserving the performance, maximum of 10,000 records are shown. Total number of records is: 
+                                    <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>
+                                </em>
+                            </p>
                         </div>
 
                         <jw-pagination 
@@ -437,5 +442,10 @@
 
         .circle { border: calc(25px / 10) solid transparent; }
     }
+}
+
+.count-note {
+    font-size: 11px;
+    color: #e1302a;
 }
 </style>
