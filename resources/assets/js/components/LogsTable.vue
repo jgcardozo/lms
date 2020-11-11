@@ -130,7 +130,7 @@
                                     Action
                                 </th>
 
-                                <th tabindex="3" rowspan="1" colspan="1" @click="sortTablePageItems('subject')" :class="getColumnSortOrderClass('subject')">
+                                <th tabindex="3" rowspan="1" colspan="1" class="table--subject-column" :class="getColumnSortOrderClass('subject')">
                                     Subject
                                 </th>
 
@@ -163,7 +163,7 @@
                                     Action
                                 </th>
 
-                                <th tabindex="3" rowspan="1" colspan="1" @click="sortTablePageItems('subject')" :class="getColumnSortOrderClass('subject')">
+                                <th tabindex="3" rowspan="1" colspan="1" class="table--subject-column" :class="getColumnSortOrderClass('subject')">
                                     Subject
                                 </th>
 
