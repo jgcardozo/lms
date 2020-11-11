@@ -118,51 +118,23 @@
                         <table class="table table-bordered table-hover" :class="{'table--loading': tableLoading}">
                             <thead>
                             <tr role="row">
-                                <th 
-                                    tabindex="0" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('id')"
-                                    :class="getColumnSortOrderClass('id')"
-                                >
+                                <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
                                     Log Id
                                 </th>
 
-                                <th 
-                                    tabindex="1" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('user')"
-                                    :class="getColumnSortOrderClass('user')"
-                                >
+                                <th tabindex="1" rowspan="1" colspan="1" @click="sortTablePageItems('user')" :class="getColumnSortOrderClass('user')">
                                     User
                                 </th>
 
-                                <th 
-                                    tabindex="2" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('action')"
-                                    :class="getColumnSortOrderClass('action')"
-                                >Action</th>
+                                <th tabindex="2" rowspan="1" colspan="1" @click="sortTablePageItems('action')" :class="getColumnSortOrderClass('action')">
+                                    Action
+                                </th>
 
-                                <th 
-                                    tabindex="3" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('subject')"
-                                    :class="getColumnSortOrderClass('subject')"
-                                >
+                                <th tabindex="3" rowspan="1" colspan="1" @click="sortTablePageItems('subject')" :class="getColumnSortOrderClass('subject')">
                                     Subject
                                 </th>
 
-                                <th 
-                                    tabindex="4" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('timestamp')"
-                                    :class="getColumnSortOrderClass('timestamp')"
-                                >
+                                <th tabindex="4" rowspan="1" colspan="1" @click="sortTablePageItems('timestamp')" :class="getColumnSortOrderClass('timestamp')">
                                     Timestamp
                                 </th>
                             </tr>
@@ -179,51 +151,23 @@
                                     <td>{{hit._source.created_at}}</td>
                                 </tr>
                                 <tr role="row">
-                                <th 
-                                    tabindex="0" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('id')"
-                                    :class="getColumnSortOrderClass('id')"
-                                >
+                                <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
                                     Log Id
                                 </th>
 
-                                <th 
-                                    tabindex="1" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('user')"
-                                    :class="getColumnSortOrderClass('user')"
-                                >
+                                <th tabindex="1" rowspan="1" colspan="1" @click="sortTablePageItems('user')" :class="getColumnSortOrderClass('user')">
                                     User
                                 </th>
 
-                                <th 
-                                    tabindex="2" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('action')"
-                                    :class="getColumnSortOrderClass('action')"
-                                >Action</th>
+                                <th tabindex="2" rowspan="1" colspan="1" @click="sortTablePageItems('action')" :class="getColumnSortOrderClass('action')">
+                                    Action
+                                </th>
 
-                                <th 
-                                    tabindex="3" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('subject')"
-                                    :class="getColumnSortOrderClass('subject')"
-                                >
+                                <th tabindex="3" rowspan="1" colspan="1" @click="sortTablePageItems('subject')" :class="getColumnSortOrderClass('subject')">
                                     Subject
                                 </th>
 
-                                <th 
-                                    tabindex="4" 
-                                    rowspan="1" 
-                                    colspan="1" 
-                                    @click="sortTablePageItems('timestamp')"
-                                    :class="getColumnSortOrderClass('timestamp')"
-                                >
+                                <th tabindex="4" rowspan="1" colspan="1" @click="sortTablePageItems('timestamp')" :class="getColumnSortOrderClass('timestamp')">
                                     Timestamp
                                 </th>
                             </tr>
