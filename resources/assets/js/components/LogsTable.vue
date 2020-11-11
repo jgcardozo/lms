@@ -232,7 +232,7 @@
 
                         <!-- DISPLAYED COUNT -->
                         <div class="m-b-20 m-t-20">
-                            <label>Showing {{pageOfItems.length}} of total 10,000</label>
+                            <label>Showing {{pageOfItems.length}} of total {{ new Intl.NumberFormat('en-US').format(stats.value) }} </label>
                             <p class="count-note">
                                 <em>*Due to preserving the performance, maximum of 10,000 records are shown. Total number of records is: 
                                     <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>
@@ -241,6 +241,7 @@
                         </div>
 
                         <jw-pagination 
+                            v-if="hits.length >= pageItemsCount"
                             :items="hits"
                             @changePage="onChangePage"
                             :pageSize="pageItemsCount"
