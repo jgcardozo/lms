@@ -115,7 +115,7 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         ];
 
         $parameters['body'] = [
-            "size" => 10000
+            "size" => 5000
         ];
 
         $this->setSortOrder($filters['sort'], $filters['order'], $parameters);

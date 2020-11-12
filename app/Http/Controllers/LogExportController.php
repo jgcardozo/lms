@@ -93,7 +93,7 @@ class LogExportController extends Controller
 
                             // Add a new row with data
                             fputcsv($handle, [
-                                $source['id'],
+                                (string)$source['id'],
                                 $source['user']['name'] !== null ? $source['user']['name'] : $source['user']['email'],
                                 $source['action'] ? $source['action']['name'] : "",
                                 $source['subject']['tree'],
