@@ -30,7 +30,7 @@ class LogExportController extends Controller
 
                 // Add CSV headers
                 fputcsv($handle, [
-                    'ID',
+                    '"ID"',
                     'User',
                     'Action',
                     'Subject',
