@@ -25,7 +25,7 @@ class LogObserver
      */
     public function saved(Log $log)
     {
-        $this->repo->updateOrInsert($log);
+        $this->repo->updateOrInsert($log->fresh());
     }
 
 }
