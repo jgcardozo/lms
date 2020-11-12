@@ -2,6 +2,10 @@
 
 namespace App\Console;
 
+use App\ElasticSearch\Commands\ElasticsearchIndexCommand;
+use App\ElasticSearch\Commands\ElasticsearchLogIndexCommand;
+use App\ElasticSearch\Commands\ElasticsearchLogReindexCommand;
+use App\ElasticSearch\Commands\ElasticsearchReindexCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +18,12 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\RefreshTokenIS::class,
-        Commands\RefreshAutologinKey::class
+        Commands\RefreshAutologinKey::class,
+
+        ElasticsearchIndexCommand::class,
+        ElasticsearchReindexCommand::class,
+        ElasticsearchLogIndexCommand::class,
+        ElasticsearchLogReindexCommand::class
     ];
 
     /**

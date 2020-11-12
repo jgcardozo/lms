@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Log;
+use App\Observers\LogObserver;
 use Auth;
 use Validator;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Schema::defaultStringLength(191);
+
+        Log::observe(LogObserver::class);
 
         // \StephaneCoinon\Papertrail\Laravel5::boot();
     }

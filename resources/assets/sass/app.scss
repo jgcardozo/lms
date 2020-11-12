@@ -124,6 +124,21 @@
  */
 @import "components/notification-popup";
 
+/**
+ * Vue Table Component
+ */ 
+@import "components/table";
+
+/**
+ * Spinner Component
+ */ 
+@import "components/spinner";
+
+/**
+ * Datetime picker component
+ */ 
+@import "components/datetimepicker";
+
 .button {
     display: inline-block;
     color: #ffffff;
