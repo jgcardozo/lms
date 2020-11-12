@@ -1,12 +1,15 @@
 <template>
-    <div class="row">
+    <div v-if="pageLoading">
+        <Spinner />
+    </div>
+    <div class="row" v-else>
         <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-body">
                     <!-- FILTERS -->
                     <div class="row form-inline m-b-20">
                         <div class="col-sm-12">
-                            <div class="form-group">
+                            <div class="form-group" v-if="filters.user_id === null">
                                 <label for="causer">Caused By</label>
                                 <select class="form-control" name="causer" id="causer" v-model="filters.causer">
                                     <option value="all">All</option>
@@ -15,7 +18,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-if="filters.user_id === null">
                                 <label for="cohort">Cohort</label>
                                 <select class="form-control" name="cohort" id="cohort" v-model="filters.cohort">
                                     <option value="all">All</option>
@@ -38,22 +41,42 @@
                                     <option v-for="activity in activities" :key="activity.id" :value="activity.id">{{ activity.name }}</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
-                                <div class="input-group date dtp">
-                                    <span class="input-group-addon" id="fromDate"><b>From Date</b></span>
-                                    <input type="text" class="form-control" name="fromDate" id="fromDate" aria-describedby="basic-addon3" style="background-color: white">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
+                                    <Datetime 
+                                        v-model="filters.fromDate"
+                                        input-id="startDate"
+                                        :input-class="'form-control'"
+                                        type="datetime"
+                                        :format="'yyyy-MM-dd T'"
+                                        auto
+                                        use12-hour
+                                    >
+                                        <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </Datetime>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <div class="input-group date dtp">
-                                    <span class="input-group-addon" id="toDate"><b>To Date</b></span>
-                                    <input type="text" class="form-control" name="toDate" id="toDate" aria-describedby="basic-addon3" style="background-color: white">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
+                                    <Datetime 
+                                        v-model="filters.toDate"
+                                        input-id="endDate"
+                                        :input-class="'form-control'"
+                                        type="datetime"
+                                        :format="'yyyy-MM-dd T'"
+                                        auto
+                                        use12-hour
+                                    >
+                                        <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </Datetime>
                                 </div>
                             </div>
 
@@ -62,89 +85,125 @@
                     </div>
 
                     <div class="csv_search">
-                        <button name="CSV">CSV</button>
-                        <input type="text" name="search" v-model="filters.query" placeholder="Search" />
+                        <form method="GET" action="logs/export">
+                            <input type="hidden" name="_token" :value="csrfToken">
+                            <input type="text" name="causer" :value="filters.causer" hidden>
+                            <input type="text" name="cohort" :value="filters.cohort" hidden>
+                            <input type="text" name="action" :value="filters.action" hidden>
+                            <input type="text" name="activity" :value="filters.activity" hidden>
+                            <input type="text" name="sort" :value="filters.sort" hidden>
+                            <input type="text" name="order" :value="filters.order" hidden>
+                            <input type="text" name="fromDate" :value="filters.fromDate" hidden>
+                            <input type="text" name="toDate" :value="filters.toDate" hidden>
+                            <input type="text" name="user_id" :value="filters.user_id" hidden>
+
+                            <button type="submit" class="m-b-10 m-t-10" :disabled="hits.length === 0">CSV</button>
+                        </form>
+
+                        <div class="items-count">
+                            <label for="itemsCount">Items per page:</label>
+                            <select class="form-control" name="itemsCount" id="itemsCount" v-model="pageItemsCount">
+                                <option :value="10">10</option>
+                                <option :value="50">50</option>
+                                <option :value="100">100</option>
+                                <option :value="500">500</option>
+                                <option :value="1000">1000</option>
+                            </select>
+                        </div>
+
                     </div>
 
-                    <!-- TABLE -->
-                    <table class="table table-bordered table-hover dataTable">
-                        <thead>
-                        <tr role="row">
-                            <th 
-                                tabindex="0" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('id')"
-                                :class="getColumnSortOrderClass('id')"
-                            >
-                                Log Id
-                            </th>
+                    <div v-if="hits.length === 0">
+                        <div class="no-data">
+                            <p>No data available.</p>
+                            <Spinner v-if="tableLoading" />
+                        </div>
+                    </div>
 
-                            <th 
-                                tabindex="1" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('user')"
-                                :class="getColumnSortOrderClass('user')"
-                            >
-                                User
-                            </th>
+                    <div v-else>
+                        
+                        <!-- TABLE -->
+                        <div v-if="tableLoading">
+                            <Spinner :modifierClass="'spinner--table'"/>
+                        </div>
+                        <table class="table table-bordered table-hover" :class="{'table--loading': tableLoading}">
+                            <thead>
+                            <tr role="row">
+                                <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
+                                    Log Id
+                                </th>
 
-                            <th 
-                                tabindex="2" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('action')"
-                                :class="getColumnSortOrderClass('action')"
-                            >Action</th>
+                                <th tabindex="1" rowspan="1" colspan="1" @click="sortTablePageItems('user')" :class="getColumnSortOrderClass('user')">
+                                    User
+                                </th>
 
-                            <th 
-                                tabindex="3" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('subject')"
-                                :class="getColumnSortOrderClass('subject')"
-                            >
-                                Subject
-                            </th>
+                                <th tabindex="2" rowspan="1" colspan="1" @click="sortTablePageItems('action')" :class="getColumnSortOrderClass('action')">
+                                    Action
+                                </th>
 
-                            <th 
-                                tabindex="4" 
-                                rowspan="1" 
-                                colspan="1" 
-                                @click="sortTablePageItems('timestamp')"
-                                :class="getColumnSortOrderClass('timestamp')"
-                            >
-                                Timestamp
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="hit in pageOfItems" :key="hit._source.id">
-                                <td>{{hit._source.id}}</td>
+                                <th tabindex="3" rowspan="1" colspan="1" class="table--subject-column" :class="getColumnSortOrderClass('subject')">
+                                    Subject
+                                </th>
 
-                                <td v-if="hit._source.user.name != null"> {{hit._source.user.name}} </td>
-                                <td v-else> {{hit._source.user.email}} </td>
-
-                                <td>{{hit._source.action.name}}</td>
-                                <td>{{hit._source.subject.tree}}</td>
-                                <td>{{hit._source.created_at}}</td>
+                                <th tabindex="4" rowspan="1" colspan="1" @click="sortTablePageItems('timestamp')" :class="getColumnSortOrderClass('timestamp')">
+                                    Timestamp
+                                </th>
                             </tr>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <tr v-for="hit in pageOfItems" :key="hit._source.id">
+                                    <td>{{hit._source.id}}</td>
 
-                    <!-- DISPLAYED COUNT -->
-                    <div>
-                        <label>Showing {{pageOfItems.length}} of total {{stats.total}}</label>
+                                    <td v-if="hit._source.user.name != null"> {{hit._source.user.name}} </td>
+                                    <td v-else> {{hit._source.user.email}} </td>
+
+                                    <td>{{hit._source.action.name}}</td>
+                                    <td>{{hit._source.subject.tree}}</td>
+                                    <td>{{hit._source.created_at}}</td>
+                                </tr>
+                                <tr role="row">
+                                <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
+                                    Log Id
+                                </th>
+
+                                <th tabindex="1" rowspan="1" colspan="1" @click="sortTablePageItems('user')" :class="getColumnSortOrderClass('user')">
+                                    User
+                                </th>
+
+                                <th tabindex="2" rowspan="1" colspan="1" @click="sortTablePageItems('action')" :class="getColumnSortOrderClass('action')">
+                                    Action
+                                </th>
+
+                                <th tabindex="3" rowspan="1" colspan="1" class="table--subject-column" :class="getColumnSortOrderClass('subject')">
+                                    Subject
+                                </th>
+
+                                <th tabindex="4" rowspan="1" colspan="1" @click="sortTablePageItems('timestamp')" :class="getColumnSortOrderClass('timestamp')">
+                                    Timestamp
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- DISPLAYED COUNT -->
+                        <div class="m-b-20 m-t-20">
+                            <label>Showing {{pageOfItems.length}} of total {{ new Intl.NumberFormat('en-US').format(stats.value) }} </label>
+                            <p class="count-note" v-if="stats.total > 10000">
+                                <em>*In order to preserve the performance, maximum of 10,000 records are shown. Total number of records is:
+                                    <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>.
+                                    You can get all entries by exporting the data to a .csv file.
+                                </em>
+                            </p>
+                        </div>
+
+                        <jw-pagination 
+                            :items="hits"
+                            @changePage="onChangePage"
+                            :pageSize="pageItemsCount"
+                            :key="pageItemsCount"
+                            :labels="customLabels"
+                        ></jw-pagination>
                     </div>
-
-                    <jw-pagination 
-                        :items="sortedHits"
-                        @changePage="onChangePage"
-                        :pageSize="pageItemsCount"
-                        :key="pageItemsCount"
-                        :labels="customLabels"
-                    ></jw-pagination>
 
                 </div>
             </div>
@@ -153,17 +212,11 @@
 </template>
 
 <script>
-
-    // TODO: Finish table and add filters
-    // TODO: Make logic for creating the correct URL for search:
-        // - add logic for handling sort value [x]
-        // - add logic for handling order value [x]
-        // - add sorting functionality 
-        // - add logic for handling fromDate and toDate - how does it works??
-    // TODO: Pagination using jw-pagination
     import Vue from "vue";
     import axios from "axios";
     import JwPagination from "jw-vue-pagination";
+    import Spinner from "./Spinner";
+    import { Datetime } from 'vue-datetime';
 
     Vue.component('jw-pagination', JwPagination);
 
@@ -178,14 +231,14 @@
     export default {
         data() {
             return {
+                csrfToken: document.querySelector('meta[name="csrf-token"]').content,
                 filters: {
-                    query: "",
                     causer: "all",
                     cohort: "all",
                     action: "all",
                     activity: "all",
-                    sort: "",
-                    order: "asc",
+                    sort: "timestamp",
+                    order: "desc",
                     fromDate: null,
                     toDate: null,
                     user_id: null
@@ -194,6 +247,8 @@
                 stats: {},
                 pageOfItems: [],
                 pageItemsCount: 10,
+                pageLoading: true,
+                tableLoading: true,
                 customLabels
             }
         },
@@ -202,126 +257,69 @@
             this.search();
         },
         props: ['cohorts', 'actions', 'activities'],
-        computed: {
-            sortedHits: function() {
-                const { sort, order } = this.filters;
-
-                switch(true) {
-                    case sort === "id" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.id - b._source.id;
-                        });
-                        break;
-                    case sort === "id" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.id - a._source.id;
-                        });
-                        break;
-                    // case sort === "user" && order === "asc":
-                    //     this.hits = this.hits.sort(function (a, b) {
-
-                    //     })
-                    case sort === "action" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.action.name - b._source.action.name;
-                        });
-                        break;
-                    case sort === "action" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.action.name - a._source.action.name
-                        });
-                        break;
-                    case sort === "subject" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.subject.tree - b._source.subject.tree;
-                        });
-                        break;
-                    case sort === "subject" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.subject.tree - a._source.subject.tree;
-                        });
-                        break;
-                    case sort === "timestamp" && order === "asc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return a._source.created_at - b._source.created_at;
-                        });
-                        break;
-                    case sort === "timestamp" && order === "desc":
-                        this.hits = this.hits.sort(function (a,b) {
-                            return b._source.created_at - a._source.created_at;
-                        });
-                        break;
-                }
-
-                return this.hits;
-            }
-        },
+        components: { Spinner, Datetime },
         methods: {
             // Check and get the user ID from the query parameter if it exists
             checkForUserID() {
                 const url = new URLSearchParams(window.location.search);
                 const userID = parseInt(url.get("user_id"));
 
-                this.filters.user_id = userID;
+                if(!Number.isNaN(userID)){
+                    this.filters.user_id = userID;
+                }
             },
 
             search: async function () {
-                const { query, causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
+                // Set loading state
+                this.tableLoading = true;
+                
+                // Desctructure filters
+                const { causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
 
-                let url_filters = "";
+                // Format the selected from and to dates and send the formatted values
+                const formatted_fromDate = await this.formatDate(fromDate);
+                const formatted_toDate = await this.formatDate(toDate);
 
-                const queryFilter = query ? `&query=${query}` : '';
-                const fromDateFilter = fromDate ? `&fromDate=${fromDate}` : '';
-                const toDateFilter = toDate ? `&toDate=${toDate}` : '';
+                const response = await axios.post(`logs/search`, {
+                    filters: {
+                        causer,
+                        cohort,
+                        action,
+                        activity,
+                        sort,
+                        order,
+                        fromDate: formatted_fromDate ? formatted_fromDate : null,
+                        toDate: formatted_toDate ? formatted_toDate : null,
+                        user_id
+                    }
+                });
 
-                // Check if user ID exits to use specific filters
-                if (user_id) {
-                    const defaultFilters = `?user_id=${user_id}&action=${action}&activity=${activity}&sort=${sort}&order=${order}`;
-
-                    url_filters = `${defaultFilters}${queryFilter}${fromDateFilter}${toDateFilter}`;
+                // Populate table if data exists
+                if (response.data.hits) {
+                    this.hits = response.data.hits.hits;
+                    this.stats = response.data.hits.total;
                 } else {
-                    const defaultFilters = `?causer=${causer}&cohort=${cohort}&action=${action}&activity=${activity}&sort=${sort}&order=${order}`;
+                    this.hits = [];
+                    this.stats = {};
+                }
 
-                    url_filters = `${defaultFilters}${queryFilter}${fromDateFilter}${toDateFilter}`;
-                };
-                
-
-                const response = await axios.post(`logs/search${url_filters}`);
-
-                this.hits = response.data.hits.hits;
-                this.stats = response.data.hits.total;
-                
-
-                // NOTE: Ke se izbrise
-                // Example:
-                // url = url+"causer=all&cohort=1&action=2&activity=all&sort=id&order=asc";
-                // url = url+"?user_id=53079";
-                // axios.post(`logs/search${url_filters}`, {
-                //     // filters: {
-                //     //      "causer": "all",    // admin, user or "all"
-                //     //      "cohort": 1,        // cohort ID or "all"
-                //     //      "action": 2,        // action ID or "all"
-                //     //      "activity": "all",  // activity ID or "all"
-                //     //      "sort": "id",       // po koja kolona se sortira
-                //     //      "order": "asc",     // asc or desc
-                //     //      "fromDate": null,   // filter From
-                //     //      "toDate": null,     // filter To
-                //     //      "user_id": null    // user ID or null
-                //     // }
-                // }).then((response) => {
-                //     this.hits = response.data.hits.hits;
-                //     this.stats = response.data.hits.total;
-                // });
+                // Hide spinner and show the table
+                this.pageLoading = false;
+                this.tableLoading = false;
             },
 
             // Set the sort and order state
             sortTablePageItems(column) {
                 if (column === this.filters.sort) {
-                    this.filters.order = this.filters.order === "asc" ? "desc" : "asc";
+                    this.filters.order = this.filters.order === "asc" ? "desc" : "";
+                    this.filters.sort = this.filters.order === "" ? "" : this.filters.sort;
                 } else {
                     this.filters.sort = column;
                     this.filters.order = "asc";
                 }
+
+                // Query the endpoint again
+                this.search();
             },
 
             // Add or remove a sorting class based on selected table column
@@ -339,6 +337,29 @@
             // Handle pagination and items displayed
             onChangePage(pageOfItems) {
                 this.pageOfItems = pageOfItems;
+            },
+
+            // Format the dates in 'yyyy-MM-dd H:mm' format
+            formatDate(date) {
+                // Exit if no date was selected
+                if (!date) return;
+
+                const dateObject = new Date(date);
+                const year = dateObject.getFullYear();
+                const month = dateObject.getMonth() + 1;
+                const day = dateObject.getDate();
+                const hour = dateObject.getHours();
+                const minutes = dateObject.getMinutes();
+
+                const formattedMonth = month <= 9 ? `0${month}` : month;
+                const formattedDay = day <= 9 ? `0${day}` : day;
+                const formattedHour = hour <= 9 ? `0${hour}` : hour;
+                const formattedMinutes = minutes <= 9 ? `0${minutes}` : minutes; 
+
+                // Fully formatted date to be returned
+                const formattedDate = `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinutes}`;
+
+                return formattedDate;
             }
         }
     }
@@ -351,5 +372,46 @@
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
+}
+
+.items-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    & label { width: 200px; }
+}
+
+.no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 18px;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .half-circle-spinner { 
+        width: 20px;
+        height: 20px;
+        position: relative;
+        top: unset;
+        left: unset;
+        transform: translate(10px, -5px);
+
+        .circle { border: calc(25px / 10) solid transparent; }
+    }
+}
+
+.count-note {
+    font-size: 11px;
+    color: #e1302a;
+}
+
+.input-group-addon--datetimepicker { 
+    height: 34px;
+    border-left: none;
 }
 </style>

@@ -36,6 +36,9 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         ];
 
         try {
+            if(!$this->client->exists($parameters)) {
+                throw new \Exception("[ElasticSearchLogsRepository - updateOrInsert] Index {$this->indexName} does not exist.");
+            }
             $this->client->update($parameters);
         } catch (\Exception $exception) {
             ElasticSearchFailed::dispatch($exception, 'insert', $model->id);
@@ -105,7 +108,6 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
     public function search(Request $request)
     {
-        $query = $request->get('query');
         $filters = $request->get('filters');
 
         $parameters = [
@@ -117,8 +119,6 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         ];
 
         $this->setSortOrder($filters['sort'], $filters['order'], $parameters);
-
-        $this->appendQueryTerm($query, $parameters);
 
         $this->appendUserFilter($filters['user_id'], $parameters);
 
@@ -162,45 +162,13 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
             case "id":
                 return "id";
             case "user":
-                return "user.email.original";
+                return "user.email";
             case "action":
-                return "action.name.original";
+                return "action.name";
             case "subject":
                 return "subject.tree";
             default:
                 return "created_at";
-        }
-    }
-
-
-
-    private function appendQueryTerm($query, &$parameters)
-    {
-        $trimmedQuery = trim($query);
-
-        if (empty($trimmedQuery)) {
-            $parameters['body']['query']['bool']['must'] = [
-                [ "match_all" => new \stdClass() ]
-            ];
-        } else {
-            $parameters['body']['query']['bool']['must'][] = [
-                "bool" => [
-                    "should" => [
-                        [
-                            "match" => [ "id" => $trimmedQuery ]
-                        ],
-                        [
-                            "match" => [ "user.name" => $trimmedQuery ]
-                        ],
-                        [
-                            "match" => [ "user.email" => $trimmedQuery ]
-                        ],
-                        [
-                            "match" => [ "subject.tree" => $trimmedQuery ]
-                        ]
-                    ]
-                ]
-            ];
         }
     }
 
@@ -284,5 +252,23 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
                 ]
             ];
         }
+    }
+
+    public function getLogsByIds(array $ids)
+    {
+        $params = [
+            'body' => [
+                'docs' => [
+                ]
+            ]
+        ];
+        foreach ($ids as $id) {
+            $params['body']['docs'][] = [
+                '_index' => $this->indexName,
+                '_id' => $id
+            ];
+        }
+
+        return  $this->client->mget($params);
     }
 }

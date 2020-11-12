@@ -1,5 +1,6 @@
 .table {
   background-color: #fff;
+  transition: 0.3s ease;
 
   thead tr {
     th:nth-child(1) { width: 65px;  }
@@ -11,6 +12,11 @@
   tr td {
     padding: 8px !important;
     border: 1px solid #ddd;
+
+    &:last-child { 
+      font-size: 12px !important;
+      vertical-align: bottom !important;
+    }
   }
 
   tbody tr:nth-child(even) { background-color: #ececec; }
@@ -30,4 +36,8 @@
     &-oldest  { background-image: url('../images/table-sort-desc.png'); }
   }
 
+  &--subject-column { background-image: none; }
+
+  // Loading state
+  &--loading { opacity: 0.5; }
 }
