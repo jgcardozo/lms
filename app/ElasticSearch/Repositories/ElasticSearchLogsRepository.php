@@ -136,7 +136,6 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         }
 
         try {
-//            dd($parameters);
             $result = $this->client->search($parameters);
             $totalCount = $this->count($parameters);
             $result["hits"]["total"]["total"] = $totalCount["count"];
