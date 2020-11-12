@@ -36,7 +36,7 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         ];
 
         try {
-            if(!$this->client->exists($parameters)) {
+            if(!$this->client->indices()->exists(["index" => $this->indexName])) {
                 throw new \Exception("[ElasticSearchLogsRepository - updateOrInsert] Index {$this->indexName} does not exist.");
             }
             $this->client->update($parameters);

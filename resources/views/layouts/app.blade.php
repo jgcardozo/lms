@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}?v=123" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}?v=123" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -103,7 +103,7 @@
         @endif
 
         <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
 
         {{--<script>
             mixpanel.identify({{ \Auth::user()->id }});

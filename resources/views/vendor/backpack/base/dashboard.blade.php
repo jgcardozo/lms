@@ -99,7 +99,7 @@
 
 @section('custom_scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-    <script src="{{ mix('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection
 
 @if (session('success_login'))

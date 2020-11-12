@@ -377,7 +377,7 @@ $(document).ready(function () {
 
         if (videoWrap) {
             var session_id = videoWrap.data('session');
-            video = Wistia.api(videoWrap.find('.wistia_embed').attr('id'));
+            var video = Wistia.api(videoWrap.find('.wistia_embed').attr('id'));
 
             if (typeof session_id == 'undefined' || video == null)
                 return false;
