@@ -115,7 +115,7 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         ];
 
         $parameters['body'] = [
-            "size" => 5000
+            "size" => 10000
         ];
 
         $this->setSortOrder($filters['sort'], $filters['order'], $parameters);
@@ -136,7 +136,6 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
         }
 
         try {
-//            dd($parameters);
             $result = $this->client->search($parameters);
             $totalCount = $this->count($parameters);
             $result["hits"]["total"]["total"] = $totalCount["count"];

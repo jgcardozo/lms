@@ -188,8 +188,8 @@
                         <!-- DISPLAYED COUNT -->
                         <div class="m-b-20 m-t-20">
                             <label>Showing {{pageOfItems.length}} of total {{ new Intl.NumberFormat('en-US').format(stats.value) }} </label>
-                            <p class="count-note" v-if="stats.total > 5000">
-                                <em>*In order to preserve the performance, maximum of 5,000 records are shown. Total number of records is:
+                            <p class="count-note" v-if="stats.total > 10000">
+                                <em>*In order to preserve the performance, maximum of 10,000 records are shown. Total number of records is:
                                     <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>.
                                     You can get all entries by exporting the data to a .csv file.
                                 </em>
