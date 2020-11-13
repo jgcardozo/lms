@@ -97,7 +97,7 @@ class LogExportController extends Controller
                                 $source['user']['name'] !== null ? $source['user']['name'] : $source['user']['email'],
                                 $source['action'] ? $source['action']['name'] : "",
                                 $source['subject']['tree'],
-                                $source['created_at']
+                                Carbon::createFromFormat('Y-m-d H:i:s', $source['created_at'])->format('m/d/Y g:i A')
                             ]);
                         }
                     }
