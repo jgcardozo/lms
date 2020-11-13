@@ -80,7 +80,7 @@
                                 </div>
                             </div>
 
-                            <button v-on:click="search" class="btn btn-primary">Search</button>
+                            <button v-on:click="search" class="btn btn-primary">Filter</button>
                         </div>
                     </div>
 
@@ -103,7 +103,6 @@
                         <div class="items-count">
                             <label for="itemsCount">Items per page:</label>
                             <select class="form-control" name="itemsCount" id="itemsCount" v-model="pageItemsCount">
-                                <option :value="10">10</option>
                                 <option :value="50">50</option>
                                 <option :value="100">100</option>
                                 <option :value="500">500</option>
@@ -246,7 +245,7 @@
                 hits: [],
                 stats: {},
                 pageOfItems: [],
-                pageItemsCount: 10,
+                pageItemsCount: 50,
                 pageLoading: true,
                 tableLoading: true,
                 customLabels
