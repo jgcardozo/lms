@@ -140,7 +140,6 @@
                                 :pageSize="pageItemsCount"
                                 :key="pageItemsCount"
                                 :labels="customLabels"
-                                :styles="'{ marginBottom: 20px; }'"
                             ></jw-pagination>
                         </div>
                         
