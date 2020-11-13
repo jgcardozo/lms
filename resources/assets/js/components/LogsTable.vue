@@ -54,6 +54,8 @@
                                             :format="'yyyy-MM-dd'"
                                             auto
                                             use12-hour
+                                            :value-zone="'UTC'"
+                                            :zone="'UTC'"
                                         >
                                             <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -73,6 +75,8 @@
                                             :format="'yyyy-MM-dd'"
                                             auto
                                             use12-hour
+                                            :value-zone="'UTC'"
+                                            :zone="'UTC'"
                                         >
                                             <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -306,8 +310,8 @@
                 const { causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
 
                 // Format the selected from and to dates and send the formatted values
-                const formatted_fromDate = fromDate ? await this.formatTimestamp(fromDate) : null;
-                const formatted_toDate = toDate ? await this.formatTimestamp(toDate) : null;
+                const formatted_fromDate = fromDate ? moment.utc(fromDate).format("YYYY-MM-DD 00:00:00") : null;
+                const formatted_toDate = toDate ? moment.utc(toDate).format("YYYY-MM-DD 00:00:00") : null;
 
                 const response = await axios.post(`logs/search`, {
                     filters: {
