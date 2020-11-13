@@ -146,6 +146,7 @@
                                 :labels="customLabels"
                                 @updatePagerDetails="updatePagerDetails"
                                 :customPager="pager"
+                                @updatePageOfItems="updatePageOfItems"
                             ></Pagination>
                         </div>
                         
@@ -231,6 +232,7 @@
                             :labels="customLabels"
                             @updatePagerDetails="updatePagerDetails"
                             :customPager="pager"
+                            @updatePageOfItems="updatePageOfItems"
                         ></Pagination>
                     </div>
 
@@ -386,6 +388,10 @@
             // Update the details for the Pagination component
             updatePagerDetails(pager) {
                 this.pager = pager;
+            },
+
+            updatePageOfItems(pageOfItems)  {
+                this.pageOfItems = pageOfItems;
             }
         }
     }
