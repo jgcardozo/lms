@@ -101,7 +101,7 @@
           },
           items: function(itemsTest) {
             // get new pager object for specified page
-            const pager = paginate(this.items.length, this.pager.currentSize, this.pager.pageSize, this.pager.maxPages);
+            const pager = paginate(this.items.length, this.pager.currentPage, this.pager.pageSize, this.pager.maxPages);
 
             // get new page of items from items array
             const pageOfItems = this.items.slice(this.pager.startIndex, this.pager.endIndex + 1);
@@ -109,6 +109,8 @@
             this.pager = pager;
 
             this.$emit("updatePageOfItems", pageOfItems);
+
+            this.setPage(1);
           }
         },
         created () {
