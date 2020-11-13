@@ -66,11 +66,11 @@ class LogExportController extends Controller
                     }
 
                     if ($request->get('fromDate')) {
-                        $logs = $logs->where('created_at','>=', date("Y-m-d H:i:s", strtotime($request->get('fromDate'))));
+                        $logs = $logs->where('created_at','>=', $request->get('fromDate'));
                     }
 
                     if ($request->get('toDate')) {
-                        $logs = $logs->where('created_at','<=', date("Y-m-d H:i:s", strtotime($request->get('toDate'))));
+                        $logs = $logs->where('created_at','<=', $request->get('toDate'));
                     }
 
                     if($request->get('cohort') !== 'all') {
