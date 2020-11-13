@@ -8,75 +8,77 @@
                 <div class="box-body">
                     <!-- FILTERS -->
                     <div class="row form-inline m-b-20">
-                        <div class="col-sm-12">
-                            <div class="form-group" v-if="filters.user_id === null">
-                                <label for="causer">Caused By</label>
-                                <select class="form-control" name="causer" id="causer" v-model="filters.causer">
-                                    <option value="all">All</option>
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group" v-if="filters.user_id === null">
-                                <label for="cohort">Cohort</label>
-                                <select class="form-control" name="cohort" id="cohort" v-model="filters.cohort">
-                                    <option value="all">All</option>
-                                    <option v-for="cohort in cohorts" :key="cohort.id" :value="cohort.id">{{ cohort.name }}</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="action">Action</label>
-                                <select class="form-control" name="action" id="action" v-model="filters.action">
-                                    <option value="all">All</option>
-                                    <option v-for="action in actions" :key="action.id" :value="action.id">{{ action.name }}</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="activity">Activity</label>
-                                <select class="form-control" name="activity" id="activity" v-model="filters.activity">
-                                    <option value="all">All</option>
-                                    <option v-for="activity in activities" :key="activity.id" :value="activity.id">{{ activity.name }}</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
-                                    <Datetime 
-                                        v-model="filters.fromDate"
-                                        input-id="startDate"
-                                        :input-class="'form-control'"
-                                        type="datetime"
-                                        :format="'yyyy-MM-dd T'"
-                                        auto
-                                        use12-hour
-                                    >
-                                        <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </label>
-                                    </Datetime>
+                        <div class="col-sm-12 filters">
+                            <div>
+                                <div class="form-group" v-if="filters.user_id === null">
+                                    <label for="causer">Caused By</label>
+                                    <select class="form-control" name="causer" id="causer" v-model="filters.causer">
+                                        <option value="all">All</option>
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
-                                    <Datetime 
-                                        v-model="filters.toDate"
-                                        input-id="endDate"
-                                        :input-class="'form-control'"
-                                        type="datetime"
-                                        :format="'yyyy-MM-dd T'"
-                                        auto
-                                        use12-hour
-                                    >
-                                        <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </label>
-                                    </Datetime>
+                                <div class="form-group" v-if="filters.user_id === null">
+                                    <label for="cohort">Cohort</label>
+                                    <select class="form-control" name="cohort" id="cohort" v-model="filters.cohort">
+                                        <option value="all">All</option>
+                                        <option v-for="cohort in cohorts" :key="cohort.id" :value="cohort.id">{{ cohort.name }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="action">Action</label>
+                                    <select class="form-control" name="action" id="action" v-model="filters.action">
+                                        <option value="all">All</option>
+                                        <option v-for="action in actions" :key="action.id" :value="action.id">{{ action.name }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="activity">Activity</label>
+                                    <select class="form-control" name="activity" id="activity" v-model="filters.activity">
+                                        <option value="all">All</option>
+                                        <option v-for="activity in activities" :key="activity.id" :value="activity.id">{{ activity.name }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
+                                        <Datetime 
+                                            v-model="filters.fromDate"
+                                            input-id="startDate"
+                                            :input-class="'form-control'"
+                                            type="date"
+                                            :format="'yyyy-MM-dd T'"
+                                            auto
+                                            use12-hour
+                                        >
+                                            <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </Datetime>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
+                                        <Datetime 
+                                            v-model="filters.toDate"
+                                            input-id="endDate"
+                                            :input-class="'form-control'"
+                                            type="date"
+                                            :format="'yyyy-MM-dd T'"
+                                            auto
+                                            use12-hour
+                                        >
+                                            <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </Datetime>
+                                    </div>
                                 </div>
                             </div>
 
@@ -387,6 +389,11 @@
 </script>
 
 <style lang="scss" scoped>
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .csv_search {
     display: flex;
     justify-content: space-between;
