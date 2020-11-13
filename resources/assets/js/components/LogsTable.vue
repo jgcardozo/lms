@@ -99,8 +99,8 @@
                             <input type="text" name="activity" :value="filters.activity" hidden>
                             <input type="text" name="sort" :value="filters.sort" hidden>
                             <input type="text" name="order" :value="filters.order" hidden>
-                            <input type="text" name="fromDate" :value="filters.fromDate" hidden>
-                            <input type="text" name="toDate" :value="filters.toDate" hidden>
+                            <input type="text" name="fromDate" :value="csv_fromDate" hidden>
+                            <input type="text" name="toDate" :value="csv_toDate" hidden>
                             <input type="text" name="user_id" :value="filters.user_id" hidden>
 
                             <button type="submit" class="m-b-10 m-t-10" :disabled="hits.length === 0">Download CSV</button>
@@ -275,6 +275,8 @@
                     toDate: null,
                     user_id: null
                 },
+                csv_fromDate: null,
+                csv_toDate: null,
                 hits: [],
                 stats: {},
                 pageOfItems: [],
@@ -312,6 +314,10 @@
                 // Format the selected from and to dates and send the formatted values
                 const formatted_fromDate = fromDate ? moment.utc(fromDate).format("YYYY-MM-DD 00:00:00") : null;
                 const formatted_toDate = toDate ? moment.utc(toDate).format("YYYY-MM-DD 00:00:00") : null;
+
+                // State used for hidden inputs for the CSV export
+                this.csv_fromDate = formatted_fromDate;
+                this.csv_toDate = formatted_toDate;
 
                 const response = await axios.post(`logs/search`, {
                     filters: {
