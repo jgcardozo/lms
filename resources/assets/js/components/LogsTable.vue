@@ -362,7 +362,7 @@
             },
             
             formatTimestamp(date) {
-                return moment(date).format("YYYY-MM-DD h:mm:ss A");
+                return moment(date).format("MM/DD/YYYY h:mm A");
             }
         }
     }
