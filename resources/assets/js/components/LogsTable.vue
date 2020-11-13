@@ -51,7 +51,7 @@
                                             input-id="startDate"
                                             :input-class="'form-control'"
                                             type="date"
-                                            :format="'yyyy-MM-dd T'"
+                                            :format="'yyyy-MM-dd'"
                                             auto
                                             use12-hour
                                         >
@@ -70,7 +70,7 @@
                                             input-id="endDate"
                                             :input-class="'form-control'"
                                             type="date"
-                                            :format="'yyyy-MM-dd T'"
+                                            :format="'yyyy-MM-dd'"
                                             auto
                                             use12-hour
                                         >
@@ -180,7 +180,7 @@
 
                                     <td>{{hit._source.action.name}}</td>
                                     <td>{{hit._source.subject.tree}}</td>
-                                    <td>{{hit._source.created_at}}</td>
+                                    <td>{{formatTimestamp(hit._source.created_at)}}</td>
                                 </tr>
                                 <tr role="row">
                                 <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
@@ -238,6 +238,7 @@
     import JwPagination from "jw-vue-pagination";
     import Spinner from "./Spinner";
     import { Datetime } from 'vue-datetime';
+    import moment from "moment";
 
     Vue.component('jw-pagination', JwPagination);
 
@@ -298,8 +299,8 @@
                 const { causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
 
                 // Format the selected from and to dates and send the formatted values
-                const formatted_fromDate = await this.formatDate(fromDate);
-                const formatted_toDate = await this.formatDate(toDate);
+                const formatted_fromDate = fromDate ? await this.formatTimestamp(fromDate) : null;
+                const formatted_toDate = toDate ? await this.formatTimestamp(toDate) : null;
 
                 const response = await axios.post(`logs/search`, {
                     filters: {
@@ -359,28 +360,9 @@
             onChangePage(pageOfItems) {
                 this.pageOfItems = pageOfItems;
             },
-
-            // Format the dates in 'yyyy-MM-dd H:mm' format
-            formatDate(date) {
-                // Exit if no date was selected
-                if (!date) return;
-
-                const dateObject = new Date(date);
-                const year = dateObject.getFullYear();
-                const month = dateObject.getMonth() + 1;
-                const day = dateObject.getDate();
-                const hour = dateObject.getHours();
-                const minutes = dateObject.getMinutes();
-
-                const formattedMonth = month <= 9 ? `0${month}` : month;
-                const formattedDay = day <= 9 ? `0${day}` : day;
-                const formattedHour = hour <= 9 ? `0${hour}` : hour;
-                const formattedMinutes = minutes <= 9 ? `0${minutes}` : minutes; 
-
-                // Fully formatted date to be returned
-                const formattedDate = `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinutes}`;
-
-                return formattedDate;
+            
+            formatTimestamp(date) {
+                return moment(date).format("YYYY-MM-DD h:mm:ss A");
             }
         }
     }
