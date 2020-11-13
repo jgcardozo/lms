@@ -229,24 +229,21 @@ class ElasticSearchLogsRepository implements ElasticSearchRepositoryInterface
 
     private function appendDateTimeRangeFilter($fromDate, $toDate, &$parameters)
     {
-        $from = !is_null($fromDate) ? date("Y-m-d H:i:s", strtotime($fromDate)) : null;
-        $to = !is_null($toDate) ? date("Y-m-d H:i:s", strtotime($toDate)) : null;
-
-        if($from) {
+        if($fromDate) {
             $parameters['body']['query']['bool']['filter'][] = [
                 "range" => [
                     "created_at" => [
-                        "gte" => $from,
+                        "gte" => $fromDate,
                     ]
                 ]
             ];
         }
 
-        if($to) {
+        if($toDate) {
             $parameters['body']['query']['bool']['filter'][] = [
                 "range" => [
                     "created_at" => [
-                        "lte" => $to,
+                        "lte" => $toDate,
                     ]
                 ]
             ];
