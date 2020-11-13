@@ -8,79 +8,81 @@
                 <div class="box-body">
                     <!-- FILTERS -->
                     <div class="row form-inline m-b-20">
-                        <div class="col-sm-12">
-                            <div class="form-group" v-if="filters.user_id === null">
-                                <label for="causer">Caused By</label>
-                                <select class="form-control" name="causer" id="causer" v-model="filters.causer">
-                                    <option value="all">All</option>
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                            </div>
+                        <div class="col-sm-12 filters">
+                            <div>
+                                <div class="form-group" v-if="filters.user_id === null">
+                                    <label for="causer">Caused By</label>
+                                    <select class="form-control" name="causer" id="causer" v-model="filters.causer">
+                                        <option value="all">All</option>
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
 
-                            <div class="form-group" v-if="filters.user_id === null">
-                                <label for="cohort">Cohort</label>
-                                <select class="form-control" name="cohort" id="cohort" v-model="filters.cohort">
-                                    <option value="all">All</option>
-                                    <option v-for="cohort in cohorts" :key="cohort.id" :value="cohort.id">{{ cohort.name }}</option>
-                                </select>
-                            </div>
+                                <div class="form-group" v-if="filters.user_id === null">
+                                    <label for="cohort">Cohort</label>
+                                    <select class="form-control" name="cohort" id="cohort" v-model="filters.cohort">
+                                        <option value="all">All</option>
+                                        <option v-for="cohort in cohorts" :key="cohort.id" :value="cohort.id">{{ cohort.name }}</option>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="action">Action</label>
-                                <select class="form-control" name="action" id="action" v-model="filters.action">
-                                    <option value="all">All</option>
-                                    <option v-for="action in actions" :key="action.id" :value="action.id">{{ action.name }}</option>
-                                </select>
-                            </div>
+                                <div class="form-group">
+                                    <label for="action">Action</label>
+                                    <select class="form-control" name="action" id="action" v-model="filters.action">
+                                        <option value="all">All</option>
+                                        <option v-for="action in actions" :key="action.id" :value="action.id">{{ action.name }}</option>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="activity">Activity</label>
-                                <select class="form-control" name="activity" id="activity" v-model="filters.activity">
-                                    <option value="all">All</option>
-                                    <option v-for="activity in activities" :key="activity.id" :value="activity.id">{{ activity.name }}</option>
-                                </select>
-                            </div>
+                                <div class="form-group">
+                                    <label for="activity">Activity</label>
+                                    <select class="form-control" name="activity" id="activity" v-model="filters.activity">
+                                        <option value="all">All</option>
+                                        <option v-for="activity in activities" :key="activity.id" :value="activity.id">{{ activity.name }}</option>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
-                                    <Datetime 
-                                        v-model="filters.fromDate"
-                                        input-id="startDate"
-                                        :input-class="'form-control'"
-                                        type="datetime"
-                                        :format="'yyyy-MM-dd T'"
-                                        auto
-                                        use12-hour
-                                    >
-                                        <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </label>
-                                    </Datetime>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="fromDate"><strong>From Date</strong></span>
+                                        <Datetime 
+                                            v-model="filters.fromDate"
+                                            input-id="startDate"
+                                            :input-class="'form-control'"
+                                            type="date"
+                                            :format="'yyyy-MM-dd'"
+                                            auto
+                                            use12-hour
+                                        >
+                                            <label for="startDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </Datetime>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
+                                        <Datetime 
+                                            v-model="filters.toDate"
+                                            input-id="endDate"
+                                            :input-class="'form-control'"
+                                            type="date"
+                                            :format="'yyyy-MM-dd'"
+                                            auto
+                                            use12-hour
+                                        >
+                                            <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </Datetime>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="toDate"><strong>To Date</strong></span>
-                                    <Datetime 
-                                        v-model="filters.toDate"
-                                        input-id="endDate"
-                                        :input-class="'form-control'"
-                                        type="datetime"
-                                        :format="'yyyy-MM-dd T'"
-                                        auto
-                                        use12-hour
-                                    >
-                                        <label for="endDate" slot="after" class="input-group-addon input-group-addon--datetimepicker">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </label>
-                                    </Datetime>
-                                </div>
-                            </div>
-
-                            <button v-on:click="search" class="btn btn-primary">Search</button>
+                            <button v-on:click="search" class="btn btn-primary">Filter</button>
                         </div>
                     </div>
 
@@ -97,13 +99,12 @@
                             <input type="text" name="toDate" :value="filters.toDate" hidden>
                             <input type="text" name="user_id" :value="filters.user_id" hidden>
 
-                            <button type="submit" class="m-b-10 m-t-10" :disabled="hits.length === 0">CSV</button>
+                            <button type="submit" class="m-b-10 m-t-10" :disabled="hits.length === 0">Download CSV</button>
                         </form>
 
                         <div class="items-count">
                             <label for="itemsCount">Items per page:</label>
                             <select class="form-control" name="itemsCount" id="itemsCount" v-model="pageItemsCount">
-                                <option :value="10">10</option>
                                 <option :value="50">50</option>
                                 <option :value="100">100</option>
                                 <option :value="500">500</option>
@@ -121,6 +122,26 @@
                     </div>
 
                     <div v-else>
+                        <!-- DISPLAYED COUNT -->
+                        <div class="m-b-10">
+                            <div class="m-b-20 m-t-20">
+                                <label>Showing {{pageOfItems.length}} of total {{ new Intl.NumberFormat('en-US').format(stats.value) }} </label>
+                                <p class="count-note" v-if="stats.total > 10000">
+                                    <em>*In order to preserve the performance, maximum of 10,000 records are shown. Total number of records is:
+                                        <strong>{{ new Intl.NumberFormat('en-US').format(stats.total) }}</strong>.
+                                        You can get all entries by exporting the data to a .csv file.
+                                    </em>
+                                </p>
+                            </div>
+
+                            <jw-pagination 
+                                :items="hits"
+                                @changePage="onChangePage"
+                                :pageSize="pageItemsCount"
+                                :key="pageItemsCount"
+                                :labels="customLabels"
+                            ></jw-pagination>
+                        </div>
                         
                         <!-- TABLE -->
                         <div v-if="tableLoading">
@@ -159,7 +180,7 @@
 
                                     <td>{{hit._source.action.name}}</td>
                                     <td>{{hit._source.subject.tree}}</td>
-                                    <td>{{hit._source.created_at}}</td>
+                                    <td>{{formatTimestamp(hit._source.created_at)}}</td>
                                 </tr>
                                 <tr role="row">
                                 <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">
@@ -217,6 +238,7 @@
     import JwPagination from "jw-vue-pagination";
     import Spinner from "./Spinner";
     import { Datetime } from 'vue-datetime';
+    import moment from "moment";
 
     Vue.component('jw-pagination', JwPagination);
 
@@ -246,7 +268,7 @@
                 hits: [],
                 stats: {},
                 pageOfItems: [],
-                pageItemsCount: 10,
+                pageItemsCount: 50,
                 pageLoading: true,
                 tableLoading: true,
                 customLabels
@@ -277,8 +299,8 @@
                 const { causer, cohort, action, activity, sort, order, fromDate, toDate, user_id } = this.filters;
 
                 // Format the selected from and to dates and send the formatted values
-                const formatted_fromDate = await this.formatDate(fromDate);
-                const formatted_toDate = await this.formatDate(toDate);
+                const formatted_fromDate = fromDate ? await this.formatTimestamp(fromDate) : null;
+                const formatted_toDate = toDate ? await this.formatTimestamp(toDate) : null;
 
                 const response = await axios.post(`logs/search`, {
                     filters: {
@@ -338,28 +360,9 @@
             onChangePage(pageOfItems) {
                 this.pageOfItems = pageOfItems;
             },
-
-            // Format the dates in 'yyyy-MM-dd H:mm' format
-            formatDate(date) {
-                // Exit if no date was selected
-                if (!date) return;
-
-                const dateObject = new Date(date);
-                const year = dateObject.getFullYear();
-                const month = dateObject.getMonth() + 1;
-                const day = dateObject.getDate();
-                const hour = dateObject.getHours();
-                const minutes = dateObject.getMinutes();
-
-                const formattedMonth = month <= 9 ? `0${month}` : month;
-                const formattedDay = day <= 9 ? `0${day}` : day;
-                const formattedHour = hour <= 9 ? `0${hour}` : hour;
-                const formattedMinutes = minutes <= 9 ? `0${minutes}` : minutes; 
-
-                // Fully formatted date to be returned
-                const formattedDate = `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinutes}`;
-
-                return formattedDate;
+            
+            formatTimestamp(date) {
+                return moment(date).format("YYYY-MM-DD h:mm:ss A");
             }
         }
     }
@@ -367,6 +370,11 @@
 </script>
 
 <style lang="scss" scoped>
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .csv_search {
     display: flex;
     justify-content: space-between;
