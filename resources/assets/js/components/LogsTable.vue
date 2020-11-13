@@ -133,14 +133,16 @@
                                     </em>
                                 </p>
                             </div>
-
-                            <jw-pagination 
+                            
+                            <Pagination
                                 :items="hits"
                                 @changePage="onChangePage"
                                 :pageSize="pageItemsCount"
-                                :key="pageItemsCount"
+                                :key="1"
                                 :labels="customLabels"
-                            ></jw-pagination>
+                                @updatePagerDetails="updatePagerDetails"
+                                :customPager="pager"
+                            ></Pagination>
                         </div>
                         
                         <!-- TABLE -->
@@ -217,13 +219,15 @@
                             </p>
                         </div>
 
-                        <jw-pagination 
+                        <Pagination
                             :items="hits"
                             @changePage="onChangePage"
                             :pageSize="pageItemsCount"
-                            :key="pageItemsCount"
+                            :key="2"
                             :labels="customLabels"
-                        ></jw-pagination>
+                            @updatePagerDetails="updatePagerDetails"
+                            :customPager="pager"
+                        ></Pagination>
                     </div>
 
                 </div>
@@ -241,6 +245,8 @@
     import moment from "moment";
 
     Vue.component('jw-pagination', JwPagination);
+
+    import Pagination from "./Pagination"
 
     // Custom labels for the pagination
     const customLabels = {
@@ -268,6 +274,7 @@
                 hits: [],
                 stats: {},
                 pageOfItems: [],
+                pager: {}, // Pagination details
                 pageItemsCount: 50,
                 pageLoading: true,
                 tableLoading: true,
@@ -279,7 +286,7 @@
             this.search();
         },
         props: ['cohorts', 'actions', 'activities'],
-        components: { Spinner, Datetime },
+        components: { Spinner, Datetime, Pagination },
         methods: {
             // Check and get the user ID from the query parameter if it exists
             checkForUserID() {
@@ -361,8 +368,14 @@
                 this.pageOfItems = pageOfItems;
             },
             
+            // Format timestamps in US format
             formatTimestamp(date) {
                 return moment(date).format("MM/DD/YYYY h:mm A");
+            },
+
+            // Update the details for the Pagination component
+            updatePagerDetails(pager) {
+                this.pager = pager;
             }
         }
     }
