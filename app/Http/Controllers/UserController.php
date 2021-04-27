@@ -378,6 +378,14 @@ class UserController extends Controller
             $user->save();
         }
 
+        if ($request->filled('cohortId')) {
+            $cohortId = $request->input('cohortId');
+
+            if ($user->cohorts->where('id', $cohortId)->count() == 0 && Cohort::where('id', $cohortId)->count() > 0) {
+                $user->cohorts()->attach($cohortId);
+            }
+        }
+
 
         // Sync Infusionsoft user tags
         $user->syncIsTags();
