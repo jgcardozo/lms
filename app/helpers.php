@@ -428,7 +428,7 @@ if (!function_exists('form_to_lms2')) {
             if ($image) {
                 $form .= '<button type="submit" class="masthead__classes-link" ';
                 if ($course->logo_image) {
-                    $form .= 'style="border: none; border-bottom: 0.1rem solid #dadada; padding-top: 10px; padding-bottom: 10px; background-image: url('.$course->getLogoImageUrlAttribute().');"';
+                    $form .= 'style="border: none; border-bottom: 0.1rem solid #dadada; padding-top: 10px; padding-bottom: 10px; background-image: url('.$course->getLogoImageUrlAttribute().'); width: 100%; text-align: left;"';
                 } else {
                     $form .= 'style="border: none"';
                 }
