@@ -78,9 +78,11 @@
                         @endif
                     @endif
 
+                    <!--
                     <div class="masthead__calendar grid--flex">
                         <a class="grid--flex flex--align-center{!! set_active_link('calendar') !!}" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
                     </div>
+                    -->
 
 
                     <div class="masthead__notifications grid--flex flex--align-center">
