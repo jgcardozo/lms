@@ -34,6 +34,6 @@ class UserRegistered extends Mailable
     {
         return $this->view('lms.mail.newuser')->with('uuid', $this->uuid)->with('email', $this->mail)
             ->from('contact@askmethodmail.com', 'Ryan Levesque')
-            ->subject('IMPORTANT: Login Details ASK Method Training Portal! (Save this Email)');
+            ->subject('IMPORTANT: Login Details ASK Method Learning Area! (Save this Email)');
     }
 }
