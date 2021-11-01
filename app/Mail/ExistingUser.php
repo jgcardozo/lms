@@ -32,6 +32,6 @@ class ExistingUser extends Mailable
     {
         return $this->view('lms.mail.existinguser')->with('email', $this->mail)
             ->from('contact@askmethodmail.com', 'Ryan Levesque')
-            ->subject('IMPORTANT: Login Details ASK Method Training Portal! (Save this Email)');
+            ->subject('IMPORTANT: Login Details ASK Method Learning Area! (Save this Email)');
     }
 }
