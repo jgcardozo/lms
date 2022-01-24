@@ -16,7 +16,7 @@ class BonusController extends Controller
      */
     public function index()
     {
-        $allBonuses = Bonus::get();
+        $allBonuses = Bonus::orderBy('lft', 'ASC')->get();
         $bonuses = [];
 
         foreach($allBonuses as $bonus)
