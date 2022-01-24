@@ -26,6 +26,12 @@ trait BackpackCrudTrait {
 		{
 			$title = $this->question;
 		}
+		
+		// juan-20220124: to avoid adding -1 on reorder bonuses
+		if (!$request->has('slug')) {
+			$this->attributes['slug'] = $value;
+			return;
+		}
 
 		?>
 		<a href="<?php echo route('crud.' . $modelname . '.edit', $this->id); ?>" title="Edit <?php echo $modelname; ?>"><?php echo $title; ?></a>
