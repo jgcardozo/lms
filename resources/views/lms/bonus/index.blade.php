@@ -38,6 +38,28 @@
                 <!-- <h2 class="course-modules__title">Lorem ipsum sit amet</h2> -->
 
                 <div class="grid--flex course-modules__list flex--wrap">
+
+
+                    @if ($resources)
+                        @foreach($resources as $res)
+                            <div id="resource-{{ $res->id }}" class="module module--push-b grid--flex">
+                                <div class="module__component grid--flex flex--column">
+                                    <div class="module__featured-image" @if($res->featured_image) style="background-image: url({{ $res->featured_image_url }});" @endif>
+                                    </div>
+
+                                    <div class="module__content">
+                                        <h2 class="module__title">{{ $res->title }}</h2>
+
+                                        <p>{!! truncate_string($res->description) !!}</p>
+
+                                        <a href="{{ route('single.resourcesbank', $res->slug) }}" class="module__link">Go To Resource</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach  
+                    @endif
+
+
                     @foreach($bonuses as $bonus)
                         <div id="bonus-{{ $bonus->id }}" class="module module--push-b grid--flex">
                             <div class="module__component grid--flex flex--column">
@@ -54,6 +76,8 @@
                             </div>
                         </div>
                     @endforeach
+
+
                 </div>
             </div>
         </div>

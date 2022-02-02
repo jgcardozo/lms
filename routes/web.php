@@ -91,6 +91,12 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'BonusController@show'
     ]);
 
+    Route::get('resourcesbank/{resource}', [
+        'as' => 'single.resourcesbank',
+        'uses' => 'ResourcesBankController@show',
+    ]);
+
+
     // Check If course survey is finished
     Route::group(['middleware' => ['survey']], function () {
         Route::get('course/{course}/intro', [
@@ -316,7 +322,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('user', 'Admin\UserCrudController');
     CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
     CRUD::resource('cohort', 'Admin\CohortCrudController');
-    CRUD::resource('bonus', 'Admin\BonusCrudController');
+    CRUD::resource('bonus', 'Admin\BonusCrudController'); 
+    CRUD::resource('resourcesbank', 'Admin\ResourcesBankCrudController'); //juan
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
     Route::get('logs', 'LogController@index')->name('log.index');
     Route::post('logs/search', 'LogController@search')->name('log.search');

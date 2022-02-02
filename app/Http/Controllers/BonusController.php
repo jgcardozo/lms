@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bonus;
-use App\Models\Course;
-use Illuminate\Http\Request;
+use App\Models\ResourcesBank;
+
 
 class BonusController extends Controller
 {
@@ -16,24 +16,29 @@ class BonusController extends Controller
      */
     public function index()
     {
+        $allResourcesBank = ResourcesBank::orderBy('lft', 'ASC')->get();
         $allBonuses = Bonus::orderBy('lft', 'ASC')->get();
-        $bonuses = [];
+        $bonuses = $resources = [];
 
-        foreach($allBonuses as $bonus)
-        {
-            if(!$bonus->is_locked)
-            {
-                $bonuses[] = $bonus;
+        foreach ($allResourcesBank as $resource) {
+            if (!$resource->is_locked) {
+                $resources[] = $resource;
             }
         }
 
-        return view('lms.bonus.index', ['bonuses' => $bonuses]);
+        foreach ($allBonuses as $bonus) {
+            if (!$bonus->is_locked) {
+                $bonuses[] = $bonus;
+            }
+        }
+        return view('lms.bonus.index', ['bonuses' => $bonuses, 'resources' => $resources]);
+
     }
 
     public function show($slug)
     {
         $bonus = Bonus::whereSlug($slug)
-                      ->first();
+            ->first();
 
         return view('lms.bonus.single', ['bonus' => $bonus]);
     }

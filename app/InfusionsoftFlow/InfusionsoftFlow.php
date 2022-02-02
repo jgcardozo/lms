@@ -93,9 +93,9 @@ class InfusionsoftFlow
     public function __construct($is)
     {
         $this->is = $is;
-        if (env('APP_ENV', 'local') == 'production') {
+        //if (env('APP_ENV', 'local') == 'production') {
             $this->setToken();
-        }
+        //}
     }
 
     public function is()
