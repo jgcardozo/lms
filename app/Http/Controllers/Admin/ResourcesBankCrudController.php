@@ -123,7 +123,7 @@ class ResourcesBankCrudController extends CrudController
             'type' => 'checkbox',
         ]);
 
-
+        
         /**
          * Enable CRUD reorder
          */

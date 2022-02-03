@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Bonus;
 use App\Models\ResourcesBank;
 
-
 class BonusController extends Controller
 {
 
@@ -21,7 +20,7 @@ class BonusController extends Controller
         $bonuses = $resources = [];
 
         foreach ($allResourcesBank as $resource) {
-            if (!$resource->is_locked) {
+            if ($resource->published) {
                 $resources[] = $resource;
             }
         }
@@ -32,7 +31,6 @@ class BonusController extends Controller
             }
         }
         return view('lms.bonus.index', ['bonuses' => $bonuses, 'resources' => $resources]);
-
     }
 
     public function show($slug)
