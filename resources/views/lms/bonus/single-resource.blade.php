@@ -14,7 +14,11 @@
 
 
 
-    <div class="intro grid grid--full course-single">
+    <div class="intro" @if($resource->header_image) style="background-image: url({{ $resource->header_image_url }});" @endif>
+        <h1>{!! $resource->title !!}</h1>
+        <p>
+            {!! $resource->description !!}
+        </p>
     </div>
 
     <section class="white">
