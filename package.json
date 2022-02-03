@@ -8,15 +8,28 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+    "autoprefixer": "9.2.1",
     "axios": "^0.19",
     "cross-env": "^3.2.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-livereload": "^4.0.1",
+    "gulp-postcss": "8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-all": "^2.0.3",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "2.6.4",
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",
     "laravel-mix": "^0.8.1",
-    "node-sass": "^4.10.0",
     "parsleyjs": "^2.8.1",
     "perfect-scrollbar": "^0.6.16",
+    "postcss-flexbugs-fixes": "4.1.0",
     "progressbar.js": "^1.0.1",
+    "randomstring": "^1.2.1",
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^6.0.7",
     "select2": "^4.0.6-rc.1",
@@ -27,6 +40,7 @@
     "jw-vue-pagination": "^1.0.3",
     "luxon": "^1.25.0",
     "moment": "^2.29.1",
+    "node-sass": "^7.0.1",
     "vue-datetime": "^1.0.0-beta.14"
   }
 }
