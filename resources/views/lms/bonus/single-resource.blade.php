@@ -13,42 +13,27 @@
 <main class="resources-bank-page">
 
 
+
     <div class="intro grid grid--full course-single">
     </div>
 
     <section class="white">
 
         <div class="resources-bank-page__container">
+
+            <!-- Menu Mobile -->
+            <div class="menu--mobile">
+                <button class="aside__menu"></button> Resources Index
+            </div>
+
             <aside class="aside">
+                <button class="aside__close"></button>
                 <div class="aside__fixed">
                     {!! $resource->sidebar_content !!}
                 </div>
             </aside>
 
             <section class="content">
-                <!-- <div class="grid grid--w950 course-single__content">-->
-                <?php /*
-        <div class="">
-            <div class="course-single__content-wrap grid--flex flex--space-between">
-                <div class="single-header-block">
-                    <h2 class="single-header-block__title ucase">{!! bold_first_word($resource->title) !!}</h2>
-                    <p class="single-header-block__content">{{ $resource->short_description }}</p>
-                    <div class="single-header-block__separator"></div>
-                    <div class="single-header-block__content single-header-block__content--small">
-                        {!! $resource->description !!}
-                    </div>
-                </div>
-
-                <div class="single-header-video">
-                    <div class="wistia_responsive_padding">
-                        <div class="wistia_responsive_wrapper">
-                            @include('lms.components.video', ['model' => $resource])
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*/ ?>
-                <!-- <div class="grid grid--w950"> -->
                 <div class="">
                     <div class="course-modules">
                         <div class="course-modules__list">
@@ -63,6 +48,46 @@
 
 </main>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    console.log("Hello world");
+
+    (function($) {
+        function closeMenu() {
+
+
+            console.log("function called");
+
+            $(".aside").removeClass("aside--active");
+            $("body").css("overflow", "visible");
+        }
+
+        $(".aside__nav-item").click(function() {
+            $(".aside__nav-item").removeClass("aside__nav-item--active");
+            $(this).addClass("aside__nav-item--active");
+
+            var toElem = $(this).attr("data-offset");
+            var wScreen = $(window).width();
+            var offsetValue = wScreen < 900 ? 80 : 60;
+
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#" + toElem).offset().top - offsetValue
+            }, 500);
+
+            closeMenu();
+        });
+
+        $(".aside__menu").on("click", function() {
+            $(".aside").addClass("aside--active");
+            $("body").css("overflow", "hidden");
+        });
+
+        $(".aside__close").on("click", function() {
+            closeMenu();
+        });
+    })(jQuery);
+</script>
 
 
 
