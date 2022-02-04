@@ -76,6 +76,8 @@ class ResourcesBankCrudController extends CrudController
             'type' => 'wysiwyg',
         ]);
 
+        /*
+
         $this->crud->addField([
             'label' => 'Video Type:',
             'type' => 'select',
@@ -95,17 +97,20 @@ class ResourcesBankCrudController extends CrudController
             ],
         ]);
 
+        */
+
         $this->crud->addField([
             'name' => 'content',
             'label' => 'Content',
             'type' => 'wysiwyg',
         ]);
 
+        /*
         $this->crud->addField([
             'name' => 'sidebar_content',
             'label' => 'Sidebar Content',
             'type' => 'wysiwyg',
-        ]);
+        ]);  */
 
         $this->crud->addField([
             'label' => 'Lock tags:',
