@@ -23,8 +23,9 @@
 
     <section class="white">
 
-        <div class="resources-bank-page__container">
-
+        <div style="grid-template-columns: 1fr;" class="resources-bank-page__container">
+            
+            <?php /*
             <!-- Menu Mobile -->
             <div class="menu--mobile">
                 <button class="aside__menu"></button> Resources Index
@@ -37,7 +38,9 @@
                 </div>
             </aside>
 
-            <section class="content">
+            */ ?>
+
+            <section style="border:0;" class="content">
                 <div class="">
                     <div class="course-modules">
                         <div class="course-modules__list">
