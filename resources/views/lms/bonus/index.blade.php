@@ -48,7 +48,11 @@
                                     </div>
 
                                     <div class="module__content">
-                                        <h2 class="module__title">{{ $res->title }}</h2>
+                                        <h2 class="module__title">{{ $res->title }}
+                                            @if (!$res->published)
+                                              Coming Soon 
+                                            @endif    
+                                        </h2>
 
                                         <p>{!! truncate_string($res->description) !!}</p>
 

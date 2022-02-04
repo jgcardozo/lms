@@ -39,16 +39,21 @@
             </aside>
 
             */ ?>
-
+            
             <section style="border:0;" class="content">
                 <div class="">
                     <div class="course-modules">
                         <div class="course-modules__list">
-                            {!! compileShortcodes($resource->content) !!}
+                            @if (!$resource->published)
+                                <h2>Coming Soon !</h2>      
+                            @else
+                                {!! compileShortcodes($resource->content) !!}
+                            @endif
                         </div>
                     </div>
                 </div>
             </section>
+           
         </div>
 
     </section>
