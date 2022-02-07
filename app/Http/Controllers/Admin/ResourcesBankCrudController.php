@@ -76,37 +76,40 @@ class ResourcesBankCrudController extends CrudController
             'type' => 'wysiwyg',
         ]);
 
+        /*
         $this->crud->addField([
-            'label' => 'Video Type:',
-            'type' => 'select',
-            'name' => 'video_type_id',
-            'attribute' => 'title',
-            'model' => 'App\Models\VideoType',
-            'wrapperAttributes' => [
-                'class' => 'form-group col-md-2',
-            ],
+        'label' => 'Video Type:',
+        'type' => 'select',
+        'name' => 'video_type_id',
+        'attribute' => 'title',
+        'model' => 'App\Models\VideoType',
+        'wrapperAttributes' => [
+        'class' => 'form-group col-md-2',
+        ],
         ]);
 
         $this->crud->addField([
-            'name' => 'video_url',
-            'label' => 'Video ID',
-            'wrapperAttributes' => [
-                'class' => 'form-group col-md-10',
-            ],
+        'name' => 'video_url',
+        'label' => 'Video ID',
+        'wrapperAttributes' => [
+        'class' => 'form-group col-md-10',
+        ],
         ]);
 
         $this->crud->addField([
-            'name' => 'content',
-            'label' => 'Content',
-            'type' => 'wysiwyg',
+        'name' => 'content',
+        'label' => 'Content',
+        'type' => 'wysiwyg',
         ]);
 
         $this->crud->addField([
-            'name' => 'sidebar_content',
-            'label' => 'Sidebar Content',
-            'type' => 'wysiwyg',
+        'name' => 'sidebar_content',
+        'label' => 'Sidebar Content',
+        'type' => 'wysiwyg',
         ]);
+         */
 
+         
         $this->crud->addField([
             'label' => 'Lock tags:',
             'type' => 'select2_multipleIsTags',
@@ -116,14 +119,25 @@ class ResourcesBankCrudController extends CrudController
             'model' => 'App\Models\ISTag',
             'pivot' => true,
         ]);
+        
 
+        $this->crud->addField([
+            'label' => 'Resources children:',
+            'type' => 'select2_multipleIsTags',
+            'name' => 'resources_children',
+            'entity' => 'resources_children',
+            'attribute' => 'title',
+            'model' => 'App\Models\ResourcesChild',
+            'pivot' => true,
+        ]);
+
+          
         $this->crud->addField([
             'name' => 'published',
             'label' => 'Published',
             'type' => 'checkbox',
         ]);
 
-        
         /**
          * Enable CRUD reorder
          */

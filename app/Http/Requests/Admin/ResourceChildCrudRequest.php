@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
-class ResourceBankCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
+class ResourceChildCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
 {
 
     /**
@@ -24,7 +24,7 @@ class ResourceBankCrudRequest extends \Backpack\CRUD\app\Http\Requests\CrudReque
     {
         return [
             'title'            => 'required|max:255',
-            'description'      => 'required',
+            'content'          => 'required',
         ];
     }
 }

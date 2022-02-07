@@ -19,18 +19,19 @@ class BonusController extends Controller
         $allBonuses = Bonus::orderBy('lft', 'ASC')->get();
         $bonuses = $resources = [];
 
+        /*
         foreach ($allResourcesBank as $resource) {
             if ($resource->published) {
                 $resources[] = $resource;
             }
-        }
+        } */
 
         foreach ($allBonuses as $bonus) {
             if (!$bonus->is_locked) {
                 $bonuses[] = $bonus;
             }
         }
-        return view('lms.bonus.index', ['bonuses' => $bonuses, 'resources' => $resources]);
+        return view('lms.bonus.index', ['bonuses' => $bonuses, 'resources' => $allResourcesBank]);
     }
 
     public function show($slug)

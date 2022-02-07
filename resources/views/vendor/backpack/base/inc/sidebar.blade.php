@@ -20,6 +20,14 @@
           <!-- ================================================ -->
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
 
+
+          <!-- ============================== -->
+          <!-- ==== LMS admin menu items ==== -->
+          <!-- ============================== -->
+          <li class="header">Resources Bank</li>
+          <li><a href="{{ url('admin/resourcesbank') }}"><i class="fa fa-book"></i> <span>Resource Container</span></a></li>
+          <li><a href="{{ url('admin/resourceschild') }}"><i class="fa fa-file-image-o"></i> <span>Resource Section</span></a></li>
+
           <!-- ============================== -->
           <!-- ==== LMS admin menu items ==== -->
           <!-- ============================== -->
@@ -34,7 +42,6 @@
           <li><a href="{{ url('admin/lessonquestion') }}"><i class="fa fa-question"></i> <span>Lesson questions</span></a></li>
           <li><a href="{{ url('admin/cohort') }}"><i class="fa fa-group"></i> <span>Cohorts</span></a></li>
           <li><a href="{{ url('admin/bonus') }}"><i class="fa fa-book"></i> <span>Bonus</span></a></li>
-          <li><a href="{{ url('admin/resourcesbank') }}"><i class="fa fa-book"></i> <span>Resources Bank</span></a></li>
           <li><a href="{{ url('admin/reports') }}"><i class="fa fa-list-alt"></i> <span>Reports</span></a></li>
           <li><a href="{{ url('admin/schedule') }}"><i class="fa fa-list-alt"></i> <span>Schedules</span></a></li>
           <li><a href="{{ url('admin/easter_links') }}"><i class="fa fa-list-alt"></i> <span>Facebook Links</span></a></li>
