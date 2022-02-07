@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'BonusController@show'
     ]);
 
-    Route::get('resourcesbank/{resource}', [
+    Route::get('resChild/{resource}', [
         'as' => 'single.resourcesbank',
         'uses' => 'ResourcesBankController@show',
     ]);
@@ -323,7 +323,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Administrator,Editor']
     CRUD::resource('lessonquestion', 'Admin\LessonQuestionCrudController');
     CRUD::resource('cohort', 'Admin\CohortCrudController');
     CRUD::resource('bonus', 'Admin\BonusCrudController'); 
-    CRUD::resource('resourcesbank', 'Admin\ResourcesBankCrudController'); //juan
+    CRUD::resource('resourcesbank',  'Admin\ResourcesBankCrudController'); //juan
+    CRUD::resource('resourceschild', 'Admin\ResourcesChildCrudController'); //juan
     CRUD::resource('schedule', 'Admin\ScheduleCrudController');
     Route::get('logs', 'LogController@index')->name('log.index');
     Route::post('logs/search', 'LogController@search')->name('log.search');

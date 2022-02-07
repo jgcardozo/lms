@@ -6,6 +6,7 @@
 <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
 @endsection
 
+
 @section('content')
 
 <link href="{{ asset('resources-bank/main.css') }}" rel="stylesheet">
@@ -25,20 +26,18 @@
 
         <div style="grid-template-columns: 1fr;" class="resources-bank-page__container">
             
-            <?php /*
-            <!-- Menu Mobile -->
-            <div class="menu--mobile">
                 <button class="aside__menu"></button> Resources Index
-            </div>
 
             <aside class="aside">
                 <button class="aside__close"></button>
                 <div class="aside__fixed">
-                    {!! $resource->sidebar_content !!}
+                    @foreach ($sections as $child)
+						{!! $child->title ."<br>" !!}
+                    @endforeach
                 </div>
             </aside>
 
-            */ ?>
+           
             
             <section style="border:0;" class="content">
                 <div class="">
@@ -47,7 +46,9 @@
                             @if (!$resource->published)
                                 <h2>Coming Soon !</h2>      
                             @else
-                                {!! compileShortcodes($resource->content) !!}
+                                @foreach ($sections as $child)
+									{!! compileShortcodes($child->content) . "<hr>" !!}
+                                @endforeach      
                             @endif
                         </div>
                     </div>
