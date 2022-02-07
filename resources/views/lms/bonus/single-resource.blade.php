@@ -16,10 +16,13 @@
 
 
     <div class="intro" @if($resource->header_image) style="background-image: url({{ $resource->header_image_url }});" @else status="no-bg" @endif;>
-        <h1>{!! $resource->title !!}</h1>
-        <p>
-            {!! $resource->description !!}
-        </p>
+        <div class="course-single__overlay"></div>
+        <div class="titles">
+            <h1>{!! $resource->title !!}</h1>
+            <p>
+                {!! $resource->description !!}
+            </p>
+        </div>
     </div>
 
     <section class="white">

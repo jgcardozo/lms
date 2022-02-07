@@ -60,18 +60,13 @@
 
     .intro {
         background: #f8f7f2;
+        background-image: url(../images/course-placeholder.jpg);
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
 
+        position: relative;
         text-align: center;
-
-        &[status='no-bg'] {
-            h1,
-            p {
-                color: black;
-            }
-        }
 
         /*
         display: grid;
@@ -82,6 +77,10 @@
         padding: 50px 20px;
         justify-content: center;
         align-items: center;
+
+        .titles {
+            position: relative;
+        }
 
         h1 {
             text-transform: capitalize;
@@ -214,6 +213,24 @@
 
             h2 {
                 text-transform: capitalize;
+            }
+
+            .button {
+                border: none;
+                padding: 11px;
+                display: table;
+                width: auto;
+                height: auto;
+                background: rgb(242, 153, 74);
+                border-radius: 4px;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 130%;
+                text-align: center;
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+                margin: 0 auto;
             }
 
             &:last-of-type {

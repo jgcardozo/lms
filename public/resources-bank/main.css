@@ -17,9 +17,9 @@
 
 @media (min-width: 992px) { .resources-bank-page__container { gap: 20px 0; grid-template-columns: 300px 1fr; } }
 
-.resources-bank-page .intro { background: #f8f7f2; background-position: center; background-size: cover; background-repeat: no-repeat; text-align: center; /* display: grid; grid-template-rows: repeat(3, max-content); grid-column: aside-start / span 2; grid-gap: 15px; */ padding: 50px 20px; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+.resources-bank-page .intro { background: #f8f7f2; background-image: url(../images/course-placeholder.jpg); background-position: center; background-size: cover; background-repeat: no-repeat; position: relative; text-align: center; /* display: grid; grid-template-rows: repeat(3, max-content); grid-column: aside-start / span 2; grid-gap: 15px; */ padding: 50px 20px; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 
-.resources-bank-page .intro[status='no-bg'] h1, .resources-bank-page .intro[status='no-bg'] p { color: black; }
+.resources-bank-page .intro .titles { position: relative; }
 
 .resources-bank-page .intro h1 { text-transform: capitalize; }
 
@@ -58,6 +58,8 @@
 .resources-bank-page .content article { float: left; width: 100%; padding: 20px 0 50px; border-bottom: 1px solid #e0e0e0; }
 
 .resources-bank-page .content article h2 { text-transform: capitalize; }
+
+.resources-bank-page .content article .button { border: none; padding: 11px; display: table; width: auto; height: auto; background: #f2994a; border-radius: 4px; font-style: normal; font-weight: bold; font-size: 16px; line-height: 130%; text-align: center; color: white; text-decoration: none; margin: 0 auto; }
 
 .resources-bank-page .content article:last-of-type { border-bottom: 0; }
 
