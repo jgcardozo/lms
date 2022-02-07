@@ -15,7 +15,7 @@
 
 
 
-    <div class="intro" @if($resource->header_image) style="background-image: url({{ $resource->header_image_url }});" @endif>
+    <div class="intro" @if($resource->header_image) style="background-image: url({{ $resource->header_image_url }});" @else status="no-bg" @endif;>
         <h1>{!! $resource->title !!}</h1>
         <p>
             {!! $resource->description !!}
@@ -24,37 +24,54 @@
 
     <section class="white">
 
-        <div style="grid-template-columns: 1fr;" class="resources-bank-page__container">
-            
+        <div class="resources-bank-page__container">
+
+            <div class="menu--mobile">
                 <button class="aside__menu"></button> Resources Index
+            </div>
+
 
             <aside class="aside">
                 <button class="aside__close"></button>
                 <div class="aside__fixed">
-                    @foreach ($sections as $child)
-						{!! $child->title ."<br>" !!}
-                    @endforeach
+                    <ul>
+                        <li>
+                            Page Index
+                        </li>
+                        @foreach ($sections as $child)
+                        <li>
+                            <a href="#section-{!! $child->id !!}">
+                                {!! $child->title !!}
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
             </aside>
 
-           
-            
-            <section style="border:0;" class="content">
+
+
+            <section class="content">
                 <div class="">
                     <div class="course-modules">
                         <div class="course-modules__list">
                             @if (!$resource->published)
-                                <h2>Coming Soon !</h2>      
+                            <h2>Resource Coming Soon!</h2>
                             @else
-                                @foreach ($sections as $child)
-									{!! compileShortcodes($child->content) . "<hr>" !!}
-                                @endforeach      
+                            @foreach ($sections as $child)
+
+                            <article id="section-{!! $child->id !!}" class="item">
+                                <h2>{!! $child->title !!}</h2>
+                                {!! compileShortcodes($child->content)!!}
+                            </article>
+
+                            @endforeach
                             @endif
                         </div>
                     </div>
                 </div>
             </section>
-           
+
         </div>
 
     </section>

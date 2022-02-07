@@ -66,6 +66,13 @@
 
         text-align: center;
 
+        &[status='no-bg'] {
+            h1,
+            p {
+                color: black;
+            }
+        }
+
         /*
         display: grid;
         grid-template-rows: repeat(3, max-content);
@@ -76,6 +83,9 @@
         justify-content: center;
         align-items: center;
 
+        h1 {
+            text-transform: capitalize;
+        }
         h1,
         p {
             color: white;
@@ -138,11 +148,18 @@
             overflow-y: scroll;
 
             li {
+                &:first-of-type {
+                    padding: 13px 10px;
+                    font-weight: bold;
+                }
+
                 a {
                     font-size: 14px;
                     padding: 13px 10px;
                     color: #333;
                     display: block;
+
+                    text-transform: capitalize;
 
                     &:hover {
                         background-color: #f1f1f1;
@@ -187,7 +204,21 @@
         width: 100%;
 
         @media (min-width: 992px) {
-            padding: 0 40px;
+            //padding: 0 40px;
+        }
+        article {
+            float: left;
+            width: 100%;
+            padding: 20px 0 50px;
+            border-bottom: 1px solid #e0e0e0;
+
+            h2 {
+                text-transform: capitalize;
+            }
+
+            &:last-of-type {
+                border-bottom: 0;
+            }
         }
     }
 }
