@@ -4867,3 +4867,11 @@ p {
 .button:hover {
   color: #ffffff;
 }
+
+
+
+
+/* Fixes by COL Dev Team */ 
+body .is--locked.courseblock__wrapper{
+  display: none;
+}

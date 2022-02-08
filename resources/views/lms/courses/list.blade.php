@@ -15,7 +15,7 @@
 
 
 		<!-- Single course item -->
-		<div id="course-{{ $course->id }}" class="courseblock__wrapper">
+		<div id="course-{{ $course->id }}" class="@if($course->is_locked) is--locked @endif courseblock__wrapper">
 
 			@if($course->is_locked)
 
@@ -26,12 +26,6 @@
 					@endif
 					><i class="icon--lock"></i>
 				</div>
-				<style>
-					body #course-{{$course->id}}{
-						position: relative;
-						display: none;
-					}
-				</style>
 
 				<div class="courseblock__overlay courseblock__overlay--locked"></div>
 				@else

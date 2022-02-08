@@ -25,8 +25,8 @@
           <!-- ==== LMS admin menu items ==== -->
           <!-- ============================== -->
           <li class="header">Resources Bank</li>
-          <li><a href="{{ url('admin/resourcesbank') }}"><i class="fa fa-book"></i> <span>Resource Container</span></a></li>
-          <li><a href="{{ url('admin/resourceschild') }}"><i class="fa fa-file-image-o"></i> <span>Resource Section</span></a></li>
+          <li><a href="{{ url('admin/resourcesbank') }}"><i class="fa fa-book"></i> <span>Resource Pages</span></a></li>
+          <li><a href="{{ url('admin/resourceschild') }}"><i class="fa fa-file-image-o"></i> <span>Resource Items</span></a></li>
 
           <!-- ============================== -->
           <!-- ==== LMS admin menu items ==== -->

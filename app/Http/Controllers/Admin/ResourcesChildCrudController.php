@@ -18,7 +18,7 @@ class ResourcesChildCrudController extends CrudController
 
        $this->crud->setModel('App\Models\ResourcesChild');
         $this->crud->setRoute('admin/resourceschild');
-        $this->crud->setEntityNameStrings('resource', 'Resources Child');
+        $this->crud->setEntityNameStrings('resource', 'Resources Items');
 
         /**
          * Define CRUD list columns

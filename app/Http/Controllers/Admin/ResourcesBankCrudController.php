@@ -16,7 +16,7 @@ class ResourcesBankCrudController extends CrudController
     {
         $this->crud->setModel('App\Models\ResourcesBank');
         $this->crud->setRoute('admin/resourcesbank');
-        $this->crud->setEntityNameStrings('resource', 'Resources Bank');
+        $this->crud->setEntityNameStrings('resource', 'Resources Pages');
 
         /**
          * Define CRUD list columns
@@ -76,43 +76,13 @@ class ResourcesBankCrudController extends CrudController
             'type' => 'wysiwyg',
         ]);
 
-        /*
         $this->crud->addField([
-        'label' => 'Video Type:',
-        'type' => 'select',
-        'name' => 'video_type_id',
-        'attribute' => 'title',
-        'model' => 'App\Models\VideoType',
-        'wrapperAttributes' => [
-        'class' => 'form-group col-md-2',
-        ],
+            'name' => 'content',
+            'label' => 'Content',
+            'type' => 'wysiwyg',
         ]);
 
-        $this->crud->addField([
-        'name' => 'video_url',
-        'label' => 'Video ID',
-        'wrapperAttributes' => [
-        'class' => 'form-group col-md-10',
-        ],
-        ]);
 
-        */
-
-        $this->crud->addField([
-        'name' => 'content',
-        'label' => 'Content',
-        'type' => 'wysiwyg',
-        ]);
-
-        /*
-        $this->crud->addField([
-        'name' => 'sidebar_content',
-        'label' => 'Sidebar Content',
-        'type' => 'wysiwyg',
-        ]);
-         */
-
-         
         $this->crud->addField([
             'label' => 'Lock tags:',
             'type' => 'select2_multipleIsTags',
@@ -122,11 +92,10 @@ class ResourcesBankCrudController extends CrudController
             'model' => 'App\Models\ISTag',
             'pivot' => true,
         ]);
-        
 
         $this->crud->addField([
             'label' => 'Resources children:',
-            'type' => 'select2_multipleIsTags',
+            'type' => 'select2_multipleResourceChild',
             'name' => 'resources_children',
             'entity' => 'resources_children',
             'attribute' => 'title',
@@ -134,7 +103,6 @@ class ResourcesBankCrudController extends CrudController
             'pivot' => true,
         ]);
 
-          
         $this->crud->addField([
             'name' => 'published',
             'label' => 'Published',

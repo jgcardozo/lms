@@ -50,7 +50,7 @@
                                     <div class="module__content">
                                         <h2 class="module__title">{{ $res->title }}
                                             @if (!$res->published)
-                                              Coming Soon 
+                                              - Coming Soon!
                                             @endif    
                                         </h2>
 

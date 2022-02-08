@@ -15,7 +15,7 @@
 
 
 
-    <div class="intro" @if($resource->header_image) style="background-image: url({{ $resource->header_image_url }});" @else status="no-bg" @endif;>
+    <div class="intro" @if($resource->header_image) style="background-image: url({{ $resource->header_image_url }});" @else status="no-bg" @endif>
         <div class="course-single__overlay"></div>
         <div class="titles">
             <h1>{!! $resource->title !!}</h1>
@@ -34,6 +34,9 @@
             </div>
 
 
+            @if (!$resource->published)
+            <h4></h4>
+            @else
             <aside class="aside">
                 <button class="aside__close"></button>
                 <div class="aside__fixed">
@@ -51,6 +54,8 @@
                     </ul>
                 </div>
             </aside>
+            @endif
+
 
 
 
@@ -59,7 +64,10 @@
                     <div class="course-modules">
                         <div class="course-modules__list">
                             @if (!$resource->published)
-                            <h2>Resource Coming Soon!</h2>
+                            <h2>Resources Coming Soon!</h2>
+                            <p>
+                                The resources bank for the {!! $resource->title !!} are coming soon! Please check this page later to see them.
+                            </p>
                             @else
                             @foreach ($sections as $child)
 
@@ -88,8 +96,6 @@
 
     (function($) {
         function closeMenu() {
-
-
             console.log("function called");
 
             $(".aside").removeClass("aside--active");
