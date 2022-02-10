@@ -14,9 +14,8 @@ class ResourcesChildCrudController extends CrudController
 
     public function setup()
     {
-        //$this->crud->setModel('App\Models\ResourcesBank');
 
-       $this->crud->setModel('App\Models\ResourcesChild');
+        $this->crud->setModel('App\Models\ResourcesChild');
         $this->crud->setRoute('admin/resourceschild');
         $this->crud->setEntityNameStrings('resource', 'Resources Items');
 
@@ -53,13 +52,11 @@ class ResourcesChildCrudController extends CrudController
             'label' => 'Slug',
         ]);
 
-
         $this->crud->addField([
             'name' => 'content',
             'label' => 'Content',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
-
 
         $this->crud->addField([
             'name' => 'published',
@@ -67,6 +64,12 @@ class ResourcesChildCrudController extends CrudController
             'type' => 'checkbox',
         ]);
 
+        /**
+         * Enable CRUD reorder
+         */
+        $this->crud->enableReorder('title', 1);
+        $this->crud->allowAccess('reorder');
+        $this->crud->orderBy('lft');
 
     } //setup
 

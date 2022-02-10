@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Admin\ResourceBankCrudRequest as StoreRequest;
-use App\Http\Requests\Admin\ResourceBankCrudRequest as UpdateRequest;
+use App\Models\ResourcesBank;
 use App\Traits\BackpackCrudTrait;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+use App\Http\Requests\Admin\ResourceBankCrudRequest as StoreRequest;
+use App\Http\Requests\Admin\ResourceBankCrudRequest as UpdateRequest;
 
 class ResourcesBankCrudController extends CrudController
 {
@@ -77,13 +78,6 @@ class ResourcesBankCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name' => 'content',
-            'label' => 'Content',
-            'type' => 'wysiwyg',
-        ]);
-
-
-        $this->crud->addField([
             'label' => 'Lock tags:',
             'type' => 'select2_multipleIsTags',
             'name' => 'lock_tags',
@@ -94,10 +88,10 @@ class ResourcesBankCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => 'Resources children:',
+            'label' => 'Resources items:',
             'type' => 'select2_multipleResourceChild',
-            'name' => 'resources_children',
-            'entity' => 'resources_children',
+            'name' => 'resourcesChildren',
+            'entity' => 'resourcesChildren',
             'attribute' => 'title',
             'model' => 'App\Models\ResourcesChild',
             'pivot' => true,
@@ -108,6 +102,11 @@ class ResourcesBankCrudController extends CrudController
             'label' => 'Published',
             'type' => 'checkbox',
         ]);
+		
+		/**
+		 * Add CRUD action button
+		 */
+        $this->crud->addButton('line', 'reorder_resources', 'model_function', 'reorder_resources_button', 'end');
 
         /**
          * Enable CRUD reorder
@@ -126,5 +125,6 @@ class ResourcesBankCrudController extends CrudController
     {
         return parent::updateCrud();
     }
+
 
 } //class

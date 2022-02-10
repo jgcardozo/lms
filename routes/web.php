@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'BonusController@show'
     ]);
 
-    Route::get('resChild/{resource}', [
+    Route::get('resourcepage/{resource}', [
         'as' => 'single.resourcesbank',
         'uses' => 'ResourcesBankController@show',
     ]);

@@ -12,10 +12,10 @@ class ResourcesBankController extends Controller
     {
         $resource = ResourcesBank::whereSlug($slug)->first();
 
-        $raw = "select rr.container_id, rb.id, rr.section_id , rc.id, rc.title, rc.slug, rc.content  from rcontainer_rsection rr
-        join resources_children rc on rc.id=rr.section_id
-        join resources_banks rb on rb.id=rr.container_id
-        where container_id=$resource->id";
+        $raw = "select resources_bank_id , resources_child_id , rc.lft, rc.id, rc.title, rc.slug, rc.content from resourcechild_resourcebank rr
+                    join resources_children rc on rc.id=rr.resources_child_id
+                    join resources_banks rb on rb.id=rr.resources_bank_id
+                where resources_bank_id=$resource->id order by rc.lft asc";
 
         $sections = DB::select(DB::raw($raw));
 

@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Scopes\OrderScope;
+use App\Traits\BackpackCrudTrait;
+use App\Traits\BackpackUpdateLFT;
 use App\Traits\ISLock;
 use App\Traits\RecordActivity;
 use Backpack\CRUD\CrudTrait;
-use App\Traits\BackpackCrudTrait;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Model;
 
 class ResourcesBank extends Model
 {
@@ -17,21 +19,26 @@ class ResourcesBank extends Model
     use Sluggable;
     use CrudTrait;
     use BackpackCrudTrait;
+    use BackpackUpdateLFT;
     use SluggableScopeHelpers;
     use RecordActivity;
 
     protected $fillable = [
-        'title', 'slug', 'description', 'content', 'video_url', 'video_type_id', 'featured_image', 'header_image', 'sidebar_content', 'published'
+        'title', 'slug', 'description', 'featured_image', 'header_image', 'lft', 'published',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new OrderScope);
+    }
 
-
-     public function sluggable()
+    public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 
@@ -41,10 +48,10 @@ class ResourcesBank extends Model
     }
 
     /*
-	|--------------------------------------------------------------------------
-	| Mutators
-	|--------------------------------------------------------------------------
-	*/
+    |--------------------------------------------------------------------------
+    | Mutators
+    |--------------------------------------------------------------------------
+     */
     public function setFeaturedImageAttribute($value)
     {
         $attribute_name = 'featured_image';
@@ -116,17 +123,28 @@ class ResourcesBank extends Model
         return $this->is_tag_locked() && !is_role_admin();
     }
 
-
     public function logs()
     {
         return $this->morphMany('App\Models\Log', 'subject');
     }
 
-
-    public function resources_children()
+    public function resourcesChildren()
     {
-        return $this->belongsToMany('App\Models\ResourcesChild', 'rcontainer_rsection', 'container_id', 'section_id')->withPivot('created_at');
+        return $this->belongsToMany('App\Models\ResourcesChild', 'resourcechild_resourcebank');
     }
 
+    public function reorder_resources_button()
+    {
+        if (!$this->resourcesChildren) {
+            return;
+        }
+
+        ?>
+		<a href="<?php echo route('crud.resourceschild.reorder', ['resourcebank' => $this->id]); ?>" class="btn btn-xs btn-default">
+			<i class="fa fa-arrows" aria-hidden="true"></i>
+			Reorder resources items
+		</a>
+		<?php
+}
 
 }

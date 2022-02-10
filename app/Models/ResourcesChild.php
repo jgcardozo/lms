@@ -2,44 +2,65 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-use Backpack\CRUD\CrudTrait;
+use App\Models\ResourcesBank;
+use App\Scopes\OrderScope;
 use App\Traits\BackpackCrudTrait;
+use Backpack\CRUD\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class ResourcesChild extends Model
 {
-	use Sluggable;
+    use Sluggable;
     use CrudTrait;
     use BackpackCrudTrait;
     use SluggableScopeHelpers;
-	
-	
+
     protected $fillable = [
-        'title', 'slug', 'content',  'published'
+        'title', 'slug', 'content', 'published',
     ];
-	
-	
-	public function sluggable()
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        if (\Route::currentRouteName() == 'crud.resourcesitems.reorder') {
+            if (request()->has('resourcebank')) {
+                $bank = ResourcesBank::find(request()->get('resourcebank'));
+                $child = $bank->resourcesChildren->pluck('id')->toArray();
+                static::addGlobalScope('byResourcebank', function (Builder $builder) use ($child) {
+                    $builder->whereIn('id', $child);
+                });
+            }
+        }
+
+        static::addGlobalScope(new OrderScope);
+    }
+
+    public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
-	
-	public function getRouteKeyName()
+
+    public function getRouteKeyName()
     {
         return 'slug';
     }
 
-
-    public function resources_bank()
+    public function resourcesBank()
     {
-        return $this->belongsToMany('App\Models\ResourcesBank', 'rcontainer_rsection', 'container_id', 'section_id')->withPivot('created_at');
+        return $this->belongsToMany('App\Models\ResourcesBank', 'resourcechild_resourcebank');
     }
-	
+
 } //class
