@@ -16,13 +16,14 @@
                                 </li>
                                 @foreach($courses as $course)
                                     @if($course->is_locked)
-                                        <li class="masthead__classes-list__item masthead__classes-list__item--locked">
+                                        <!--
+                                            <li class="masthead__classes-list__item masthead__classes-list__item--locked">
                                             @if($course->apply_now)
                                                 <a class="masthead__classes-link masthead__classes-link--locked" href="{{ $course->apply_now }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif target="_blank">{!! bold_first_word($course->title) !!}</a>
                                             @else
                                                 <a class="masthead__classes-link masthead__classes-link--locked" href="javascript:;" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>{!! bold_first_word($course->title) !!}</a>
-                                            @endif
-                                        </li>
+                                            @endif  
+                                        </li> -->
                                     @else
                                         <li class="masthead__classes-list__item">
                                             @if($course->id == 12)
@@ -33,6 +34,10 @@
                                         </li>
                                     @endif
                                 @endforeach
+
+                                <li class="masthead__classes-list__item masthead__classes-list__item--locked">
+                                    <a class="masthead__classes-link" href="{{ route('bonus') }}" style="background-image: url({{ asset('images/backtoallcourses.png') }});">Access to bonuses</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
