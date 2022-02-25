@@ -60,7 +60,7 @@ class ResourcesChild extends Model
 
     public function resourcesBank()
     {
-        return $this->belongsToMany('App\Models\ResourcesBank', 'resourcechild_resourcebank');
+        return $this->belongsToMany('App\Models\ResourcesBank', 'resourcechild_resourcebank',  'child_id', 'bank_id');
     }
 
 } //class

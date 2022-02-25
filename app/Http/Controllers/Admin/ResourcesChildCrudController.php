@@ -58,11 +58,12 @@ class ResourcesChildCrudController extends CrudController
             'type' => 'wysiwyg',
         ]);
 
+        /*
         $this->crud->addField([
             'name' => 'published',
             'label' => 'Published',
             'type' => 'checkbox',
-        ]);
+        ]); */
 
         /**
          * Enable CRUD reorder
