@@ -59,17 +59,23 @@ class ResourcesBank extends Model
         $destination_path = 'resourcesbank/';
 
         $request = \Request::instance();
-        $file = $request->file($attribute_name);
-        $filename = date('mdYHis') . '_' . $file->getClientOriginalName();
 
-        // Make the image
-        $image = \Image::make($file);
+        if ($value == null) {
+            // delete the image from disk
+            \Storage::disk($disk)->delete($this->{$attribute_name});
+            // set null in the database column
+            $this->attributes[$attribute_name] = null;
+        } else {
+            $file = $request->file($attribute_name);
+            $filename = date('mdYHis') . '_' . $file->getClientOriginalName();
 
-        // Store the image on disk
-        \Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
-
-        // Save the path to the database
-        $this->attributes[$attribute_name] = $destination_path . $filename;
+            // Make the image
+            $image = \Image::make($file);
+            // Store the image on disk
+            \Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
+            // Save the path to the database
+            $this->attributes[$attribute_name] = $destination_path . $filename;
+        }
     }
 
     public function setHeaderImageAttribute($value)
@@ -79,17 +85,23 @@ class ResourcesBank extends Model
         $destination_path = 'resourcesbank/header';
 
         $request = \Request::instance();
-        $file = $request->file($attribute_name);
-        $filename = date('mdYHis') . '_' . $file->getClientOriginalName();
 
-        // Make the image
-        $image = \Image::make($file);
+        if ($value == null) {
+            // delete the image from disk
+            \Storage::disk($disk)->delete($this->{$attribute_name});
+            // set null in the database column
+            $this->attributes[$attribute_name] = null;
+        } else {
+            $file = $request->file($attribute_name);
+            $filename = date('mdYHis') . '_' . $file->getClientOriginalName();
 
-        // Store the image on disk
-        \Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
-
-        // Save the path to the database
-        $this->attributes[$attribute_name] = $destination_path . $filename;
+            // Make the image
+            $image = \Image::make($file);
+            // Store the image on disk
+            \Storage::disk($disk)->put($destination_path . $filename, $image->stream()->__toString());
+            // Save the path to the database
+            $this->attributes[$attribute_name] = $destination_path . $filename;
+        }
     }
 
     /**

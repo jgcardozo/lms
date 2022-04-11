@@ -69,14 +69,20 @@
                                 The resources bank for the {!! $resource->title !!} are coming soon! Please check this page later to see them.
                             </p>
                             @else
-                            @foreach ($sections as $child)
-
-                            <article id="section-{!! $child->id !!}" class="item">
-                                <h2>{!! $child->title !!}</h2>
-                                {!! compileShortcodes($child->content)!!}
-                            </article>
-
-                            @endforeach
+                                @foreach ($sections as $child)
+                                    @if ($child->published)    
+                                        <article id="section-{!! $child->id !!}" class="item">
+                                            <h2>{!! $child->title !!}</h2>
+                                            {!! compileShortcodes($child->content)!!}
+                                        </article>
+									@else
+										<article id="section-{!! $child->id !!}" class="item">
+                                            <h2>{!! $child->title !!}</h2>
+											<h5>Resources Coming Soon!</h5>
+                                        </article>
+										
+                                    @endif    
+                                @endforeach
                             @endif
                         </div>
                     </div>
@@ -125,6 +131,9 @@
         $(".aside__close").on("click", function() {
             closeMenu();
         });
+
+        $('article p a').attr('target', '_blank');
+
     })(jQuery);
 </script>
 

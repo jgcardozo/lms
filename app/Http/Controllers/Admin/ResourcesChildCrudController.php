@@ -36,6 +36,17 @@ class ResourcesChildCrudController extends CrudController
                 'name' => 'slug',
                 'label' => 'Slug',
             ],
+            
+            /*[
+                'label' => "Belongs to",
+                'type' => "select_multiple",
+                'name' => 'resourcesBank',
+                'entity' => 'resourcesChildren',
+                'attribute' => "title",
+                'model' => "App\Models\ResourcesBank",
+                'pivot' => true
+            ] */
+
         ]);
 
         /**
@@ -57,13 +68,12 @@ class ResourcesChildCrudController extends CrudController
             'label' => 'Content',
             'type' => 'wysiwyg',
         ]);
-
-        /*
+  
         $this->crud->addField([
             'name' => 'published',
             'label' => 'Published',
             'type' => 'checkbox',
-        ]); */
+        ]); 
 
         /**
          * Enable CRUD reorder
