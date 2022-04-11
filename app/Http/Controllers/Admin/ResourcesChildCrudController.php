@@ -35,17 +35,16 @@ class ResourcesChildCrudController extends CrudController
             [
                 'name' => 'slug',
                 'label' => 'Slug',
-            ],
-            
-            /*[
+            ], 
+            [
                 'label' => "Belongs to",
                 'type' => "select_multiple",
                 'name' => 'resourcesBank',
-                'entity' => 'resourcesChildren',
+                'entity' => 'resourcesBank',
                 'attribute' => "title",
-                'model' => "App\Models\ResourcesBank",
+                'model' => "App\Models\ResourcesChild",
                 'pivot' => true
-            ] */
+            ] 
 
         ]);
 
@@ -81,6 +80,7 @@ class ResourcesChildCrudController extends CrudController
         $this->crud->enableReorder('title', 1);
         $this->crud->allowAccess('reorder');
         $this->crud->orderBy('lft');
+
 
     } //setup
 

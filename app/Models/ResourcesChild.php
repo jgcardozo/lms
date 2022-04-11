@@ -31,7 +31,7 @@ class ResourcesChild extends Model
     {
         parent::boot();
 
-        if (\Route::currentRouteName() == 'crud.resourcesitems.reorder') {
+        if (\Route::currentRouteName() == 'crud.resourceschild.reorder') {
             if (request()->has('resourcebank')) {
                 $bank = ResourcesBank::find(request()->get('resourcebank'));
                 $child = $bank->resourcesChildren->pluck('id')->toArray();
@@ -42,7 +42,7 @@ class ResourcesChild extends Model
         }
 
         static::addGlobalScope(new OrderScope);
-    }
+    } //boot
 
     public function sluggable()
     {
@@ -60,7 +60,7 @@ class ResourcesChild extends Model
 
     public function resourcesBank()
     {
-        return $this->belongsToMany('App\Models\ResourcesBank', 'resourcechild_resourcebank',  'child_id', 'bank_id');
+        return $this->belongsToMany('App\Models\ResourcesBank', 'resourcechild_resourcebank');
     }
 
 } //class

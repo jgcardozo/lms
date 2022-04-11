@@ -142,7 +142,7 @@ class ResourcesBank extends Model
 
     public function resourcesChildren()
     {
-        return $this->belongsToMany('App\Models\ResourcesChild', 'resourcechild_resourcebank', 'bank_id', 'child_id');
+        return $this->belongsToMany('App\Models\ResourcesChild', 'resourcechild_resourcebank');
     }
 
     public function reorder_resources_button()
