@@ -15,7 +15,7 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($slug)
-    {
+    {        
         $course = Course::with('modules')->whereSlug($slug)->first();
 
         if(!$course) {
