@@ -73,14 +73,29 @@
                                     @if ($child->published)    
                                         <article id="section-{!! $child->id !!}" class="item">
                                             <h2>{!! $child->title !!}</h2>
-                                            {!! compileShortcodes($child->content)!!}
+                                    
+                                                <?php                   
+                                                    $pieces = explode("[button", $child->content);
+                                                    foreach ($pieces as $i=>$button) { 
+                       
+                                                        if (strpos($button, "[/button]</p>")!=""){
+                                                            $button = "<p>[button".$button;
+                                                        } elseif (strpos($button, "[/button]</td>")!=""){
+                                                            $button = "[button".$button;
+                                                                //echo $button; exit;
+                                                        }   
+                                                ?>
+                                                    {!! compileShortcodes($button)!!}
+                                                <?php  
+                                                    } //foreach
+                                                ?> 
+                                                                                    
                                         </article>
 									@else
 										<article id="section-{!! $child->id !!}" class="item">
                                             <h2>{!! $child->title !!}</h2>
 											<h5>Resources Coming Soon!</h5>
-                                        </article>
-										
+                                        </article>										
                                     @endif    
                                 @endforeach
                             @endif
@@ -132,7 +147,8 @@
             closeMenu();
         });
 
-        $('article p a').attr('target', '_blank');
+
+        //$('article p a').attr('target', '_blank'); now in helpers.php
 
     })(jQuery);
 </script>

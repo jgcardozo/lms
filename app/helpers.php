@@ -356,7 +356,7 @@ if (!function_exists('compileShortcodes')) {
 
             $url = $attributes_values[$urlKey];
             if (!empty($url)) {
-                $button = '<a class="button" href="' . $url . '">' . $button_text . '</a>';
+                $button = '<a class="button" href="' . $url . '" target="_blank">' . $button_text . '</a>';
             }
 
             if (!empty($button)) {

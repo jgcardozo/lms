@@ -1,4 +1,4 @@
-<p>To access your ASK Method content, please log in to our training portal with your current account.</p>
+<p>To access your ASK Method content, please log in to our Learning Area with your current account.</p>
 <br />
 <p>1. Go to: <a href="{{ route('home') }}">https://learn.askmethod.com/</a></p>
 <p>2. Enter your email address: {{ $email }}</p>

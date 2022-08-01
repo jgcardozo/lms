@@ -63,4 +63,34 @@
 
 .resources-bank-page .content article:last-of-type { border-bottom: 0; }
 
+  table {
+    width: 100%;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-style: solid;
+  }
+
+  table thead tr{
+    background-color:#f2994a;
+    color:white;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  table, tr, td{
+    border:none;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  table tr:nth-of-type(even) {
+    background-color: #F8F7F2;
+  }
+
+
+ 
+
 /*# sourceMappingURL=main.css.map */

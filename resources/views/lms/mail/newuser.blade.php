@@ -1,12 +1,12 @@
 <p><strong>************<br />
         IMPORTANT: Your login information for the <br />
-        ASK Method Training Portal is contained in this email<br />
+        ASK Method Learning Area is contained in this email<br />
         ************</strong></p>
 
 <h3>Success!</h3>
 
 <p>Your registration for the <br />
-    ASK Method Training Portal <br />
+    ASK Method Learning Area <br />
     has been received!</p>
 
 <p>Here are your login details <br />

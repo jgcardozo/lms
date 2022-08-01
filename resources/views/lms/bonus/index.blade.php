@@ -33,16 +33,16 @@
             </div>
         </div>
 
-        <div class="grid grid--w950">
-            <div class="course-modules">
+        <div class="grid " style="display:flex; max-width: 100rem; padding-left: 1rem; padding-right: 1rem;" >
+            <div class="course-modules" style="">
                 <!-- <h2 class="course-modules__title">Lorem ipsum sit amet</h2> -->
 
-                <div class="grid--flex course-modules__list flex--wrap">
+                <div class="grid--flex course-modules__list flex--wrap mobile" style="justify-content:center; ">
 
 
                     @if ($resources)
                         @foreach($resources as $res)
-                            <div id="resource-{{ $res->id }}" class="module module--push-b grid--flex">
+                            <div id="resource-{{ $res->id }}" class=" module--push-b grid--flex" style="width:310px; box-shadow: 0 3px 5px 0 rgba(0,0,0,0.2); border-radius:10px; padding:0px; margin:10px 6px; overflow:hidden;" >
                                 <div class="module__component grid--flex flex--column">
                                     <div class="module__featured-image" @if($res->featured_image) style="background-image: url({{ $res->featured_image_url }});" @endif>
                                     </div>
@@ -55,8 +55,9 @@
                                         </h2>
 
                                         <p>{!! truncate_string($res->description) !!}</p>
-
-                                        <a href="{{ route('single.resourcesbank', $res->slug) }}" class="module__link">Go To Resource</a>
+                                    </div>
+                                    <div style="text-align:center; padding-bottom: 25px">
+                                        <a href="{{ route('single.resourcesbank', $res->slug) }}" class="module__link" >Go To Resource</a>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +66,7 @@
 
 
                     @foreach($bonuses as $bonus)
-                        <div id="bonus-{{ $bonus->id }}" class="module module--push-b grid--flex">
+                        <div id="bonus-{{ $bonus->id }}" class="module--push-b grid--flex" style="width:310px; box-shadow: 0 3px 5px 0 rgba(0,0,0,0.2); border-radius:10px; padding:0px; margin:7px 4px; overflow:hidden;" >
                             <div class="module__component grid--flex flex--column">
                                 <div class="module__featured-image" @if($bonus->featured_image) style="background-image: url({{ $bonus->featured_image_url }});" @endif>
                                 </div>
@@ -74,7 +75,8 @@
                                     <h2 class="module__title">{{ $bonus->title }}</h2>
 
                                     <p>{!! truncate_string($bonus->description) !!}</p>
-
+                                </div>
+                                <div style="text-align:center; padding-bottom: 25px">
                                     <a href="{{ route('single.bonus', $bonus->slug) }}" class="module__link">Go To Bonus</a>
                                 </div>
                             </div>
