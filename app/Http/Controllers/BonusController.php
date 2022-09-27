@@ -34,11 +34,14 @@ class BonusController extends Controller
         return view('lms.bonus.index', ['bonuses' => $bonuses, 'resources' => $resources]);
     }
 
+
+
     public function show($slug)
     {
-        $bonus = Bonus::whereSlug($slug)
-            ->first();
-
+        $bonus = Bonus::whereSlug($slug)->first();
+        if ($bonus->is_locked){
+           return \Redirect::to('/');
+        }
         return view('lms.bonus.single', ['bonus' => $bonus]);
     }
 }
