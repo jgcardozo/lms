@@ -63,34 +63,74 @@
 
 .resources-bank-page .content article:last-of-type { border-bottom: 0; }
 
+.course-single__overlay {display: none;}
+
   table {
     width: 100%;
     text-align: center;
-    border-collapse: separate;
     border-spacing: 2px;
     border-style: solid;
+    border-collapse: collapse;
+    border-radius: 0.5em;
+    overflow: hidden;
   }
 
   table thead tr{
-    background-color:#f2994a;
+    background-color:#F47D24;
     color:white;
   }
 
   th, td {
-    padding: 8px;
-  }
+    padding-top: 15px;
+    padding-bottom: 15px;
+  } 
 
   table, tr, td{
     border:none;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 50%;
+    font-weight: 700;
   }
 
-  table tr:nth-of-type(even) {
+  table tr:nth-of-type(odd) td {
     background-color: #F8F7F2;
   }
 
+  table tbody tr td a {
+    color: #F47D24;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight:600;
+  }
 
+  table tbody tr td a:hover {
+    color: #F47D24;
+    text-decoration: underline;
+  }
  
+  a {
+    color: #F47D24;
+    text-decoration: none;
+    font-weight: 600;
+  }
 
+  a:hover {
+    color: #F47D24;
+    text-decoration: underline;
+  }
+
+  table tr td:nth-child(2) {
+    position: relative;
+    border-left: 1px solid #ddd;
+  }
+  
+  table tr td {
+    position: relative;
+    width: 50%;
+  }
+
+  td img {
+    max-width: 70%;
+  }
 /*# sourceMappingURL=main.css.map */

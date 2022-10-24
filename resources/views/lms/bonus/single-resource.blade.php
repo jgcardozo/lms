@@ -110,15 +110,20 @@
 
 </main>
 
+@endsection
+
+
+@section('scripts_after')
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
     console.log("Hello world");
 
-    (function($) {
+    //(function($) {
+    $( document ).ready(function() {    
         function closeMenu() {
-            console.log("function called");
-
+            //console.log("function called");
             $(".aside").removeClass("aside--active");
             $("body").css("overflow", "visible");
         }
@@ -150,10 +155,10 @@
 
         //$('article p a').attr('target', '_blank'); now in helpers.php
 
-    })(jQuery);
+    
+    }); //jquery    
+    //})(jQuery);
 </script>
-
-
 
 
 @endsection

@@ -15,23 +15,32 @@ class BonusController extends Controller
      */
     public function index()
     {
-        $allResourcesBank = ResourcesBank::orderBy('lft', 'ASC')->get();
-        $allBonuses = Bonus::orderBy('lft', 'ASC')->get();
-        $bonuses = $resources = [];
+        $allResourcesBank = ResourcesBank::orderBy('lft', 'ASC')->orderBy('created_at', 'DESC')->get();
+        $allBonuses = Bonus::orderBy('lft', 'ASC')->orderBy('created_at', 'DESC')->get();
+        $bonuses = $resources = $collection = [];
 
-        
+        $key=1;
         foreach ($allResourcesBank as $resource) {
             if (!$resource->is_locked) {
+                $resource['type'] = 'resource';
                 $resources[] = $resource;
+                $collection[$key]=$resource;
             }
+            $key=$key+2;
         } 
-
+       
+        $key=0;
         foreach ($allBonuses as $bonus) {
             if (!$bonus->is_locked) {
+                $bonus['type'] = 'bonus';
                 $bonuses[] = $bonus;
+                $collection[$key] = $bonus;
             }
+            $key = $key + 2;
         }
-        return view('lms.bonus.index', ['bonuses' => $bonuses, 'resources' => $resources]);
+    
+        ksort($collection);
+        return view('lms.bonus.index', ['bonuses' => $bonuses, 'resources' => $resources, 'collection'=>$collection]);
     }
 
 
@@ -41,7 +50,7 @@ class BonusController extends Controller
         $bonus = Bonus::whereSlug($slug)->first();
         if ($bonus->is_locked){
            return \Redirect::to('/');
-        }
+        } 
         return view('lms.bonus.single', ['bonus' => $bonus]);
     }
 }
