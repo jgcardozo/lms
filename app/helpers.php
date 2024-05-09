@@ -134,7 +134,7 @@ if (!function_exists('human_filesize')) {
  */
 if (!function_exists('is_role_admin')) {
     function is_role_admin()
-    {
+    {//dd("tercero desde curso->islockTrait");
         return \Auth::user()
                     ->hasRole(['Administrator', 'Editor']);
     }

@@ -17,7 +17,9 @@
                                 @foreach($courses as $course)
                                     @if($course->is_locked)
                                         <!--
-                                            <li class="masthead__classes-list__item masthead__classes-list__item--locked">
+                                        JuanCardozo: 2022-02-21 quitar los candados y ocultar acceso a los que no tiene permiso,
+                                        para que sea uniforme con el ocultamiento en el dashboard  views/lms/courses/list.blade
+                                        <li class="masthead__classes-list__item masthead__classes-list__item--locked">
                                             @if($course->apply_now)
                                                 <a class="masthead__classes-link masthead__classes-link--locked" href="{{ $course->apply_now }}" @if($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif target="_blank">{!! bold_first_word($course->title) !!}</a>
                                             @else
@@ -34,8 +36,8 @@
                                         </li>
                                     @endif
                                 @endforeach
-
-                                <li class="masthead__classes-list__item masthead__classes-list__item--locked">
+								
+								<li class="masthead__classes-list__item masthead__classes-list__item--locked">
                                     <a class="masthead__classes-link" href="{{ route('bonus') }}" style="background-image: url({{ asset('images/backtoallcourses.png') }});">Access to bonuses</a>
                                 </li>
                             </ul>
@@ -81,14 +83,13 @@
                                     <a class="js-header-progress" href="javascript:;">Course Progress</a>
                             </div>
                         @endif
-                    @endif
+		    @endif
 
-                    <!--
+		    <!--
                     <div class="masthead__calendar grid--flex">
                         <a class="grid--flex flex--align-center{!! set_active_link('calendar') !!}" href="{{ route('calendar') }}"><i class="icon--calendar"></i></a>
                     </div>
-                    -->
-
+		    -->
 
                     <div class="masthead__notifications grid--flex flex--align-center">
                         <a class="js-header-notifications" href="javascript:;">

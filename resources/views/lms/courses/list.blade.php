@@ -3,6 +3,7 @@
 @section('title', 'Courses')
 
 @section('content')
+
     @if (!empty($courses))
 
         <main class="grid grid--lg spacer__top--big">
@@ -10,11 +11,9 @@
 
             <section class="grid--flex courseblock--flex">
                 @foreach ($courses as $course)
-                   
-
                     <!-- Single course item -->
-                    <div id="course-{{ $course->id }}"
-                        class=" courseblock__wrapper">
+                    <div id="course-{{ $course->id }}" class=" courseblock__wrapper"
+                        @if ($course->notDisplay()) style="display:none;" @endif>
 
                         @if ($course->is_locked)
                             <div class="courseblock courseblock--locked"
@@ -25,39 +24,44 @@
                                     <i class="icon--lock"></i>
                                 </div>
 
-                                <div class="courseblock__overlay courseblock__overlay--locked"></div>
+
+                                <div class="courseblock__overlay--locked"></div> 
                             @else
                                 <div class="courseblock"
                                     @if ($course->featured_image) style="background-image: url({{ $course->featured_image_url }});" @endif>
                                     <div class="courseblock__overlay"></div>
                         @endif
 
-                        <div class="courseblock__content">
-                            <div class="courseblock__logo"
-                                @if ($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>
-                            </div>
-
-                            <div class="courseblock__content__wrapper">
-                                <h2 class="courseblock__title ucase">{!! bold_first_word($course->title) !!}</h2>
-
-                                <p>{!! $course->short_description !!}</p>
-                                @if ($course->is_locked)
-                                    @if ($course->apply_now)
-                                        <a href="{{ $course->apply_now }}" class="courseblock__link"
-                                            target="_blank">{!! $course->apply_now_label !!}</a>
-                                    @else
-                                        <button type="button" class="courseblock__link">Coming Soon</button>
-                                    @endif
-                                @else
-                                    @if ($course->id == 12)
-                                        {!! form_to_lms2() !!}
-                                    @else
-                                        <a href="{{ route('single.course', $course->slug) }}"
-                                            class="courseblock__link">Access Training</a>
-                                    @endif
-                                @endif
-                            </div>
+                        @if ($course->is_locked)
+                            <div class="courseblock__content content-locked">
+                        @else
+                            <div class="courseblock__content">
+                        @endif
+                        <div class="courseblock__logo"
+                            @if ($course->logo_image) style="background-image: url({{ $course->getLogoImageUrlAttribute() }});" @endif>
                         </div>
+
+                        <div class="courseblock__content__wrapper">
+                            <h2 class="courseblock__title ucase">{!! bold_first_word($course->title) !!}</h2>
+
+                            <p>{!! $course->short_description !!}</p>
+                            @if ($course->is_locked)
+                                @if ($course->apply_now)
+                                    <a href="{{ $course->apply_now }}" class="courseblock__link"
+                                        target="_blank">{!! $course->apply_now_label !!} <span class="arrow"></span> </a>
+                                @else
+                                    <button type="button" class="courseblock__link">Coming Soon</button>
+                                @endif
+                            @else
+                                @if ($course->id == 12)
+                                    {!! form_to_lms2() !!}
+                                @else
+                                    <a href="{{ route('single.course', $course->slug) }}" class="courseblock__link">Access
+                                        Training <span class="arrow"></span></a>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
                     </div>
                     </div>
                 @endforeach

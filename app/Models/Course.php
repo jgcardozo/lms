@@ -2,21 +2,24 @@
 
 namespace App\Models;
 
-use App\Traits\RecordActivity;
 use Auth;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use InfusionsoftFlow;
 use App\Traits\ISLock;
 use App\Models\Session;
 use App\Scopes\OrderScope;
 use Backpack\CRUD\CrudTrait;
+use App\Traits\RecordActivity;
 use App\Traits\BackpackCrudTrait;
 use App\Traits\BackpackUpdateLFT;
 use App\Traits\UsearableTimezone;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+//
+use Illuminate\Database\Eloquent\Builder;
 
 class Course extends Model
 {
@@ -31,7 +34,7 @@ class Course extends Model
 	use RecordActivity;
 
 	protected $fillable = [
-		'title', 'slug', 'short_description', 'description', 'video_url', 'video_type_id', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products', 'must_watch', 'complete_feature'
+		'title', 'slug', 'short_description', 'description', 'video_url', 'video_type_id', 'featured_image', 'logo_image', 'apply_now', 'apply_now_label', 'module_group_title', 'lock_date', 'user_lock_date', 'facebook_group_id', 'payf_tag', 'cancel_tag', 'billing_is_products', 'must_watch', 'complete_feature', 'not_display'
 	];
 
 	protected $dates = [
@@ -60,17 +63,31 @@ class Course extends Model
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
+//dd("mi-modelo",Course::where('not_display', '!=',1)->get());
+//dd("this->is_tag_locked", Course::is_tag_locked());
+// $tag_id = $course->tags->first()->id;
+// $created = $user->is_tags()->where('id',$tag_id)->first()->pivot->created_at;		
+/*
+		if (!is_role_admin()) { // && !static::is_tag_locked()
+			static::addGlobalScope('not_displayed', function ($builder) {
+				$builder->where('not_display', '!=', 1);
+			});
+		} // if - juan oct19
+		*/
+		
+		
 
 		static::created(function($course) {
             $schedule = new \App\Models\Schedule;
-            $schedule->name = "Default for $course->title";
+            $schedule->name = "$course->title - DefaultDripped";
             $schedule->course_id = $course->id;
             $schedule->status = "default";
             $schedule->schedule_type = "dripped";
             $schedule->save();
-
         });
-	}
+
+	} //boot
+
 	/**
 	 * Method that checks if all
 	 * starter videos are seen
@@ -160,9 +177,17 @@ class Course extends Model
 	 * @return bool
 	 */
 	public function getIsLockedAttribute()
-	{
+	{//dd("llega primero", "is_tag_locked",$this->is_tag_locked(),"!is_role_admin", !is_role_admin(), "this->not_display", 
 		return $this->is_tag_locked() && !is_role_admin();
 	}
+
+	public function notDisplay(){
+		if (is_role_admin()) {
+			return false;
+		}
+		return $this->not_display && $this->is_tag_locked();
+	}
+
 
 	public function getCourseCanceledAttribute()
 	{
@@ -300,6 +325,7 @@ class Course extends Model
 			}
 		}
 	}
+
 
 	/*
 	|--------------------------------------------------------------------------

@@ -86,7 +86,7 @@ class SessionCrudController extends CrudController
             'attribute' => 'title',
             'model' => 'App\Models\VideoType',
             'wrapperAttributes' => [
-                'class' => 'form-group col-md-2'
+                'class' => 'form-group col-md-4'
             ]
         ]);
 
@@ -100,11 +100,24 @@ class SessionCrudController extends CrudController
 
 		$this->crud->addField([
 			'name' => 'video_duration',
-			'label' => 'Video duration (in minutes)',
+			'label' => 'Video Duration(in minutes)',
 			'wrapperAttributes' => [
-				'class' => 'form-group col-md-6'
+				'class' => 'form-group col-md-4'
 			]
 		]);
+
+		/*
+		$this->crud->addField([
+			'label' => 'Video Reveal At',
+			'name' => 'video_reveal_at',
+			'type' => 'datetime_picker',
+			'date_picker_options' => [
+				'format' => 'dd-mm-yyyy g:ia'
+			],
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-4'
+			]
+		]); */
 
 		$this->crud->addField([
 			'label' => 'Session featured image',
@@ -121,19 +134,29 @@ class SessionCrudController extends CrudController
 			'entity' => 'resources',
 			'attribute' => 'title',
 			'model' => 'App\Models\Resource',
-			'pivot' => true,
-			'wrapperAttributes' => [
-				'class' => 'form-group col-md-6'
-			]
+			'pivot' => true
 		]);
 
 		$this->crud->addField([
 			'name' => 'bucket_url',
 			'label' => 'Bucket URL',
+			/*'wrapperAttributes' => [
+				'class' => 'form-group col-md-6'
+			] */
+		]);
+
+		/*
+		$this->crud->addField([
+			'label' => 'Learn More Reveal At',
+			'name' => 'learnmore_reveal_at',
+			'type' => 'datetime_picker',
+			'date_picker_options' => [
+				'format' => 'dd-mm-yyyy g:ia'
+			],
 			'wrapperAttributes' => [
 				'class' => 'form-group col-md-6'
 			]
-		]);
+		]); */
 
 		$this->crud->addField([
 			'name' => 'learn_more',
@@ -157,14 +180,6 @@ class SessionCrudController extends CrudController
 			'model' => 'App\Models\Course'
 		]);
 
-		/*$this->crud->addField([
-			'label' => 'Lock the session until this date:',
-			'name' => 'lock_date',
-			'type' => 'datetime_picker',
-			'date_picker_options' => [
-				'format' => 'dd-mm-yyyy g:ia'
-			]
-		]);*/
 
 		$this->crud->addField([
 			'name' => 'type',
@@ -218,7 +233,7 @@ class SessionCrudController extends CrudController
 		if(!$this->request->get('course')) {
 			$this->crud->addClause('whereNull', 'starter_course_id');
 		}
-	}
+	} //setup
 
 	public function store(StoreRequest $request)
 	{

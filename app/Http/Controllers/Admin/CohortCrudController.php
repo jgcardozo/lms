@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\Admin\CohortsCrudRequest as StoreRequest;
 use App\Http\Requests\Admin\CohortsCrudRequest as UpdateRequest;
+use App\Models\Course;
+use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 class CohortCrudController extends CrudController
 {
@@ -26,6 +27,11 @@ class CohortCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Name'
+			],
+			[
+                'label' => 'Course',
+                'type' => 'model_function',
+                'function_name' => 'admin_course_link'
             ]
 		]);
 
@@ -37,14 +43,18 @@ class CohortCrudController extends CrudController
 			'label' => 'Name'
 		]);
 
+		
         $this->crud->addField([  // Select2
             'label' => "Course",
             'type' => 'select2',
             'name' => 'course_id', // the db column for the foreign key
             'entity' => 'course', // the method that defines the relationship in your Model
             'attribute' => 'title', // foreign key attribute that is shown to user
-            'model' => "App\\Models\\Course" // foreign key model
-        ]);
+            'model' => "App\\Models\\Course", // foreign key model
+			'attributes' => [
+        		'data-order' => '{"column": "title", "direction": "asc"}', // ordena los elementos por título en orden ascendente
+    		]
+		]); 
 
         $this->crud->addField([  // Select2
             'label' => "Schedule",
@@ -52,7 +62,10 @@ class CohortCrudController extends CrudController
             'name' => 'schedule_id', // the db column for the foreign key
             'entity' => 'schedule', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => "App\\Models\\Schedule" // foreign key model
+            'model' => "App\\Models\\Schedule", // foreign key model
+			'options' => function ($query, $id, $value) {
+				return $query->orderBy('name', 'asc')->pluck('name', 'id');
+			}
         ]);
 	}
 

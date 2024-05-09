@@ -15,9 +15,11 @@ use App\Traits\UsearableTimezone;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\IgnoreCoachingCallsScope;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use App\Traits\LockViaSchedule; //juanUpdate
 
 class Session extends Model
 {
@@ -32,9 +34,24 @@ class Session extends Model
 	use BackpackUpdateLFT;
 	use SluggableScopeHelpers;
 	use RecordActivity;
+	use LockViaSchedule;
 
 	protected $fillable = [
-		'title', 'slug', 'description', 'video_url', 'video_type_id', 'video_duration', 'bucket_url', 'type', 'course_id', 'featured_image', 'starter_course_id', 'lesson_id', 'lock_date', 'learn_more'
+		'title',
+		'slug',
+		'description',
+		'video_url',
+		'video_type_id',
+		'video_duration',
+		'bucket_url',
+		'type',
+		'course_id',
+		'featured_image',
+		'starter_course_id',
+		'lesson_id',
+		'lock_date',
+		'learn_more'
+		
 	];
 
 	/**
@@ -43,7 +60,7 @@ class Session extends Model
 	 * @return void
 	 */
 	protected static function boot()
-    {
+	{
 		parent::boot();
 
 		static::addGlobalScope(new OrderScope);
@@ -56,54 +73,54 @@ class Session extends Model
 	 * @param $user
 	 */
 	public function markAsComplete($user = null)
-    {
-		if(!$user) {
+	{
+		if (!$user) {
 			$user = Auth::user();
 		}
 
 		$this->usersWatched()->sync([$user->id], false);
 	}
 
-    public function getPreviousSessionAttribute()
-    {
-        $prevSession = $this->lesson->sessions->where('lft', '<', $this->lft)->last();
+	public function getPreviousSessionAttribute()
+	{
+		$prevSession = $this->lesson->sessions->where('lft', '<', $this->lft)->last();
 
-        return !$prevSession ? false : $prevSession;
-    }
+		return !$prevSession ? false : $prevSession;
+	}
 
-    /**
-     * Check if this session is locked
-     *
-     * @return bool
-     */
-    public function getIsLockedAttribute()
-    {
-        if(is_role_admin()) {
-            return false;
-        }
+	/**
+	 * Check if this session is locked
+	 *
+	 * @return bool
+	 */
+	public function getIsLockedAttribute()
+	{
+		if (is_role_admin()) {
+			return false;
+		}
 
-        if(!$this->course->is_locked && is_role_vip())
-        {
-            return false;
-        }
+		if (!$this->course->is_locked && is_role_vip()) {
+			//dd("llego1");
+			return false;
+		}
 
-        if($this->lesson->is_locked) {
-            return true;
-        }
+		if ($this->lesson->is_locked) {
+			//dd("llego2");
+			return true;
+		}
 
-        if(!$this->isCourseMustWatch() && !$this->is_date_locked)
-        {
-            return false;
-        }
+		if (!$this->isCourseMustWatch() && !$this->is_date_locked) {
+			//dd("llego3");
+			return false;
+		}
 
-        $prevSession = $this->previous_session;
-        if((!$prevSession || $prevSession->is_completed) && !$this->is_date_locked)
-        {
-            return false;
-        }
+		$prevSession = $this->previous_session;
+		if ((!$prevSession || $prevSession->is_completed) && !$this->is_date_locked) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 	/**
 	 * Check if this session is marked as seen
@@ -111,15 +128,14 @@ class Session extends Model
 	 * @return bool
 	 */
 	public function getIsCompletedAttribute($user = null)
-    {
-		if(!$user) {
+	{
+		if (!$user) {
 			$user = Auth::user();
 		}
 
-        if(is_numeric($user))
-        {
-            $user = \App\Models\User::find($user);
-        }
+		if (is_numeric($user)) {
+			$user = \App\Models\User::find($user);
+		}
 
 		return $this->usersWatched()->where('user_id', $user->id)->exists();
 	}
@@ -154,55 +170,55 @@ class Session extends Model
 	}
 
 	public function getHierarchyNameAttribute()
-    {
-        $name = '';
-        if($this->lesson !== null) {
-            $name = "[ ".$this->lesson->title." ] ".$name;
-            if($this->lesson->module !== null) {
-                $name = "[ ".$this->lesson->module->title." ] ".$name;
-            }
-        }
+	{
+		$name = '';
+		if ($this->lesson !== null) {
+			$name = "[ " . $this->lesson->title . " ] " . $name;
+			if ($this->lesson->module !== null) {
+				$name = "[ " . $this->lesson->module->title . " ] " . $name;
+			}
+		}
 
-        $name = $name.$this->title;
+		$name = $name . $this->title;
 
-        return $name;
-    }
+		return $name;
+	}
 
 	/*
-	|--------------------------------------------------------------------------
-	| Relations
-	|--------------------------------------------------------------------------
-	*/
-    public function schedules()
-    {
-        return $this->morphToMany(Schedule::class,'schedulable');
-    }
+		  |--------------------------------------------------------------------------
+		  | Relations
+		  |--------------------------------------------------------------------------
+		  */
+	public function schedules()
+	{
+		return $this->morphToMany(Schedule::class, 'schedulable');
+	}
 
 
-    public function logs()
-    {
-        return $this->morphMany('App\Models\Log', 'subject');
-    }
+	public function logs()
+	{
+		return $this->morphMany('App\Models\Log', 'subject');
+	}
 
-    public function progress()
-    {
-        return $this->morphMany('App\Models\Progress', 'progress');
-    }
+	public function progress()
+	{
+		return $this->morphMany('App\Models\Progress', 'progress');
+	}
 
 	public function resources()
-    {
+	{
 		return $this->belongsToMany('App\Models\Resource', 'resource_session');
 	}
 
+
 	public function lesson()
-    {
+	{
 		return $this->belongsTo('App\Models\Lesson');
 	}
 
 	public function course()
-    {
-		if(!empty($this->starter_course_id))
-		{
+	{
+		if (!empty($this->starter_course_id)) {
 			return $this->belongsTo('App\Models\Course', 'starter_course_id', 'id');
 		}
 
@@ -215,17 +231,17 @@ class Session extends Model
 	}
 
 	public function usersWatched()
-    {
-		return $this->belongsToMany('App\Models\User', 'session_user')->withPivot(['created_at','user_id','session_id']);
+	{
+		return $this->belongsToMany('App\Models\User', 'session_user')->withPivot(['created_at', 'user_id', 'session_id']);
 	}
 
-    public function video_type()
-    {
-        return $this->belongsTo('App\Models\VideoType');
-    }
+	public function video_type()
+	{
+		return $this->belongsTo('App\Models\VideoType');
+	}
 
 	public function sluggable()
-    {
+	{
 		return [
 			'slug' => [
 				'source' => 'title'
@@ -234,10 +250,10 @@ class Session extends Model
 	}
 
 	/*
-	|--------------------------------------------------------------------------
-	| Mutators
-	|--------------------------------------------------------------------------
-	*/
+		  |--------------------------------------------------------------------------
+		  | Mutators
+		  |--------------------------------------------------------------------------
+		  */
 	public function setFeaturedImageAttribute($value)
 	{
 		$attribute_name = 'featured_image';
@@ -259,13 +275,14 @@ class Session extends Model
 	}
 
 	/*
-	|--------------------------------------------------------------------------
-	| Backpack model callbacks
-	|--------------------------------------------------------------------------
-	*/
+		  |--------------------------------------------------------------------------
+		  | Backpack model callbacks
+		  |--------------------------------------------------------------------------
+		  */
 	public function admin_lesson_link()
 	{
-		if(!$this->lesson) return;
+		if (!$this->lesson)
+			return;
 
 		ob_start();
 		?>
@@ -279,7 +296,8 @@ class Session extends Model
 
 	public function admin_course_link()
 	{
-		if(!$this->starter_course) return;
+		if (!$this->starter_course)
+			return;
 
 		ob_start();
 		?>
@@ -293,10 +311,11 @@ class Session extends Model
 
 	public function view_in_frontend_button()
 	{
-		if(!$this->lesson)
+		if (!$this->lesson)
 			return;
 		?>
-		<a target="_blank" href="<?php echo route('single.lesson', [$this->lesson->slug, 'session' => $this->id]); ?>" class="btn btn-xs btn-default">
+		<a target="_blank" href="<?php echo route('single.lesson', [$this->lesson->slug, 'session' => $this->id]); ?>"
+			class="btn btn-xs btn-default">
 			<i class="fa fa-eye"></i>
 			View session
 		</a>
@@ -305,7 +324,7 @@ class Session extends Model
 
 	public function reorder_resources_button()
 	{
-		if(!$this->resources)
+		if (!$this->resources)
 			return;
 
 		?>
@@ -316,39 +335,50 @@ class Session extends Model
 		<?php
 	}
 
-    public function getDripOrLockDays($schedule_id)
-    {
-        $id = $this->id;
+	public function getDripOrLockDays($schedule_id)
+	{
+		$id = $this->id;
 
-        $table_row = DB::table('schedulables')
-            ->select('drip_days','lock_date')
-            ->where([
-                ['schedule_id', $schedule_id],
-                ['schedulable_id', $id],
-                ['schedulable_type',"App\Models\Session"]
-            ])->get()->first();
+		$table_row = DB::table('schedulables')
+			->select('drip_days', 'lock_date')
+			->where([
+				['schedule_id', $schedule_id],
+				['schedulable_id', $id],
+				['schedulable_type', "App\Models\Session"]
+			])->get()->first();
 
-        if (empty($table_row)) {
-            $schedule = Schedule::find($schedule_id);
-            $schedule->sessions()->attach($this);
+		if (empty($table_row)) {
+			$schedule = Schedule::find($schedule_id);
+			$schedule->sessions()->attach($this);
 
-            DB::table('schedulables')
-                ->where([
-                    ['schedule_id', $schedule_id],
-                    ['schedulable_id', $id],
-                    ['schedulable_type',"App\Models\Session"]
-                ])->update([
-                    'drip_days' => 0,
-                ]);
+			DB::table('schedulables')
+				->where([
+					['schedule_id', $schedule_id],
+					['schedulable_id', $id],
+					['schedulable_type', "App\Models\Session"]
+				])->update([
+						'drip_days' => 0,
+					]);
 
-            return 0;
-        }
+			return 0;
+		}
 
-        if (!empty($table_row->lock_date)) {
-            $session_days = date("m/d/Y h:i A", strtotime($table_row->lock_date));
-        } else {
-            $session_days = $table_row->drip_days;
-        }
-        return $session_days;
-    }
-}
+		if (!empty($table_row->lock_date)) {
+			$session_days = date("m/d/Y h:i A", strtotime($table_row->lock_date));
+		} else {
+			$session_days = $table_row->drip_days;
+		}
+		return $session_days;
+	}
+
+	public function isLockedAtSchedule($sessionId, $courseId, $sessionField) //juan 23oct
+	{
+		if (is_role_admin()) {
+			return false;
+		}
+		//dd($this->lockedAtSchedule($sessionId, $courseId, $sessionField));
+		return $this->lockedAtSchedule($sessionId, $courseId, $sessionField);
+	} //isLockedAtSchedule
+
+
+} //class

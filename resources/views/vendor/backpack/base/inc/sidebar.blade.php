@@ -22,7 +22,7 @@
 
 
           <!-- ============================== -->
-          <!-- ==== LMS Resources bank items ==== -->
+          <!-- ==== LMS admin menu items ==== -->
           <!-- ============================== -->
           <li class="header">Resources Bank</li>
           <li><a href="{{ url('admin/resourcesbank') }}"><i class="fa fa-book"></i> <span>Resource Pages</span></a></li>

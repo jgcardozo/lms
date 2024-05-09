@@ -30,8 +30,10 @@ class LogExportController extends Controller
 
                 // Add CSV headers
                 fputcsv($handle, [
-                    '"ID"',
-                    'User',
+                    'Log Id',
+                    'User Name',
+					'Email',
+					//'Contact Id',
                     'Action',
                     'Subject',
                     'Timestamp'
@@ -87,6 +89,7 @@ class LogExportController extends Controller
                     if(count($chunk)) {
                         $esLogs = $repo->getLogsByIds($chunk);
                         foreach ($esLogs['docs'] as $log) {
+							
                             if(!$log['found']) { continue; }
 
                             $source = $log['_source'];
@@ -94,7 +97,9 @@ class LogExportController extends Controller
                             // Add a new row with data
                             fputcsv($handle, [
                                 (string)$source['id'],
-                                $source['user']['name'] !== null ? $source['user']['name'] : $source['user']['email'],
+                                $source['user']['name'] !== null ? $source['user']['name']: "It has no name",
+								$source['user']['email'],
+								//$source['user']['contact'],
                                 $source['action'] ? $source['action']['name'] : "",
                                 $source['subject']['tree'],
                                 Carbon::createFromFormat('Y-m-d H:i:s', $source['created_at'])->format('m/d/Y g:i A')

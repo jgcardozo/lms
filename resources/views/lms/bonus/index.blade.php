@@ -7,6 +7,9 @@
 @endsection
 
 @section('content')
+    <script>
+        document.body.classList.add('v2');
+    </script>
     <main>
         <div class="grid grid--full course-single">
             <div class="course-single__overlay"></div>
@@ -40,7 +43,7 @@
                 <div class="grid--flex course-modules__list flex--wrap mobile" style="justify-content:center; ">
 
 {{--                     @foreach ($collection as $item)
-                        <?php//echo 'type:' . $item->type . ' title:' . $item->title . ' lft:' . $item->lft . ' created_at:' . $item->created_at ?><br>
+                        //echo 'type:' . $item->type . ' title:' . $item->title . ' lft:' . $item->lft . ' created_at:' . $item->created_at ?><br>
                     @endforeach --}}
                     @forelse ($collection as $item)
                         @if ($item->type == 'resource')

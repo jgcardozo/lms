@@ -10,12 +10,15 @@ use Backpack\CRUD\CrudTrait;
 use App\Traits\BackpackCrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+//juanUpdate 23Oct
+use App\Traits\LockViaSchedule;
+
 
 class Resource extends Model
 {
 	use CrudTrait, BackpackCrudTrait;
 	use RecordActivity;
-
+	use LockViaSchedule; // juanUpdate
 	protected $fillable = ['title', 'file_url'];
 
 	/**
@@ -88,6 +91,21 @@ class Resource extends Model
     {
         return $this->belongsToMany(ResourceTag::class);
     }
+
+	public function schedules() //juanUpdate 18-sept
+	{
+		return $this->morphToMany(Schedule::class, 'schedulable');
+	}
+
+	public function isLockedAtSchedule($sessionId, $courseId) //juan 23oct
+	{
+		if (is_role_admin()) {
+			return false;
+		}
+		//dd("paso1-islockatschedule-resourceModel - sessionId:$sessionId , courseId:$courseId");
+		//dd($this->lockedAtSchedule($sessionId, $courseId));
+		return $this->lockedAtSchedule($sessionId, $courseId);
+	} //isLockedAtSchedule
 
 	/*
 	|--------------------------------------------------------------------------

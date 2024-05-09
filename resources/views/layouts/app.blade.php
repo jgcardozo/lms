@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
 <head>
+	<script>
+		(function(w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({
+				'gtm.start': new Date().getTime(),
+				event: 'gtm.js'
+			});
+			var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s),
+				dl = l != 'dataLayer' ? '&l=' + l : '';
+			j.async = true;
+			j.src =
+				'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-MZCXNVC');
+	</script>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,6 +29,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}?v=123" rel="stylesheet">
+	<link href="{{ asset('css/v2.css') }}?v=230515" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -58,25 +76,20 @@
     </script>
     <!-- end Mixpanel -->
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-M85VTZ6');</script>
-    <!-- End Google Tag Manager -->
+
 </head>
 
 @if(changeHeader())
     <body>
 @elseif(is_home())
-    <body class="home">
+    <body class="home v2">
 @else
     <body class="inner-page">
 @endif
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M85VTZ6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZCXNVC"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
 
         <div id="app">
             @include('layouts.header')

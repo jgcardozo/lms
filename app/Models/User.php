@@ -227,6 +227,7 @@ class User extends Authenticatable
             $schedule = Schedule::find($cohort->schedule_id);
         }
 
+
         $schedule_type = $schedule->schedule_type;
 
         if ($schedule_type === "locked") {
@@ -237,13 +238,13 @@ class User extends Authenticatable
 
 
         $dateOrDay = DB::table('schedulables')
-            ->select($column_name)
+            //->select($column_name) //juanUpdate
             ->where([
                 'schedule_id' => $schedule->id,
                 'schedulable_type' => $class_name,
                 'schedulable_id' => $lesson->id
             ])->first();
-
+        $dripTime = $dateOrDay->drip_time; //juanUpdate        
         $dateOrDay = $dateOrDay->$column_name;
 
 
@@ -254,12 +255,23 @@ class User extends Authenticatable
         if ($schedule_type === "dripped") {
             $course = Course::find($course_id);
             $tag_id = $course->tags->first()->id;
-            $created = $this->is_tags()->where('id',$tag_id)->first()->pivot->created_at;
+            //$created = $this->is_tags()->where('id',$tag_id)->first()->pivot->created_at;
+            // juan 22-nov-2023  ,  dayZero Field
+            $created = (isset($schedule->day_zero) && !is_null($schedule->day_zero))
+                ? Carbon::parse($schedule->day_zero)
+                : $this->is_tags()->where('id', $tag_id)->first()->pivot->created_at;
+            //dd("created_at",$created);  
+            // END juan 22-nov-2023  ,  dayZero Field
 
             $unlock_day = Carbon::parse($created);
             $unlock_day->hour = 8;
             $unlock_day->minute = 0;
             $unlock_day->second = 0;
+            if (isset($dripTime) && !is_null($dripTime)) { //juanUpdate
+                $dripTimeCarbon = Carbon::createFromFormat('H:i:s', $dripTime);
+                $unlock_day->hour = $dripTimeCarbon->hour;
+                $unlock_day->minute = $dripTimeCarbon->minute;
+            }
             $unlock_day->addDays($dateOrDay);
 
 

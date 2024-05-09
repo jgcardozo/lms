@@ -149,11 +149,14 @@ class Lesson extends Model
 	 */
 	public function getIsLockedAttribute()
 	{
-		if(is_role_admin())
+		if(is_role_admin()){
+			//dd("this user is admin");
 			return false;
-
+		}
+		
 		if(!$this->course->is_locked && is_role_vip())
         {
+			//dd("this->course->is_locked && is_role_vip");
             return false;
         }
 
@@ -162,12 +165,14 @@ class Lesson extends Model
             $this->is_tag_locked()
         )
 		{
+			//dd("this->module->is_locked || this->is_tag_locked() - juanElcasoComun");
 			return true;
 		}
 
-        if(!$this->isCourseMustWatch() && !$this->is_date_locked)
+		if(!$this->isCourseMustWatch() && !$this->is_date_locked)
         {
-            return false;
+			//dd("this->isCourseMustWatch() && !this->is_date_locked es: lockViaUserDate");
+			return false;
         }
 
 		// Get previous lesson
@@ -175,7 +180,7 @@ class Lesson extends Model
 		if((!$prevLesson || $prevLesson->is_completed) && !$this->is_date_locked)
 		{
 			return false;
-		}
+		} 
 
 		return true;
 	}

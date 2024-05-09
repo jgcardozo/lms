@@ -119,6 +119,8 @@ class CourseCrudController extends CrudController
 			'disk' => 's3'
 		]);
 
+
+
 		/*$this->crud->addField([
 			'label' => 'Lock the course until this date:',
 			'name' => 'lock_date',
@@ -215,6 +217,13 @@ class CourseCrudController extends CrudController
             'type' => 'checkbox'
         ]);
 
+		$this->crud->addField([
+            'name' => 'not_display',
+            'label' => 'Do Not Display Without Course Tag.<br>
+			The course would only display on the Dashboard if the user was tagged for this course',
+            'type' => 'checkbox'
+        ]);
+
         /**
 		 * Add CRUD action button
 		 */
@@ -305,6 +314,7 @@ class CourseCrudController extends CrudController
 
             $schedule->modules()->detach();
             $schedule->lessons()->detach();
+			$schedule->resources()->detach();
 
             $schedule->delete();
         }

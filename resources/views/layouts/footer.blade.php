@@ -4,7 +4,7 @@
 		<div class="mastfoot__content grid--flex flex--space-between">
 			<div class="footer-component">
 				<h5>{{ config('app.name') }}</h5>
-				<p>&copy; {{ date("Y") }} All Rights Reserved.</p>
+				<p>&copy; {{date('Y')}} All Rights Reserved.</p>
 			</div>
 
 			<div class="footer-component">

@@ -176,6 +176,10 @@
                                 <th tabindex="4" rowspan="1" colspan="1" @click="sortTablePageItems('timestamp')" :class="getColumnSortOrderClass('timestamp')">
                                     Timestamp
                                 </th>
+								
+								<th tabindex="5" rowspan="1" colspan="1">
+                                    Contact Id
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -188,6 +192,7 @@
                                     <td>{{hit._source.action.name}}</td>
                                     <td>{{hit._source.subject.tree}}</td>
                                     <td>{{formatTimestamp(hit._source.created_at)}}</td>
+									<td>{{hit._source.user.contact}}</td>
                                 </tr>
                                 <tr role="row">
                                 <th tabindex="0" rowspan="1" colspan="1" @click="sortTablePageItems('id')" :class="getColumnSortOrderClass('id')">

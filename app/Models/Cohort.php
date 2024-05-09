@@ -52,4 +52,19 @@ class Cohort extends Model
     {
         return $this->fbLinks()->find($lessonId)->pivot->fb_link ?? '';
     }
+
+
+    public function admin_course_link()
+    {
+        ?>
+                <a href="#">
+                    <?php echo Course::find($this->course_id)->title ?>
+                </a>
+                <?php
+    }
+
+
+
+
+
 }

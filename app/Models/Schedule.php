@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Backpack\CRUD\CrudTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
@@ -41,6 +42,11 @@ class Schedule extends Model
         return $this->morphedByMany(Session::class,'schedulable');
     }
 
+    public function resources() // juan sept18
+    {
+        return $this->morphedByMany(Resource::class, 'schedulable');
+    }
+
     public function admin_course_link()
     {
         ?>
@@ -50,4 +56,10 @@ class Schedule extends Model
         <?php
     }
 
-}
+    public function getDayZeroAttribute($value)
+    {
+        return Carbon::parse($value)->format('m/d/Y g:i A');   
+    }
+
+
+}//class

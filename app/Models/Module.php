@@ -151,6 +151,12 @@ class Module extends Model
             return false;
         }
 
+        // 10-abril-2024  
+        // issue course purchased 7 years ago by tomkaules1+asklive@gmail.com  course_id=3 schedule_id=1
+        if (!$this->course->is_locked || !$this->is_tag_locked()) {
+            return false;
+        }
+
         if (!$this->course->is_locked && is_role_vip() && !$this->is_tag_locked()) {
             return false;
         }

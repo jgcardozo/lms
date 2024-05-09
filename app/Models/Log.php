@@ -47,7 +47,8 @@ class Log extends Model
                         "id" => [ "type" => "integer" ],
                         "type" => [ "type" => "keyword" ],
                         "name" => [ "type" => "keyword" ],
-                        "email" => [ "type" => "keyword" ]
+                        "email" => [ "type" => "keyword" ],
+						"contact" => ["type" => "keyword"]
                     ]
                 ],
                 "cohorts" => [
